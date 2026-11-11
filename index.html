@@ -10,8 +10,11 @@
 <meta property="og:title" content="متجر نسر البرية الرسمي">
 <meta property="og:description" content="كل ما تحتاجه في عالم الهواتف والكمبيوتر">
 <meta property="og:image" content="https://antonyos2010.github.io/nasr-albaria/store-design.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root{
@@ -41,6 +44,7 @@ button,input{font-family:inherit}
 button{cursor:pointer}
 a{text-decoration:none;color:inherit}
 .container{width:min(1250px,94%);margin:auto}
+
 .topbar{
  text-align:center;padding:8px;
  background:linear-gradient(90deg,#092d75,#5a00a8,#092d75);
@@ -90,6 +94,7 @@ header{
  width:20px;height:20px;border-radius:50%;
  background:var(--gold);color:#111;font-size:11px;margin-right:4px;
 }
+
 .categories{
  display:flex;gap:10px;overflow-x:auto;padding:17px 0;
  scrollbar-width:none;
@@ -161,8 +166,7 @@ header{
 .product-image{
  height:165px;display:grid;place-items:center;
  position:relative;font-size:65px;
- background:
- radial-gradient(circle at 50% 50%,#183c83,#10132a 70%);
+ background:radial-gradient(circle at 50% 50%,#183c83,#10132a 70%);
  border-bottom:1px solid #263e7d;
 }
 .product-badge{
@@ -200,6 +204,7 @@ footer{
 }
 footer h2{font-size:23px;color:var(--gold)}
 footer p{font-size:12px;color:var(--muted);margin-top:8px}
+
 .overlay{
  display:none;position:fixed;inset:0;background:#000b;z-index:40;
 }
@@ -244,92 +249,144 @@ footer p{font-size:12px;color:var(--muted);margin-top:8px}
 .note{font-size:11px;color:#aab4d1;line-height:1.8;margin-top:12px}
 
 /* نافذة الحسابات */
-.auth-overlay{
- display:none;position:fixed;inset:0;z-index:80;
- background:#000c;backdrop-filter:blur(7px);
- align-items:center;justify-content:center;padding:16px;
+.auth-backdrop{
+ display:none;position:fixed;inset:0;z-index:100;
+ background:rgba(0,0,0,.78);
+ backdrop-filter:blur(8px);
+ padding:18px;overflow-y:auto;
+ align-items:center;justify-content:center;
 }
-.auth-overlay.show{display:flex}
-.auth-box{
- width:min(430px,100%);max-height:90vh;overflow-y:auto;
- padding:25px;border-radius:20px;
- background:linear-gradient(145deg,#171b3c,#0c1027);
- border:1px solid #087bff;
- box-shadow:0 0 35px #087bff44;
+.auth-backdrop.show{display:flex}
+.auth-card{
+ position:relative;width:min(440px,100%);
+ margin:auto;padding:30px 25px;
+ border:1px solid rgba(0,217,255,.35);
+ border-radius:25px;
+ background:
+ radial-gradient(ellipse at top,#1b2452 0,transparent 55%),
+ #10132a;
+ box-shadow:0 0 40px #006dff35,0 20px 70px #0009;
+ animation:authAppear .25s ease;
 }
-.auth-head{
- display:flex;justify-content:space-between;align-items:center;
- gap:10px;margin-bottom:20px;
+@keyframes authAppear{
+ from{opacity:0;transform:translateY(15px) scale(.98)}
+ to{opacity:1;transform:translateY(0) scale(1)}
 }
-.auth-head h2{font-size:21px;color:var(--gold)}
 .auth-close{
- background:#20294c;color:white;border:1px solid #35508b;
- border-radius:8px;padding:7px 12px;
+ position:absolute;top:14px;left:14px;
+ width:35px;height:35px;border-radius:50%;
+ border:1px solid #35508b;background:#192044;
+ color:white;font-size:19px;
 }
-.auth-intro{
- color:var(--muted);font-size:12px;line-height:1.8;
- margin-bottom:18px;
+.auth-logo{
+ width:70px;height:70px;margin:0 auto 12px;
+ display:grid;place-items:center;
+ border-radius:22px;font-size:39px;
+ background:linear-gradient(145deg,#092b78,#160b42);
+ border:1px solid var(--cyan);
+ box-shadow:0 0 22px #008cff66;
 }
-.auth-label{
- display:block;font-size:12px;font-weight:800;margin:12px 0 6px;
+.auth-title{text-align:center;font-size:23px;font-weight:900;color:white}
+.auth-subtitle{
+ text-align:center;color:#aebbdc;font-size:12px;
+ line-height:1.9;margin:6px 0 22px;
 }
-.auth-input{
- display:block;width:100%;padding:13px;
- border-radius:10px;background:#090e23;
- border:1px solid #304b83;color:white;outline:none;
- direction:ltr;text-align:left;
+.auth-tabs{
+ display:grid;grid-template-columns:1fr 1fr;gap:8px;
+ padding:5px;margin-bottom:20px;
+ border-radius:999px;background:#090e25;
+ border:1px solid #253b70;
 }
-.auth-input:focus{border-color:var(--cyan);box-shadow:0 0 10px #00cfff33}
-.auth-main-btn,.google-btn{
- width:100%;padding:12px;border-radius:10px;
- font-weight:900;font-size:13px;margin-top:16px;
+.auth-tab{
+ border:0;border-radius:999px;padding:10px 7px;
+ color:#b9c2df;background:transparent;
+ font-size:13px;font-weight:800;transition:.2s;
 }
-.auth-main-btn{
- color:white;border:0;
- background:linear-gradient(90deg,#087bff,#7514c5);
+.auth-tab.active{
+ color:white;
+ background:linear-gradient(90deg,#0753c7,#6411a4);
+ box-shadow:0 0 12px #087bff55;
 }
-.auth-main-btn:disabled,.google-btn:disabled{opacity:.6;cursor:wait}
-.google-btn{
- color:white;background:#fff;color:#222;
- border:1px solid #ddd;
+.auth-field{margin-bottom:14px}
+.auth-field label{
+ display:block;color:#dce7ff;font-size:12px;
+ font-weight:800;margin-bottom:7px;
+}
+.auth-field input{
+ width:100%;height:48px;padding:0 15px;
+ border-radius:12px;border:1px solid #30477e;
+ background:#090f26;color:white;outline:none;
+ font-size:14px;
+}
+.auth-field input:focus{
+ border-color:var(--cyan);box-shadow:0 0 12px #00cfff33;
+}
+.auth-field input::placeholder{color:#7d8bae}
+.auth-pill{
+ width:100%;min-height:49px;
+ display:flex;align-items:center;justify-content:center;
+ gap:10px;padding:11px 20px;
+ border-radius:999px;
+ font-size:14px;font-weight:900;
+ transition:.2s;
+}
+.auth-pill:disabled{opacity:.6;cursor:wait}
+.auth-submit{
+ color:white;border:1px solid #348dff;
+ background:linear-gradient(90deg,#0753c7,#6411a4);
+ box-shadow:0 5px 18px #005cff33;
+}
+.auth-submit:hover:not(:disabled){
+ transform:translateY(-2px);
+ box-shadow:0 0 20px #087bff88;
 }
 .auth-divider{
- display:flex;align-items:center;gap:10px;
- color:#9eabc9;font-size:11px;margin-top:16px;
+ display:flex;align-items:center;gap:12px;
+ margin:18px 0;color:#8795b9;font-size:11px;
 }
 .auth-divider:before,.auth-divider:after{
- content:"";height:1px;background:#34436a;flex:1;
+ content:"";height:1px;flex:1;background:#30416b;
 }
-.auth-switch{
- margin-top:17px;text-align:center;font-size:12px;color:var(--muted);
+.google-pill{
+ color:#202124;background:#fff;
+ border:1px solid #dadce0;
+ box-shadow:0 3px 12px #0003;
 }
-.auth-switch button{
- color:var(--cyan);background:none;border:0;
- font-weight:900;margin-right:5px;
+.google-pill:hover:not(:disabled){
+ background:#f1f5f9;transform:translateY(-2px);
 }
+.google-icon{width:20px;height:20px;flex-shrink:0}
 .auth-message{
- display:none;margin-top:14px;padding:11px;
- border-radius:9px;font-size:12px;line-height:1.8;
- background:#14284a;border:1px solid #315d9b;color:#dceaff;
- overflow-wrap:anywhere;
+ display:none;padding:12px 13px;margin:14px 0;
+ border-radius:11px;font-size:12px;
+ line-height:1.8;text-align:center;
 }
 .auth-message.show{display:block}
 .auth-message.error{
- background:#421c2b;border-color:#a33d58;color:#ffdce4;
+ color:#ffd0d0;background:#451b2b;
+ border:1px solid #a93d57;
+}
+.auth-message.success{
+ color:#c6ffdf;background:#123c31;
+ border:1px solid #23865f;
+}
+.auth-footer{
+ color:#8795b9;text-align:center;
+ font-size:10px;line-height:1.8;margin-top:18px;
 }
 .auth-account{
- text-align:center;padding:15px 0;
+ text-align:center;padding:15px 0 5px;
 }
-.auth-avatar{
- width:65px;height:65px;margin:0 auto 12px;
- display:grid;place-items:center;border-radius:50%;
- background:#172e64;border:1px solid var(--cyan);font-size:30px;
+.auth-account p{color:#c5d4f4;font-size:13px;line-height:2;margin:12px 0}
+.auth-secondary{
+ background:#192044;color:white;
+ border:1px solid #35508b;margin-top:10px;
 }
-.auth-account p{color:var(--muted);font-size:12px;margin-top:8px;overflow-wrap:anywhere}
-.auth-logout{
- width:100%;margin-top:20px;padding:11px;border-radius:9px;
- background:#421c2b;color:#fff;border:1px solid #a33d58;
- font-weight:800;
+.auth-secondary:hover{border-color:var(--cyan)}
+.auth-forgot{
+ display:block;text-align:left;margin-top:-5px;
+ margin-bottom:14px;color:#66cfff;
+ font-size:11px;background:none;border:0;
 }
 @media(max-width:850px){
  .products-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -349,7 +406,7 @@ footer p{font-size:12px;color:var(--muted);margin-top:8px}
  .section-heading h2{font-size:17px}
  .features{gap:8px}
  .feature{padding:14px 7px}
- .auth-box{padding:20px}
+ .auth-card{padding:28px 19px}
 }
 </style>
 </head>
@@ -373,7 +430,7 @@ footer p{font-size:12px;color:var(--muted);margin-top:8px}
 
   <div class="header-actions">
    <button class="action-btn" onclick="openCart()">🛒 السلة <span class="cart-count" id="cartCount">0</span></button>
-   <button class="action-btn" id="authButton" onclick="openAuth()">👤 حسابي</button>
+   <button class="action-btn" id="accountButton" onclick="openAuth()">👤 حسابي</button>
   </div>
  </div>
 </header>
@@ -434,70 +491,94 @@ footer p{font-size:12px;color:var(--muted);margin-top:8px}
  <p class="note">الأسعار والمنتجات المعروضة حالياً تجريبية للتصميم. لن يتم إرسال طلب أو تحصيل أموال قبل تفعيل نظام الطلبات.</p>
 </aside>
 
-<!-- نافذة تسجيل الحساب -->
-<div class="auth-overlay" id="authOverlay" onclick="handleAuthBackdrop(event)">
- <div class="auth-box">
-  <div class="auth-head">
-   <h2>👤 حسابك في نسر البرية</h2>
-   <button class="auth-close" onclick="closeAuth()">✕</button>
-  </div>
+<!-- نافذة تسجيل الدخول وإنشاء الحساب -->
+<div class="auth-backdrop" id="authBackdrop" onclick="handleAuthBackdrop(event)">
+ <section class="auth-card" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <button class="auth-close" onclick="closeAuth()" aria-label="إغلاق">×</button>
 
-  <div id="authFormArea">
-   <p class="auth-intro" id="authIntro">سجّل الدخول إلى حسابك أو أنشئ حساباً جديداً للمتابعة.</p>
+  <div class="auth-logo">🦅</div>
+  <h2 class="auth-title" id="authTitle">مرحبًا بك في نسر البرية</h2>
+  <p class="auth-subtitle" id="authSubtitle">
+   سجّل الدخول أو أنشئ حسابك للاستمتاع بتجربة التسوق.
+  </p>
 
-   <form id="authForm" onsubmit="handleAuthSubmit(event)">
-    <label class="auth-label" for="authEmail">البريد الإلكتروني</label>
-    <input class="auth-input" id="authEmail" type="email" autocomplete="email" placeholder="name@example.com" required>
+  <div id="authForms">
+   <div class="auth-tabs">
+    <button class="auth-tab active" id="loginTab" onclick="setAuthMode('login')">تسجيل الدخول</button>
+    <button class="auth-tab" id="signupTab" onclick="setAuthMode('signup')">إنشاء حساب</button>
+   </div>
 
-    <label class="auth-label" for="authPassword">كلمة المرور</label>
-    <input class="auth-input" id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="6 أحرف على الأقل" required>
+   <form id="emailAuthForm">
+    <div class="auth-field">
+     <label for="authEmail">البريد الإلكتروني</label>
+     <input id="authEmail" type="email" placeholder="example@gmail.com" autocomplete="email" required>
+    </div>
 
-    <button class="auth-main-btn" id="authSubmitBtn" type="submit">تسجيل الدخول</button>
+    <div class="auth-field">
+     <label for="authPassword">كلمة المرور</label>
+     <input id="authPassword" type="password" placeholder="أدخل كلمة المرور" autocomplete="current-password" minlength="6" required>
+    </div>
+
+    <button type="button" class="auth-forgot" id="forgotPasswordButton" onclick="resetPassword()">
+     نسيت كلمة المرور؟
+    </button>
+
+    <button type="submit" class="auth-pill auth-submit" id="emailSubmitButton">
+     تسجيل الدخول
+    </button>
    </form>
 
    <div class="auth-divider">أو</div>
-   <button class="google-btn" id="googleAuthBtn" onclick="signInWithGoogle()">متابعة باستخدام Google</button>
 
-   <div class="auth-switch">
-    <span id="authSwitchText">ليس لديك حساب؟</span>
-    <button id="authSwitchBtn" onclick="toggleAuthMode()">إنشاء حساب جديد</button>
+   <button type="button" class="auth-pill google-pill" id="googleButton" onclick="signInWithGoogle()">
+    <svg class="google-icon" viewBox="0 0 48 48" aria-hidden="true">
+     <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" transform="translate(0 5)"/>
+     <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.72 7.18l7.2 5.59c4.2-3.87 6.56-9.57 6.56-17.24z"/>
+     <path fill="#FBBC05" d="M10.53 28.59a14.4 14.4 0 0 1 0-9.18l-7.98-6.19a23.9 23.9 0 0 0 0 21.56l7.98-6.19z" transform="translate(0 5)"/>
+     <path fill="#34A853" d="M24 48c6.47 0 11.92-2.13 15.9-5.79l-7.2-5.59c-2 1.34-4.55 2.13-8.7 2.13-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" transform="translate(0 -5)"/>
+    </svg>
+    <span>متابعة باستخدام Google</span>
+   </button>
+
+   <div class="auth-message" id="authMessage" role="status"></div>
+  </div>
+
+  <div id="loggedInPanel" style="display:none">
+   <div class="auth-account">
+    <div style="font-size:35px">👤</div>
+    <p id="loggedInEmail"></p>
+    <button class="auth-pill auth-submit" onclick="closeAuth()">متابعة التسوق</button>
+    <button class="auth-pill auth-secondary" onclick="signOutUser()">تسجيل الخروج</button>
    </div>
   </div>
 
-  <div id="authAccountArea" class="auth-account" style="display:none">
-   <div class="auth-avatar">👤</div>
-   <h3>أنت مسجل الدخول بنجاح</h3>
-   <p id="accountEmail"></p>
-   <button class="auth-logout" onclick="signOutUser()">تسجيل الخروج</button>
-  </div>
-
-  <div class="auth-message" id="authMessage" role="status" aria-live="polite"></div>
- </div>
+  <p class="auth-footer">
+   بتسجيلك في المتجر، يمكنك استخدام حسابك للوصول إلى خدمات نسر البرية.
+  </p>
+ </section>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* إعداد الاتصال بمشروع Supabase */
+/* إعداد Supabase */
 const SUPABASE_URL="https://jknvoihcxgdpcctvnhab.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY="sb_publishable_ScBUjfRWrmlmPPiquO_FHg_RFOv8j6N";
+const SUPABASE_ANON_KEY="sb_publishable_ScBUjfRWrmlmPPiquO_FHg_RFOv8j6N";
 
 let supabaseClient=null;
-let currentUser=null;
-let authMode="login";
+let currentAuthMode="login";
+let currentSession=null;
 
 try{
  if(window.supabase && window.supabase.createClient){
   supabaseClient=window.supabase.createClient(
    SUPABASE_URL,
-   SUPABASE_PUBLISHABLE_KEY
+   SUPABASE_ANON_KEY
   );
- }else{
-  console.error("Supabase library did not load.");
  }
 }catch(error){
  console.error("Supabase initialization error:",error);
 }
 
+/* بيانات الأقسام والمنتجات */
 const categoriesList=[
  {name:"الكل",icon:"🛍️"},
  {name:"جرابات الموبايل",icon:"📱"},
@@ -629,97 +710,84 @@ function checkout(){
 }
 
 /* وظائف الحسابات */
-function showAuthMessage(message,type="info"){
+function showAuthMessage(message,type){
  const box=document.getElementById("authMessage");
  box.textContent=message;
- box.className="auth-message show"+(type==="error"?" error":"");
+ box.className="auth-message show "+type;
 }
 function clearAuthMessage(){
  const box=document.getElementById("authMessage");
  box.textContent="";
  box.className="auth-message";
 }
-function openAuth(){
+function setAuthMode(mode){
+ currentAuthMode=mode;
  clearAuthMessage();
- document.getElementById("authOverlay").classList.add("show");
+
+ document.getElementById("loginTab").classList.toggle("active",mode==="login");
+ document.getElementById("signupTab").classList.toggle("active",mode==="signup");
+
+ document.getElementById("authTitle").textContent=
+  mode==="login"?"مرحبًا بعودتك!":"انضم إلى متجر نسر البرية";
+
+ document.getElementById("authSubtitle").textContent=
+  mode==="login"
+  ?"سجّل الدخول إلى حسابك لمتابعة تجربة التسوق."
+  :"أنشئ حسابك الآن واستمتع بتجربة التسوق.";
+
+ document.getElementById("emailSubmitButton").textContent=
+  mode==="login"?"تسجيل الدخول":"إنشاء حساب";
+
+ document.getElementById("forgotPasswordButton").style.display=
+  mode==="login"?"block":"none";
+
+ document.getElementById("authPassword").autocomplete=
+  mode==="login"?"current-password":"new-password";
+}
+function openAuth(){
+ closeCart();
+ document.getElementById("authBackdrop").classList.add("show");
+ clearAuthMessage();
  updateAuthInterface();
 }
 function closeAuth(){
- document.getElementById("authOverlay").classList.remove("show");
+ document.getElementById("authBackdrop").classList.remove("show");
 }
 function handleAuthBackdrop(event){
- if(event.target.id==="authOverlay")closeAuth();
-}
-function toggleAuthMode(){
- authMode=authMode==="login"?"signup":"login";
- clearAuthMessage();
- updateAuthInterface();
+ if(event.target.id==="authBackdrop")closeAuth();
 }
 function updateAuthInterface(){
- const formArea=document.getElementById("authFormArea");
- const accountArea=document.getElementById("authAccountArea");
- const submit=document.getElementById("authSubmitBtn");
+ const forms=document.getElementById("authForms");
+ const logged=document.getElementById("loggedInPanel");
+ const accountButton=document.getElementById("accountButton");
 
- if(currentUser){
-  formArea.style.display="none";
-  accountArea.style.display="block";
-  document.getElementById("accountEmail").textContent=currentUser.email||"";
-  document.getElementById("authButton").textContent="👤 حسابي";
-  return;
+ if(currentSession && currentSession.user){
+  forms.style.display="none";
+  logged.style.display="block";
+  document.getElementById("loggedInEmail").textContent=
+   currentSession.user.email||"تم تسجيل الدخول بنجاح";
+  accountButton.textContent="👤 حسابي";
+ }else{
+  forms.style.display="block";
+  logged.style.display="none";
+  accountButton.textContent="👤 حسابي";
  }
-
- formArea.style.display="block";
- accountArea.style.display="none";
-
- const isSignup=authMode==="signup";
- document.getElementById("authIntro").textContent=isSignup
-  ?"أنشئ حساباً جديداً باستخدام بريدك الإلكتروني وكلمة مرور."
-  :"سجّل الدخول إلى حسابك للمتابعة.";
-
- submit.textContent=isSignup?"إنشاء الحساب":"تسجيل الدخول";
- document.getElementById("authSwitchText").textContent=
-  isSignup?"لديك حساب بالفعل؟":"ليس لديك حساب؟";
- document.getElementById("authSwitchBtn").textContent=
-  isSignup?"تسجيل الدخول":"إنشاء حساب جديد";
- document.getElementById("authPassword").autocomplete=
-  isSignup?"new-password":"current-password";
- document.getElementById("authButton").textContent="👤 حسابي";
 }
-
-function translateAuthError(error){
- const message=(error&&error.message)?error.message:"";
-
- if(message.includes("Invalid login credentials"))
-  return "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
- if(message.includes("Email not confirmed"))
-  return "يجب تأكيد بريدك الإلكتروني أولاً من رسالة التأكيد.";
- if(message.includes("User already registered"))
-  return "هذا البريد مسجل بالفعل. جرّب تسجيل الدخول.";
- if(message.includes("Password should be"))
-  return "كلمة المرور لا تحقق شروط Supabase.";
- if(message.includes("rate limit"))
-  return "تم إجراء محاولات كثيرة. انتظر قليلاً ثم حاول مرة أخرى.";
- if(message.includes("network")||message.includes("fetch"))
-  return "تعذر الاتصال بالخدمة. تحقق من الإنترنت وحاول مرة أخرى.";
-
- return message||"حدث خطأ غير متوقع. حاول مرة أخرى.";
-}
-
-async function handleAuthSubmit(event){
+async function handleEmailAuth(event){
  event.preventDefault();
  clearAuthMessage();
 
  if(!supabaseClient){
-  showAuthMessage("تعذر تحميل نظام الحسابات. أعد تحميل الصفحة وحاول مرة أخرى.","error");
+  showAuthMessage("تعذر الاتصال بخدمة الحسابات. أعد تحميل الصفحة وحاول مرة أخرى.","error");
   return;
  }
 
  const email=document.getElementById("authEmail").value.trim();
  const password=document.getElementById("authPassword").value;
- const submit=document.getElementById("authSubmitBtn");
+ const submit=document.getElementById("emailSubmitButton");
 
- if(password.length<6){
-  showAuthMessage("كلمة المرور يجب أن تكون 6 أحرف على الأقل.","error");
+ if(!email||!password){
+  showAuthMessage("يرجى إدخال البريد الإلكتروني وكلمة المرور.","error");
   return;
  }
 
@@ -727,7 +795,7 @@ async function handleAuthSubmit(event){
  submit.textContent="جارٍ التنفيذ...";
 
  try{
-  if(authMode==="signup"){
+  if(currentAuthMode==="signup"){
    const {data,error}=await supabaseClient.auth.signUp({
     email:email,
     password:password,
@@ -739,9 +807,14 @@ async function handleAuthSubmit(event){
    if(error)throw error;
 
    if(data.session){
-    showAuthMessage("تم إنشاء الحساب وتسجيل الدخول بنجاح.");
+    currentSession=data.session;
+    showAuthMessage("تم إنشاء حسابك وتسجيل الدخول بنجاح.","success");
+    updateAuthInterface();
    }else{
-    showAuthMessage("تم إرسال طلب إنشاء الحساب. افتح بريدك الإلكتروني واضغط رابط التأكيد، ثم ارجع إلى المتجر وسجّل الدخول.");
+    showAuthMessage(
+     "تم إنشاء الحساب. أرسلنا رابط تأكيد إلى بريدك الإلكتروني. افتح الرسالة واضغط على رابط التأكيد قبل تسجيل الدخول.",
+     "success"
+    );
    }
   }else{
    const {data,error}=await supabaseClient.auth.signInWithPassword({
@@ -751,92 +824,127 @@ async function handleAuthSubmit(event){
 
    if(error)throw error;
 
-   currentUser=data.user;
+   currentSession=data.session;
+   showAuthMessage("تم تسجيل الدخول بنجاح. أهلًا بك في متجر نسر البرية.","success");
    updateAuthInterface();
-   showAuthMessage("تم تسجيل الدخول بنجاح.");
   }
  }catch(error){
-  showAuthMessage(translateAuthError(error),"error");
+  console.error("Authentication error:",error);
+  let message=error.message||"حدث خطأ غير متوقع.";
+
+  if(message.toLowerCase().includes("invalid login credentials")){
+   message="البريد الإلكتروني أو كلمة المرور غير صحيحة، أو لم يتم تأكيد البريد بعد.";
+  }else if(message.toLowerCase().includes("email not confirmed")){
+   message="يرجى تأكيد بريدك الإلكتروني أولًا من الرسالة التي وصلتك.";
+  }else if(message.toLowerCase().includes("already registered")){
+   message="هذا البريد مسجل بالفعل. جرّب تسجيل الدخول بدل إنشاء حساب جديد.";
+  }else if(message.toLowerCase().includes("password")){
+   message="كلمة المرور غير مقبولة. تأكد أنها مكونة من 6 أحرف على الأقل.";
+  }
+
+  showAuthMessage(message,"error");
  }finally{
   submit.disabled=false;
-  updateAuthInterface();
+  submit.textContent=currentAuthMode==="login"?"تسجيل الدخول":"إنشاء حساب";
  }
 }
-
 async function signInWithGoogle(){
  clearAuthMessage();
 
  if(!supabaseClient){
-  showAuthMessage("تعذر تحميل نظام الحسابات. أعد تحميل الصفحة.","error");
+  showAuthMessage("تعذر الاتصال بخدمة الحسابات. حاول مرة أخرى.","error");
   return;
  }
 
- const button=document.getElementById("googleAuthBtn");
+ const button=document.getElementById("googleButton");
  button.disabled=true;
- button.textContent="جارٍ الانتقال إلى Google...";
 
  try{
-  const redirectUrl=window.location.origin+window.location.pathname;
   const {error}=await supabaseClient.auth.signInWithOAuth({
    provider:"google",
-   options:{redirectTo:redirectUrl}
+   options:{
+    redirectTo:window.location.origin+window.location.pathname
+   }
   });
 
   if(error)throw error;
  }catch(error){
-  showAuthMessage(translateAuthError(error),"error");
+  console.error("Google sign-in error:",error);
+  showAuthMessage("تعذر بدء تسجيل الدخول باستخدام Google. حاول مرة أخرى.","error");
   button.disabled=false;
-  button.textContent="متابعة باستخدام Google";
  }
 }
+async function resetPassword(){
+ clearAuthMessage();
 
+ if(!supabaseClient){
+  showAuthMessage("خدمة الحسابات غير متاحة حاليًا.","error");
+  return;
+ }
+
+ const email=document.getElementById("authEmail").value.trim();
+
+ if(!email){
+  showAuthMessage("اكتب بريدك الإلكتروني أولًا في خانة البريد، ثم اضغط نسيت كلمة المرور.","error");
+  return;
+ }
+
+ try{
+  const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{
+   redirectTo:window.location.origin+window.location.pathname
+  });
+
+  if(error)throw error;
+
+  showAuthMessage("إذا كان البريد مسجلًا، فستصلك رسالة لإعادة تعيين كلمة المرور. تحقق من صندوق الوارد والرسائل غير المرغوب فيها.","success");
+ }catch(error){
+  console.error("Password reset error:",error);
+  showAuthMessage("تعذر إرسال رسالة استعادة كلمة المرور. حاول مرة أخرى.","error");
+ }
+}
 async function signOutUser(){
  if(!supabaseClient)return;
-
- const button=document.querySelector(".auth-logout");
- button.disabled=true;
- button.textContent="جارٍ تسجيل الخروج...";
 
  try{
   const {error}=await supabaseClient.auth.signOut();
   if(error)throw error;
 
-  currentUser=null;
-  authMode="login";
-  clearAuthMessage();
+  currentSession=null;
   updateAuthInterface();
-  showAuthMessage("تم تسجيل الخروج بنجاح.");
+  showAuthMessage("تم تسجيل الخروج بنجاح.","success");
  }catch(error){
-  showAuthMessage(translateAuthError(error),"error");
-  button.disabled=false;
-  button.textContent="تسجيل الخروج";
+  console.error("Sign out error:",error);
+  showAuthMessage("تعذر تسجيل الخروج. حاول مرة أخرى.","error");
  }
 }
 
-/* استعادة جلسة المستخدم ومتابعة تغييرات تسجيل الدخول */
+/* متابعة حالة تسجيل الدخول */
 async function initializeAuth(){
  if(!supabaseClient)return;
 
  try{
   const {data,error}=await supabaseClient.auth.getSession();
   if(error)throw error;
-
-  currentUser=data.session?data.session.user:null;
+  currentSession=data.session;
   updateAuthInterface();
  }catch(error){
   console.error("Session error:",error);
  }
 
  supabaseClient.auth.onAuthStateChange((event,session)=>{
-  currentUser=session?session.user:null;
+  currentSession=session;
   updateAuthInterface();
 
   if(event==="SIGNED_IN"){
-   showAuthMessage("تم تسجيل الدخول بنجاح.");
+   const backdrop=document.getElementById("authBackdrop");
+   if(backdrop.classList.contains("show")){
+    showAuthMessage("تم تسجيل الدخول بنجاح.","success");
+   }
   }
  });
 }
 
+document.getElementById("emailAuthForm").addEventListener("submit",handleEmailAuth);
 document.getElementById("searchInput").addEventListener("input",renderProducts);
 document.getElementById("year").textContent=new Date().getFullYear();
 
