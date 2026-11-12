@@ -610,14 +610,44 @@ body.light .bottom-nav{background:rgba(255,255,255,.97)}
 }
 .product-old,.pd-price del{opacity:.55}
 
-/* صفحة إتمام الطلب */
-.co-title{font-size:15px;font-weight:900;margin:14px 0 10px}
-.co-summary{border:2px solid var(--c4);border-radius:12px;padding:10px 12px;margin:12px 0;background:var(--panel2)}
-.co-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;font-size:13px;border-bottom:1px dashed var(--border)}
-.co-row:last-child{border-bottom:0}
-.co-row strong{color:var(--num);-webkit-text-fill-color:var(--num)}
-.co-warn{background:#451b2b;color:#ffd0d0;border:1.5px solid var(--danger);padding:10px;border-radius:9px;font-size:11px;line-height:1.9;margin:10px 0}
-.co-info{border:1.5px solid var(--c6);padding:10px;border-radius:9px;font-size:11px;line-height:2;margin:10px 0}
+/* صفحة إتمام الطلب (شاشة كاملة) */
+.co-page{display:none;position:fixed;inset:0;z-index:100;background:#f4f5f7;overflow-y:auto;color:#17172a;direction:rtl}
+.co-page.show{display:block}
+.co-head{position:sticky;top:0;z-index:2;background:#02213a;color:#fff;text-align:center;font-size:24px;font-weight:900;padding:calc(20px + env(safe-area-inset-top)) 14px 20px}
+.co-back{position:absolute;right:10px;bottom:12px;background:none;border:0;color:#fff;font-size:24px;padding:6px 10px}
+.co-wrap{max-width:720px;margin:0 auto;padding:20px 14px 50px}
+.co-steps{display:flex;align-items:center;justify-content:center;margin:6px 0 24px}
+.co-steps .st{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;color:#4a5a78;font-weight:700}
+.co-steps .st b{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#e6ebf5;color:#4a5a78;font-size:18px}
+.co-steps .st.on b{background:#1d6bff;color:#fff}
+.co-steps .ln{flex:0 0 90px;height:3px;background:linear-gradient(270deg,#1d6bff 55%,#d8dfec 55%);margin-bottom:24px}
+.co-h{font-size:24px;font-weight:900;margin:20px 0 14px;color:#111}
+.cof{margin-bottom:14px}
+.cof label{display:block;font-size:14px;font-weight:800;margin-bottom:7px;color:#222}
+.cof label i{color:#e02b3a;font-style:normal;margin-inline-end:4px}
+.cof label small{color:#777;font-weight:600}
+.cof input,.cof select,.cof textarea{width:100%;padding:16px;border:1.5px solid #dfe4ee;border-radius:16px;background:#f7f8fb;color:#1f2a8a;font-size:16px;font-weight:700;outline:none;font-family:inherit}
+.cof textarea{min-height:130px;resize:vertical}
+.cof input:focus,.cof select:focus,.cof textarea:focus{border-color:#1d6bff;box-shadow:0 0 0 3px #1d6bff22}
+.co-hint{font-size:12px;line-height:1.9;padding:8px 12px;border-radius:6px;border-right:4px solid #1d6bff;background:#e8f0ff;color:#1d4fd8;margin-top:6px;font-weight:700}
+.co-hint.p{border-color:#8a5cf0;background:#f1ebff;color:#6a3df0}
+.co-card{background:#fff;border-radius:14px;padding:6px 16px;margin-top:8px;box-shadow:0 2px 10px #0001}
+.co-th{display:flex;justify-content:space-between;font-weight:900;font-size:16px;padding:14px 0;border-bottom:1px solid #e5e8ef}
+.co-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid #e5e8ef}
+.co-item img,.co-item .ph{width:64px;height:64px;object-fit:contain;border-radius:8px;background:#fff;flex-shrink:0;display:grid;place-items:center;font-size:26px}
+.co-item .n{flex:1;font-size:13px;font-weight:800;color:#5b2fd6;line-height:1.7}
+.co-item .n small{display:block;color:#555;font-weight:700}
+.co-item strong{color:#e5960f;font-size:14px;white-space:nowrap}
+.co-tr{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #e5e8ef;font-weight:900;font-size:15px}
+.co-tr:last-child{border-bottom:0}
+.co-tr strong{color:#e5960f;font-size:17px}
+.co-pay{font-size:15px;margin:20px 0 10px;color:#222}
+.co-red{border-right:4px solid #e02b3a;background:#fde8e8;color:#c62828;padding:14px;font-size:14px;line-height:2;font-weight:700}
+.co-blue{background:#fff;color:#1d2f9a;padding:14px;font-size:14px;line-height:2;font-weight:700;border-radius:10px;box-shadow:0 2px 10px #0001;margin-top:12px}
+.co-priv{font-size:13px;color:#1d2f9a;line-height:2;margin:16px 0;font-weight:600}
+.co-tr strong,.co-item strong{direction:ltr;unicode-bidi:isolate}
+.co-btn{width:100%;padding:18px;border:0;border-radius:40px;background:#e5960f;color:#fff;font-size:17px;font-weight:900;margin-top:6px}
+.co-btn:disabled{opacity:.6;cursor:not-allowed}
 
 @media(min-width:650px){
  .products-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
@@ -845,40 +875,47 @@ body.light .bottom-nav{background:rgba(255,255,255,.97)}
 </div>
 
 <!-- إتمام الطلب -->
-<div class="modal-backdrop" id="checkoutModal" onclick="backdropClose(event,'checkoutModal')">
- <section class="modal-card">
-  <div class="modal-head"><h2>إتمام الطلب</h2><button class="close-btn" type="button" onclick="closeModal('checkoutModal')">✕</button></div>
+<div class="co-page" id="checkoutModal">
+ <div class="co-head"><button class="co-back" type="button" onclick="closeModal('checkoutModal')" aria-label="رجوع">➜</button>الدفع</div>
+ <div class="co-wrap">
+  <div class="co-steps">
+   <div class="st on"><b>1</b><span>بيانات التوصيل</span></div>
+   <i class="ln"></i>
+   <div class="st"><b>2</b><span>إتمام الدفع</span></div>
+  </div>
   <form id="checkoutForm">
-   <h3 class="co-title">الفوترة والشحن</h3>
-   <div class="field"><label>الاسم الكامل *</label><input id="customerName" required maxlength="100" autocomplete="name"></div>
-   <div class="field"><label>البريد الإلكتروني *</label><input id="customerEmail" type="email" required autocomplete="email"></div>
-   <div class="field"><label>رقم الهاتف الرئيسي *</label><input id="customerPhone" required maxlength="25" inputmode="tel" autocomplete="tel" placeholder="01xxxxxxxxx"></div>
-   <div class="field"><label>رقم هاتف إضافي *</label><input id="customerPhone2" required maxlength="25" inputmode="tel" placeholder="01xxxxxxxxx"></div>
-   <div class="field"><label>العنوان السكني بالتفصيل *</label><textarea id="customerAddress" required maxlength="500" autocomplete="street-address"></textarea></div>
-   <div class="field"><label>المدينة / المنطقة *</label><input id="customerArea" required maxlength="80"></div>
-   <div class="field"><label>المحافظة *</label><select id="customerCity" required onchange="renderCheckoutSummary()"></select></div>
-   <div class="field"><label>الرمز البريدي / ZIP (اختياري)</label><input id="customerZip" maxlength="15" inputmode="numeric"></div>
+   <h3 class="co-h">الفوترة والشحن</h3>
+   <div class="cof"><label><i>*</i>الاسم الكامل</label><input id="customerName" required maxlength="100" autocomplete="name"></div>
+   <div class="cof"><label><i>*</i>البريد الإلكتروني</label><input id="customerEmail" type="email" required autocomplete="email"></div>
+   <div class="cof"><label><i>*</i>رقم الهاتف الرئيسي</label><input id="customerPhone" required maxlength="25" inputmode="tel" autocomplete="tel" placeholder="01xxxxxxxxx">
+    <div class="co-hint">ادخل الرقم المسجل بخدمه الوتس ليسهل التواصل معك</div></div>
+   <div class="cof"><label><i>*</i>رقم هاتف إضافي</label><input id="customerPhone2" required maxlength="25" inputmode="tel" placeholder="01xxxxxxxxx"></div>
+   <div class="cof"><label><i>*</i>العنوان السكني بالتفصيل</label><input id="customerAddress" required maxlength="500" autocomplete="street-address"></div>
+   <div class="cof"><label><i>*</i>المدينة / المنطقة</label><input id="customerArea" required maxlength="80"></div>
+   <div class="cof"><label><i>*</i>المحافظة / المنطقة</label><select id="customerCity" required onchange="renderCheckoutSummary()"></select></div>
+   <div class="cof"><label>الرمز البريدي / ZIP <small>(اختياري)</small></label><input id="customerZip" maxlength="15" inputmode="numeric">
+    <div class="co-hint p">الرمز البريدي هو ( رقم مكتب البريد الخاص بمنطقتكم يمكن الاستعلام عنه بالبحث في جوجل)</div></div>
 
-   <h3 class="co-title">معلومات إضافية</h3>
-   <div class="field"><label>ملاحظات الطلب (اختياري)</label><textarea id="customerNotes" maxlength="500" placeholder="ملاحظات حول الطلب، مثال: ملحوظة خاصة بتسليم الطلب."></textarea></div>
+   <h3 class="co-h">معلومات إضافية</h3>
+   <div class="cof"><label>ملاحظات الطلب <small>(اختياري)</small></label><textarea id="customerNotes" maxlength="500" placeholder="ملاحظات حول الطلب، مثال: ملحوظة خاصة بتسليم الطلب."></textarea></div>
 
-   <h3 class="co-title">طلبك</h3>
-   <div class="co-summary">
+   <h3 class="co-h" style="text-align:center">طلبك</h3>
+   <div class="co-card">
+    <div class="co-th"><span>المنتج</span><span>المجموع</span></div>
     <div id="coItems"></div>
-    <div class="co-row"><span>المجموع</span><strong id="coSub">0 EGP</strong></div>
-    <div class="co-row"><span>الشحن</span><strong id="coShip">اختر المحافظة</strong></div>
-    <div class="co-row"><span><b>الإجمالي</b></span><strong id="coTotal" style="font-size:16px">—</strong></div>
+    <div class="co-tr"><span>المجموع</span><strong id="coSub">0 EGP</strong></div>
+    <div class="co-tr"><span>الشحن</span><strong id="coShip">اختر المحافظة</strong></div>
+    <div class="co-tr"><span>الإجمالي</span><strong id="coTotal">—</strong></div>
    </div>
 
-   <p style="font-size:13px;font-weight:800;margin:10px 0">الدفع نقدًا عند الاستلام</p>
-   <div class="co-warn">ملحوظة: أي مبلغ يتم تحصيله من العميل يتم خصمه من إجمالي الفاتورة شاملة مصاريف الشحن وتحصيل المتبقي عند تسليم الطلب.</div>
-   <div class="co-info">ملحوظة: سيتم وضع طلبك قيد الانتظار لحين سدادك رسوم الشحن كحد أدنى على الرقم: ( 01009012719 )<br>يرجى إرسال سكرين شوت من عملية التحويل مرفق به رقم الطلب إلى الرقم المذكور لتجهيز الطلب وشحنه ... طرق الدفع (فون كاش - انستا)</div>
-   <p class="note">سيتم استخدام بياناتك الشخصية لمعالجة طلبك، ودعم تجربتك في هذا الموقع، ولأغراض أخرى تم توضيحها في سياسة الخصوصية لدينا.</p>
-
-   <button class="primary-btn" id="placeOrderButton">تأكيد الطلب</button>
+   <p class="co-pay">الدفع نقدًا عند الاستلام</p>
+   <div class="co-red">ملحوظة: أي مبلغ يتم تحصيله من العميل يتم خصمه من إجمالي الفاتورة شاملة مصاريف الشحن وتحصيل المتبقي عند تسليم الطلب.</div>
+   <div class="co-blue">ملحوظة : سيتم وضع طلبك قيد الانتظار لحين سدادك رسوم الشحن كحد ادنى على الارقام : ( 01009012719 )<br>يرجى ارسال سكرين شوت من عملية التحويل مرفق به رقم الطلب الي الرقم المذكور لتجهيز الطلب وشحنه ... طرق الدفع (فون كاش - انستا)</div>
+   <p class="co-priv">سيتم استخدام بياناتك الشخصية لمعالجة طلبك، ودعم تجربتك في هذا الموقع، ولأغراض أخرى تم توضيحها في سياسة الخصوصية لدينا.</p>
+   <div class="message" id="checkoutMessage"></div>
+   <button class="co-btn" id="placeOrderButton">تأكيد الطلب</button>
   </form>
-  <div class="message" id="checkoutMessage"></div>
- </section>
+ </div>
 </div>
 
 <!-- الطلبات -->
@@ -1082,7 +1119,7 @@ const toLatin=s=>String(s||"").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".inde
 /* إغلاق النافذة العلوية بزر Esc */
 document.addEventListener("keydown",e=>{
  if(e.key!=="Escape")return;
- const open=[...document.querySelectorAll(".modal-backdrop.show")];
+ const open=[...document.querySelectorAll(".modal-backdrop.show,.co-page.show")];
  if(open.length){open[open.length-1].classList.remove("show");return}
  closeCart();
 });
@@ -1661,7 +1698,8 @@ function renderCheckoutSummary(){
  $("coItems").innerHTML=cart.map(x=>{
   const p=products.find(y=>Number(y.id)===Number(x.id));
   if(!p)return "";
-  return `<div class="co-row"><span>${escapeHTML(p.name)} × ${number(x.qty)}</span><strong>${money(Number(p.price)*Number(x.qty))}</strong></div>`;
+  const img=p.image_url?`<img src="${escapeHTML(p.image_url)}" alt="">`:'<div class="ph">📦</div>';
+  return `<div class="co-item">${img}<div class="n">${escapeHTML(p.name)}<small>الكمية: ${number(x.qty)}</small></div><strong>${money(Number(p.price)*Number(x.qty))}</strong></div>`;
  }).join("");
  $("coSub").textContent=money(sub);
  if(city&&SHIPPING_RATES[city]!==undefined){
@@ -1685,7 +1723,7 @@ async function checkout(){
  fillCheckoutCities();
  $("customerEmail").value=currentSession.user.email||"";
  renderCheckoutSummary();
- openModal("checkoutModal");
+ openModal("checkoutModal");$("checkoutModal").scrollTop=0;
 }
 $("checkoutForm").addEventListener("submit",async event=>{
  event.preventDefault();clearMessage("checkoutMessage");
@@ -2012,212 +2050,4 @@ $("productForm").addEventListener("submit",async event=>{
    name:$("productName").value.trim(),
    description:$("productDescription").value.trim(),
    price:Number($("productPrice").value),
-   old_price:$("productOldPrice").value?Number($("productOldPrice").value):null,
-   category:$("productCategory").value,
-   stock:Number($("productStock").value),
-   image_url:imageUrl,
-   is_active:$("productActive").checked
-  };
-  if(payload.price<0||payload.stock<0)throw new Error("تحقق من السعر والكمية.");
-  const id=$("productId").value;
-  const result=id
-   ?await supabaseClient.from("products").update(payload).eq("id",id)
-   :await supabaseClient.from("products").insert(payload);
-  if(result.error)throw result.error;
-  closeModal("productModal");await loadProducts();renderAdminProducts();
-  toast(id?"تم حفظ التعديلات بنجاح.":"تمت إضافة المنتج وإبلاغ العملاء تلقائيًا.");
- }catch(error){
-  console.error(error);showMessage("productMessage",error.message||"تعذر حفظ المنتج.","error");
- }finally{button.disabled=false;button.textContent="حفظ المنتج"}
-});
-async function deleteProduct(id){
- if(!isAdmin())return;
- if(!confirm("هل أنت متأكد من حذف هذا المنتج؟"))return;
- const {error}=await supabaseClient.from("products").delete().eq("id",id);
- if(error){alert("تعذر حذف المنتج: "+error.message);return}
- await loadProducts();renderAdminProducts();
-}
-
-/* إدارة الأقسام */
-function renderAdminCategories(){
- const box=$("adminCategoriesList");if(!box)return;
- $("addCategoryBtn").classList.remove("hidden");
- const list=categoriesList.slice(1);
- box.innerHTML=list.length?list.map((c,i)=>`
-  <div class="admin-item">
-   <div class="meta">${c.image_url?`<img class="thumb" src="${escapeHTML(c.image_url)}" alt="">`:'<div class="thumb">🗂️</div>'}
-    <div><h4>${escapeHTML(c.name)}</h4></div></div>
-   <div class="admin-actions">
-    <button class="secondary-btn" type="button" onclick="editCategory(${i+1})">تعديل</button>
-    <button class="danger-btn" type="button" onclick="deleteCategory(${i+1})">حذف</button>
-   </div>
-  </div>
- `).join(""):'<div class="empty">لا توجد أقسام. أضف أول قسم.</div>';
-}
-/* أول مرة: تُحفظ الأقسام الحالية في قاعدة البيانات تلقائيًا ليتم التعديل عليها */
-let seeding=null;
-async function ensureSeeded(){
- if(categoriesFromDB)return true;
- if(seeding)return seeding;
- seeding=(async()=>{
-  const rows=defaultCategories.filter(c=>c.name!=="الكل").map((c,i)=>({name:c.name,sort_order:i}));
-  const {error}=await supabaseClient.from("categories").insert(rows);
-  if(error){toast("تعذر تجهيز الأقسام: "+error.message,null,7000);return false}
-  try{localStorage.setItem("nasrCatsSeeded","1")}catch(e){}
-  await loadCategories();return categoriesFromDB;
- })();
- try{return await seeding}finally{seeding=null}
-}
-function openCategoryForm(){
- if(!isAdmin())return;
- $("categoryForm").reset();$("categoryId").value="";$("categoryOldName").value="";$("categoryImageUrl").value="";
- $("categoryFormTitle").textContent="إضافة قسم جديد";
- clearMessage("categoryMessage");openModal("categoryModal");
-}
-async function editCategory(i){
- if(!isAdmin())return;
- let c=categoriesList[i];if(!c)return;
- if(!c.id){
-  const name=c.name;
-  if(!await ensureSeeded())return;
-  c=categoriesList.find(x=>x.name===name);if(!c)return;
- }
- $("categoryForm").reset();
- $("categoryId").value=c.id;$("categoryOldName").value=c.name;
- $("categoryName").value=c.name;$("categoryImageUrl").value=c.image_url||"";
- $("categoryFormTitle").textContent="تعديل القسم";
- clearMessage("categoryMessage");openModal("categoryModal");
-}
-$("categoryForm").addEventListener("submit",async event=>{
- event.preventDefault();if(!isAdmin())return;
- clearMessage("categoryMessage");
- const button=$("saveCategoryButton");button.disabled=true;
- try{
-  const name=$("categoryName").value.trim();
-  if(!name)throw new Error("اكتب اسم القسم.");
-  let image=$("categoryImageUrl").value;
-  const file=$("categoryImage").files[0];
-  if(file)image=await uploadProductImage(file,"categories");
-  const id=$("categoryId").value,old=$("categoryOldName").value;
-  if(!id&&categoriesList.some(c=>c.name===name))throw new Error("يوجد قسم بنفس الاسم بالفعل.");
-  if(!id&&!await ensureSeeded())throw new Error("تعذر تجهيز الأقسام.");
-  if(id){
-   let r=await supabaseClient.from("categories").update({name,image_url:image||null}).eq("id",id);
-   if(r.error)throw r.error;
-   if(old&&old!==name){
-    r=await supabaseClient.from("products").update({category:name}).eq("category",old);
-    if(r.error)throw r.error;
-   }
-  }else{
-   const r=await supabaseClient.from("categories").insert({name,image_url:image||null,sort_order:categoriesList.length});
-   if(r.error)throw r.error;
-  }
-  closeModal("categoryModal");await loadCategories();await loadProducts();
- }catch(error){
-  showMessage("categoryMessage",error.message||"تعذر حفظ القسم.","error");
- }finally{button.disabled=false}
-});
-async function deleteCategory(i){
- if(!isAdmin())return;
- let c=categoriesList[i];if(!c)return;
- if(!confirm("هل أنت متأكد من حذف قسم «"+c.name+"»؟ المنتجات التابعة له لن تُحذف."))return;
- if(!c.id){
-  const name=c.name;
-  if(!await ensureSeeded())return;
-  c=categoriesList.find(x=>x.name===name);if(!c)return;
- }
- const {error}=await supabaseClient.from("categories").delete().eq("id",c.id);
- if(error){alert("تعذر حذف القسم: "+error.message);return}
- await loadCategories();
-}
-
-/* الأكثر مبيعًا */
-function renderBestAdmin(){
- const box=$("adminBestList");if(!box)return;
- box.innerHTML=adminProducts.length?adminProducts.map(p=>`
-  <div class="admin-item">
-   <div class="meta">${thumb(p)}<div style="min-width:0"><h4>${escapeHTML(p.name)}</h4><small>${money(p.price)}</small></div></div>
-   <button type="button" class="${p.is_best_seller?"danger-btn":"secondary-btn"}" onclick="toggleBest(${Number(p.id)},${!p.is_best_seller})">
-    ${p.is_best_seller?"إزالة من الشريط":"⭐ إضافة للشريط"}
-   </button>
-  </div>
- `).join(""):'<div class="empty">لا توجد منتجات.</div>';
-}
-async function toggleBest(id,value){
- if(!isAdmin())return;
- const {error}=await supabaseClient.from("products").update({is_best_seller:value}).eq("id",id);
- if(error){alert("تعذر التحديث: "+error.message);return}
- await loadProducts();
-}
-
-/* إدارة الطلبات */
-async function loadAdminOrders(){
- if(!isAdmin())return;
- $("adminOrdersList").innerHTML='<div class="loading">جارٍ تحميل الطلبات...</div>';
- const {data,error}=await supabaseClient.from("orders").select("*").order("created_at",{ascending:false});
- if(error){$("adminOrdersList").textContent=error.message;return}
- if(!data.length){$("adminOrdersList").innerHTML='<div class="empty">لا توجد طلبات حتى الآن.</div>';return}
- $("adminOrdersList").innerHTML=data.map(o=>`
-  <div class="admin-item" style="align-items:flex-start">
-   <div style="flex:1">
-    <h4>طلب #${o.id} — ${escapeHTML(o.customer_name)}</h4>
-    <small>${escapeHTML(o.phone)} · ${escapeHTML(o.city)} · ${new Date(o.created_at).toLocaleString("ar-EG")}</small>
-    <p style="font-size:11px;margin-top:5px">${escapeHTML(o.address)}</p>
-    ${o.notes?`<p style="font-size:11px;margin-top:5px;white-space:pre-line;color:var(--muted)">${escapeHTML(o.notes)}</p>`:""}
-    <strong style="font-size:13px;color:var(--num)">${money(o.total)}</strong>
-   </div>
-   <div class="admin-actions" style="flex-direction:column;align-items:stretch">
-    <select class="order-status" id="status-${o.id}">
-     ${Object.entries(statusNames).map(([v,n])=>`<option value="${v}" ${o.status===v?"selected":""}>${n}</option>`).join("")}
-    </select>
-    <button class="secondary-btn" type="button" onclick="updateOrderStatus(${Number(o.id)})">حفظ الحالة</button>
-    <button class="secondary-btn" type="button" onclick="showOrderDetails(${Number(o.id)})">التفاصيل</button>
-   </div>
-  </div>
- `).join("");
-}
-async function updateOrderStatus(id){
- if(!isAdmin())return;
- const status=$("status-"+id).value;
- const {error}=await supabaseClient.from("orders").update({status}).eq("id",id);
- if(error){alert("تعذر تحديث الطلب: "+error.message);return}
- toast("تم تحديث حالة الطلب.");await loadAdminOrders();
-}
-
-/* نقل الملكية */
-async function transferOwnership(){
- if(currentRole!=="owner"){
-  showMessage("ownershipMessage","نقل الملكية متاح للمالك الحالي فقط.","error");return;
- }
- const email=$("newOwnerEmail").value.trim();
- if(!email){showMessage("ownershipMessage","اكتب البريد الجديد.","error");return}
- if(!confirm("سيتم نقل ملكية المتجر إلى "+email+". هل تريد المتابعة؟"))return;
- try{
-  const {data,error}=await supabaseClient.rpc("transfer_store_ownership",{new_email:email});
-  if(error)throw error;
-  alert("تم تنفيذ طلب نقل الملكية. سيتم تسجيل خروج حسابك الحالي.");
-  await supabaseClient.auth.signOut();
-  currentSession=null;currentRole=null;closeModal("adminModal");updateAuthInterface();stopNotifications();
- }catch(error){
-  showMessage("ownershipMessage",error.message||"تعذر نقل الملكية.","error");
- }
-}
-
-/* تشغيل الموقع */
-$("emailAuthForm").addEventListener("submit",handleEmailAuth);
-$("year").textContent=number(new Date().getFullYear());
-fillCategorySelect();renderCategories();renderCart();route();
-
-(async()=>{
- if(!supabaseClient)await loadSupabaseFallback();
- if(!supabaseClient){toast("تعذر الاتصال بالخادم. تأكد من الإنترنت وحدّث الصفحة.",null,9000);return}
- await initializeAuth();
- await Promise.all([loadCategories(),loadSettings()]);
- await loadProducts();
- renderCart();
- checkNewProductsOnLoad();
- startProductFeed();
-})();
-</script>
-</body>
-</html>
+   old_price:$("productOl
