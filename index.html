@@ -704,6 +704,119 @@ body.light .bottom-nav{background:rgba(255,255,255,.97)}
 @media(prefers-reduced-motion:reduce){
  html{scroll-behavior:auto}
 }
+
+/* ===== صفحة طلباتي الاحترافية ===== */
+.ord-wrap{max-width:760px;margin:0 auto}
+.ord-title{font-size:26px;font-weight:900;margin:0 0 4px}
+.ord-sub{font-size:13px;color:var(--muted);margin-bottom:18px}
+.ord-list{display:grid;gap:14px}
+.ord-card{
+ display:block;width:100%;text-align:right;color:var(--text);cursor:pointer;
+ padding:16px;border-radius:18px;background:var(--panel2);border:1.5px solid var(--border);
+ transition:.2s;
+}
+.ord-card:hover{border-color:var(--c1);box-shadow:0 8px 24px #0004;transform:translateY(-2px)}
+.ord-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.ord-no{font-size:16px;font-weight:900;direction:ltr;unicode-bidi:isolate}
+.ord-date{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);margin-top:4px}
+.ord-badge{
+ display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:20px;
+ font-size:11px;font-weight:800;white-space:nowrap;
+ color:var(--sc);background:color-mix(in srgb,var(--sc) 14%,transparent);
+ border:1px solid color-mix(in srgb,var(--sc) 45%,transparent);
+}
+.st-pending{--sc:#ffb020}.st-confirmed{--sc:#3da5ff}.st-processing{--sc:#a58bff}
+.st-shipped{--sc:#00d9ff}.st-delivered{--sc:#24d69a}.st-cancelled{--sc:#ff5d73}
+.ord-prods{display:flex;align-items:center;gap:10px;margin:14px 0;flex-wrap:wrap}
+.ord-th{
+ width:56px;height:56px;border-radius:12px;background:#fff;flex-shrink:0;overflow:hidden;
+ display:grid;place-items:center;font-size:22px;border:1px solid var(--border);
+}
+.ord-th img{width:100%;height:100%;object-fit:contain}
+.ord-more{
+ width:56px;height:56px;border-radius:12px;display:grid;place-items:center;
+ background:var(--bg);border:1px dashed var(--border);font-size:13px;font-weight:900;color:var(--muted);
+}
+.ord-pn{flex:1;min-width:140px;font-size:13px;font-weight:700;line-height:1.7;
+ overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.ord-foot{
+ display:flex;justify-content:space-between;align-items:center;gap:10px;
+ padding-top:13px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);
+}
+.ord-foot b{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.ord-price{font-size:16px;font-weight:900;color:var(--cyan);direction:ltr;unicode-bidi:isolate;
+ display:inline-flex;align-items:center;gap:6px}
+.ord-empty{text-align:center;padding:50px 10px;color:var(--muted)}
+.ord-empty .ic{font-size:54px;margin-bottom:10px}
+.ord-empty h3{font-size:17px;color:var(--text);margin-bottom:6px}
+.ord-skel{height:150px;border-radius:18px;background:linear-gradient(90deg,var(--panel2),var(--bg),var(--panel2));
+ background-size:200% 100%;animation:ordSk 1.2s linear infinite}
+@keyframes ordSk{to{background-position:-200% 0}}
+
+.ord-back{
+ display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;padding:8px 4px;
+ background:none;border:0;color:var(--text);font-size:14px;font-weight:800;
+}
+.ord-back:hover{color:var(--cyan)}
+.ord-box{
+ padding:18px;border-radius:18px;background:var(--panel2);
+ border:1.5px solid var(--border);margin-bottom:14px;
+}
+.ord-box h3{font-size:16px;font-weight:900;margin-bottom:14px}
+.od-label{font-size:11px;color:var(--muted)}
+.od-no{font-size:24px;font-weight:900;direction:ltr;unicode-bidi:isolate;text-align:right}
+.od-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.od-banner{
+ display:flex;align-items:center;gap:10px;margin-top:16px;padding:14px;border-radius:12px;
+ font-size:13px;font-weight:800;color:var(--sc);
+ background:color-mix(in srgb,var(--sc) 12%,transparent);
+ border:1px solid color-mix(in srgb,var(--sc) 40%,transparent);
+}
+.od-track{display:flex;justify-content:space-between;margin-top:18px;position:relative}
+.od-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;
+ font-size:10px;font-weight:700;color:var(--muted);text-align:center;position:relative;z-index:1}
+.od-step i{
+ width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ background:var(--bg);border:2px solid var(--border);font-size:13px;
+}
+.od-step.done{color:var(--text)}
+.od-step.done i{background:var(--success);border-color:var(--success);color:#04251a}
+.od-step.now i{box-shadow:0 0 0 4px #24d69a33}
+.od-step:not(:last-child):after{
+ content:"";position:absolute;top:13px;right:50%;width:100%;height:2px;background:var(--border);z-index:-1;
+}
+.od-step.done:not(:last-child):after{background:var(--success)}
+.od-it{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.od-it:last-of-type{border-bottom:0}
+.od-it .ord-th{width:64px;height:64px}
+.od-in{flex:1;min-width:0}
+.od-in b{display:block;font-size:13px;line-height:1.7}
+.od-in small{color:var(--muted);font-size:11px;direction:ltr;unicode-bidi:isolate;display:inline-block}
+.od-line{font-weight:900;font-size:14px;direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+.od-sum{margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}
+.od-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;font-size:13px}
+.od-row span:first-child{color:var(--muted)}
+.od-row strong{direction:ltr;unicode-bidi:isolate;font-weight:800}
+.od-row.total{font-size:15px;border-top:1px dashed var(--border);margin-top:4px;padding-top:14px}
+.od-row.total strong{font-size:20px;color:var(--cyan)}
+.od-info{display:flex;align-items:flex-start;gap:12px;padding:10px 0;font-size:13px;line-height:1.8}
+.od-info .ic{
+ width:34px;height:34px;border-radius:10px;flex-shrink:0;display:grid;place-items:center;
+ background:var(--bg);border:1px solid var(--border);font-size:16px;
+}
+.od-info small{display:block;color:var(--muted);font-size:10px}
+.od-info b{font-weight:700;word-break:break-word}
+.od-pay{
+ display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;
+ background:var(--bg);border:1px solid var(--border);font-size:13px;font-weight:800;
+}
+.od-pay small{display:block;color:var(--muted);font-weight:600;font-size:11px;margin-top:3px;line-height:1.8}
+.od-note{margin-top:10px;padding:12px;border-radius:10px;font-size:12px;line-height:1.9;font-weight:700;
+ color:#ffd978;background:#4a3a0e55;border:1px solid #ffb02055}
+body.light .od-note{color:#8a5a00;background:#fff4d6}
+@media(max-width:450px){
+ .ord-title{font-size:22px}.od-no{font-size:20px}.od-step{font-size:9px}
+}
 </style>
 </head>
 
@@ -940,8 +1053,15 @@ body.light .bottom-nav{background:rgba(255,255,255,.97)}
 <!-- الطلبات -->
 <div class="modal-backdrop" id="ordersModal" onclick="backdropClose(event,'ordersModal')">
  <section class="modal-card wide">
-  <div class="modal-head"><h2>📦 طلباتي</h2><button class="close-btn" type="button" onclick="closeModal('ordersModal')">✕</button></div>
-  <div id="ordersList" class="loading">جارٍ تحميل الطلبات...</div>
+  <div class="modal-head"><span></span><button class="close-btn" type="button" onclick="closeModal('ordersModal')">✕</button></div>
+  <div class="ord-wrap">
+   <div id="ordersListView">
+    <h2 class="ord-title">طلباتي</h2>
+    <p class="ord-sub">تابع كل طلب من لحظة الاستلام حتى التوصيل</p>
+    <div id="ordersList" class="ord-list"><div class="ord-skel"></div><div class="ord-skel"></div></div>
+   </div>
+   <div id="orderDetailView" class="hidden"></div>
+  </div>
  </section>
 </div>
 
@@ -1797,487 +1917,96 @@ const statusNames={
  processing:"قيد التجهيز",shipped:"تم الشحن",
  delivered:"تم التسليم",cancelled:"ملغي"
 };
+let ordersCache=[];
+const STATUS_ICON={pending:"⏳",confirmed:"✅",processing:"📦",shipped:"🚚",delivered:"🎉",cancelled:"⊗"};
+const STATUS_FLOW=["pending","confirmed","processing","shipped","delivered"];
+const STATUS_MSG={
+ pending:"طلبك قيد المراجعة وسيتم التواصل معك قريبًا",
+ confirmed:"تم تأكيد طلبك وجارٍ تجهيزه",
+ processing:"طلبك قيد التجهيز حاليًا",
+ shipped:"طلبك في الطريق إليك",
+ delivered:"تم تسليم طلبك بنجاح",
+ cancelled:"تم إلغاء هذا الطلب"
+};
+const fmtDate=d=>new Date(d).toLocaleDateString("ar-EG",{day:"numeric",month:"long",year:"numeric"});
+const prodImg=x=>{
+ if(x.image_url)return x.image_url;
+ const p=products.find(y=>Number(y.id)===Number(x.product_id));
+ return p?p.image_url:"";
+};
+const thumbBox=x=>{const u=prodImg(x);return `<div class="ord-th">${u?`<img src="${escapeHTML(u)}" alt="" loading="lazy">`:"📦"}</div>`};
+function orderBadge(st){
+ return `<span class="ord-badge st-${escapeHTML(st)}">${escapeHTML(statusNames[st]||st)}</span>`;
+}
 async function showOrders(){
  if(!currentSession){
   openAuth();showMessage("authMessage","سجل الدخول لعرض طلباتك.","error");return;
  }
  openModal("ordersModal");
- $("ordersList").className="loading";
- $("ordersList").innerHTML='جارٍ تحميل الطلبات...';
+ $("orderDetailView").classList.add("hidden");$("ordersListView").classList.remove("hidden");
+ $("ordersList").innerHTML='<div class="ord-skel"></div><div class="ord-skel"></div>';
  let query=supabaseClient.from("orders").select("*").order("created_at",{ascending:false});
  if(!isAdmin())query=query.eq("user_id",currentSession.user.id);
  const {data,error}=await query;
- if(error){$("ordersList").textContent="تعذر تحميل الطلبات: "+error.message;return}
- $("ordersList").className="";
- if(!data.length){$("ordersList").innerHTML='<div class="empty">لا توجد طلبات حتى الآن.</div>';return}
- $("ordersList").innerHTML=data.map(o=>`
-  <div class="order-card">
-   <div class="row-between"><strong>طلب رقم #${o.id}</strong><strong>${money(o.total)}</strong></div>
-   <p>التاريخ: ${new Date(o.created_at).toLocaleString("ar-EG")}</p>
-   <p>الحالة: ${escapeHTML(statusNames[o.status]||o.status)}</p>
-   <p>الاسم: ${escapeHTML(o.customer_name)}</p>
-   <button class="secondary-btn" type="button" onclick="showOrderDetails(${Number(o.id)})">تفاصيل الطلب</button>
-  </div>
- `).join("");
-}
-async function showOrderDetails(id){
- const {data,error}=await supabaseClient.from("order_items").select("*").eq("order_id",id);
- if(error){alert(error.message);return}
- const details=data.map(x=>x.product_name+" × "+x.quantity+" = "+money(x.line_total)).join("\n");
- alert("تفاصيل الطلب #"+id+"\n\n"+details);
-}
-
-/* لوحة الإدارة */
-async function openAdmin(){
- if(!isAdmin()){alert("ليس لديك صلاحية دخول لوحة الإدارة.");return}
- closeCart();openModal("adminModal");
- adminTab("overview",document.querySelector(".admin-tab"));
- await loadProducts();renderAdminProducts();
- loadNotifications();
-}
-function adminTab(tab,button){
- currentAdminTab=tab;
- ["overview","products","categories","orders","best","hero","notifications","ownership"].forEach(t=>{
-  $("admin"+t.charAt(0).toUpperCase()+t.slice(1)).classList.toggle("hidden",t!==tab);
- });
- document.querySelectorAll(".admin-tab").forEach(b=>b.classList.remove("active"));
- if(button)button.classList.add("active");
- if(tab==="overview")loadOverview();
- if(tab==="orders")loadAdminOrders();
- if(tab==="notifications")loadNotifications();
- if(tab==="hero")$("heroPreview").src=$("heroImg").src;
- if(tab==="ownership"&&currentRole!=="owner"){
-  $("adminOwnership").innerHTML="<p>نقل الملكية متاح للمالك الحالي فقط.</p>";
+ if(error){$("ordersList").innerHTML='<div class="ord-empty">تعذر تحميل الطلبات: '+escapeHTML(error.message)+'</div>';return}
+ ordersCache=data||[];
+ if(!ordersCache.length){
+  $("ordersList").innerHTML='<div class="ord-empty"><div class="ic">📦</div><h3>لا توجد طلبات حتى الآن</h3><p>ابدأ التسوق وستظهر طلباتك هنا</p></div>';return;
  }
+ /* منتجات كل الطلبات دفعة واحدة لعرض الصور والأسماء في القائمة */
+ const ids=ordersCache.map(o=>o.id);
+ const {data:its}=await supabaseClient.from("order_items").select("*").in("order_id",ids);
+ const byOrder={};(its||[]).forEach(x=>{(byOrder[x.order_id]=byOrder[x.order_id]||[]).push(x)});
+ ordersCache.forEach(o=>{o._items=byOrder[o.id]||[]});
+ $("ordersList").innerHTML=ordersCache.map(o=>{
+  const items=o._items,first=items[0];
+  const thumbs=items.slice(0,3).map(thumbBox).join("")+(items.length>3?`<div class="ord-more">+${items.length-3}</div>`:"");
+  const nm=first?escapeHTML(first.product_name)+(items.length>1?" وغيره":""):"";
+  return `<button type="button" class="ord-card" onclick="openOrderDetail(${Number(o.id)})">
+   <div class="ord-top">
+    <div><div class="ord-no">#${escapeHTML(o.id)}</div><div class="ord-date">🕒 ${fmtDate(o.created_at)}</div></div>
+    ${orderBadge(o.status)}
+   </div>
+   <div class="ord-prods">${thumbs}<div class="ord-pn">${nm}</div></div>
+   <div class="ord-foot"><b>🚚 ${escapeHTML(o.city||"")}</b><span class="ord-price">${money(orderGrand(o))} ‹</span></div>
+  </button>`;
+ }).join("");
 }
-
-/* نظرة عامة: المبيعات والطلبات تُحسب للشهر الحالي وتبدأ من الصفر كل شهر جديد */
-async function loadOverview(){
- if(!isAdmin())return;
- const box=$("overviewBox");box.className="loading";box.textContent="جارٍ التحميل...";
- const now=new Date();
- const start=new Date(now.getFullYear(),now.getMonth(),1).toISOString();
- const [o]=await Promise.all([
-  supabaseClient.from("orders").select("id,total,status").gte("created_at",start),
-  loadAdminProducts()
- ]);
- if(o.error){box.textContent="تعذر تحميل الإحصائيات: "+o.error.message;return}
- const orders=o.data||[];
- const sales=orders.filter(x=>x.status!=="cancelled").reduce((s,x)=>s+Number(x.total||0),0);
- const stockValue=adminProducts.reduce((s,x)=>s+Number(x.price||0)*Number(x.stock||0),0);
- const low=adminProducts.filter(x=>Number(x.stock)>0&&Number(x.stock)<=LOW_STOCK).sort((a,b)=>Number(a.stock)-Number(b.stock));
- const out=adminProducts.filter(x=>Number(x.stock)<=0);
- const month=now.toLocaleDateString("ar-EG",{month:"long",year:"numeric"});
- const statCard=(ico,label,value,accent)=>`
-  <div class="stat-card" style="--accent:${accent}">
-   <span class="stat-ico">${ico}</span><small>${label}</small><strong>${value}</strong>
-  </div>`;
- const row=(p,pill)=>`
-  <div class="admin-item click" onclick="openRestock(${Number(p.id)})">
-   <div class="meta">${thumb(p)}<div><h4>${escapeHTML(p.name)}</h4><small>${escapeHTML(p.category)}</small></div></div>
-   ${pill}
-  </div>`;
- box.className="";
+/* الشحن والمجموع: من ملاحظات الطلب لو موجودة، وإلا من جدول الشحن */
+function orderMoney(o){
+ const items=o._items||[];
+ const sub=items.length?items.reduce((s,x)=>s+Number(x.line_total||0),0):Number(o.total||0);
+ let ship=null;
+ const m=String(o.notes||"").match(/الشحن:\s*([\d.]+)/);
+ if(m)ship=Number(m[1]);
+ else if(SHIPPING_RATES[o.city]!==undefined)ship=SHIPPING_RATES[o.city];
+ return {sub,ship};
+}
+function orderGrand(o){const {sub,ship}=orderMoney(o);return sub+(ship||0)}
+async function openOrderDetail(id){
+ const o=ordersCache.find(x=>Number(x.id)===Number(id));if(!o)return;
+ $("ordersListView").classList.add("hidden");
+ const box=$("orderDetailView");box.classList.remove("hidden");
+ box.innerHTML='<div class="ord-skel"></div>';
+ if(!o._items||!o._items.length){
+  const {data}=await supabaseClient.from("order_items").select("*").eq("order_id",id);
+  o._items=data||[];
+ }
+ const {sub,ship}=orderMoney(o);
+ const st=o.status,cancelled=st==="cancelled";
+ const idx=STATUS_FLOW.indexOf(st);
+ const track=cancelled?"":`<div class="od-track">${STATUS_FLOW.map((k,i)=>`
+   <div class="od-step ${i<=idx?"done":""} ${i===idx?"now":""}"><i>${i<=idx?"✓":""}</i><span>${statusNames[k]}</span></div>`).join("")}</div>`;
+ const items=o._items.map(x=>`
+  <div class="od-it">${thumbBox(x)}
+   <div class="od-in"><b>${escapeHTML(x.product_name)}</b><small>${x.unit_price!=null?money(x.unit_price)+" × ":""}${number(x.quantity)}</small></div>
+   <div class="od-line">${money(x.line_total)}</div>
+  </div>`).join("");
+ const noteExtra=String(o.notes||"").split("\n").filter(l=>l.startsWith("ملاحظات العميل:")).map(l=>l.replace("ملاحظات العميل:","").trim()).join(" ");
+ const phone2=(String(o.notes||"").match(/هاتف إضافي:\s*(\S+)/)||[])[1];
  box.innerHTML=`
-  <div class="month-badge">📅 إحصائيات شهر ${escapeHTML(month)}</div>
-  <div class="stats-grid">
-   ${statCard("💰","إجمالي المبيعات (الشهر)",money(sales),"linear-gradient(90deg,#24d69a,#087bff)")}
-   ${statCard("🧾","عدد الطلبات (الشهر)",number(orders.length),"linear-gradient(90deg,#a600ff,#ff4d8d)")}
-   ${statCard("📦","عدد المنتجات الموجودة",number(adminProducts.length),"linear-gradient(90deg,#087bff,#00d9ff)")}
-   ${statCard("🗂️","عدد الأقسام الموجودة",number(categoriesList.length-1),"linear-gradient(90deg,#ffc52e,#ff8a00)")}
-   ${statCard("🏷️","قيمة المنتجات الموجودة",money(stockValue),"linear-gradient(90deg,#ff4d8d,#ffc52e)")}
-   ${statCard("⚠️","منتجات على وشك النفاذ",number(low.length),"linear-gradient(90deg,#ffb020,#ff8a00)")}
-   ${statCard("🚫","منتجات نفذت",number(out.length),"linear-gradient(90deg,#ff5364,#a600ff)")}
-  </div>
-  <p class="note" style="margin:-6px 0 14px">المبيعات وعدد الطلبات تبدأ من الصفر تلقائيًا مع أول كل شهر، والطلبات الملغية غير محسوبة في المبيعات.</p>
-  <h3 class="sub-title warn">⚠️ منتجات على وشك النفاذ (${LOW_STOCK} قطع أو أقل)</h3>
-  <div class="admin-list">
-   ${low.length?low.map(p=>row(p,`<span class="pill warn">متبقي ${number(p.stock)}</span>`)).join(""):'<div class="empty">لا توجد منتجات على وشك النفاذ.</div>'}
-  </div>
-  <h3 class="sub-title bad">🚫 منتجات نفذت</h3>
-  <div class="admin-list">
-   ${out.length?out.map(p=>row(p,'<span class="pill off">نفد المخزون</span>')).join(""):'<div class="empty">لا توجد منتجات نافذة.</div>'}
-  </div>
-  <p class="note">اضغط على أي منتج لإضافة كمية جديدة له.</p>`;
-}
-
-/* إضافة كمية جديدة للمخزون */
-function openRestock(id){
- if(!isAdmin())return;
- const p=adminProducts.find(x=>Number(x.id)===Number(id));if(!p)return;
- restockId=p.id;
- $("restockInfo").innerHTML=`${thumb(p)}<div><h4>${escapeHTML(p.name)}</h4><small>الكمية الحالية: ${number(p.stock)}</small></div>`;
- $("restockQty").value="";clearMessage("restockMessage");openModal("restockModal");
-}
-$("restockForm").addEventListener("submit",async event=>{
- event.preventDefault();if(!isAdmin())return;
- const qty=Math.floor(Number($("restockQty").value));
- const p=adminProducts.find(x=>Number(x.id)===Number(restockId));
- if(!p||!(qty>0)){showMessage("restockMessage","اكتب كمية صحيحة.","error");return}
- const {error}=await supabaseClient.from("products").update({stock:Number(p.stock)+qty}).eq("id",p.id);
- if(error){showMessage("restockMessage",error.message,"error");return}
- closeModal("restockModal");
- await loadProducts();
- if(currentAdminTab==="overview")loadOverview();
- toast("تمت إضافة "+qty+" قطعة للمنتج.");
-});
-
-/* إشعارات المالك */
-async function loadNotifications(){
- if(!isAdmin())return;
- const {data,error}=await supabaseClient.from("admin_notifications").select("*")
-  .order("created_at",{ascending:false}).limit(60);
- if(error)return;
- notifs=data||[];updateNotifBadge();renderNotifications();
-}
-function updateNotifBadge(){
- const n=notifs.filter(x=>!x.is_read).length;
- $("notifBadge").textContent=number(n);$("notifBadge").classList.toggle("hidden",n<=0);
-}
-function renderNotifications(){
- $("notifList").innerHTML=notifs.length?notifs.map(n=>`
-  <div class="admin-item click notif-item ${n.is_read?"":"unread"}" onclick="openRestock(${Number(n.product_id)})">
-   <div class="meta"><span style="font-size:22px">${n.kind==="out"?"🚫":"⚠️"}</span>
-    <div><h4>${n.kind==="out"?"نفد المخزون: ":"مخزون على وشك النفاذ: "}${escapeHTML(n.product_name)}</h4>
-    <small>${n.kind==="out"?"الكمية 0":"تبقى "+number(n.stock)+" قطعة فقط"} · ${new Date(n.created_at).toLocaleString("ar-EG")}</small></div></div>
-   ${n.is_read?"":'<span class="pill warn">جديد</span>'}
-  </div>`).join(""):'<div class="empty">لا توجد إشعارات.</div>';
-}
-async function markAllRead(){
- if(!isAdmin())return;
- await supabaseClient.from("admin_notifications").update({is_read:true}).eq("is_read",false);
- loadNotifications();
-}
-function startNotifications(){
- if(notifChannel)return;
- loadNotifications();
- notifChannel=supabaseClient.channel("admin-notifications")
-  .on("postgres_changes",{event:"INSERT",schema:"public",table:"admin_notifications"},payload=>{
-   const n=payload.new;
-   const msg=n.kind==="out"?"نفد المخزون: "+n.product_name:"مخزون على وشك النفاذ: "+n.product_name+" (تبقى "+n.stock+")";
-   toast("🔔 "+msg);
-   systemNotify("متجر نسر البرية",msg);
-   loadNotifications();
-   if(isAdmin()&&$("adminModal").classList.contains("show")&&currentAdminTab==="overview")loadOverview();
-  }).subscribe();
-}
-function stopNotifications(){
- if(notifChannel){supabaseClient.removeChannel(notifChannel);notifChannel=null}
- notifs=[];
-}
-
-/* ===== إشعارات المنتجات الجديدة لكل المستخدمين تلقائيًا ===== */
-function systemNotify(title,body,productId){
- if(!("Notification" in window)||Notification.permission!=="granted")return;
- try{
-  const n=new Notification(title,{body,icon:DEFAULT_HERO,tag:"nasr-"+(productId||"general")});
-  n.onclick=()=>{window.focus();if(productId)openProduct(productId);n.close()};
- }catch(e){}
-}
-/* طلب إذن الإشعارات مرة واحدة عند أول تفاعل للمستخدم مع الموقع */
-function askNotifPermissionOnce(){
- if(!("Notification" in window)||Notification.permission!=="default")return;
- let asked=false;try{asked=localStorage.getItem("nasrAskedNotif")==="1"}catch(e){}
- if(asked)return;
- try{localStorage.setItem("nasrAskedNotif","1")}catch(e){}
- try{Notification.requestPermission()}catch(e){}
-}
-document.addEventListener("pointerdown",askNotifPermissionOnce,{once:true});
-
-let seenProductId=null;
-try{const v=localStorage.getItem("nasrSeenProduct");seenProductId=v===null?null:Number(v)}catch(e){}
-function saveSeen(id){
- seenProductId=Math.max(Number(seenProductId)||0,Number(id)||0);
- try{localStorage.setItem("nasrSeenProduct",String(seenProductId))}catch(e){}
-}
-function announceNewProducts(list){
- if(!list.length)return;
- const first=list[0];
- const msg=list.length===1?"🆕 منتج جديد في المتجر: "+first.name:"🆕 تمت إضافة "+list.length+" منتجات جديدة للمتجر";
- toast(msg,()=>list.length===1?openProduct(first.id):goToStore(),8000);
- systemNotify("متجر نسر البرية",msg,list.length===1?first.id:null);
-}
-/* عند فتح الموقع: لو فيه منتجات أضيفت من آخر زيارة يتم إبلاغ المستخدم */
-function checkNewProductsOnLoad(){
- if(!products.length)return;
- const maxId=Math.max(...products.map(p=>Number(p.id)));
- if(seenProductId===null){saveSeen(maxId);return}
- const fresh=products.filter(p=>Number(p.id)>Number(seenProductId));
- saveSeen(maxId);
- announceNewProducts(fresh);
-}
-/* أثناء تصفح الموقع: أي منتج جديد يُضاف يظهر إشعاره فورًا لكل من يفتح المتجر */
-function startProductFeed(){
- supabaseClient.channel("new-products")
-  .on("postgres_changes",{event:"INSERT",schema:"public",table:"products"},async payload=>{
-   const n=payload.new;if(!n||n.is_active===false)return;
-   await loadProducts();
-   const p=products.find(x=>Number(x.id)===Number(n.id))||n;
-   saveSeen(n.id);
-   announceNewProducts([p]);
-  }).subscribe();
-}
-
-/* إدارة المنتجات */
-function renderAdminProducts(){
- if(!isAdmin())return;
- const q=($("adminSearch").value||"").trim().toLowerCase();
- const list=adminProducts.filter(p=>!q||String(p.name).toLowerCase().includes(q));
- $("adminProductsList").innerHTML=list.length?list.map(p=>`
-  <div class="admin-item">
-   <div class="meta">${thumb(p)}<div style="min-width:0"><h4>${escapeHTML(p.name)}</h4>
-    <small>${money(p.price)} · المخزون ${number(p.stock)} · ${escapeHTML(p.category)}</small><br>
-    <span class="pill ${p.is_active?"ok":"off"}">${p.is_active?"ظاهر":"مخفي"}</span>
-    ${Number(p.stock)<=0?'<span class="pill off">نفد المخزون</span>':Number(p.stock)<=LOW_STOCK?'<span class="pill warn">على وشك النفاذ</span>':""}
-    ${p.is_best_seller?'<span class="pill star">⭐ الأكثر مبيعًا</span>':""}
-   </div></div>
-   <div class="admin-actions">
-    <button class="secondary-btn" type="button" onclick="editProduct(${Number(p.id)})">تعديل</button>
-    <button class="danger-btn" type="button" onclick="deleteProduct(${Number(p.id)})">حذف</button>
-   </div>
-  </div>
- `).join(""):'<div class="empty">لا توجد منتجات. أضف أول منتج.</div>';
-}
-function fillCategorySelect(){
- $("productCategory").innerHTML=categoriesList.filter(c=>c.name!=="الكل")
-  .map(c=>`<option value="${escapeHTML(c.name)}">${escapeHTML(c.name)}</option>`).join("");
-}
-function openProductForm(){
- if(!isAdmin())return;
- $("productForm").reset();$("productId").value="";
- $("productFormTitle").textContent="إضافة منتج جديد";
- $("productActive").checked=true;fillCategorySelect();
- clearMessage("productMessage");openModal("productModal");
-}
-function editProduct(id){
- if(!isAdmin())return;
- const p=adminProducts.find(x=>Number(x.id)===Number(id));if(!p)return;
- fillCategorySelect();
- $("productId").value=p.id;$("productName").value=p.name;
- $("productDescription").value=p.description||"";
- $("productPrice").value=p.price;$("productOldPrice").value=p.old_price??"";
- $("productCategory").value=p.category;$("productStock").value=p.stock;
- $("productImageUrl").value=p.image_url||"";
- $("productActive").checked=p.is_active;$("productFormTitle").textContent="تعديل المنتج";
- $("productImage").value="";clearMessage("productMessage");openModal("productModal");
-}
-$("productForm").addEventListener("submit",async event=>{
- event.preventDefault();if(!isAdmin())return;
- clearMessage("productMessage");
- const button=$("saveProductButton");button.disabled=true;button.textContent="جارٍ الحفظ...";
- try{
-  let imageUrl=$("productImageUrl").value.trim();
-  const file=$("productImage").files[0];if(file)imageUrl=await uploadProductImage(file);
-  const payload={
-   name:$("productName").value.trim(),
-   description:$("productDescription").value.trim(),
-   price:Number($("productPrice").value),
-   old_price:$("productOldPrice").value?Number($("productOldPrice").value):null,
-   category:$("productCategory").value,
-   stock:Number($("productStock").value),
-   image_url:imageUrl,
-   is_active:$("productActive").checked
-  };
-  if(payload.price<0||payload.stock<0)throw new Error("تحقق من السعر والكمية.");
-  const id=$("productId").value;
-  const result=id
-   ?await supabaseClient.from("products").update(payload).eq("id",id)
-   :await supabaseClient.from("products").insert(payload);
-  if(result.error)throw result.error;
-  closeModal("productModal");await loadProducts();renderAdminProducts();
-  toast(id?"تم حفظ التعديلات بنجاح.":"تمت إضافة المنتج وإبلاغ العملاء تلقائيًا.");
- }catch(error){
-  console.error(error);showMessage("productMessage",error.message||"تعذر حفظ المنتج.","error");
- }finally{button.disabled=false;button.textContent="حفظ المنتج"}
-});
-async function deleteProduct(id){
- if(!isAdmin())return;
- if(!confirm("هل أنت متأكد من حذف هذا المنتج؟"))return;
- const {error}=await supabaseClient.from("products").delete().eq("id",id);
- if(error){alert("تعذر حذف المنتج: "+error.message);return}
- await loadProducts();renderAdminProducts();
-}
-
-/* إدارة الأقسام */
-function renderAdminCategories(){
- const box=$("adminCategoriesList");if(!box)return;
- $("addCategoryBtn").classList.remove("hidden");
- const list=categoriesList.slice(1);
- box.innerHTML=list.length?list.map((c,i)=>`
-  <div class="admin-item">
-   <div class="meta">${c.image_url?`<img class="thumb" src="${escapeHTML(c.image_url)}" alt="">`:'<div class="thumb">🗂️</div>'}
-    <div><h4>${escapeHTML(c.name)}</h4></div></div>
-   <div class="admin-actions">
-    <button class="secondary-btn" type="button" onclick="editCategory(${i+1})">تعديل</button>
-    <button class="danger-btn" type="button" onclick="deleteCategory(${i+1})">حذف</button>
-   </div>
-  </div>
- `).join(""):'<div class="empty">لا توجد أقسام. أضف أول قسم.</div>';
-}
-/* أول مرة: تُحفظ الأقسام الحالية في قاعدة البيانات تلقائيًا ليتم التعديل عليها */
-let seeding=null;
-async function ensureSeeded(){
- if(categoriesFromDB)return true;
- if(seeding)return seeding;
- seeding=(async()=>{
-  const rows=defaultCategories.filter(c=>c.name!=="الكل").map((c,i)=>({name:c.name,sort_order:i}));
-  const {error}=await supabaseClient.from("categories").insert(rows);
-  if(error){toast("تعذر تجهيز الأقسام: "+error.message,null,7000);return false}
-  try{localStorage.setItem("nasrCatsSeeded","1")}catch(e){}
-  await loadCategories();return categoriesFromDB;
- })();
- try{return await seeding}finally{seeding=null}
-}
-function openCategoryForm(){
- if(!isAdmin())return;
- $("categoryForm").reset();$("categoryId").value="";$("categoryOldName").value="";$("categoryImageUrl").value="";
- $("categoryFormTitle").textContent="إضافة قسم جديد";
- clearMessage("categoryMessage");openModal("categoryModal");
-}
-async function editCategory(i){
- if(!isAdmin())return;
- let c=categoriesList[i];if(!c)return;
- if(!c.id){
-  const name=c.name;
-  if(!await ensureSeeded())return;
-  c=categoriesList.find(x=>x.name===name);if(!c)return;
- }
- $("categoryForm").reset();
- $("categoryId").value=c.id;$("categoryOldName").value=c.name;
- $("categoryName").value=c.name;$("categoryImageUrl").value=c.image_url||"";
- $("categoryFormTitle").textContent="تعديل القسم";
- clearMessage("categoryMessage");openModal("categoryModal");
-}
-$("categoryForm").addEventListener("submit",async event=>{
- event.preventDefault();if(!isAdmin())return;
- clearMessage("categoryMessage");
- const button=$("saveCategoryButton");button.disabled=true;
- try{
-  const name=$("categoryName").value.trim();
-  if(!name)throw new Error("اكتب اسم القسم.");
-  let image=$("categoryImageUrl").value;
-  const file=$("categoryImage").files[0];
-  if(file)image=await uploadProductImage(file,"categories");
-  const id=$("categoryId").value,old=$("categoryOldName").value;
-  if(!id&&categoriesList.some(c=>c.name===name))throw new Error("يوجد قسم بنفس الاسم بالفعل.");
-  if(!id&&!await ensureSeeded())throw new Error("تعذر تجهيز الأقسام.");
-  if(id){
-   let r=await supabaseClient.from("categories").update({name,image_url:image||null}).eq("id",id);
-   if(r.error)throw r.error;
-   if(old&&old!==name){
-    r=await supabaseClient.from("products").update({category:name}).eq("category",old);
-    if(r.error)throw r.error;
-   }
-  }else{
-   const r=await supabaseClient.from("categories").insert({name,image_url:image||null,sort_order:categoriesList.length});
-   if(r.error)throw r.error;
-  }
-  closeModal("categoryModal");await loadCategories();await loadProducts();
- }catch(error){
-  showMessage("categoryMessage",error.message||"تعذر حفظ القسم.","error");
- }finally{button.disabled=false}
-});
-async function deleteCategory(i){
- if(!isAdmin())return;
- let c=categoriesList[i];if(!c)return;
- if(!confirm("هل أنت متأكد من حذف قسم «"+c.name+"»؟ المنتجات التابعة له لن تُحذف."))return;
- if(!c.id){
-  const name=c.name;
-  if(!await ensureSeeded())return;
-  c=categoriesList.find(x=>x.name===name);if(!c)return;
- }
- const {error}=await supabaseClient.from("categories").delete().eq("id",c.id);
- if(error){alert("تعذر حذف القسم: "+error.message);return}
- await loadCategories();
-}
-
-/* الأكثر مبيعًا */
-function renderBestAdmin(){
- const box=$("adminBestList");if(!box)return;
- box.innerHTML=adminProducts.length?adminProducts.map(p=>`
-  <div class="admin-item">
-   <div class="meta">${thumb(p)}<div style="min-width:0"><h4>${escapeHTML(p.name)}</h4><small>${money(p.price)}</small></div></div>
-   <button type="button" class="${p.is_best_seller?"danger-btn":"secondary-btn"}" onclick="toggleBest(${Number(p.id)},${!p.is_best_seller})">
-    ${p.is_best_seller?"إزالة من الشريط":"⭐ إضافة للشريط"}
-   </button>
-  </div>
- `).join(""):'<div class="empty">لا توجد منتجات.</div>';
-}
-async function toggleBest(id,value){
- if(!isAdmin())return;
- const {error}=await supabaseClient.from("products").update({is_best_seller:value}).eq("id",id);
- if(error){alert("تعذر التحديث: "+error.message);return}
- await loadProducts();
-}
-
-/* إدارة الطلبات */
-async function loadAdminOrders(){
- if(!isAdmin())return;
- $("adminOrdersList").innerHTML='<div class="loading">جارٍ تحميل الطلبات...</div>';
- const {data,error}=await supabaseClient.from("orders").select("*").order("created_at",{ascending:false});
- if(error){$("adminOrdersList").textContent=error.message;return}
- if(!data.length){$("adminOrdersList").innerHTML='<div class="empty">لا توجد طلبات حتى الآن.</div>';return}
- $("adminOrdersList").innerHTML=data.map(o=>`
-  <div class="admin-item" style="align-items:flex-start">
-   <div style="flex:1">
-    <h4>طلب #${o.id} — ${escapeHTML(o.customer_name)}</h4>
-    <small>${escapeHTML(o.phone)} · ${escapeHTML(o.city)} · ${new Date(o.created_at).toLocaleString("ar-EG")}</small>
-    <p style="font-size:11px;margin-top:5px">${escapeHTML(o.address)}</p>
-    ${o.notes?`<p style="font-size:11px;margin-top:5px;white-space:pre-line;color:var(--muted)">${escapeHTML(o.notes)}</p>`:""}
-    <strong style="font-size:13px;color:var(--num)">${money(o.total)}</strong>
-   </div>
-   <div class="admin-actions" style="flex-direction:column;align-items:stretch">
-    <select class="order-status" id="status-${o.id}">
-     ${Object.entries(statusNames).map(([v,n])=>`<option value="${v}" ${o.status===v?"selected":""}>${n}</option>`).join("")}
-    </select>
-    <button class="secondary-btn" type="button" onclick="updateOrderStatus(${Number(o.id)})">حفظ الحالة</button>
-    <button class="secondary-btn" type="button" onclick="showOrderDetails(${Number(o.id)})">التفاصيل</button>
-   </div>
-  </div>
- `).join("");
-}
-async function updateOrderStatus(id){
- if(!isAdmin())return;
- const status=$("status-"+id).value;
- const {error}=await supabaseClient.from("orders").update({status}).eq("id",id);
- if(error){alert("تعذر تحديث الطلب: "+error.message);return}
- toast("تم تحديث حالة الطلب.");await loadAdminOrders();
-}
-
-/* نقل الملكية */
-async function transferOwnership(){
- if(currentRole!=="owner"){
-  showMessage("ownershipMessage","نقل الملكية متاح للمالك الحالي فقط.","error");return;
- }
- const email=$("newOwnerEmail").value.trim();
- if(!email){showMessage("ownershipMessage","اكتب البريد الجديد.","error");return}
- if(!confirm("سيتم نقل ملكية المتجر إلى "+email+". هل تريد المتابعة؟"))return;
- try{
-  const {data,error}=await supabaseClient.rpc("transfer_store_ownership",{new_email:email});
-  if(error)throw error;
-  alert("تم تنفيذ طلب نقل الملكية. سيتم تسجيل خروج حسابك الحالي.");
-  await supabaseClient.auth.signOut();
-  currentSession=null;currentRole=null;closeModal("adminModal");updateAuthInterface();stopNotifications();
- }catch(error){
-  showMessage("ownershipMessage",error.message||"تعذر نقل الملكية.","error");
- }
-}
-
-/* تشغيل الموقع */
-$("emailAuthForm").addEventListener("submit",handleEmailAuth);
-$("year").textContent=number(new Date().getFullYear());
-fillCategorySelect();renderCategories();renderCart();route();
-
-(async()=>{
- if(!supabaseClient)await loadSupabaseFallback();
- if(!supabaseClient){toast("تعذر الاتصال بالخادم. تأكد من الإنترنت وحدّث الصفحة.",null,9000);return}
- await initializeAuth();
- await Promise.all([loadCategories(),loadSettings()]);
- await loadProducts();
- renderCart();
- checkNewProductsOnLoad();
- startProductFeed();
-})();
-</script>
-</body>
-</html>
+  <button type="button" class="ord-back" onclick="backToOrders()">➜ كل طلباتي</button>
+  <div class="ord-box">
+   <div class="od-head">
+    <div><div class="od-label">رقم الطلب</div><div class="od-no">#${escapeHTML(o.id)}</div>
+     <div class="ord-date">🕒 ${fmtDate(o.created_at)}</di
