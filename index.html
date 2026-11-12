@@ -18,7 +18,6 @@
 <meta property="og:image" content="https://antonyos2010.github.io/nasr-albaria/store-design.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root{
@@ -990,7 +989,42 @@ const SUPABASE_ANON_KEY="sb_publishable_ScBUjfRWrmlmPPiquO_FHg_RFOv8j6N";
 const IMAGE_BUCKET="product-images";
 const DEFAULT_HERO="https://antonyos2010.github.io/nasr-albaria/store-design.jpg";
 const LOW_STOCK=5;
-const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+let supabaseClient=null;
+/* تحميل مكتبة Supabase من أكثر من مصدر: لو فشل رابط يجرب اللي بعده، والمتجر يظهر في كل الأحوال */
+function makeClient(){
+ if(window.supabase&&window.supabase.createClient){
+  supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);return true;
+ }
+ return false;
+}
+function loadScript(src,ms=8000){
+ return new Promise(res=>{
+  const t=document.createElement("script");let done=false;
+  const end=ok=>{if(!done){done=true;res(ok)}};
+  t.src=src;t.async=true;t.onload=()=>end(true);t.onerror=()=>end(false);
+  setTimeout(()=>end(false),ms);
+  document.head.appendChild(t);
+ });
+}
+async function ensureSupabase(){
+ if(makeClient())return true;
+ const sources=[
+  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2",
+  "https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.45.4/supabase.min.js"
+ ];
+ for(const src of sources){
+  if(await loadScript(src)&&makeClient())return true;
+ }
+ return false;
+}
+function showOffline(){
+ const msg="تعذر الاتصال بقاعدة البيانات. تأكد من الإنترنت ثم حدّث الصفحة.";
+ $("marquee").style.animation="none";
+ $("marquee").innerHTML='<div class="empty" style="width:92vw">'+msg+'</div>';
+ if(view.type!=="home"){$("pageTitle").textContent="المتجر";$("pageBody").innerHTML='<div class="empty-note">'+msg+'</div>'}
+ toast(msg,null,9000);
+}
 
 let currentSession=null,currentRole=null,products=[],cart=[],adminProducts=[];
 let currentAdminTab="overview",categoriesFromDB=false,productsLoaded=false;
@@ -2050,33 +2084,4 @@ $("categoryForm").addEventListener("submit",async event=>{
    const r=await supabaseClient.from("categories").insert({name,image_url:image||null,sort_order:categoriesList.length});
    if(r.error)throw r.error;
   }
-  closeModal("categoryModal");await loadCategories();await loadProducts();
- }catch(error){
-  showMessage("categoryMessage",error.message||"تعذر حفظ القسم.","error");
- }finally{button.disabled=false}
-});
-async function deleteCategory(i){
- if(!isAdmin())return;
- let c=categoriesList[i];if(!c)return;
- if(!confirm("هل أنت متأكد من حذف قسم «"+c.name+"»؟ المنتجات التابعة له لن تُحذف."))return;
- if(!c.id){
-  const name=c.name;
-  if(!await ensureSeeded())return;
-  c=categoriesList.find(x=>x.name===name);if(!c)return;
- }
- const {error}=await supabaseClient.from("categories").delete().eq("id",c.id);
- if(error){alert("تعذر حذف القسم: "+error.message);return}
- await loadCategories();
-}
-
-/* الأكثر مبيعًا */
-function renderBestAdmin(){
- const box=$("adminBestList");if(!box)return;
- box.innerHTML=adminProducts.length?adminProducts.map(p=>`
-  <div class="admin-item">
-   <div class="meta">${thumb(p)}<div style="min-width:0"><h4>${escapeHTML(p.name)}</h4><small>${money(p.price)}</small></div></div>
-   <button type="button" class="${p.is_best_seller?"danger-btn":"secondary-btn"}" onclick="toggleBest(${Number(p.id)},${!p.is_best_seller})">
-    ${p.is_best_seller?"إزالة من الشريط":"⭐ إضافة للشريط"}
-   </button>
-  </div>
- `).join(""):'<div class="empty">لا توجد منتجات.</div>';
+  closeModal("categoryModal");await loadCategories();a
