@@ -18,6 +18,7 @@
 <meta property="og:image" content="https://antonyos2010.github.io/nasr-albaria/store-design.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root{
@@ -582,20 +583,6 @@ body.light .bottom-nav{background:rgba(255,255,255,.97)}
 @keyframes toastIn{from{opacity:0;transform:translate(-50%,-12px)}to{opacity:1;transform:translate(-50%,0)}}
 .notif-item.unread{border-color:#ffb020}
 
-/* ملخص الطلب وأسعار الشحن */
-.order-summary{border:2px solid var(--c5);border-radius:14px;background:var(--panel2);padding:6px 14px;margin-bottom:12px}
-.sum-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px;font-weight:700}
-.sum-row:last-child{border-bottom:0}
-.sum-row strong{font-weight:900;color:var(--num)}
-.sum-row.total{font-size:15px;font-weight:900}
-.sum-row .pending{color:var(--muted);font-size:11px;font-weight:700}
-.pay-method{font-size:13px;font-weight:800;margin:6px 0 10px}
-.pay-note{padding:11px 13px;border-radius:11px;font-size:11px;line-height:2;margin-bottom:10px;font-weight:700}
-.pay-note.red{background:#451b2b;color:#ffd0d0;border:2px solid var(--danger)}
-.pay-note.blue{background:#0d2a52;color:#cfe4ff;border:2px solid var(--c6)}
-body.light .pay-note.red{background:#ffe9ec;color:#a3132b}
-body.light .pay-note.blue{background:#e8f1ff;color:#0b3a8a}
-
 /* ألوان الإطارات المتنوعة: كل عنصر في مجموعة بلون مختلف */
 :is(.products-grid>*,.categories-grid>*,.marquee-track>*,.benefits>*,.features>*,.stats-grid>*,.admin-list>*,.pd-perks>*,#ordersList>*,#cartItems>*):nth-child(6n+1){--bc:var(--c1)}
 :is(.products-grid>*,.categories-grid>*,.marquee-track>*,.benefits>*,.features>*,.stats-grid>*,.admin-list>*,.pd-perks>*,#ordersList>*,#cartItems>*):nth-child(6n+2){--bc:var(--c2)}
@@ -840,17 +827,10 @@ body.light .pay-note.blue{background:#e8f1ff;color:#0b3a8a}
   <div class="modal-head"><h2>تأكيد بيانات الطلب</h2><button class="close-btn" type="button" onclick="closeModal('checkoutModal')">✕</button></div>
   <form id="checkoutForm">
    <div class="field"><label>الاسم بالكامل</label><input id="customerName" required maxlength="100" autocomplete="name"></div>
-   <div class="field"><label>رقم الهاتف الرئيسي</label><input id="customerPhone" required maxlength="25" inputmode="tel" autocomplete="tel" placeholder="01xxxxxxxxx"></div>
-   <div class="field"><label>رقم هاتف إضافي</label><input id="customerPhone2" required maxlength="25" inputmode="tel" placeholder="01xxxxxxxxx"></div>
-   <div class="field"><label>المحافظة / المدينة</label><select id="customerCity" required onchange="updateCheckoutSummary()"></select></div>
+   <div class="field"><label>رقم الهاتف</label><input id="customerPhone" required maxlength="25" inputmode="tel" autocomplete="tel" placeholder="01xxxxxxxxx"></div>
+   <div class="field"><label>المحافظة</label><input id="customerCity" required maxlength="80" autocomplete="address-level1"></div>
    <div class="field"><label>العنوان بالتفصيل</label><textarea id="customerAddress" required maxlength="500" autocomplete="street-address"></textarea></div>
-   <div class="field"><label>الرمز البريدي ZIP (اختياري)</label><input id="customerZip" maxlength="12" inputmode="numeric"></div>
-   <div class="field"><label>ملاحظات الطلب (اختياري)</label><textarea id="customerNotes" maxlength="500" placeholder="ملاحظات حول الطلب، مثال: ملحوظة خاصة بتسليم الطلب."></textarea></div>
-   <h3 class="sub-title">طلبك</h3>
-   <div class="order-summary" id="orderSummary"></div>
-   <p class="pay-method">الدفع نقدًا عند الاستلام</p>
-   <div class="pay-note red">ملحوظة: أي مبلغ يتم تحصيله من العميل يتم خصمه من إجمالي الفاتورة شاملة مصاريف الشحن وتحصيل المتبقي تسليم الطلب.</div>
-   <div class="pay-note blue">ملحوظة: سيتم وضع طلبك قيد الانتظار لحين سدادك رسوم الشحن كحد أدنى على الأرقام: (01009012719)<br>يرجى إرسال سكرين شوت من عملية التحويل مرفق به رقم الطلب إلى الرقم المذكور لتجهيز الطلب وشحنه ... طرق الدفع (فون كاش - إنستا)</div>
+   <div class="field"><label>ملاحظات إضافية (اختياري)</label><textarea id="customerNotes" maxlength="500"></textarea></div>
    <button class="primary-btn" id="placeOrderButton">تأكيد الطلب</button>
   </form>
   <div class="message" id="checkoutMessage"></div>
@@ -989,42 +969,7 @@ const SUPABASE_ANON_KEY="sb_publishable_ScBUjfRWrmlmPPiquO_FHg_RFOv8j6N";
 const IMAGE_BUCKET="product-images";
 const DEFAULT_HERO="https://antonyos2010.github.io/nasr-albaria/store-design.jpg";
 const LOW_STOCK=5;
-let supabaseClient=null;
-/* تحميل مكتبة Supabase من أكثر من مصدر: لو فشل رابط يجرب اللي بعده، والمتجر يظهر في كل الأحوال */
-function makeClient(){
- if(window.supabase&&window.supabase.createClient){
-  supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);return true;
- }
- return false;
-}
-function loadScript(src,ms=8000){
- return new Promise(res=>{
-  const t=document.createElement("script");let done=false;
-  const end=ok=>{if(!done){done=true;res(ok)}};
-  t.src=src;t.async=true;t.onload=()=>end(true);t.onerror=()=>end(false);
-  setTimeout(()=>end(false),ms);
-  document.head.appendChild(t);
- });
-}
-async function ensureSupabase(){
- if(makeClient())return true;
- const sources=[
-  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2",
-  "https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js",
-  "https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.45.4/supabase.min.js"
- ];
- for(const src of sources){
-  if(await loadScript(src)&&makeClient())return true;
- }
- return false;
-}
-function showOffline(){
- const msg="تعذر الاتصال بقاعدة البيانات. تأكد من الإنترنت ثم حدّث الصفحة.";
- $("marquee").style.animation="none";
- $("marquee").innerHTML='<div class="empty" style="width:92vw">'+msg+'</div>';
- if(view.type!=="home"){$("pageTitle").textContent="المتجر";$("pageBody").innerHTML='<div class="empty-note">'+msg+'</div>'}
- toast(msg,null,9000);
-}
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
 let currentSession=null,currentRole=null,products=[],cart=[],adminProducts=[];
 let currentAdminTab="overview",categoriesFromDB=false,productsLoaded=false;
@@ -1635,68 +1580,29 @@ async function checkout(){
  if(!currentSession){
   openAuth();showMessage("authMessage","سجل الدخول أولًا لإتمام طلبك.","error");return;
  }
- $("checkoutForm").reset();clearMessage("checkoutMessage");updateCheckoutSummary();openModal("checkoutModal");
-}
-/* أسعار الشحن للمحافظات (27 محافظة) — الشحن لا يُحسب إلا بعد اختيار المحافظة */
-const SHIPPING_RATES={
- "المنيا":90,"القاهرة":90,"الجيزة":90,"القليوبية":90,
- "الإسكندرية":100,"البحيرة":100,"كفر الشيخ":100,"الدقهلية":100,"دمياط":100,"الشرقية":100,"الغربية":100,"المنوفية":100,
- "بورسعيد":120,"الإسماعيلية":120,
- "السويس":125,"بني سويف":125,"الفيوم":125,
- "أسيوط":140,"سوهاج":140,"قنا":140,"الأقصر":140,"أسوان":140,
- "البحر الأحمر":150,"مطروح":150,"شمال سيناء":150,"جنوب سيناء":150,"الوادي الجديد":150
-};
-function fillCities(){
- $("customerCity").innerHTML='<option value="">اختر المحافظة</option>'+
-  Object.keys(SHIPPING_RATES).map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join("");
-}
-function checkoutTotals(){
- const city=$("customerCity").value;
- const subtotal=cart.reduce((s,x)=>{
-  const p=products.find(y=>Number(y.id)===Number(x.id));
-  return s+(p?Number(p.price)*Number(x.qty):0);
- },0);
- const ship=city&&SHIPPING_RATES[city]!==undefined?SHIPPING_RATES[city]:null;
- return {city,subtotal,ship,total:subtotal+(ship||0)};
-}
-function updateCheckoutSummary(){
- const t=checkoutTotals();
- const rows=cart.map(x=>{
-  const p=products.find(y=>Number(y.id)===Number(x.id));
-  if(!p)return "";
-  return `<div class="sum-row"><span>${escapeHTML(p.name)} × ${number(x.qty)}</span><strong>${money(Number(p.price)*Number(x.qty))}</strong></div>`;
- }).join("");
- $("orderSummary").innerHTML=rows+
-  `<div class="sum-row"><span>المجموع</span><strong>${money(t.subtotal)}</strong></div>`+
-  `<div class="sum-row"><span>الشحن</span>${t.ship===null?'<span class="pending">اختر المحافظة لحساب الشحن</span>':`<strong>${money(t.ship)}</strong>`}</div>`+
-  `<div class="sum-row total"><span>الإجمالي</span><strong>${t.ship===null?money(t.subtotal):money(t.total)}</strong></div>`;
+ $("checkoutForm").reset();clearMessage("checkoutMessage");openModal("checkoutModal");
 }
 $("checkoutForm").addEventListener("submit",async event=>{
  event.preventDefault();clearMessage("checkoutMessage");
  if(!currentSession){showMessage("checkoutMessage","سجل الدخول أولًا.","error");return}
  if(!cart.length){showMessage("checkoutMessage","السلة فارغة.","error");return}
  const phone=toLatin($("customerPhone").value).replace(/[\s-]/g,"");
- const phone2=toLatin($("customerPhone2").value).replace(/[\s-]/g,"");
- if(!/^\+?\d{10,15}$/.test(phone)||!/^\+?\d{10,15}$/.test(phone2)){showMessage("checkoutMessage","اكتب رقمي هاتف صحيحين (أرقام فقط).","error");return}
- const t=checkoutTotals();
- if(!t.city||t.ship===null){showMessage("checkoutMessage","اختر المحافظة لحساب مصاريف الشحن.","error");return}
- const zip=toLatin($("customerZip").value).trim();
- const shipLine="الشحن: "+t.ship+" جنيه | الإجمالي مع الشحن: "+t.total+" جنيه";
+ if(!/^\+?\d{10,15}$/.test(phone)){showMessage("checkoutMessage","اكتب رقم هاتف صحيح (أرقام فقط).","error");return}
  const button=$("placeOrderButton");button.disabled=true;button.textContent="جارٍ تسجيل الطلب...";
  try{
   const items=cart.map(x=>({product_id:Number(x.id),quantity:Number(x.qty)}));
   const {data,error}=await supabaseClient.rpc("place_store_order",{
    p_customer_name:$("customerName").value.trim(),
-   p_phone:phone+" / "+phone2,
-   p_address:$("customerAddress").value.trim()+(zip?" | ZIP: "+zip:"")+" | "+shipLine,
-   p_city:t.city,
+   p_phone:phone,
+   p_address:$("customerAddress").value.trim(),
+   p_city:$("customerCity").value.trim(),
    p_notes:$("customerNotes").value.trim(),
    p_items:items
   });
   if(error)throw error;
   cart=[];saveCart();closeModal("checkoutModal");
   await loadProducts();
-  alert("تم تسجيل طلبك بنجاح. رقم الطلب: "+data+"\nالمنتجات: "+money(t.subtotal)+"\nالشحن: "+money(t.ship)+"\nالإجمالي: "+money(t.total));
+  alert("تم تسجيل طلبك بنجاح. رقم الطلب: "+data);
   showOrders();
  }catch(error){
   console.error(error);showMessage("checkoutMessage",error.message||"تعذر تسجيل الطلب.","error");
@@ -2084,4 +1990,109 @@ $("categoryForm").addEventListener("submit",async event=>{
    const r=await supabaseClient.from("categories").insert({name,image_url:image||null,sort_order:categoriesList.length});
    if(r.error)throw r.error;
   }
-  closeModal("categoryModal");await loadCategories();a
+  closeModal("categoryModal");await loadCategories();await loadProducts();
+ }catch(error){
+  showMessage("categoryMessage",error.message||"تعذر حفظ القسم.","error");
+ }finally{button.disabled=false}
+});
+async function deleteCategory(i){
+ if(!isAdmin())return;
+ let c=categoriesList[i];if(!c)return;
+ if(!confirm("هل أنت متأكد من حذف قسم «"+c.name+"»؟ المنتجات التابعة له لن تُحذف."))return;
+ if(!c.id){
+  const name=c.name;
+  if(!await ensureSeeded())return;
+  c=categoriesList.find(x=>x.name===name);if(!c)return;
+ }
+ const {error}=await supabaseClient.from("categories").delete().eq("id",c.id);
+ if(error){alert("تعذر حذف القسم: "+error.message);return}
+ await loadCategories();
+}
+
+/* الأكثر مبيعًا */
+function renderBestAdmin(){
+ const box=$("adminBestList");if(!box)return;
+ box.innerHTML=adminProducts.length?adminProducts.map(p=>`
+  <div class="admin-item">
+   <div class="meta">${thumb(p)}<div style="min-width:0"><h4>${escapeHTML(p.name)}</h4><small>${money(p.price)}</small></div></div>
+   <button type="button" class="${p.is_best_seller?"danger-btn":"secondary-btn"}" onclick="toggleBest(${Number(p.id)},${!p.is_best_seller})">
+    ${p.is_best_seller?"إزالة من الشريط":"⭐ إضافة للشريط"}
+   </button>
+  </div>
+ `).join(""):'<div class="empty">لا توجد منتجات.</div>';
+}
+async function toggleBest(id,value){
+ if(!isAdmin())return;
+ const {error}=await supabaseClient.from("products").update({is_best_seller:value}).eq("id",id);
+ if(error){alert("تعذر التحديث: "+error.message);return}
+ await loadProducts();
+}
+
+/* إدارة الطلبات */
+async function loadAdminOrders(){
+ if(!isAdmin())return;
+ $("adminOrdersList").innerHTML='<div class="loading">جارٍ تحميل الطلبات...</div>';
+ const {data,error}=await supabaseClient.from("orders").select("*").order("created_at",{ascending:false});
+ if(error){$("adminOrdersList").textContent=error.message;return}
+ if(!data.length){$("adminOrdersList").innerHTML='<div class="empty">لا توجد طلبات حتى الآن.</div>';return}
+ $("adminOrdersList").innerHTML=data.map(o=>`
+  <div class="admin-item" style="align-items:flex-start">
+   <div style="flex:1">
+    <h4>طلب #${o.id} — ${escapeHTML(o.customer_name)}</h4>
+    <small>${escapeHTML(o.phone)} · ${escapeHTML(o.city)} · ${new Date(o.created_at).toLocaleString("ar-EG")}</small>
+    <p style="font-size:11px;margin-top:5px">${escapeHTML(o.address)}</p>
+    <strong style="font-size:13px;color:var(--num)">${money(o.total)}</strong>
+   </div>
+   <div class="admin-actions" style="flex-direction:column;align-items:stretch">
+    <select class="order-status" id="status-${o.id}">
+     ${Object.entries(statusNames).map(([v,n])=>`<option value="${v}" ${o.status===v?"selected":""}>${n}</option>`).join("")}
+    </select>
+    <button class="secondary-btn" type="button" onclick="updateOrderStatus(${Number(o.id)})">حفظ الحالة</button>
+    <button class="secondary-btn" type="button" onclick="showOrderDetails(${Number(o.id)})">التفاصيل</button>
+   </div>
+  </div>
+ `).join("");
+}
+async function updateOrderStatus(id){
+ if(!isAdmin())return;
+ const status=$("status-"+id).value;
+ const {error}=await supabaseClient.from("orders").update({status}).eq("id",id);
+ if(error){alert("تعذر تحديث الطلب: "+error.message);return}
+ toast("تم تحديث حالة الطلب.");await loadAdminOrders();
+}
+
+/* نقل الملكية */
+async function transferOwnership(){
+ if(currentRole!=="owner"){
+  showMessage("ownershipMessage","نقل الملكية متاح للمالك الحالي فقط.","error");return;
+ }
+ const email=$("newOwnerEmail").value.trim();
+ if(!email){showMessage("ownershipMessage","اكتب البريد الجديد.","error");return}
+ if(!confirm("سيتم نقل ملكية المتجر إلى "+email+". هل تريد المتابعة؟"))return;
+ try{
+  const {data,error}=await supabaseClient.rpc("transfer_store_ownership",{new_email:email});
+  if(error)throw error;
+  alert("تم تنفيذ طلب نقل الملكية. سيتم تسجيل خروج حسابك الحالي.");
+  await supabaseClient.auth.signOut();
+  currentSession=null;currentRole=null;closeModal("adminModal");updateAuthInterface();stopNotifications();
+ }catch(error){
+  showMessage("ownershipMessage",error.message||"تعذر نقل الملكية.","error");
+ }
+}
+
+/* تشغيل الموقع */
+$("emailAuthForm").addEventListener("submit",handleEmailAuth);
+$("year").textContent=number(new Date().getFullYear());
+fillCategorySelect();renderCategories();renderCart();route();
+
+(async()=>{
+ await initializeAuth();
+ await Promise.all([loadCategories(),loadSettings()]);
+ await loadProducts();
+ renderCart();
+ checkNewProductsOnLoad();
+ startProductFeed();
+})();
+</script>
+</body>
+</html>
