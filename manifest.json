@@ -1,0 +1,29 @@
+
+{
+  "id": "/nasr-albaria/",
+  "name": "نسر البرية",
+  "short_name": "نسر البرية",
+  "description": "متجر نسر البرية الرسمي للإلكترونيات وإكسسوارات الموبايل والكمبيوتر في مصر.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/nasr-albaria/",
+  "scope": "/nasr-albaria/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#08091b",
+  "theme_color": "#08091b",
+  "icons": [
+    {
+      "src": "/nasr-albaria/icons/launchericon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/nasr-albaria/icons/launchericon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
