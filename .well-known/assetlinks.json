@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.antonyos2010.twa",
+      "sha256_cert_fingerprints": [
+        "40:02:CE:A4:3D:81:9B:49:7C:70:61:D6:81:31:15:65:84:D5:32:D0:E5:BE:8D:ED:57:19:90:0F:8D:22:C9:54"
+      ]
+    }
+  }
+]
