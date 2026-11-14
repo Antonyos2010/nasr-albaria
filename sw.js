@@ -1,11 +1,11 @@
-const CACHE_NAME = "nasr-albaria-pwa-v4";
+const CACHE_NAME = "nasr-albaria-pwa-v5";
 const PRECACHE = [
   "./",
-  "./manifest.json",
-  "./pwa-192x192.png?v=4",
-  "./pwa-512x512.png?v=4",
-  "./apple-touch-icon.png?v=4",
-  "./store-logo.png?v=4"
+  "./manifest.json?v=5",
+  "./pwa-192x192.png?v=5",
+  "./pwa-512x512.png?v=5",
+  "./apple-touch-icon.png?v=5",
+  "./store-logo.png?v=5"
 ];
 
 self.addEventListener("install", (event) => {

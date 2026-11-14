@@ -13,21 +13,31 @@
   "theme_color": "#08091b",
   "background_color": "#08091b",
   "prefer_related_applications": false,
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://antonyos2010.github.io/nasr-albaria/manifest.json"
+    },
+    {
+      "platform": "play",
+      "id": "io.github.antonyos2010.twa"
+    }
+  ],
   "icons": [
     {
-      "src": "./pwa-192x192.png?v=3",
+      "src": "./pwa-192x192.png?v=5",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./pwa-512x512.png?v=3",
+      "src": "./pwa-512x512.png?v=5",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./pwa-maskable-512x512.png?v=3",
+      "src": "./pwa-maskable-512x512.png?v=5",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
