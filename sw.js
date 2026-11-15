@@ -1,4 +1,4 @@
-const CACHE_NAME = "nasr-albaria-pwa-v5";
+const CACHE_NAME = "nasr-albaria-pwa-v6";
 const PRECACHE = [
   "./",
   "./manifest.json?v=5",
@@ -26,6 +26,27 @@ self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   }
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const targetUrl = (event.notification.data && event.notification.data.url) || "./";
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientsList) => {
+      for (const client of clientsList) {
+        if ("focus" in client) {
+          client.focus();
+          if (targetUrl && targetUrl !== "./" && "navigate" in client) {
+            try { client.navigate(targetUrl); } catch (e) {}
+          }
+          return;
+        }
+      }
+      if (self.clients.openWindow) {
+        return self.clients.openWindow(targetUrl);
+      }
+    })
+  );
 });
 
 self.addEventListener("fetch", (event) => {
