@@ -2709,6 +2709,216 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
 .ul-times ol{margin:6px 0 2px;padding:0 18px 0 0;max-height:150px;overflow:auto;font-size:11.5px;color:var(--muted);line-height:1.9}
 .ul-times li{direction:rtl;text-align:right}
 </style>
+<style id="nasr-billboard-and-vis-css">
+/* ===== التجاوب التلقائي والقياس الذكي للشاشة عبر الموقع والتطبيق ===== */
+:root{
+ --vp-w:100vw;
+ --vp-h:100dvh;
+ --bb-w:100vw;
+ --bb-h:75dvh;
+ --hero-max-h:75dvh;
+ --best-card-w:200px;
+ --svc-box-h:56vw;
+ --grid-cols:2;
+}
+#homeView section[data-strip-off="1"]{display:none!important}
+.hero img{max-height:var(--hero-max-h,75dvh)!important;object-fit:contain}
+.best-item{width:var(--best-card-w,200px);flex:0 0 var(--best-card-w,200px)}
+.categories-grid,.products-grid{grid-template-columns:repeat(var(--grid-cols,2),minmax(0,1fr))}
+.fx-box{height:var(--svc-box-h,56vw);max-height:75dvh}
+
+/* ===== شاشة الإعلانات الاحترافية «ضع اعلانك هنا» ===== */
+#billboardAdsSection{overflow-x:clip;margin-top:8px}
+.bb-head{
+ display:flex;align-items:center;justify-content:space-between;gap:12px;
+ margin:22px 0 12px;flex-wrap:wrap;
+}
+.bb-head-brand{display:flex;align-items:center;gap:12px;min-width:0}
+.bb-logo-wrap{
+ position:relative;width:54px;height:54px;flex:none;
+ display:grid;place-items:center;
+ filter:drop-shadow(0 0 12px rgba(0,217,255,.55)) drop-shadow(0 6px 16px rgba(166,0,255,.4));
+ animation:bbLogoFloat 3.6s ease-in-out infinite;
+}
+.bb-logo-wrap svg{width:100%;height:100%;display:block;overflow:visible}
+@keyframes bbLogoFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-3px) scale(1.04)}}
+.bb-title-col{display:flex;flex-direction:column;gap:3px;min-width:0}
+.bb-title-col h2{
+ margin:0;font-size:clamp(20px,4.5vw,26px);font-weight:900;line-height:1.25;
+ background:linear-gradient(90deg,#00e5ff,#7b61ff,#ff3d8d,#ffc83d,#00e5ff);
+ background-size:260% auto;
+ -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+ animation:bbTitleShine 5s linear infinite;
+}
+@keyframes bbTitleShine{to{background-position:260% center}}
+.bb-title-col small{font-size:11.5px;font-weight:800;color:var(--muted)}
+.bb-live-pill{
+ display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:999px;
+ font-size:11px;font-weight:900;color:#fff;
+ background:linear-gradient(135deg,#0f172a,#1e1b4b);
+ border:1.5px solid rgba(0,217,255,.55);
+ box-shadow:0 6px 18px rgba(0,217,255,.22);
+ white-space:nowrap;
+}
+.bb-live-dot{
+ width:8px;height:8px;border-radius:50%;background:#00ffaa;
+ box-shadow:0 0 0 0 rgba(0,255,170,.8);
+ animation:bbPulseDot 1.6s ease-out infinite;
+}
+@keyframes bbPulseDot{0%{box-shadow:0 0 0 0 rgba(0,255,170,.75)}70%{box-shadow:0 0 0 8px rgba(0,255,170,0)}100%{box-shadow:0 0 0 0 rgba(0,255,170,0)}}
+
+.bb-stage{
+ position:relative;
+ width:var(--bb-w,100vw);
+ margin-inline:calc(50% - (var(--bb-w,100vw) / 2));
+ height:var(--bb-h,75dvh);
+ min-height:280px;
+ overflow:hidden;
+ background:#040611;
+ border-top:2px solid rgba(0,217,255,.65);
+ border-bottom:2px solid rgba(166,0,255,.7);
+ box-shadow:0 18px 46px rgba(0,0,0,.45),0 0 28px rgba(8,123,255,.25);
+ isolation:isolate;
+ direction:ltr;
+ touch-action:pan-y;
+ -webkit-user-select:none;user-select:none;
+}
+.bb-stage::before{
+ content:"";position:absolute;inset:0;z-index:5;pointer-events:none;
+ box-shadow:inset 0 0 36px rgba(0,217,255,.16),inset 0 0 0 1px rgba(255,255,255,.1);
+}
+.bb-bg-img{
+ position:absolute;inset:-24px;width:calc(100% + 48px);height:calc(100% + 48px);
+ object-fit:cover;filter:blur(28px) saturate(1.4) brightness(.44);
+ z-index:1;opacity:0;transition:opacity .45s ease;pointer-events:none;
+}
+.bb-main-img{
+ position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+ z-index:2;opacity:0;transition:opacity .35s ease;pointer-events:none;
+}
+.bb-stage.bb-ready .bb-bg-img,
+.bb-stage.bb-ready .bb-main-img{opacity:1}
+.bb-stage.bb-intermission .bb-main-img,
+.bb-stage.bb-intermission .bb-bg-img{opacity:0!important}
+.bb-assembly{
+ position:absolute;inset:0;z-index:3;overflow:hidden;pointer-events:none;
+ perspective:1600px;transform-style:preserve-3d;
+}
+.bb-tile{
+ position:absolute;
+ will-change:transform,opacity,clip-path,filter;
+ backface-visibility:hidden;
+ background-repeat:no-repeat;
+}
+.bb-fx-canvas{
+ position:absolute;inset:0;width:100%;height:100%;display:block;
+ z-index:4;opacity:0;pointer-events:none;
+ transition:opacity .34s ease;
+}
+.bb-stage.bb-intermission .bb-fx-canvas{opacity:1}
+
+.bb-cap-bar{
+ position:absolute;left:16px;right:16px;bottom:42px;z-index:6;
+ pointer-events:none;display:flex;justify-content:center;
+ transition:opacity .3s ease,transform .3s ease;
+}
+.bb-cap-inner{
+ max-width:min(680px,92%);padding:8px 18px;border-radius:999px;
+ background:rgba(5,8,22,.72);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+ border:1px solid rgba(255,255,255,.22);color:#fff;font-size:clamp(12px,3.2vw,15px);
+ font-weight:800;text-align:center;direction:rtl;box-shadow:0 8px 24px rgba(0,0,0,.45);
+}
+.bb-stage.bb-intermission .bb-cap-bar{opacity:0;transform:translateY(8px)}
+
+.bb-nav-btn{
+ position:absolute;top:50%;transform:translateY(-50%);z-index:7;
+ width:42px;height:42px;border-radius:50%;
+ border:1.5px solid rgba(255,255,255,.32);
+ background:rgba(6,9,24,.58);color:#fff;font-size:20px;font-weight:900;
+ display:grid;place-items:center;cursor:pointer;
+ -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+ transition:transform .2s ease,background .2s ease,border-color .2s ease;
+}
+.bb-nav-btn:hover{background:rgba(0,217,255,.35);border-color:#00e5ff;transform:translateY(-50%) scale(1.08)}
+.bb-nav-btn.prev{left:12px}
+.bb-nav-btn.next{right:12px}
+.bb-dots{
+ position:absolute;left:0;right:0;bottom:14px;z-index:7;
+ display:flex;justify-content:center;gap:7px;padding:0 16px;
+}
+.bb-dots button{
+ width:9px;height:9px;padding:0;border:0;border-radius:99px;
+ background:rgba(255,255,255,.48);cursor:pointer;transition:all .3s ease;
+}
+.bb-dots button.on{
+ width:28px;background:linear-gradient(90deg,#00e5ff,#a600ff,#ff3d8d);
+ box-shadow:0 0 12px rgba(0,229,255,.7);
+}
+.bb-stage.bb-clickable{cursor:pointer}
+.bb-link-badge{
+ position:absolute;top:14px;right:14px;z-index:7;
+ display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:999px;
+ background:rgba(8,11,28,.72);border:1px solid rgba(0,229,255,.45);
+ color:#fff;font-size:11.5px;font-weight:800;direction:rtl;pointer-events:none;
+ -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+}
+
+/* ===== زر الإظهار / الإخفاء المتحرك داخل كل شريط في لوحة الإدارة ===== */
+.strip-vis-card{
+ position:relative;overflow:hidden;
+ display:flex;align-items:center;justify-content:space-between;gap:12px;
+ padding:13px 15px;margin:0 0 14px;border-radius:18px;
+ background:linear-gradient(135deg,rgba(8,123,255,.11),rgba(166,0,255,.09));
+ border:1.5px solid rgba(8,123,255,.32);
+ box-shadow:0 8px 22px rgba(0,0,0,.1);
+ transition:border-color .3s ease,background .3s ease,transform .2s ease;
+}
+.strip-vis-card.is-off{
+ background:linear-gradient(135deg,rgba(239,68,68,.11),rgba(100,116,139,.09));
+ border-color:rgba(239,68,68,.38);
+}
+.strip-vis-info{display:flex;align-items:center;gap:10px;min-width:0}
+.strip-vis-dot{
+ width:11px;height:11px;border-radius:50%;flex:none;
+ background:#10b981;box-shadow:0 0 0 4px rgba(16,185,129,.22);
+ animation:stripDotPulse 2s ease-in-out infinite;
+}
+.strip-vis-card.is-off .strip-vis-dot{
+ background:#ef4444;box-shadow:0 0 0 4px rgba(239,68,68,.2);animation:none;
+}
+@keyframes stripDotPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+.strip-vis-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.strip-vis-txt b{font-size:13.5px;font-weight:900;color:var(--text)}
+.strip-vis-txt small{font-size:11px;font-weight:800;color:var(--muted)}
+.strip-vis-btn{
+ position:relative;flex:none;width:62px;height:32px;border-radius:999px;border:0;padding:0;
+ cursor:pointer;background:#475569;
+ box-shadow:inset 0 2px 5px rgba(0,0,0,.35);
+ transition:background .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s ease;
+}
+.strip-vis-btn.on{
+ background:linear-gradient(135deg,#00d9ff,#10b981);
+ box-shadow:0 4px 16px rgba(16,185,129,.45),inset 0 1px 2px rgba(255,255,255,.35);
+}
+.strip-vis-thumb{
+ position:absolute;top:3px;right:3px;width:26px;height:26px;border-radius:50%;
+ background:#fff;color:#0f172a;font-size:13px;display:grid;place-items:center;
+ box-shadow:0 2px 8px rgba(0,0,0,.3);
+ transition:transform .38s cubic-bezier(.34,1.56,.64,1);
+}
+.strip-vis-btn.on .strip-vis-thumb{transform:translateX(-30px)}
+
+/* ===== إدارة الإعلانات 24 ساعة ===== */
+.ads-adm-box{
+ border:1.5px solid var(--border);border-radius:18px;padding:14px;
+ margin-bottom:14px;background:var(--panel);
+}
+.ads-ttl-badge{
+ display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;
+ font-size:11px;font-weight:900;background:#087bff22;color:#38bdf8;border:1px solid #38bdf866;
+}
+.ads-ttl-badge.soon{background:#f59e0b22;color:#fbbf24;border-color:#fbbf2466}
+</style>
 <script src="/_aistudio-iframe.js?v=1f94f900"></script></head>
 
 <body>
@@ -2766,7 +2976,7 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
 <main class="container" id="home">
  <!-- الصفحة الرئيسية -->
  <div id="homeView">
-  <section class="hero">
+  <section class="hero" id="heroSection">
    <img id="heroImg" src="https://antonyos2010.github.io/nasr-albaria/store-design.jpg"
     alt="متجر نسر البرية"
     onerror="this.style.display='none';this.nextElementSibling.classList.remove('hidden')">
@@ -2811,7 +3021,55 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
    </div>
   </section>
 
-  <section>
+  <section id="billboardAdsSection" class="bb-sec hidden" aria-label="شاشة الإعلانات — ضع اعلانك هنا">
+   <div class="bb-head">
+    <div class="bb-head-brand">
+     <div class="bb-logo-wrap" aria-hidden="true">
+      <svg viewBox="0 0 64 64">
+       <defs>
+        <linearGradient id="bbLgF" x1="0" y1="0" x2="1" y2="1">
+         <stop offset="0" stop-color="#00e5ff"/><stop offset=".5" stop-color="#7b61ff"/><stop offset="1" stop-color="#ff3d8d"/>
+        </linearGradient>
+        <linearGradient id="bbLgS" x1="0" y1="0" x2="1" y2="1">
+         <stop offset="0" stop-color="#0b1026"/><stop offset="1" stop-color="#191138"/>
+        </linearGradient>
+        <linearGradient id="bbLgG" x1="0" y1="0" x2="1" y2="0">
+         <stop offset="0" stop-color="#ffd166"/><stop offset="1" stop-color="#ff6b6b"/>
+        </linearGradient>
+       </defs>
+       <rect x="4" y="9" width="56" height="38" rx="9" fill="url(#bbLgS)" stroke="url(#bbLgF)" stroke-width="3.2"/>
+       <rect x="9" y="14" width="46" height="28" rx="5.5" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1.2"/>
+       <path d="M16 34l9-9 7 6 10-11 6 7v7z" fill="url(#bbLgF)" opacity=".92"/>
+       <circle cx="21" cy="21" r="3.4" fill="url(#bbLgG)"/>
+       <path d="M24 47h16l2 7H22z" fill="url(#bbLgF)"/>
+       <rect x="16" y="54" width="32" height="4" rx="2" fill="url(#bbLgF)"/>
+       <circle cx="56" cy="11" r="4" fill="#00ffaa">
+        <animate attributeName="r" values="3.2;4.8;3.2" dur="1.8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;.45;1" dur="1.8s" repeatCount="indefinite"/>
+       </circle>
+      </svg>
+     </div>
+     <div class="bb-title-col">
+      <h2>ضع اعلانك هنا</h2>
+      <small>شاشة الإعلانات الرقمية التفاعلية</small>
+     </div>
+    </div>
+    <span class="bb-live-pill"><span class="bb-live-dot"></span>عرض إعلاني متجدد</span>
+   </div>
+   <div class="bb-stage" id="bbStage">
+    <img class="bb-bg-img" id="bbBgImg" alt="" aria-hidden="true">
+    <img class="bb-main-img" id="bbMainImg" alt="إعلان نسر البرية">
+    <div class="bb-assembly" id="bbAssembly"></div>
+    <canvas class="bb-fx-canvas" id="bbIntermissionCanvas"></canvas>
+    <div class="bb-link-badge hidden" id="bbLinkBadge">🔗 اضغط للفتح</div>
+    <div class="bb-cap-bar hidden" id="bbCapBar"><div class="bb-cap-inner" id="bbCapInner"></div></div>
+    <button type="button" class="bb-nav-btn prev" id="bbPrevBtn" aria-label="الإعلان السابق">‹</button>
+    <button type="button" class="bb-nav-btn next" id="bbNextBtn" aria-label="الإعلان التالي">›</button>
+    <div class="bb-dots" id="bbDots"></div>
+   </div>
+  </section>
+
+  <section id="bestSellersSection">
    <div class="section-heading">
     <h2><svg class="ex-ic fl-ic" viewBox="0 0 32 32" aria-hidden="true"><defs>
 <linearGradient id="fG1" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff2d00"/><stop offset=".55" stop-color="#ff7a00"/><stop offset="1" stop-color="#ffc400"/></linearGradient>
@@ -3284,8 +3542,9 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
    <button class="admin-tab" type="button" onclick="adminTab('best',this)">🔥 المنتجات الأكثر مبيعًا</button>
    <button class="admin-tab" type="button" onclick="adminTab('exclusive',this)">💎 المنتجات الحصرية</button>
    <button class="admin-tab" type="button" onclick="adminTab('exclvideos',this)">🎬 فيديوهات منتجات حصرية</button>
-    <button class="admin-tab" type="button" onclick="adminTab('services',this)">🛎️ الخدمات</button>
+   <button class="admin-tab" type="button" onclick="adminTab('services',this)">🛎️ الخدمات</button>
    <button class="admin-tab" type="button" onclick="adminTab('wifi',this)">📶 كروت واي فاي</button>
+   <button class="admin-tab" type="button" onclick="adminTab('ads',this)">📺 ضع إعلانك هنا</button>
    <button class="admin-tab" type="button" onclick="adminTab('hero',this)">🖼️ الشاشة الرئيسية</button>
    <button class="admin-tab" id="admTabNotifs" type="button" onclick="adminTab('notifications',this)">📥 الإشعارات المستلمة <span class="pill red hidden" id="notifBadge">0</span></button>
    <button class="admin-tab" type="button" onclick="adminTab('sendnotif',this)">📣 إرسال إشعارات</button>
@@ -3309,6 +3568,7 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
   </div>
 
   <div id="adminCategories" class="hidden">
+   <div class="strip-vis-slot" data-strip-toggle="categories"></div>
    <button class="primary-btn hidden" type="button" id="addCategoryBtn" onclick="openCategoryForm()">＋ إضافة قسم جديد</button>
    <div class="srch-row"><input class="search-input" onkeydown="if(event.key==='Enter'){event.preventDefault();renderAdminCategories()}" id="adminCatSearch" placeholder="🔍 ابحث عن قسم..." oninput="renderAdminCategories()"><button type="button" class="srch-btn" onclick="renderAdminCategories()">🔍 بحث</button></div>
    <div id="adminCategoriesList" class="admin-list"></div>
@@ -3323,18 +3583,21 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
   </div>
 
   <div id="adminBest" class="hidden">
+   <div class="strip-vis-slot" data-strip-toggle="best"></div>
    <p class="note" style="margin:0 0 10px">اختر المنتجات اللي عايزها تظهر في شريط المنتجات الأكثر مبيعًا في الصفحة الرئيسية.</p>
    <div class="srch-row"><input class="search-input" onkeydown="if(event.key==='Enter'){event.preventDefault();renderBestAdmin()}" id="adminBestSearch" placeholder="🔍 ابحث عن منتج..." oninput="renderBestAdmin()"><button type="button" class="srch-btn" onclick="renderBestAdmin()">🔍 بحث</button></div>
    <div id="adminBestList" class="admin-list"></div>
   </div>
 
   <div id="adminExclusive" class="hidden">
+   <div class="strip-vis-slot" data-strip-toggle="exclusive"></div>
    <p class="note" style="margin:0 0 10px">اختر المنتجات اللي عايزها تظهر في شريط المنتجات الحصرية في الصفحة الرئيسية.</p>
    <div class="srch-row"><input class="search-input" onkeydown="if(event.key==='Enter'){event.preventDefault();renderExclusiveAdmin()}" id="adminExclSearch" placeholder="🔍 ابحث عن منتج..." oninput="renderExclusiveAdmin()"><button type="button" class="srch-btn" onclick="renderExclusiveAdmin()">🔍 بحث</button></div>
    <div id="adminExclList" class="admin-list"></div>
   </div>
 
   <div id="adminExclvideos" class="hidden">
+   <div class="strip-vis-slot" data-strip-toggle="exclvideos"></div>
    <p class="note" style="margin:0 0 10px">الفيديوهات دي بتظهر تحت شريط المنتجات الحصرية، وبتتقلب لوحدها كل 5 ثواني، ولما العميل يدوس على أي فيديو بيتفتح مكبّر ويعيد لحد ما يقفله. ارفع فيديو من جهازك (حتى 50MB — الأفضل MP4) أو الصق رابط فيديو مباشر أو رابط يوتيوب.</p>
    <div class="xv-form">
     <div class="field"><label>عنوان الفيديو (اختياري)</label><input id="xvTitle" maxlength="80" placeholder="مثال: شاهد المنتج الحصري"></div>
@@ -3357,7 +3620,24 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
 
   <div id="adminWifi" class="hidden"></div>
 
+  <div id="adminAds" class="hidden">
+   <div class="strip-vis-slot" data-strip-toggle="ads"></div>
+   <p class="note" style="margin:0 0 10px">شاشة الإعلانات التفاعلية «ضع اعلانك هنا» — تظهر بعرض الشاشة وارتفاع 75% مع مؤثرات عرض وتجميع احترافية مختلفة، وتُحذف كل صورة تلقائيًا بعد مرور 24 ساعة من رفعها.</p>
+   <div class="ads-adm-box">
+    <div class="field"><label>عنوان / وصف مختصر للإعلان (اختياري)</label><input id="adTitleInput" maxlength="90" placeholder="مثال: خصم 30% اليوم فقط 🔥"></div>
+    <div class="field"><label>رابط عند الضغط على الإعلان (اختياري)</label><input id="adLinkInput" type="url" dir="ltr" placeholder="https://..."></div>
+    <div class="field"><label>اختر صورة أو عدة صور إعلانات من جهازك</label><input id="adFilesInput" type="file" accept="image/jpeg,image/png,image/webp" multiple></div>
+    <div class="field"><label>أو الصق رابط صورة مباشر</label><input id="adUrlInput" type="url" dir="ltr" placeholder="https://..."></div>
+    <div class="admin-actions">
+     <button class="primary-btn" type="button" id="adSaveBtn" style="width:auto;padding:11px 22px" onclick="saveBillboardAdFromAdmin()">＋ نشر الإعلان (صالح 24 ساعة)</button>
+    </div>
+    <div class="message" id="adAdminMsg"></div>
+   </div>
+   <div id="adminAdsList" class="admin-list"></div>
+  </div>
+
   <div id="adminHero" class="hidden">
+   <div class="strip-vis-slot" data-strip-toggle="hero"></div>
    <h3 class="sub-title">صورة الشاشة الرئيسية</h3>
    <img id="heroPreview" class="hero-preview" alt="الصورة الحالية">
    <div class="field"><label>ارفع صورة جديدة من جهازك</label><input id="heroFile" type="file" accept="image/jpeg,image/png,image/webp"></div>
@@ -3889,6 +4169,26 @@ function clearDownloadInitiated(){
  try{localStorage.removeItem("nasr_dl_init_at")}catch(e){}
 }
 
+function triggerInstantAppPackageDownload(){
+ try{
+  const isExh=(window.STORE_MODE==="exhibition");
+  const title=isExh?"معرض نسر البرية الرسمي":"متجر نسر البرية الرسمي";
+  const targetUrl="https://antonyos2010.github.io/nasr-albaria/";
+  const fname=(isExh?"معرض-نسر-البرية":"متجر-نسر-البرية")+".html";
+  const htmlDoc='<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><title>'+title+'</title><meta http-equiv="refresh" content="0;url='+targetUrl+'"><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#070a18;color:#fff;font-family:system-ui,sans-serif;text-align:center}a{color:#00e5ff;font-weight:900;text-decoration:none;padding:14px 28px;border:2px solid #00e5ff;border-radius:999px;display:inline-block;margin-top:14px}</style></head><body><div><h2>'+title+' 🦅</h2><a href="'+targetUrl+'">فتح التطبيق الآن</a></div><script>location.replace("'+targetUrl+'")<\/script></body></html>';
+  const blob=new Blob([htmlDoc],{type:"text/html;charset=utf-8"});
+  const bUrl=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=bUrl;
+  a.download=fname;
+  a.style.display="none";
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(()=>{try{a.remove();URL.revokeObjectURL(bUrl)}catch(e){}},2500);
+  return true;
+ }catch(e){return false}
+}
+
 window.performDirectAppDownload=async function(sourceTag){
  clearDownloadInitiated();
  const customUrl=window.getConfiguredDirectDlUrl();
@@ -3897,7 +4197,7 @@ window.performDirectAppDownload=async function(sourceTag){
   try{
    const a=document.createElement("a");
    a.href=customUrl;
-   a.target="_blank";
+   a.setAttribute("download","");
    a.rel="noopener noreferrer";
    a.style.display="none";
    document.body.appendChild(a);
@@ -3911,12 +4211,18 @@ window.performDirectAppDownload=async function(sourceTag){
  const st=typeof triggerNativeInstallPrompt==="function"?await triggerNativeInstallPrompt():"unavailable";
  if(st==="accepted"){
   recordDownloadInitiated(sourceTag||"native_accepted");
- }else if(st==="unavailable"&&/iPhone|iPad|iPod/i.test(navigator.userAgent||"")){
-  recordDownloadInitiated("ios_manual_guide");
- }else{
-  clearDownloadInitiated();
+  return {status:"accepted"};
  }
- return {status:st};
+ if(st==="dismissed"){
+  clearDownloadInitiated();
+  return {status:"dismissed"};
+ }
+ if(triggerInstantAppPackageDownload()){
+  recordDownloadInitiated("direct_downloaded");
+  return {status:"direct_downloaded"};
+ }
+ clearDownloadInitiated();
+ return {status:"unavailable"};
 };
 
 window.runInteractiveInstallVerification=async function({panelEl,verifyBtn,dlBtn,isPreview,onPass}){
@@ -3946,7 +4252,7 @@ window.runInteractiveInstallVerification=async function({panelEl,verifyBtn,dlBtn
  if(verifyBtn){verifyBtn.disabled=true;verifyBtn.textContent="⏳ جارٍ التحقق الذكي الآن..."}
  let signalOk=false,byInitiation=false,nativeProofOk=false;
  const hasCustomUrl=!!(typeof window.getConfiguredDirectDlUrl==="function"&&window.getConfiguredDirectDlUrl());
- const isIOSUa=/iPhone|iPad|iPod/i.test(navigator.userAgent||"");
+ const dlSrc=(()=>{try{return sessionStorage.getItem("nasr_dl_init_src")||""}catch(e){return ""}})();
  const chromiumPromptStillPending=!hasCustomUrl&&!!(window.__installPromptFired&&window.__deferredInstallPrompt);
  const signalPromise=(async()=>{
   try{
@@ -3976,7 +4282,7 @@ window.runInteractiveInstallVerification=async function({panelEl,verifyBtn,dlBtn
  if(!panelEl.isConnected)return false;
  if(detected){
   signalOk=true;
- }else if(wasDownloadInitiatedRecently()&&!chromiumPromptStillPending&&(hasCustomUrl||isIOSUa)){
+ }else if(wasDownloadInitiatedRecently()&&!chromiumPromptStillPending&&(hasCustomUrl||dlSrc==="direct_downloaded")){
   signalOk=true;
   byInitiation=true;
  }
@@ -4124,7 +4430,6 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
  const existing=document.getElementById("mandatoryAppGate");
  const isExh=(window.STORE_MODE==="exhibition");
  const bLabel=isExh?"معرض نسر البرية الرسمي":"متجر نسر البرية الرسمي";
- const {isIOS,isInApp,osLabel}=getClientInstallEnv();
  const logoSrc=(typeof window.__NASR_LOGO==="string"&&window.__NASR_LOGO)||"./pwa-192x192.png";
  const hasCustomUrl=!!window.getConfiguredDirectDlUrl();
  const perksHtml=isExh
@@ -4132,24 +4437,13 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
     <div class="mand-perk"><span>💬</span><span>طلب واستفسار فوري عبر واتساب</span></div>`
   :`<div class="mand-perk"><span>⚡</span><span>تصفّح أسرع بدون شريط متصفح</span></div>
     <div class="mand-perk"><span>🔔</span><span>إشعارات العروض والخصومات</span></div>`;
- const guideSteps=isInApp
-  ?`<div class="mand-step-row"><i>1</i><span>أنت تفتح الرابط الآن من <strong>متصفح داخلي لتطبيق آخر</strong> — قد يمنع التثبيت التلقائي.</span></div>
-    <div class="mand-step-row"><i>2</i><span>اضغط القائمة <strong>(⋮)</strong> أو أيقونة المشاركة بالأعلى واختر <strong>«الفتح في المتصفح» (Chrome أو Safari)</strong>.</span></div>
-    <div class="mand-step-row"><i>3</i><span>ثم اضغط زر التحميل المباشر وسيتم التثبيت فورًا!</span></div>`
-  :(isIOS
-   ?`<div class="mand-step-row"><i>1</i><span>اضغط أيقونة المشاركة <strong>(⬆️)</strong> في شريط <strong>Safari</strong> بالأسفل.</span></div>
-     <div class="mand-step-row"><i>2</i><span>اختر <strong>«إضافة إلى الصفحة الرئيسية» (Add to Home Screen)</strong> ثم اضغط <strong>«إضافة»</strong>.</span></div>
-     <div class="mand-step-row"><i>3</i><span>افتح تطبيق <strong>نسر البرية</strong> من شاشتك الرئيسية للمتابعة.</span></div>`
-   :`<div class="mand-step-row"><i>1</i><span>اضغط زر <strong>«تحميل التطبيق الآن»</strong> بالأعلى ثم اختر <strong>«تثبيت / Install»</strong>.</span></div>
-     <div class="mand-step-row"><i>2</i><span>إذا لم تظهر النافذة تلقائيًا، افتح قائمة المتصفح <strong>(⋮)</strong> واختر <strong>«تثبيت التطبيق»</strong>.</span></div>
-     <div class="mand-step-row"><i>3</i><span>أو امسح الباركود بكاميرا هاتفك للتنزيل السريع.</span></div>`);
  const dlBtnLabel=hasCustomUrl?"⬇️ تحميل التطبيق الآن (رابط مباشر)":"⬇️ تحميل التطبيق الآن";
  const prevHeadline=simUninst?"تم رصد حذف التطبيق من الهاتف 📲":"حمّل التطبيق الرسمي للمتابعة 📲";
  const prevDesc=simUninst
-  ?"تم حذف تطبيق نسر البرية من الجهاز! أعد تثبيت التطبيق الآن وسيتم فتح حسابك والمتجر فورًا."
+  ?"تم حذف تطبيق نسر البرية من الجهاز! اضغط الزر أدناه لتحميل التطبيق فورًا وسيتم فتح حسابك والمتجر مباشرة."
   :(isExh
-   ?"تم تسجيل دخولك بنجاح! لتحقيق أسرع تجربة وتصفّح منتجات المعرض والخصومات، حمّل التطبيق الرسمي للمتابعة."
-   :"تم تسجيل دخولك بنجاح! لتصفّح كافة المنتجات والطلب بسهولة وأمان، حمّل تطبيق نسر البرية الرسمي للمتابعة.");
+   ?"تم تسجيل دخولك بنجاح! لتحقيق أسرع تجربة وتصفّح منتجات المعرض والخصومات، اضغط لتحميل التطبيق مباشرة."
+   :"تم تسجيل دخولك بنجاح! لتصفّح كافة المنتجات والطلب بسهولة وأمان، اضغط لتحميل تطبيق نسر البرية مباشرة.");
 
  if(existing){
   const badge=existing.querySelector(".mand-app-badge");
@@ -4187,23 +4481,7 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
     </div>
     <button type="button" class="mand-verify-pill" id="mandVerifyBtn">✓ تم التحميل — تحقّق والمتابعة الآن</button>
     <div class="verify-panel hidden" id="mandVerifyPanel"></div>
-    <button type="button" class="mand-help-toggle" id="mandHelpToggle">؟ مساعدة التثبيت السريع وباركود الموبايل</button>
-    <div class="mand-guide hidden" id="mandGuideBox">
-     <div class="mand-guide-hd">
-      <b>⚡ طريقة التثبيت السريع</b>
-      <span class="mand-guide-os">${escapeHTML(osLabel)}</span>
-     </div>
-     <div class="mand-steps">${guideSteps}</div>
-     <div class="mand-sub-actions">
-      <button type="button" class="mand-sub-btn" id="mandCopyBtn">🔗 نسخ رابط التحميل</button>
-      <button type="button" class="mand-sub-btn" id="mandQrToggleBtn">📱 باركود الموبايل</button>
-     </div>
-     <div class="mand-qr-box hidden" id="mandQrBox">
-      <canvas id="mandQrCanvas" width="180" height="180"></canvas>
-      <small>وجّه كاميرا هاتفك نحو الباركود للتثبيت المباشر</small>
-     </div>
-    </div>
-    <div class="mand-foot-trust">🛡️ تطبيق رسمي آمن ومجاني 100% · حسابك وبياناتك محفوظة تلقائيًا</div>
+    <div class="mand-foot-trust">🛡️ تحميل فوري وآمن 100% · حسابك وبياناتك محفوظة تلقائيًا</div>
    </div>
   </div>`;
 
@@ -4215,25 +4493,12 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
  const dlBtn=ov.querySelector("#mandDlBtn");
  const verifyBtn=ov.querySelector("#mandVerifyBtn");
  const verifyPanel=ov.querySelector("#mandVerifyPanel");
- const helpToggle=ov.querySelector("#mandHelpToggle");
- const guideBox=ov.querySelector("#mandGuideBox");
- const copyBtn=ov.querySelector("#mandCopyBtn");
- const qrToggle=ov.querySelector("#mandQrToggleBtn");
- const qrBox=ov.querySelector("#mandQrBox");
 
  const showVerifyBanner=(msg,isOk)=>{
   if(!verifyPanel)return;
   verifyPanel.classList.remove("hidden");
   verifyPanel.innerHTML=`<div class="verify-result ${isOk?"ok":"warn"}">${escapeHTML(msg)}</div>`;
  };
-
- if(helpToggle&&guideBox){
-  helpToggle.onclick=()=>{
-   const open=guideBox.classList.contains("hidden");
-   guideBox.classList.toggle("hidden",!open);
-   helpToggle.textContent=open?"▲ إخفاء مساعدة التثبيت":"؟ مساعدة التثبيت السريع وباركود الموبايل";
-  };
- }
 
  if(dlBtn){
   dlBtn.onclick=async()=>{
@@ -4247,29 +4512,12 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
     hideMandatoryAppGate(true);
     return;
    }
-   if(res.status==="external"){
+   if(res.status==="external"||res.status==="direct_downloaded"){
     if(verifyBtn)verifyBtn.textContent="✅ اكتمل التحميل — تحقّق وادخل للمتجر الآن";
-    showVerifyBanner("📥 تم فتح التحميل المباشر! بعد التثبيت اضغط زر «تحقّق والمتابعة الآن» بالأعلى للدخول فورًا.",true);
+    showVerifyBanner("📥 بدأ تحميل التطبيق مباشرة على جهازك الآن! اضغط «تحقّق والمتابعة الآن» للدخول فورًا.",true);
     return;
    }
-   if(res.status==="dismissed"){
-    showVerifyBanner("⚠️ اضغط «تثبيت / Install» عند ظهور النافذة أو استخدم «تحقّق والمتابعة الآن» بعد التثبيت.",false);
-    return;
-   }
-   if(guideBox&&guideBox.classList.contains("hidden")){
-    guideBox.classList.remove("hidden");
-    if(helpToggle)helpToggle.textContent="▲ إخفاء مساعدة التثبيت";
-   }
-   if(isInApp)showVerifyBanner("⚠️ المتصفح الداخلي يمنع التثبيت التلقائي — افتح الرابط في Chrome أو Safari بالخطوات بالأسفل، أو اضغط تحقق بعد الفتح.",false);
-   else if(isIOS)showVerifyBanner("📲 في Safari اضغط زر المشاركة (⬆️) ثم «إضافة إلى الصفحة الرئيسية»، ثم اضغط «تحقّق والمتابعة الآن».",false);
-   else showVerifyBanner("📲 اضغط القائمة (⋮) في المتصفح ثم «تثبيت التطبيق»، ثم اضغط «تحقّق والمتابعة الآن».",false);
-  };
- }
- if(copyBtn){
-  copyBtn.onclick=async()=>{
-   const url=typeof getDefaultAppQrUrl==="function"?getDefaultAppQrUrl():(location.origin+location.pathname+"#/app-download");
-   try{await navigator.clipboard.writeText(url);okToast("✅ تم نسخ الرابط — افتحه في Chrome أو Safari للتثبيت")}
-   catch(e){showVerifyBanner("انسخ الرابط التالي وافتحه في المتصفح: "+url,false)}
+   showVerifyBanner("⚠️ اضغط «تحميل التطبيق الآن» مرة أخرى لإتمام التثبيت المباشر.",false);
   };
  }
  if(verifyBtn){
@@ -4284,18 +4532,6 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
      hideMandatoryAppGate(true);
     }
    });
-  };
- }
- if(qrToggle&&qrBox){
-  qrToggle.onclick=()=>{
-   const willShow=qrBox.classList.contains("hidden");
-   qrBox.classList.toggle("hidden",!willShow);
-   if(willShow&&window.drawQrOnCanvas){
-    try{
-     const target=typeof getDefaultAppQrUrl==="function"?getDefaultAppQrUrl():(location.origin+location.pathname+"#/app-download");
-     window.drawQrOnCanvas(qrBox.querySelector("#mandQrCanvas"),target);
-    }catch(e){}
-   }
   };
  }
 
@@ -4937,7 +5173,7 @@ function setHero(url){
 }
 async function loadSettings(){
  try{
-  const {data}=await supabaseClient.from("site_settings").select("key,value").in("key",["hero_image","store_display_mode","app_download_prompt_mode","app_direct_download_url","app_qr_target_url"]);
+  const {data}=await supabaseClient.from("site_settings").select("key,value").in("key",["hero_image","store_display_mode","app_download_prompt_mode","app_direct_download_url","app_qr_target_url","billboard_ads_v1","strip_visibility_v1","services_visible"]);
   const map={};(data||[]).forEach(r=>{map[r.key]=r.value});
   setHero(map.hero_image||DEFAULT_HERO);
   if(map.store_display_mode==="store"||map.store_display_mode==="exhibition")applyStoreMode(map.store_display_mode);
@@ -4946,6 +5182,9 @@ async function loadSettings(){
   else applyAppDownloadPromptMode(window.APP_DL_PROMPT_MODE);
   if(typeof map.app_direct_download_url==="string")applyAppDirectDownloadUrl(map.app_direct_download_url);
   if(typeof map.app_qr_target_url==="string")applyAdminQrTargetUrl(map.app_qr_target_url);
+  if(typeof map.billboard_ads_v1==="string"&&typeof window.applyBillboardAdsRaw==="function")window.applyBillboardAdsRaw(map.billboard_ads_v1);
+  if(typeof map.strip_visibility_v1==="string"&&typeof window.applyStripVisibilityRaw==="function")window.applyStripVisibilityRaw(map.strip_visibility_v1);
+  if(typeof map.services_visible==="string"){window.servicesVisible=(String(map.services_visible)!=="0")}
  }catch(e){setHero(DEFAULT_HERO);applyStoreMode(window.STORE_MODE);applyAppDownloadPromptMode(window.APP_DL_PROMPT_MODE)}
  try{
   supabaseClient.channel("store-mode-sync")
@@ -4962,6 +5201,15 @@ async function loadSettings(){
    })
    .on("postgres_changes",{event:"*",schema:"public",table:"site_settings",filter:"key=eq.app_qr_target_url"},p=>{
     if(p&&p.new)applyAdminQrTargetUrl(p.new.value);
+   })
+   .on("postgres_changes",{event:"*",schema:"public",table:"site_settings",filter:"key=eq.billboard_ads_v1"},p=>{
+    if(p&&p.new&&typeof window.applyBillboardAdsRaw==="function")window.applyBillboardAdsRaw(p.new.value);
+   })
+   .on("postgres_changes",{event:"*",schema:"public",table:"site_settings",filter:"key=eq.strip_visibility_v1"},p=>{
+    if(p&&p.new&&typeof window.applyStripVisibilityRaw==="function")window.applyStripVisibilityRaw(p.new.value);
+   })
+   .on("postgres_changes",{event:"*",schema:"public",table:"site_settings",filter:"key=eq.services_visible"},p=>{
+    if(p&&p.new){window.servicesVisible=(String(p.new.value)!=="0");if(typeof window.renderServices==="function")window.renderServices();if(typeof window.renderServicesAdmin==="function")window.renderServicesAdmin()}
    }).subscribe();
  }catch(e){}
 }
@@ -6126,14 +6374,16 @@ function adminTab(tab,button){
  }
  if(currentAdminTab==="notifications"&&tab!=="notifications"){notifs=notifs.filter(n=>!n.is_read);updateNotifBadge();renderNotifications()}
  currentAdminTab=tab;
- ["overview","products","categories","subcats","orders","payments","best","exclusive","exclvideos","services","wifi","hero","notifications","sendnotif","appqr","ownership"].forEach(t=>{
+ ["overview","products","categories","subcats","orders","payments","best","exclusive","exclvideos","services","wifi","ads","hero","notifications","sendnotif","appqr","ownership"].forEach(t=>{
   const el=$("admin"+t.charAt(0).toUpperCase()+t.slice(1));
   if(el)el.classList.toggle("hidden",t!==tab);
  });
  document.querySelectorAll(".admin-tab").forEach(b=>b.classList.remove("active"));
  if(button)button.classList.add("active");
+ if(window.refreshStripToggles)window.refreshStripToggles();
  if(tab==="subcats"&&window.renderSubcatsAdmin)window.renderSubcatsAdmin();
  if(tab==="exclvideos"&&window.renderXvAdmin)window.renderXvAdmin();
+ if(tab==="ads"&&window.renderBillboardAdsAdmin)window.renderBillboardAdsAdmin();
  if(tab==="overview"){ovOffset=0;loadOverview()}
  if(tab==="payments"){loadAdminPayments();markPaysSeen()}
  if(tab==="orders"){loadAdminOrders();refreshPendingOrders().then(markOrdersSeen)}
@@ -9849,7 +10099,7 @@ window.renderServicesAdmin=function(){
  const box=$("adminServicesList");if(!box)return;
  const isExh=window.STORE_MODE==="exhibition";
  const list=window.servicesList||[],on=window.servicesVisible!==false;
- const head=`<div class="wx-sw-row"><span>إظهار شريط «الخدمات» في ${isExh?"المعرض":"المتجر"}</span><button type="button" class="wfa-sw ${on?"on":""}" data-sx="all" aria-label="إظهار / إخفاء الشريط"></button></div>`;
+ const head=`<div class="strip-vis-card ${on?"":"is-off"}"><div class="strip-vis-info"><span class="strip-vis-dot"></span><div class="strip-vis-txt"><b>إظهار شريط «الخدمات التي نقدمها»</b><small>${on?"ظاهر حاليًا في المتجر والمعرض والتطبيق":"مخفي حاليًا عن جميع العملاء"}</small></div></div><button type="button" class="strip-vis-btn ${on?"on":""}" data-sx="all" aria-label="إظهار / إخفاء الشريط"><span class="strip-vis-thumb">${on?"👁️":"🚫"}</span></button></div>`;
  box.innerHTML=head+(list.length?list.map((s,i)=>`
   <div class="admin-item ${s.hidden?"wx-hid":""}">
    <div class="meta">${s.image_url?`<img class="thumb" src="${esc(s.image_url)}" alt="">`:'<div class="thumb">🛎️</div>'}
@@ -9995,7 +10245,7 @@ window.renderWifiAdmin=function renderWifiAdmin(){
    <div class="wx-types"><div class="wx-th">📶 كروت الصورة دي</div>${mine.length?mine.map((t,k)=>typeRow(t,k,mine.length)).join(""):'<div class="wx-empty">لا توجد كروت على الصورة دي</div>'}<button type="button" class="wx-add" data-x="addtype" data-i="${i}">＋ إضافة كارت على الصورة دي</button></div></div></div></div>`}).join("");
  box.innerHTML=`<div class="wfa-hero">${WIFI("h")}<div><h3>كروت واي فاي</h3><small>كل صورة في الشريط ليها كروتها الخاصة</small></div></div>
  <div class="wfa-stats"><div class="wfa-stat"><b>${imgs.length}</b><small>الصور</small></div><div class="wfa-stat"><b>${nShown}</b><small>ظاهرة</small></div><div class="wfa-stat"><b>${types.length}</b><small>الكروت</small></div></div>
- <div class="wx-sw-row"><span>إظهار قسم «كروت واي فاي» في ${window.STORE_MODE==="exhibition"?"المعرض":"المتجر"}</span><button type="button" class="wfa-sw ${on?"on":""}" data-x="vis" aria-label="إظهار / إخفاء القسم"></button></div>
+ <div class="strip-vis-card ${on?"":"is-off"}"><div class="strip-vis-info"><span class="strip-vis-dot"></span><div class="strip-vis-txt"><b>إظهار قسم «كروت واي فاي»</b><small>${on?"ظاهر حاليًا في المتجر والمعرض والتطبيق":"مخفي حاليًا عن جميع العملاء"}</small></div></div><button type="button" class="strip-vis-btn ${on?"on":""}" data-x="vis" aria-label="إظهار / إخفاء القسم"><span class="strip-vis-thumb">${on?"👁️":"🚫"}</span></button></div>
  <button class="primary-btn" type="button" data-x="addimg">＋ إضافة صورة للشريط</button>
  ${imgs.length?cards:'<div class="empty" style="margin-top:12px">لا توجد صور في الشريط. أضف أول صورة.</div>'}`;
 };
@@ -11411,9 +11661,9 @@ function showAppInviteModal(){
    if(typeof okToast==="function")okToast("✅ تم تثبيت تطبيق نسر البرية على جهازك بنجاح!");
    return;
   }
-  if(res.status==="external"){
+  if(res.status==="external"||res.status==="direct_downloaded"){
    ov.remove();
-   if(typeof okToast==="function")okToast("📥 بدأ تحميل التطبيق مباشرة!");
+   if(typeof okToast==="function")okToast("📥 بدأ تحميل التطبيق مباشرة على جهازك الآن!");
    return;
   }
   ov.remove();
@@ -11609,15 +11859,6 @@ window.renderAppDownloadPage=function(container){
     </div>
    </div>
 
-   <details class="dl-steps-acc" id="dlStepsAcc">
-    <summary><span>📱 طريقة التثبيت اليدوي السريع على جهازك (${esc(osLabel)})</span><span>▾</span></summary>
-    <div class="dl-steps">
-     <div class="dl-step"><i>1</i><div><b>شاشة كاملة بدون شريط متصفح</b><span>يعمل كتطبيق مستقل بأيقونة «نسر البرية» على الشاشة الرئيسية بدون الشريط العلوي للمتصفح.</span></div></div>
-     <div class="dl-step"><i>2</i><div><b>${isIOS?"لمستخدمي آيفون وآيباد (Safari)":"لمستخدمي أندرويد والكمبيوتر (Chrome)"}</b><span>${isInApp?"افتح الرابط من القائمة (⋮) داخل متصفح Chrome أو Safari أولًا، ثم اضغط زر التحميل بالأعلى.":(isIOS?"اضغط زر المشاركة (⬆️) أسفل Safari، ثم اختر «إضافة إلى الصفحة الرئيسية» ثم «إضافة».":"اضغط زر «تحميل التطبيق الآن مجانًا» بالأعلى، أو اختر من قائمة المتصفح (⋮) «تثبيت التطبيق».")}</span></div></div>
-     <div class="dl-step"><i>3</i><div><b>تحديث تلقائي ومزامنة فورية</b><span>أي ميزة جديدة تصلك مباشرة للتحديث في ثوانٍ مع حفظ كامل لحسابك وبياناتك.</span></div></div>
-    </div>
-   </details>
-
    <div class="qr-card">
     <h3 style="margin:0 0 6px;font-size:17px;font-weight:900">📱 باركود التحميل المباشر</h3>
     <p style="margin:0 0 8px;font-size:12.5px;color:var(--muted);font-weight:700">وجّه كاميرا أي هاتف نحو الباركود للوصول فورًا لزر التحميل المباشر</p>
@@ -11643,7 +11884,6 @@ window.renderAppDownloadPage=function(container){
  const verifyPanel=container.querySelector("#dlVerifyPanel");
  const copyBtn=container.querySelector("#dlCopyBtn");
  const guideMsg=container.querySelector("#dlGuideMsg");
- const stepsAcc=container.querySelector("#dlStepsAcc");
 
  if(nowBtn){
   try{
@@ -11676,26 +11916,15 @@ window.renderAppDownloadPage=function(container){
     return;
    }
    nowBtn.textContent=prevTx;
-   if(res.status==="external"){
+   if(res.status==="external"||res.status==="direct_downloaded"){
     if(verifyBtn)verifyBtn.textContent="✅ اكتمل التحميل — تحقّق وادخل للمتجر الآن";
     if(verifyPanel){
      verifyPanel.classList.remove("hidden");
-     verifyPanel.innerHTML='<div class="verify-result ok">📥 بدأ تحميل التطبيق مباشرة! بعد التثبيت اضغط زر «تحقّق وادخل للمتجر الآن» بالأعلى للدخول.</div>';
+     verifyPanel.innerHTML='<div class="verify-result ok">📥 بدأ تحميل التطبيق مباشرة على جهازك الآن! اضغط «تحقّق وادخل للمتجر الآن» للدخول فورًا.</div>';
     }
     return;
    }
-   if(res.status==="dismissed"){
-    guideMsg.textContent="اضغط الزر بالأعلى مرة أخرى واختر «تثبيت / Install» لإضافة التطبيق فورًا.";
-    return;
-   }
-   if(stepsAcc)stepsAcc.open=true;
-   if(isInApp){
-    guideMsg.textContent="⚠️ أنت داخل متصفح تطبيق آخر — افتح الرابط في Chrome أو Safari من القائمة بالأعلى ثم اضغط زر التحميل.";
-   }else if(isIOS){
-    guideMsg.textContent="📲 في Safari اضغط زر المشاركة (⬆️) بالأسفل ثم «إضافة إلى الصفحة الرئيسية»، ثم اضغط «تحقّق وادخل للمتجر الآن».";
-   }else{
-    guideMsg.textContent="📲 اضغط القائمة (⋮) بالأعلى في المتصفح واختر «تثبيت التطبيق»، ثم اضغط «تحقّق وادخل للمتجر الآن».";
-   }
+   guideMsg.textContent="اضغط الزر بالأعلى مرة أخرى لبدء التحميل المباشر.";
   };
  }
  if(verifyBtn){
@@ -12369,6 +12598,819 @@ $("xvSave").addEventListener("click",async()=>{
 const _le=window.loadExtras;
 window.loadExtras=async function(){if(_le)await _le.apply(this,arguments);await load()};
 if(typeof supabaseClient!=="undefined"&&supabaseClient)load();
+})();
+</script>
+<script data-nasr-core="1" id="nasr-billboard-vis-engine">
+/* ============================================================================
+   محرك التجاوب التلقائي + أزرار إظهار/إخفاء الأشرطة + شاشة الإعلانات «ضع اعلانك هنا»
+   (صلاحية 24 ساعة تلقائيًا + تجميع صور غير مكرر + فواصل ألوان ضوئية ثانيتين لا تتكرر)
+   ============================================================================ */
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const esc=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* ----------------------------------------------------------------------------
+   1) قياس وضبط أبعاد الشاشة والأشرطة والكروت تلقائيًا في الموقع والتطبيق
+   ---------------------------------------------------------------------------- */
+let lastCalW=0,lastCalH=0,calTimer=null;
+window.calibrateResponsiveViewport=function(){
+ const docEl=document.documentElement;
+ const vw=Math.max(280,Math.min(window.innerWidth||9999,docEl.clientWidth||window.innerWidth||390));
+ const vh=Math.max(360,(window.visualViewport&&window.visualViewport.height)||window.innerHeight||docEl.clientHeight||800);
+ const bbH=Math.max(260,Math.round(vh*0.75));
+ const heroMaxH=Math.max(240,Math.round(vh*0.75));
+ let bestCardW=200;
+ if(vw<480)bestCardW=Math.round(Math.max(150,Math.min(205,(vw-42)/2.08)));
+ else if(vw<900)bestCardW=Math.round(Math.max(182,Math.min(224,vw/3.2)));
+ else bestCardW=220;
+ const gridCols=vw>=980?4:(vw>=640?3:2);
+ const svcBoxH=Math.round(Math.min(vh*0.72,Math.max(220,vw*0.56)));
+
+ docEl.style.setProperty("--vp-w",vw+"px");
+ docEl.style.setProperty("--vp-h",vh+"px");
+ docEl.style.setProperty("--bb-w",vw+"px");
+ docEl.style.setProperty("--bb-h",bbH+"px");
+ docEl.style.setProperty("--hero-max-h",heroMaxH+"px");
+ docEl.style.setProperty("--best-card-w",bestCardW+"px");
+ docEl.style.setProperty("--grid-cols",String(gridCols));
+ docEl.style.setProperty("--svc-box-h",svcBoxH+"px");
+
+ const canvas=$("bbIntermissionCanvas"),stage=$("bbStage");
+ if(canvas&&stage){
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  const tw=Math.max(280,Math.round((stage.clientWidth||vw)*dpr));
+  const th=Math.max(220,Math.round((stage.clientHeight||bbH)*dpr));
+  if(canvas.width!==tw||canvas.height!==th){canvas.width=tw;canvas.height=th}
+ }
+
+ if(Math.abs(vw-lastCalW)>10){
+  lastCalW=vw;
+  if(typeof stripState==="object"){delete stripState.best;delete stripState.excl}
+  if(typeof renderBestSellers==="function"){
+   try{renderBestSellers()}catch(e){}
+  }
+ }
+ lastCalH=vh;
+};
+const scheduleCal=()=>{clearTimeout(calTimer);calTimer=setTimeout(window.calibrateResponsiveViewport,60)};
+window.addEventListener("resize",scheduleCal,{passive:true});
+window.addEventListener("orientationchange",()=>{setTimeout(window.calibrateResponsiveViewport,120)},{passive:true});
+if(window.visualViewport){
+ window.visualViewport.addEventListener("resize",scheduleCal,{passive:true});
+}
+if(typeof ResizeObserver!=="undefined"){
+ try{new ResizeObserver(scheduleCal).observe(document.documentElement)}catch(e){}
+}
+document.addEventListener("DOMContentLoaded",window.calibrateResponsiveViewport);
+window.addEventListener("load",window.calibrateResponsiveViewport);
+setTimeout(window.calibrateResponsiveViewport,50);
+
+/* ----------------------------------------------------------------------------
+   2) نظام إظهار وإخفاء كل شريط من داخل خانته الخاصة في لوحة الإدارة
+   ---------------------------------------------------------------------------- */
+const STRIP_KEY="strip_visibility_v1";
+const STRIP_META={
+ hero:{secId:"heroSection",label:"الشاشة الرئيسية"},
+ ads:{secId:"billboardAdsSection",label:"شاشة الإعلانات «ضع اعلانك هنا»"},
+ best:{secId:"bestSellersSection",label:"المنتجات الأكثر مبيعًا"},
+ exclusive:{secId:"exclusiveSection",label:"منتجات حصرية"},
+ exclvideos:{secId:"exclVideosSection",label:"فيديوهات منتجات حصرية"},
+ categories:{secId:"storeSection",label:"الأقسام الرئيسية"}
+};
+const defaultVis=()=>({hero:true,ads:true,best:true,exclusive:true,exclvideos:true,categories:true});
+window.STRIP_VISIBILITY=(()=>{
+ const def=defaultVis();
+ try{
+  const raw=localStorage.getItem("nasr_strip_visibility_v1");
+  if(raw){const o=JSON.parse(raw);if(o&&typeof o==="object")return {...def,...o}}
+ }catch(e){}
+ return def;
+})();
+
+function renderStripToggleCards(){
+ document.querySelectorAll(".strip-vis-slot[data-strip-toggle]").forEach(slot=>{
+  const k=slot.dataset.stripToggle;
+  const meta=STRIP_META[k];if(!meta)return;
+  const on=window.STRIP_VISIBILITY[k]!==false;
+  slot.innerHTML=`
+   <div class="strip-vis-card ${on?"":"is-off"}">
+    <div class="strip-vis-info">
+     <span class="strip-vis-dot"></span>
+     <div class="strip-vis-txt">
+      <b>إظهار شريط «${esc(meta.label)}»</b>
+      <small>${on?"ظاهر حاليًا في المتجر والمعرض والتطبيق":"مخفي حاليًا عن جميع العملاء"}</small>
+     </div>
+    </div>
+    <button type="button" class="strip-vis-btn ${on?"on":""}" data-strip-sw="${esc(k)}" aria-label="إظهار أو إخفاء ${esc(meta.label)}">
+     <span class="strip-vis-thumb">${on?"👁️":"🚫"}</span>
+    </button>
+   </div>`;
+ });
+}
+window.refreshStripToggles=renderStripToggleCards;
+
+window.applyStripVisibility=function(nextMap){
+ if(nextMap&&typeof nextMap==="object"){
+  window.STRIP_VISIBILITY={...defaultVis(),...nextMap};
+  try{localStorage.setItem("nasr_strip_visibility_v1",JSON.stringify(window.STRIP_VISIBILITY))}catch(e){}
+ }
+ Object.keys(STRIP_META).forEach(k=>{
+  const meta=STRIP_META[k];
+  const sec=$(meta.secId);if(!sec)return;
+  const off=window.STRIP_VISIBILITY[k]===false;
+  if(off)sec.setAttribute("data-strip-off","1");
+  else sec.removeAttribute("data-strip-off");
+ });
+ if(adsEngineReady&&typeof syncAdsPlaybackAndAdmin==="function")syncAdsPlaybackAndAdmin();
+ renderStripToggleCards();
+};
+window.applyStripVisibilityRaw=function(raw){
+ try{
+  const o=typeof raw==="string"?JSON.parse(raw):raw;
+  if(o&&typeof o==="object")window.applyStripVisibility(o);
+ }catch(e){}
+};
+
+document.addEventListener("click",async e=>{
+ const btn=e.target.closest("[data-strip-sw]");
+ if(!btn)return;
+ if(typeof isAdmin==="function"&&!isAdmin())return;
+ const k=btn.dataset.stripSw;
+ if(!STRIP_META[k])return;
+ const nextVal=(window.STRIP_VISIBILITY[k]===false);
+ const nextMap={...window.STRIP_VISIBILITY,[k]:nextVal};
+ window.applyStripVisibility(nextMap);
+ try{
+  const {error}=await supabaseClient.from("site_settings").upsert({key:STRIP_KEY,value:JSON.stringify(nextMap)});
+  if(error)throw error;
+  try{if(window.__nasrBcCh)window.__nasrBcCh.send({type:"broadcast",event:"strip_vis",payload:{map:nextMap}})}catch(err){}
+  if(typeof okToast==="function")okToast(nextVal?"👁️ تم إظهار شريط «"+STRIP_META[k].label+"»":"🚫 تم إخفاء شريط «"+STRIP_META[k].label+"»");
+ }catch(err){
+  if(typeof toast==="function")toast("تعذر حفظ الإعداد: "+(err&&err.message||""),null,5000);
+ }
+});
+window.applyStripVisibility(window.STRIP_VISIBILITY);
+
+/* ----------------------------------------------------------------------------
+   3) شاشة الإعلانات التفاعلية «ضع اعلانك هنا» (24 ساعة + 12 تجميع + فواصل ضوئية 2 ثانية)
+   ---------------------------------------------------------------------------- */
+let adsEngineReady=false;
+const ADS_KEY="billboard_ads_v1";
+const AD_TTL_MS=24*60*60*1000;
+const AD_HOLD_MS=5600;
+const INTERMISSION_MS=2000;
+
+let rawAdsList=[];
+let activeAds=[];
+let curAdIdx=0;
+let adShowTimer=null;
+let adIntermissionRaf=null;
+let adBusy=false;
+let adInIntermission=false;
+let adHoldPause=false;
+let adDestroyedOrHidden=false;
+let lastRevealMode=-1;
+let lastLightMode=-1;
+let intermissionSeq=0;
+let lightHue=Math.floor(Math.random()*360);
+
+const imgMetaCache=new Map();
+function preloadAdMeta(url){
+ if(!url)return Promise.resolve({w:16,h:9});
+ if(imgMetaCache.has(url))return Promise.resolve(imgMetaCache.get(url));
+ return new Promise(res=>{
+  const im=new Image();
+  im.decoding="async";
+  im.onload=()=>{const m={w:im.naturalWidth||16,h:im.naturalHeight||9};imgMetaCache.set(url,m);res(m)};
+  im.onerror=()=>{res({w:16,h:9})};
+  im.src=url;
+ });
+}
+
+function filterValidBillboardAds(arr){
+ const now=Date.now();
+ return (Array.isArray(arr)?arr:[]).filter(ad=>{
+  if(!ad||!ad.url)return false;
+  const created=Number(ad.createdAt||0);
+  const exp=Number(ad.expiresAt||(created?created+AD_TTL_MS:0));
+  if(exp&&now>=exp)return false;
+  if(created&&(now-created)>=AD_TTL_MS)return false;
+  return true;
+ });
+}
+
+function fmtRemaining24h(ad){
+ const now=Date.now();
+ const created=Number(ad.createdAt||now);
+ const exp=Number(ad.expiresAt||(created+AD_TTL_MS));
+ const left=Math.max(0,exp-now);
+ const hrs=Math.floor(left/3600000);
+ const mins=Math.floor((left%3600000)/60000);
+ return {left,hrs,mins,text:`⏳ متبقي ${hrs}س و${mins}د`};
+}
+
+let dbCleanupLock=false;
+async function purgeExpiredAdsEverywhere(forceAdminSave){
+ const valid=filterValidBillboardAds(rawAdsList);
+ const hadExpired=valid.length!==rawAdsList.length;
+ if(hadExpired){
+  rawAdsList=valid;
+  try{localStorage.setItem("nasr_billboard_ads_cache",JSON.stringify(valid))}catch(e){}
+  if((forceAdminSave||(typeof isAdmin==="function"&&isAdmin()))&&!dbCleanupLock&&typeof supabaseClient!=="undefined"&&supabaseClient){
+   dbCleanupLock=true;
+   supabaseClient.from("site_settings").upsert({key:ADS_KEY,value:JSON.stringify(valid)}).then(()=>{}).catch(()=>{}).finally(()=>{dbCleanupLock=false});
+  }
+  syncAdsPlaybackAndAdmin();
+ }else if(typeof isAdmin==="function"&&isAdmin()){
+  const box=$("adminAdsList");
+  if(box&&!box.closest(".hidden"))renderBillboardAdsAdmin();
+ }
+}
+
+function clearAdTimers(){
+ if(adShowTimer){clearTimeout(adShowTimer);adShowTimer=null}
+ if(adIntermissionRaf){cancelAnimationFrame(adIntermissionRaf);adIntermissionRaf=null}
+}
+
+/* ---------- محرك الفواصل الضوئية الـ 10 غير المتكررة لمدة ثانيتين ---------- */
+function nextLightSeed(){
+ intermissionSeq++;
+ lightHue=(lightHue+137.508)%360;
+ let s=(Date.now()^(intermissionSeq*2654435761))>>>0;
+ const rand=()=>{s^=s<<13;s^=s>>>17;s^=s<<5;return ((s>>>0)/4294967296)};
+ let mode=Math.floor(rand()*10);
+ if(mode===lastLightMode)mode=(mode+1+Math.floor(rand()*8))%10;
+ lastLightMode=mode;
+ return {
+  mode,
+  hue0:lightHue,
+  hue1:(lightHue+115+rand()*60)%360,
+  hue2:(lightHue+230+rand()*50)%360,
+  sym:6+Math.floor(rand()*7),
+  speed:0.85+rand()*0.8,
+  dir:rand()>0.5?1:-1,
+  phase:rand()*Math.PI*2,
+  ox:(0.32+rand()*0.36),
+  oy:(0.32+rand()*0.36),
+  rand
+ };
+}
+
+function runGenerativeLightshow2s(onDone){
+ const canvas=$("bbIntermissionCanvas"),stage=$("bbStage");
+ if(!canvas||!stage){setTimeout(onDone,INTERMISSION_MS);return}
+ window.calibrateResponsiveViewport();
+ const ctx=canvas.getContext("2d");
+ if(!ctx){setTimeout(onDone,INTERMISSION_MS);return}
+ const cfg=nextLightSeed();
+ const particles=[];
+ for(let i=0;i<72;i++){
+  const a=cfg.rand()*Math.PI*2,sp=0.4+cfg.rand()*2.4;
+  particles.push({x:cfg.ox,y:cfg.oy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,r:1.8+cfg.rand()*4.5,h:(cfg.hue0+i*19)%360,p:cfg.rand()*Math.PI*2});
+ }
+ adInIntermission=true;
+ stage.classList.add("bb-intermission");
+ stage.classList.remove("bb-ready");
+
+ const t0=performance.now();
+ function frame(now){
+  if(adDestroyedOrHidden){clearAdTimers();return}
+  const el=now-t0;
+  const p=Math.min(1,el/INTERMISSION_MS);
+  const w=canvas.width,h=canvas.height,cx=w*cfg.ox,cy=h*cfg.oy,R=Math.max(w,h);
+  const fade=Math.sin(p*Math.PI);
+
+  ctx.globalCompositeOperation="source-over";
+  ctx.fillStyle="rgba(4,6,18,0.22)";
+  ctx.fillRect(0,0,w,h);
+  if(el<30){ctx.fillStyle="#040612";ctx.fillRect(0,0,w,h)}
+  ctx.globalCompositeOperation="lighter";
+
+  const shift=(cfg.hue0+p*210*cfg.dir+360)%360;
+  const m=cfg.mode;
+
+  if(m===0){
+   // 0: Aurora Silk Ribbons
+   for(let k=0;k<5;k++){
+    ctx.beginPath();
+    const yBase=h*(0.2+k*0.15);
+    for(let x=0;x<=w;x+=Math.max(12,w/40)){
+     const yy=yBase+Math.sin(x*0.008+p*6*cfg.speed+k+cfg.phase)*h*0.12*Math.cos(p*3+k);
+     if(x===0)ctx.moveTo(x,yy);else ctx.lineTo(x,yy);
+    }
+    ctx.strokeStyle=`hsla(${(shift+k*42)%360},95%,62%,${0.32*fade})`;
+    ctx.lineWidth=Math.max(8,h*0.045);
+    ctx.lineCap="round";
+    ctx.stroke();
+   }
+  }else if(m===1){
+   // 1: Hyperspace Neon Tunnel
+   for(let i=0;i<14;i++){
+    const z=((i/14)+p*cfg.speed)%1;
+    const rad=Math.pow(z,1.7)*R*0.65;
+    ctx.beginPath();
+    const sides=cfg.sym;
+    for(let s=0;s<=sides;s++){
+     const ang=(s/sides)*Math.PI*2+p*2.5*cfg.dir+i*0.18;
+     const px=cx+Math.cos(ang)*rad,py=cy+Math.sin(ang)*rad;
+     if(s===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+    }
+    ctx.strokeStyle=`hsla(${(shift+i*28)%360},100%,64%,${(1-z)*0.55*fade})`;
+    ctx.lineWidth=2+z*7;
+    ctx.stroke();
+   }
+  }else if(m===2){
+   // 2: Kaleidoscope Crystal Mandala
+   const arms=cfg.sym;
+   for(let a=0;a<arms;a++){
+    const base=(a/arms)*Math.PI*2+p*2.2*cfg.dir;
+    for(let r=1;r<=5;r++){
+     const rr=R*0.07*r*(0.6+0.6*Math.sin(p*Math.PI+r*0.5));
+     const x1=cx+Math.cos(base)*rr,y1=cy+Math.sin(base)*rr;
+     const x2=cx+Math.cos(base+0.4)*rr*1.3,y2=cy+Math.sin(base+0.4)*rr*1.3;
+     ctx.beginPath();ctx.moveTo(cx,cy);ctx.quadraticCurveTo(x2,y2,x1,y1);
+     ctx.strokeStyle=`hsla(${(shift+r*48+a*18)%360},96%,64%,${0.42*fade})`;
+     ctx.lineWidth=3.5;ctx.stroke();
+     ctx.beginPath();ctx.arc(x1,y1,4+r*2,0,Math.PI*2);
+     ctx.fillStyle=`hsla(${(shift+r*60)%360},100%,75%,${0.55*fade})`;ctx.fill();
+    }
+   }
+  }else if(m===3){
+   // 3: Lissajous Plasma Orbitals
+   for(let k=0;k<7;k++){
+    const px=w*(0.5+0.38*Math.sin(p*5.5+k*1.1+cfg.phase));
+    const py=h*(0.5+0.36*Math.cos(p*4.2+k*1.7*cfg.dir));
+    const rad=Math.min(w,h)*(0.12+0.06*Math.sin(p*8+k));
+    const g=ctx.createRadialGradient(px,py,0,px,py,rad);
+    g.addColorStop(0,`hsla(${(shift+k*51)%360},100%,72%,${0.55*fade})`);
+    g.addColorStop(1,`hsla(${(shift+k*51)%360},100%,50%,0)`);
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(px,py,rad,0,Math.PI*2);ctx.fill();
+   }
+  }else if(m===4){
+   // 4: Galaxy Fireworks & Curl Particles
+   particles.forEach((pt,idx)=>{
+    const t=p*2.1;
+    const angle=pt.p+t*2.4*cfg.dir;
+    const dist=t*Math.min(w,h)*0.22*(0.4+pt.vx*0.35);
+    const px=cx+Math.cos(angle)*dist,py=cy+Math.sin(angle)*dist;
+    ctx.beginPath();
+    ctx.arc(px,py,pt.r*(1+fade),0,Math.PI*2);
+    ctx.fillStyle=`hsla(${(pt.h+shift)%360},100%,68%,${0.75*fade})`;
+    ctx.fill();
+   });
+  }else if(m===5){
+   // 5: Cyber Laser Matrix Grid
+   const nBeams=12;
+   for(let i=0;i<nBeams;i++){
+    const a=(i/nBeams)*Math.PI+p*1.6*cfg.dir+cfg.phase;
+    const px=w*((i%2===0)?(0.1+0.8*p):(0.9-0.8*p));
+    ctx.beginPath();
+    ctx.moveTo(px+Math.cos(a)*R,h*0.5+Math.sin(a)*R);
+    ctx.lineTo(px-Math.cos(a)*R,h*0.5-Math.sin(a)*R);
+    ctx.strokeStyle=`hsla(${(shift+i*30)%360},100%,65%,${0.38*fade})`;
+    ctx.lineWidth=3+Math.sin(p*10+i)*2;
+    ctx.stroke();
+   }
+  }else if(m===6){
+   // 6: Harmonic Chromatic Waveforms
+   for(let row=0;row<4;row++){
+    for(let s=0;s<=36;s++){
+     const u=s/36;
+     const x=u*w;
+     const y=h*(0.24+row*0.18)+Math.sin(u*10+p*9*cfg.speed+row)*h*0.11;
+     const rr=Math.max(4,w*0.008*(1+Math.cos(u*6+p*8)));
+     ctx.beginPath();ctx.arc(x,y,rr,0,Math.PI*2);
+     ctx.fillStyle=`hsla(${(shift+s*11+row*70)%360},100%,68%,${0.65*fade})`;
+     ctx.fill();
+    }
+   }
+  }else if(m===7){
+   // 7: Phyllotaxis Fractal Bloom
+   const count=90;
+   for(let i=1;i<=count;i++){
+    const ang=i*2.3999632+p*3.5*cfg.dir;
+    const rad=Math.sqrt(i/count)*Math.min(w,h)*0.44*(0.45+0.65*p);
+    const px=cx+Math.cos(ang)*rad,py=cy+Math.sin(ang)*rad;
+    ctx.beginPath();ctx.arc(px,py,3+(i%5)*1.4,0,Math.PI*2);
+    ctx.fillStyle=`hsla(${(shift+i*6)%360},100%,66%,${0.7*fade})`;
+    ctx.fill();
+   }
+  }else if(m===8){
+   // 8: Constellation Filament Network
+   const nodes=particles.slice(0,28).map((pt,idx)=>{
+    const ang=pt.p+p*2.6*cfg.dir*(idx%2?1:-1);
+    const rr=Math.min(w,h)*(0.12+0.32*((idx%7)/6));
+    return {x:w*0.5+Math.cos(ang+idx)*rr,y:h*0.5+Math.sin(ang*1.2+idx)*rr,h:(shift+idx*22)%360};
+   });
+   for(let i=0;i<nodes.length;i++){
+    const a=nodes[i],b=nodes[(i+1)%nodes.length],c=nodes[(i+5)%nodes.length];
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.lineTo(c.x,c.y);
+    ctx.strokeStyle=`hsla(${a.h},95%,65%,${0.32*fade})`;ctx.lineWidth=2.4;ctx.stroke();
+    ctx.beginPath();ctx.arc(a.x,a.y,5,0,Math.PI*2);ctx.fillStyle=`hsla(${a.h},100%,78%,${0.8*fade})`;ctx.fill();
+   }
+  }else{
+   // 9: Starburst Meteor Warp
+   particles.forEach((pt,idx)=>{
+    const ang=pt.p+cfg.phase;
+    const v=((p*1.6+(idx%13)*0.07)%1);
+    const r0=v*R*0.52,r1=Math.max(0,r0-R*0.14);
+    ctx.beginPath();
+    ctx.moveTo(cx+Math.cos(ang)*r1,cy+Math.sin(ang)*r1);
+    ctx.lineTo(cx+Math.cos(ang)*r0,cy+Math.sin(ang)*r0);
+    ctx.strokeStyle=`hsla(${(shift+idx*17)%360},100%,70%,${0.72*fade})`;
+    ctx.lineWidth=2.5+v*3;ctx.lineCap="round";ctx.stroke();
+   });
+  }
+
+  if(el<INTERMISSION_MS){
+   adIntermissionRaf=requestAnimationFrame(frame);
+  }else{
+   adInIntermission=false;
+   stage.classList.remove("bb-intermission");
+   onDone();
+  }
+ }
+ adIntermissionRaf=requestAnimationFrame(frame);
+}
+
+/* ---------- محرك تجميع الصور الـ 12 غير المتكررة ---------- */
+function pickRevealChoreography(){
+ const pool=[];
+ for(let i=0;i<12;i++){if(i!==lastRevealMode)pool.push(i)}
+ const m=pool[Math.floor(Math.random()*pool.length)];
+ lastRevealMode=m;
+ return m;
+}
+
+async function assembleAdWithChoreography(ad,onComplete){
+ const stage=$("bbStage"),asm=$("bbAssembly"),mainImg=$("bbMainImg"),bgImg=$("bbBgImg");
+ const capBar=$("bbCapBar"),capInner=$("bbCapInner"),linkBadge=$("bbLinkBadge");
+ if(!stage||!asm||!mainImg||!bgImg){if(onComplete)onComplete();return}
+
+ adBusy=true;
+ stage.classList.remove("bb-ready");
+ stage.classList.toggle("bb-clickable",!!ad.link);
+ if(linkBadge)linkBadge.classList.toggle("hidden",!ad.link);
+ if(capBar&&capInner){
+  const tx=String(ad.title||"").trim();
+  capBar.classList.toggle("hidden",!tx);
+  capInner.textContent=tx;
+ }
+
+ bgImg.src=ad.url;
+ mainImg.src=ad.url;
+ const meta=await preloadAdMeta(ad.url);
+ if(adDestroyedOrHidden)return;
+
+ const W=stage.clientWidth||window.innerWidth||390;
+ const H=stage.clientHeight||Math.round((window.innerHeight||800)*0.75);
+ const nw=meta.w||16,nh=meta.h||9;
+ const k=Math.min(W/nw,H/nh);
+ const dw=nw*k,dh=nh*k,ox=(W-dw)/2,oy=(H-dh)/2;
+
+ const mode=pickRevealChoreography();
+ const specs=[
+  {r:4,c:6},{r:1,c:12},{r:8,c:1},{r:4,c:5},
+  {r:5,c:5},{r:1,c:2},{r:4,c:6},{r:4,c:4},
+  {r:4,c:6},{r:1,c:10},{r:3,c:8},{r:5,c:5}
+ ];
+ const sp=specs[mode]||{r:4,c:6};
+ const rows=sp.r,cols=sp.c;
+ const tileW=W/cols,tileH=H/rows;
+ const frag=document.createDocumentFragment();
+ const tiles=[];
+
+ const safeUrl=ad.url.replace(/"/g,'\\"');
+ for(let r=0;r<rows;r++){
+  for(let c=0;c<cols;c++){
+   const x=c*tileW,y=r*tileH;
+   const div=document.createElement("div");
+   div.className="bb-tile";
+   div.style.left=x.toFixed(2)+"px";
+   div.style.top=y.toFixed(2)+"px";
+   div.style.width=(tileW+0.8).toFixed(2)+"px";
+   div.style.height=(tileH+0.8).toFixed(2)+"px";
+   div.style.backgroundImage=`url("${safeUrl}")`;
+   div.style.backgroundSize=`${dw.toFixed(2)}px ${dh.toFixed(2)}px`;
+   div.style.backgroundPosition=`${(ox-x).toFixed(2)}px ${(oy-y).toFixed(2)}px`;
+
+   const nx=(c+0.5)/cols-0.5,ny=(r+0.5)/rows-0.5;
+   const dist=Math.hypot(nx,ny);
+   let fromT="scale(0.6)",delay=0,dur=760;
+
+   if(mode===0){ // 3D Matrix Flip
+    fromT=`perspective(900px) rotateY(${(c%2?1:-1)*125}deg) scale(0.68)`;
+    delay=Math.round(dist*460);dur=780;
+   }else if(mode===1){ // Vertical Curtain Slats
+    fromT=`translateY(${(c%2?-1:1)*115}%) scaleY(0.85)`;
+    delay=c*42;dur=760;
+   }else if(mode===2){ // Horizontal Laser Shutters
+    fromT=`translateX(${(r%2?-1:1)*110}%) skewX(${(r%2?14:-14)}deg)`;
+    delay=r*58;dur=740;
+   }else if(mode===3){ // Diagonal Domino Grid
+    fromT=`translate3d(${nx*220}px,${ny*220}px,0) scale(0.35) rotate(${(r+c)%2?18:-18}deg)`;
+    delay=(r+c)*52;dur=780;
+   }else if(mode===4){ // Radial Scatter Convergence
+    fromT=`translate3d(${nx*420}px,${ny*420}px,0) scale(0.25) rotate(${Math.round((nx-ny)*90)}deg)`;
+    delay=Math.round((1-dist)*380);dur=820;
+   }else if(mode===5){ // Twin Door Dual Zoom
+    fromT=`translateX(${c===0?"-105%":"105%"}) scale(1.12)`;
+    delay=0;dur=840;
+   }else if(mode===6){ // Spiral Lock
+    const ang=Math.atan2(ny,nx)+Math.PI;
+    fromT=`scale(0.18) rotate(${(ang*28).toFixed(0)}deg)`;
+    delay=Math.round((ang/(Math.PI*2))*380+dist*220);dur=760;
+   }else if(mode===7){ // Origami Unfold
+    fromT=`perspective(1000px) rotateX(-95deg) translateY(-28px)`;
+    delay=(r*cols+c)*34;dur=800;
+   }else if(mode===8){ // Checkerboard Depth
+    const alt=(r+c)%2===0;
+    fromT=alt?`translateZ(180px) scale(1.45)`:`translateZ(-180px) scale(0.35)`;
+    delay=alt?80:240;dur=780;
+   }else if(mode===9){ // Accordion Fan
+    fromT=`perspective(1100px) rotateY(82deg) translateZ(60px)`;
+    delay=c*55;dur=760;
+   }else if(mode===10){ // Wave-Curtain Waterfall
+    fromT=`translateY(-95%) rotate(${Math.sin(c)*12}deg) scale(0.75)`;
+    delay=Math.round((r*90)+(Math.sin(c*0.8)+1)*110);dur=790;
+   }else{ // Diamond Prism Burst
+    fromT=`scale(0.15) rotate(${((r+c)%2?45:-45)}deg)`;
+    delay=Math.round((Math.abs(nx)+Math.abs(ny))*480);dur=800;
+   }
+
+   div.style.opacity="0";
+   div.style.transform=fromT;
+   div.style.filter="brightness(1.35) saturate(1.25)";
+   tiles.push({div,delay,dur});
+   frag.appendChild(div);
+  }
+ }
+
+ asm.innerHTML="";
+ asm.appendChild(frag);
+ void asm.offsetWidth;
+
+ let maxFinish=0;
+ tiles.forEach(({div,delay,dur})=>{
+  maxFinish=Math.max(maxFinish,delay+dur);
+  div.style.transition=`transform ${dur}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, opacity ${Math.round(dur*0.58)}ms ease ${delay}ms, filter ${dur}ms ease ${delay}ms`;
+  div.style.opacity="1";
+  div.style.transform="translate3d(0,0,0) scale(1) rotate(0deg)";
+  div.style.filter="none";
+ });
+
+ setTimeout(()=>{
+  if(adDestroyedOrHidden)return;
+  stage.classList.add("bb-ready");
+  setTimeout(()=>{asm.innerHTML=""},280);
+  adBusy=false;
+  if(onComplete)onComplete();
+ },maxFinish+60);
+}
+
+function renderAdDots(){
+ const box=$("bbDots"),prevBtn=$("bbPrevBtn"),nextBtn=$("bbNextBtn");
+ if(!box)return;
+ const many=activeAds.length>1;
+ if(prevBtn)prevBtn.classList.toggle("hidden",!many);
+ if(nextBtn)nextBtn.classList.toggle("hidden",!many);
+ box.innerHTML=many?activeAds.map((_,i)=>`<button type="button" class="${i===curAdIdx?"on":""}" data-bb-dot="${i}" aria-label="إعلان ${i+1}"></button>`).join(""):"";
+}
+
+function scheduleNextCycle(){
+ clearTimeout(adShowTimer);
+ if(adDestroyedOrHidden||!activeAds.length)return;
+ adShowTimer=setTimeout(()=>{
+  if(adHoldPause||document.hidden||adDestroyedOrHidden){scheduleNextCycle();return}
+  advanceBillboardWithIntermission((curAdIdx+1)%activeAds.length);
+ },AD_HOLD_MS);
+}
+
+function advanceBillboardWithIntermission(targetIdx){
+ if(adBusy||adInIntermission||!activeAds.length)return;
+ clearAdTimers();
+ adBusy=true;
+ curAdIdx=(targetIdx+activeAds.length)%activeAds.length;
+ renderAdDots();
+ runGenerativeLightshow2s(()=>{
+  if(adDestroyedOrHidden||!activeAds.length){adBusy=false;return}
+  const ad=activeAds[curAdIdx%activeAds.length];
+  assembleAdWithChoreography(ad,scheduleNextCycle);
+ });
+}
+
+function startBillboardFresh(){
+ clearAdTimers();
+ adBusy=false;adInIntermission=false;
+ if(!activeAds.length)return;
+ if(curAdIdx>=activeAds.length)curAdIdx=0;
+ renderAdDots();
+ assembleAdWithChoreography(activeAds[curAdIdx],scheduleNextCycle);
+}
+
+adsEngineReady=true;
+function syncAdsPlaybackAndAdmin(){
+ activeAds=filterValidBillboardAds(rawAdsList);
+ activeAds.forEach(a=>preloadAdMeta(a.url));
+ const sec=$("billboardAdsSection");
+ if(sec){
+  const vis=activeAds.length>0;
+  const stripOn=!(window.STRIP_VISIBILITY&&window.STRIP_VISIBILITY.ads===false);
+  sec.classList.toggle("hidden",!vis);
+  adDestroyedOrHidden=!(vis&&stripOn);
+  if(vis&&stripOn)startBillboardFresh();
+  else clearAdTimers();
+ }
+ if(typeof isAdmin==="function"&&isAdmin()){
+  renderBillboardAdsAdmin();
+ }
+}
+
+window.applyBillboardAdsRaw=function(raw){
+ try{
+  const parsed=typeof raw==="string"?JSON.parse(raw):(Array.isArray(raw)?raw:[]);
+  rawAdsList=filterValidBillboardAds(parsed);
+  try{localStorage.setItem("nasr_billboard_ads_cache",JSON.stringify(rawAdsList))}catch(e){}
+  syncAdsPlaybackAndAdmin();
+ }catch(e){}
+};
+
+/* التفاعل على شاشة الإعلانات */
+(function initBillboardInteractions(){
+ const stage=$("bbStage"),dots=$("bbDots"),prev=$("bbPrevBtn"),next=$("bbNextBtn");
+ if(!stage)return;
+ if(prev)prev.onclick=e=>{e.stopPropagation();if(activeAds.length>1)advanceBillboardWithIntermission(curAdIdx-1)};
+ if(next)next.onclick=e=>{e.stopPropagation();if(activeAds.length>1)advanceBillboardWithIntermission(curAdIdx+1)};
+ if(dots)dots.onclick=e=>{
+  const b=e.target.closest("[data-bb-dot]");
+  if(b){e.stopPropagation();const i=Number(b.dataset.bbDot);if(i!==curAdIdx)advanceBillboardWithIntermission(i)}
+ };
+ let touchStartX=null;
+ stage.addEventListener("pointerenter",e=>{if(e.pointerType==="mouse")adHoldPause=true});
+ stage.addEventListener("pointerleave",e=>{if(e.pointerType==="mouse")adHoldPause=false});
+ stage.addEventListener("touchstart",e=>{adHoldPause=true;touchStartX=e.touches&&e.touches[0]?e.touches[0].clientX:null},{passive:true});
+ stage.addEventListener("touchend",e=>{
+  adHoldPause=false;
+  if(touchStartX!=null&&e.changedTouches&&e.changedTouches[0]){
+   const dx=e.changedTouches[0].clientX-touchStartX;
+   if(Math.abs(dx)>45&&activeAds.length>1){
+    advanceBillboardWithIntermission(dx>0?curAdIdx-1:curAdIdx+1);
+   }
+  }
+  touchStartX=null;
+ },{passive:true});
+ stage.addEventListener("click",e=>{
+  if(e.target.closest(".bb-nav-btn,[data-bb-dot]"))return;
+  const ad=activeAds[curAdIdx];
+  if(!ad)return;
+  if(ad.link&&/^https?:\/\//i.test(ad.link)){
+   const a=document.createElement("a");a.href=ad.link;a.target="_blank";a.rel="noopener noreferrer";
+   document.body.appendChild(a);a.click();a.remove();
+   return;
+  }
+  const ov=document.createElement("div");ov.className="svv";
+  ov.innerHTML='<div class="svv-top"><button type="button" class="svv-x" aria-label="إغلاق">×</button></div><div class="vw-stage"><img class="vw-bg" alt="" aria-hidden="true"><img class="vw-im" alt=""></div>'+(ad.title?`<div class="svv-cap">${esc(ad.title)}</div>`:"");
+  ov.querySelector(".vw-bg").src=ad.url;
+  ov.querySelector(".vw-im").src=ad.url;
+  const close=()=>{ov.remove();adHoldPause=false;document.removeEventListener("keydown",escH)};
+  const escH=ev=>{if(ev.key==="Escape")close()};
+  adHoldPause=true;
+  document.addEventListener("keydown",escH);
+  ov.querySelector(".svv-x").onclick=close;
+  document.body.appendChild(ov);
+ });
+})();
+
+/* ---------- لوحة إدارة الإعلانات «ضع إعلانك هنا» ---------- */
+window.renderBillboardAdsAdmin=function(){
+ const box=$("adminAdsList");if(!box)return;
+ const valid=filterValidBillboardAds(rawAdsList);
+ rawAdsList=valid;
+ box.innerHTML=valid.length?valid.map((ad,i)=>{
+  const ttl=fmtRemaining24h(ad);
+  const soon=ttl.hrs<2;
+  return `
+  <div class="admin-item">
+   <div class="meta">
+    <img class="thumb" src="${esc(ad.url)}" alt="">
+    <div style="min-width:0">
+     <h4>${esc(ad.title||("إعلان "+(i+1)))}</h4>
+     <small><span class="ads-ttl-badge ${soon?"soon":""}">${ttl.text} (يُحذف تلقائيًا بعد 24 ساعة)</span>${ad.link?" · 🔗 "+esc(ad.link):""}</small>
+    </div>
+   </div>
+   <div class="admin-actions">
+    <button class="secondary-btn" type="button" onclick="moveBillboardAd(${i},-1)" ${i===0?"disabled":""}>▲</button>
+    <button class="secondary-btn" type="button" onclick="moveBillboardAd(${i},1)" ${i===valid.length-1?"disabled":""}>▼</button>
+    <button class="danger-btn" type="button" onclick="deleteBillboardAd('${esc(ad.id)}')">حذف</button>
+   </div>
+  </div>`;
+ }).join(""):'<div class="empty">لا توجد إعلانات نشطة حاليًا — أضف صورة إعلان من النموذج بالأعلى وستظهر للعملاء لمدة 24 ساعة.</div>';
+};
+
+async function persistAdsList(nextArr){
+ const clean=filterValidBillboardAds(nextArr);
+ const {error}=await supabaseClient.from("site_settings").upsert({key:ADS_KEY,value:JSON.stringify(clean)});
+ if(error)throw error;
+ rawAdsList=clean;
+ try{localStorage.setItem("nasr_billboard_ads_cache",JSON.stringify(clean))}catch(e){}
+ try{if(window.__nasrBcCh)window.__nasrBcCh.send({type:"broadcast",event:"billboard_ads",payload:{list:clean}})}catch(e){}
+ syncAdsPlaybackAndAdmin();
+}
+
+window.saveBillboardAdFromAdmin=async function(){
+ if(typeof isAdmin==="function"&&!isAdmin())return;
+ const msgEl=$("adAdminMsg"),btn=$("adSaveBtn");
+ if(msgEl){msgEl.textContent="";msgEl.className="message"}
+ const filesInp=$("adFilesInput"),urlInp=$("adUrlInput"),titleInp=$("adTitleInput"),linkInp=$("adLinkInput");
+ const files=[...(filesInp&&filesInp.files?filesInp.files:[])];
+ const directUrl=(urlInp&&urlInp.value||"").trim();
+ const title=(titleInp&&titleInp.value||"").trim();
+ const linkRaw=(linkInp&&linkInp.value||"").trim();
+ const link=/^https?:\/\//i.test(linkRaw)?linkRaw:"";
+ if(linkRaw&&!link){if(msgEl){msgEl.textContent="رابط الوجهة لازم يبدأ بـ https://";msgEl.className="message error"}return}
+ if(!files.length&&!directUrl){if(msgEl){msgEl.textContent="اختر صورة إعلان أو عدة صور من جهازك أو الصق رابط صورة مباشر.";msgEl.className="message error"}return}
+ if(directUrl&&!/^https?:\/\//i.test(directUrl)){if(msgEl){msgEl.textContent="رابط الصورة لازم يبدأ بـ https://";msgEl.className="message error"}return}
+
+ if(btn){btn.disabled=true;btn.textContent="⏳ جارٍ رفع ونشر الإعلان..."}
+ try{
+  const now=Date.now();
+  const added=[];
+  for(let i=0;i<files.length;i++){
+   const upUrl=await uploadProductImage(files[i],"ads");
+   if(upUrl)added.push({id:"ad_"+now+"_"+i+"_"+Math.random().toString(36).slice(2,6),url:upUrl,title,link,createdAt:now,expiresAt:now+AD_TTL_MS});
+  }
+  if(directUrl){
+   added.push({id:"ad_"+now+"_url_"+Math.random().toString(36).slice(2,6),url:directUrl,title,link,createdAt:now,expiresAt:now+AD_TTL_MS});
+  }
+  if(!added.length)throw new Error("لم يتم تجهيز أي صورة.");
+  await persistAdsList([...filterValidBillboardAds(rawAdsList),...added]);
+  if(filesInp)filesInp.value="";if(urlInp)urlInp.value="";if(titleInp)titleInp.value="";if(linkInp)linkInp.value="";
+  if(msgEl){msgEl.textContent=`✅ تم نشر ${added.length>1?added.length+" إعلانات":"الإعلان"} بنجاح — سيختفي تلقائيًا بعد 24 ساعة.`;msgEl.className="message success"}
+  if(typeof okToast==="function")okToast("✅ تم نشر الإعلان في شاشة «ضع اعلانك هنا» بنجاح!");
+ }catch(err){
+  if(msgEl){msgEl.textContent=err&&err.message||"تعذر نشر الإعلان.";msgEl.className="message error"}
+ }finally{
+  if(btn){btn.disabled=false;btn.textContent="＋ نشر الإعلان (صالح 24 ساعة)"}
+ }
+};
+
+window.deleteBillboardAd=async function(id){
+ if(typeof isAdmin==="function"&&!isAdmin())return;
+ try{
+  await persistAdsList(rawAdsList.filter(a=>String(a.id)!==String(id)));
+  if(typeof okToast==="function")okToast("🗑️ تم حذف الإعلان");
+ }catch(err){if(typeof toast==="function")toast("تعذر الحذف: "+(err&&err.message||""),null,5000)}
+};
+
+window.moveBillboardAd=async function(i,d){
+ if(typeof isAdmin==="function"&&!isAdmin())return;
+ const arr=filterValidBillboardAds(rawAdsList),j=i+d;
+ if(j<0||j>=arr.length)return;
+ [arr[i],arr[j]]=[arr[j],arr[i]];
+ try{await persistAdsList(arr)}catch(err){}
+};
+
+async function loadBillboardAndStripCfg(){
+ try{
+  if(typeof supabaseClient==="undefined"||!supabaseClient)return;
+  const {data}=await supabaseClient.from("site_settings").select("key,value").in("key",[ADS_KEY,STRIP_KEY]);
+  (data||[]).forEach(r=>{
+   if(r.key===ADS_KEY&&typeof r.value==="string")window.applyBillboardAdsRaw(r.value);
+   else if(r.key===STRIP_KEY&&typeof r.value==="string")window.applyStripVisibilityRaw(r.value);
+  });
+  await purgeExpiredAdsEverywhere(false);
+ }catch(e){}
+}
+
+try{
+ const cached=localStorage.getItem("nasr_billboard_ads_cache");
+ if(cached)window.applyBillboardAdsRaw(cached);
+}catch(e){}
+
+try{
+ if(window.__nasrBcCh){
+  window.__nasrBcCh
+   .on("broadcast",{event:"strip_vis"},p=>{if(p&&p.payload&&p.payload.map)window.applyStripVisibility(p.payload.map)})
+   .on("broadcast",{event:"billboard_ads"},p=>{if(p&&p.payload&&p.payload.list){rawAdsList=filterValidBillboardAds(p.payload.list);syncAdsPlaybackAndAdmin()}});
+ }
+}catch(e){}
+
+const prevLe=window.loadExtras;
+window.loadExtras=async function(){
+ if(prevLe)await prevLe.apply(this,arguments);
+ await loadBillboardAndStripCfg();
+};
+if(typeof supabaseClient!=="undefined"&&supabaseClient)loadBillboardAndStripCfg();
+
+setInterval(()=>purgeExpiredAdsEverywhere(false),15000);
+document.addEventListener("visibilitychange",()=>{
+ if(!document.hidden){
+  purgeExpiredAdsEverywhere(false);
+  window.calibrateResponsiveViewport();
+ }
+});
+renderStripToggleCards();
 })();
 </script>
 </body>
