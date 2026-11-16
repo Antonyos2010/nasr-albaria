@@ -652,7 +652,7 @@ body.light .bottom-nav{background:rgba(255,255,255,.97)}
  border:2px solid var(--c6);margin:10px 0;background:#08091b;
 }
 .toast{
- position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:300;
+ position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:3500;
  max-width:92%;padding:12px 18px;border-radius:12px;font-size:12px;font-weight:800;
  background:#164c91;color:#fff;border:2px solid var(--cyan);box-shadow:0 10px 30px #0008;
  animation:toastIn .3s ease;
@@ -2352,6 +2352,180 @@ body.light .guest-gate-badge{background:#f3e8ff;color:#6d28d9;border-color:#c4b5
 .guest-gate-btn svg{width:21px;height:21px;flex-shrink:0}
 .guest-gate-btn:hover{filter:brightness(1.08);transform:translateY(-2px)}
 
+/* ===== شريط وضع رسالة تحميل التطبيق + البوابة الإجبارية الاحترافية ===== */
+#adminModeBar,#adminAppPromptBar{
+ display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;
+ padding:14px 16px;margin:0 0 12px;border-radius:18px;
+ background:var(--panel2);border:1.5px solid var(--c2);
+ box-shadow:0 8px 24px rgba(0,0,0,.14);
+}
+#adminAppPromptBar{
+ margin:0 0 16px;border-color:var(--c1);
+ background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 92%,#00d9ff 8%),var(--panel2));
+}
+body.light #adminModeBar,body.light #adminAppPromptBar{
+ box-shadow:0 8px 22px rgba(15,23,42,.06);
+}
+#adminAppPromptBar .mode-bar-title b{display:flex;align-items:center;gap:6px}
+.mode-sw-btn.dl-mand.active{
+ background:linear-gradient(135deg,#dc2626,#e11d48)!important;
+ border-color:#e11d48!important;color:#fff!important;-webkit-text-fill-color:#fff!important;
+ box-shadow:0 6px 18px rgba(225,29,72,.38);
+}
+.mode-sw-btn.dl-opt.active{
+ background:linear-gradient(135deg,#087bff,#0ea5e9)!important;
+ border-color:#087bff!important;color:#fff!important;-webkit-text-fill-color:#fff!important;
+ box-shadow:0 6px 18px rgba(8,123,255,.36);
+}
+.mode-sw-btn.dl-prev{
+ flex:0 1 auto;padding:10px 14px;border-style:dashed;border-color:var(--c4);
+ color:var(--text);font-size:12.5px;
+}
+.mode-sw-btn.dl-prev:hover{background:rgba(255,197,46,.14);border-color:#f59e0b}
+.admin-prompt-note{
+ width:100%;font-size:11px;font-weight:700;color:var(--muted);line-height:1.7;
+ padding-top:8px;border-top:1px dashed var(--border);
+}
+
+/* إخفاء صف تفعيل الإشعارات في حساب المستخدم على الموقع الإلكتروني (يظهر في التطبيق فقط) */
+body[data-platform="web"] #authNotifRow{display:none!important}
+
+/* قفل الموقع/المعرض بالكامل عند تفعيل رسالة تحميل التطبيق الإجبارية بعد تسجيل الدخول */
+body.app-dl-locked{overflow:hidden!important}
+body.app-dl-locked header,
+body.app-dl-locked main,
+body.app-dl-locked footer,
+body.app-dl-locked nav.bottom-nav,
+body.app-dl-locked #aiFab,
+body.app-dl-locked #aiPage,
+body.app-dl-locked #cartPanel,
+body.app-dl-locked #overlay,
+body.app-dl-locked .modal-backdrop{
+ display:none!important;
+}
+
+.mand-app-ov{
+ position:fixed;inset:0;z-index:2900;
+ display:flex;align-items:center;justify-content:center;
+ padding:18px;overflow-y:auto;
+ background:radial-gradient(circle at 50% 18%,rgba(8,123,255,.22),transparent 52%),
+  radial-gradient(circle at 80% 82%,rgba(166,0,255,.18),transparent 50%),
+  rgba(4,6,18,.94);
+ -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+ animation:pmFade .25s ease;
+}
+body.light .mand-app-ov{
+ background:radial-gradient(circle at 50% 18%,rgba(8,123,255,.16),transparent 52%),
+  radial-gradient(circle at 80% 82%,rgba(166,0,255,.12),transparent 50%),
+  rgba(236,242,252,.95);
+}
+.mand-app-card{
+ position:relative;width:min(460px,100%);max-height:calc(100dvh - 36px);overflow-y:auto;
+ border-radius:28px;background:var(--panel);color:var(--text);
+ border:2px solid var(--c1);
+ box-shadow:0 30px 90px rgba(0,0,0,.65),0 0 42px rgba(0,217,255,.22);
+ animation:pmUp .38s cubic-bezier(.2,1.18,.4,1);text-align:center;
+}
+body.light .mand-app-card{
+ box-shadow:0 28px 80px rgba(15,23,42,.18),0 0 0 1px rgba(8,123,255,.14);
+}
+.mand-preview-exit{
+ position:sticky;top:10px;z-index:10;margin:10px auto 0;display:inline-flex;align-items:center;gap:6px;
+ padding:7px 14px;border-radius:999px;border:1.5px solid rgba(255,197,46,.7);
+ background:rgba(15,23,42,.88);color:#ffd54f;font-size:12px;font-weight:900;
+ box-shadow:0 8px 20px rgba(0,0,0,.35);
+}
+.mand-app-top{
+ position:relative;padding:26px 22px 22px;color:#fff;
+ background:radial-gradient(circle at 50% 0%,rgba(0,217,255,.38),transparent 65%),
+  linear-gradient(135deg,#071645,#1747d6 54%,#6d28d9);
+}
+.mand-app-badge{
+ display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:999px;
+ font-size:11.5px;font-weight:900;letter-spacing:.15px;
+ background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.42);color:#fff;
+ margin-bottom:13px;
+}
+.mand-app-logo{
+ width:92px;height:92px;margin:0 auto 12px;border-radius:50%;overflow:hidden;
+ background:#fff;border:3px solid rgba(255,255,255,.94);
+ box-shadow:0 0 0 6px rgba(255,255,255,.18),0 16px 34px rgba(0,0,0,.5);
+ display:grid;place-items:center;
+}
+.mand-app-logo img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+.mand-app-top h3{font-size:21px;font-weight:900;line-height:1.45;color:#fff;margin:0}
+.mand-app-top p{margin:7px auto 0;max-width:36ch;font-size:13px;font-weight:700;color:#e8f2ff;line-height:1.75}
+.mand-app-body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:14px}
+.mand-perks{display:grid;grid-template-columns:1fr 1fr;gap:9px;text-align:right}
+.mand-perk{
+ display:flex;align-items:center;gap:8px;padding:10px 11px;border-radius:14px;
+ background:var(--panel2);border:1px solid var(--border);
+ font-size:12px;font-weight:800;color:var(--text);line-height:1.45;
+}
+.mand-perk span:first-child{font-size:17px;flex-shrink:0}
+.mand-cta-wrap{display:flex;flex-direction:column;align-items:center;gap:6px}
+.mand-dl-btn{
+ width:100%;padding:15px 22px;border-radius:16px;border:0;
+ background:linear-gradient(135deg,#00d9ff,#087bff 50%,#7c3aed);color:#fff;
+ font-size:16.5px;font-weight:900;letter-spacing:.15px;
+ box-shadow:0 12px 30px rgba(8,123,255,.45);
+ display:inline-flex;align-items:center;justify-content:center;gap:9px;
+}
+.mand-dl-btn:hover:not(:disabled){filter:brightness(1.09);transform:translateY(-2px)}
+.mand-dl-btn:disabled{opacity:.72;cursor:wait}
+.mand-status-msg{
+ font-size:12.5px;font-weight:800;line-height:1.75;color:#fbbf24;
+ background:rgba(245,158,11,.12);border:1.5px solid rgba(245,158,11,.42);
+ padding:10px 13px;border-radius:13px;text-align:center;
+}
+body.light .mand-status-msg{color:#92400e;background:#fffbeb;border-color:#f59e0b}
+.mand-guide{
+ text-align:right;padding:14px 15px;border-radius:16px;
+ background:var(--panel2);border:1.5px solid var(--border);
+ display:flex;flex-direction:column;gap:10px;
+}
+.mand-guide-hd{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mand-guide-hd b{font-size:13.5px;font-weight:900;color:var(--text)}
+.mand-guide-os{
+ font-size:11px;font-weight:900;padding:3px 10px;border-radius:999px;
+ background:rgba(0,217,255,.15);color:var(--cyan);border:1px solid rgba(0,217,255,.35);
+}
+body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
+.mand-steps{display:flex;flex-direction:column;gap:8px;font-size:12.5px;font-weight:700;color:var(--muted);line-height:1.75}
+.mand-step-row{display:flex;align-items:flex-start;gap:9px}
+.mand-step-row i{
+ font-style:normal;width:24px;height:24px;flex-shrink:0;border-radius:50%;
+ display:grid;place-items:center;font-size:12px;font-weight:900;color:#fff;
+ background:linear-gradient(135deg,#087bff,#7c3aed);margin-top:2px;
+}
+.mand-step-row strong{color:var(--text)}
+.mand-sub-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+.mand-sub-btn{
+ flex:1 1 140px;padding:10px 12px;border-radius:12px;font-size:12.5px;font-weight:900;
+ border:1.5px solid var(--border);background:var(--panel);color:var(--text);
+ display:inline-flex;align-items:center;justify-content:center;gap:6px;
+}
+.mand-sub-btn:hover{border-color:var(--c1);background:var(--panel2)}
+.mand-sub-btn.verify{
+ background:linear-gradient(135deg,#16a34a,#059669);border-color:#15803d;color:#fff;
+}
+.mand-qr-box{
+ display:flex;flex-direction:column;align-items:center;gap:6px;
+ padding:12px;border-radius:14px;background:#fff;color:#0b1224;border:2px solid #cbd5e1;
+}
+.mand-qr-box canvas{display:block;width:160px;height:160px;image-rendering:pixelated}
+.mand-qr-box small{font-size:11px;font-weight:800;color:#334155}
+.mand-foot-trust{
+ font-size:11.5px;font-weight:800;color:var(--muted);line-height:1.65;
+ padding-top:8px;border-top:1px dashed var(--border);
+}
+@media(max-width:480px){
+ .mand-app-top{padding:22px 16px 18px}
+ .mand-app-body{padding:14px 15px 18px}
+ .mand-perks{grid-template-columns:1fr}
+ #adminAppPromptBar .mode-sw-btn{flex:1 1 100%}
+}
+
 </style>
 <style id="xv-css">
 #exclVideosSection .section-heading{flex-direction:column;align-items:flex-start;gap:3px}#exclVideosSection .section-heading h2{font-size:18px}#exclVideosSection .section-heading small{font-size:11.5px}
@@ -2373,14 +2547,14 @@ body.light .guest-gate-badge{background:#f3e8ff;color:#6d28d9;border-color:#c4b5
 .xv-form{border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:14px;background:var(--panel)}
 .xv-prev{width:92px;height:52px;border-radius:10px;object-fit:cover;background:#000;flex:none}
 </style>
-<script src="/_aistudio-iframe.js?v=1f94f900"></script><style data-nasr-core="1">
+<style data-nasr-core="1">
 .ul-row .ul-cnt{margin-inline-start:auto;flex:0 0 auto;align-self:center;min-width:44px;text-align:center;padding:6px 12px;border-radius:999px;font-weight:900;font-size:13px;color:#fff;background:linear-gradient(135deg,#087bff,#a600ff);box-shadow:0 4px 14px #087bff44;white-space:nowrap}
 .ul-times{margin-top:6px}.ul-times summary{cursor:pointer;font-size:11px;color:#6fb6ff;font-weight:700;list-style:none}
 .ul-times summary::-webkit-details-marker{display:none}
 .ul-times ol{margin:6px 0 2px;padding:0 18px 0 0;max-height:150px;overflow:auto;font-size:11.5px;color:var(--muted);line-height:1.9}
 .ul-times li{direction:rtl;text-align:right}
 </style>
-<script src="/_aistudio-iframe.js?v=1f94f900"></script></head>
+</head>
 
 <body>
 <script>
@@ -2912,6 +3086,18 @@ body.light .guest-gate-badge{background:#f3e8ff;color:#6d28d9;border-color:#c4b5
     <button type="button" class="mode-sw-btn exh" id="modeBtnExh" onclick="setStoreDisplayMode('exhibition')">🏷️ وضع المعرض (واتساب)</button>
    </div>
   </div>
+  <div id="adminAppPromptBar">
+   <div class="mode-bar-title">
+    <b>📲 وضع رسالة تحميل التطبيق (بعد تسجيل الدخول)</b>
+    <small id="appPromptBarHint">تعمل تلقائيًا في وضع المتجر والمعرض — تحكّم كامل بين الإلزام أو السماح بالتخطي</small>
+   </div>
+   <div class="mode-bar-btns">
+    <button type="button" class="mode-sw-btn dl-mand" id="dlPromptBtnMandatory" onclick="setAppDownloadPromptMode('mandatory')">🔒 إجبارية (لا يمكن تخطيها)</button>
+    <button type="button" class="mode-sw-btn dl-opt" id="dlPromptBtnOptional" onclick="setAppDownloadPromptMode('optional')">✨ اختيارية (يمكن تخطيها)</button>
+    <button type="button" class="mode-sw-btn dl-prev" onclick="previewMandatoryAppGate()">👁️ معاينة الإجبارية</button>
+   </div>
+   <div class="admin-prompt-note">💡 عند اختيار <b>إجبارية</b>: بمجرد تسجيل الدخول أو إنشاء حساب تظهر للعميل نافذة تحميل التطبيق الرسمية ولا تُفتح باقي الصفحات أو يمكن إغلاقها إلا بعد تثبيت التطبيق (تعمل في المتجر والمعرض).</div>
+  </div>
   <div class="admin-tabs">
    <button class="admin-tab active" type="button" onclick="adminTab('overview',this)">📊 نظرة عامة</button>
    <button class="admin-tab" type="button" onclick="adminTab('products',this)">📦 المنتجات</button>
@@ -3242,7 +3428,15 @@ function okToast(msg){toast(msg,null,4000);const t=document.querySelector(".toas
 function afterAuthDone(msg){
  closeModal("authModal");
  if(currentSession&&typeof directBuyItems!=="undefined"&&Array.isArray(directBuyItems)&&directBuyItems.length){
+  window.__pendingDirectBuyAfterInstall=directBuyItems.slice();
+ }
+ if(typeof window.evaluateMandatoryAppGate==="function"&&window.evaluateMandatoryAppGate()){
+  okToast(msg);
+  return;
+ }
+ if(currentSession&&typeof directBuyItems!=="undefined"&&Array.isArray(directBuyItems)&&directBuyItems.length){
   const items=directBuyItems.slice();
+  window.__pendingDirectBuyAfterInstall=null;
   okToast(msg);
   if(typeof checkout==="function"){checkout(items);return}
  }
@@ -3253,6 +3447,7 @@ const toLatin=s=>String(s||"").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".inde
 /* إغلاق النافذة العلوية بزر Esc */
 document.addEventListener("keydown",e=>{
  if(e.key!=="Escape")return;
+ if(document.body.classList.contains("app-dl-locked"))return;
  const open=[...document.querySelectorAll(".modal-backdrop.show,.co-page.show")];
  if(open.length){open[open.length-1].classList.remove("show");return}
  closeCart();
@@ -3359,6 +3554,10 @@ function applyStoreMode(mode){
   if(typeof updateAdminTotals==="function")updateAdminTotals();
   if(currentAdminTab==="overview"&&typeof loadOverview==="function")loadOverview();
  }
+ const mandGate=document.getElementById("mandatoryAppGate");
+ if(mandGate&&typeof showMandatoryAppGate==="function"){
+  showMandatoryAppGate(mandGate.dataset.preview==="1");
+ }
 }
 async function setStoreDisplayMode(mode){
  if(!isAdmin())return;
@@ -3372,6 +3571,296 @@ async function setStoreDisplayMode(mode){
   if(window.__nasrBcCh)window.__nasrBcCh.send({type:"broadcast",event:"mode",payload:{mode:m}});
  }catch(e){}
  okToast(m==="store"?"✅ تم التبديل إلى وضع المتجر الكامل بنجاح":"✅ تم التبديل إلى وضع المعرض بنجاح");
+}
+
+/* ===== نظام وضع رسالة تحميل التطبيق (إجبارية / اختيارية) وبوابة التثبيت الإجبارية ===== */
+window.APP_DL_PROMPT_MODE=(()=>{
+ try{
+  const v=localStorage.getItem("nasr_app_dl_prompt_mode");
+  return (v==="mandatory"||v==="optional")?v:"mandatory";
+ }catch(e){return "mandatory"}
+})();
+document.body.dataset.appDlMode=window.APP_DL_PROMPT_MODE;
+
+function applyAppDownloadPromptMode(mode){
+ const m=(mode==="mandatory"||mode==="optional")?mode:"mandatory";
+ window.APP_DL_PROMPT_MODE=m;
+ document.body.dataset.appDlMode=m;
+ try{localStorage.setItem("nasr_app_dl_prompt_mode",m)}catch(e){}
+ const isMand=(m==="mandatory");
+ if($("dlPromptBtnMandatory"))$("dlPromptBtnMandatory").classList.toggle("active",isMand);
+ if($("dlPromptBtnOptional"))$("dlPromptBtnOptional").classList.toggle("active",!isMand);
+ if($("appPromptBarHint")){
+  $("appPromptBarHint").textContent=isMand
+   ?"الوضع الحالي: إجبارية — تظهر بعد تسجيل الدخول/إنشاء الحساب ولا يمكن تخطيها حتى تحميل التطبيق (تعمل في المتجر والمعرض)"
+   :"الوضع الحالي: اختيارية — تظهر كدعوة يمكن للعميل تخطيها والمتابعة عبر المتصفح (في المتجر والمعرض)";
+ }
+ if(typeof window.evaluateMandatoryAppGate==="function")window.evaluateMandatoryAppGate();
+}
+
+async function setAppDownloadPromptMode(mode){
+ if(!isAdmin())return;
+ const m=(mode==="mandatory"||mode==="optional")?mode:"mandatory";
+ applyAppDownloadPromptMode(m);
+ try{
+  const {error}=await supabaseClient.from("site_settings").upsert({key:"app_download_prompt_mode",value:m});
+  if(error)throw error;
+ }catch(e){console.warn("app_dl_mode save notice:",e&&e.message)}
+ try{
+  if(window.__nasrBcCh)window.__nasrBcCh.send({type:"broadcast",event:"app_dl_mode",payload:{mode:m}});
+ }catch(e){}
+ okToast(m==="mandatory"
+  ?"🔒 تم تفعيل وضع رسالة تحميل التطبيق الإجبارية للعملاء (في المتجر والمعرض)"
+  :"✨ تم تغيير رسالة تحميل التطبيق إلى اختيارية (يمكن للعميل تخطيها)");
+}
+
+window.isMandatoryAppGateBlocking=function(){
+ try{
+  if(!currentSession)return false;
+  if(typeof recoveryMode!=="undefined"&&recoveryMode)return false;
+  if(typeof isAdmin==="function"&&isAdmin())return false;
+  if(window.APP_DL_PROMPT_MODE!=="mandatory")return false;
+  if(typeof detectPlatform==="function"&&detectPlatform()==="app")return false;
+  if(typeof isAppInstalledLocally==="function"&&isAppInstalledLocally())return false;
+  return true;
+ }catch(e){return false}
+};
+
+function getClientInstallEnv(){
+ const ua=navigator.userAgent||"";
+ const isIOS=/iPhone|iPad|iPod/i.test(ua);
+ const isAndroid=/Android/i.test(ua);
+ const isInApp=/FBAN|FBAV|FB_IAB|Instagram|WhatsApp|Snapchat|TikTok|Line\/|Twitter|MicroMessenger/i.test(ua);
+ const osLabel=isIOS?"iPhone / iPad":(isAndroid?"Android":"الكمبيوتر / المتصفح");
+ return {isIOS,isAndroid,isInApp,osLabel};
+}
+
+let mandGuardObserver=null;
+function ensureMandGuardObserver(){
+ if(mandGuardObserver||typeof MutationObserver==="undefined")return;
+ mandGuardObserver=new MutationObserver(()=>{
+  if(window.isMandatoryAppGateBlocking()){
+   if(!document.body.classList.contains("app-dl-locked")){
+    document.body.classList.add("app-dl-locked");
+   }
+   if(!document.getElementById("mandatoryAppGate")){
+    showMandatoryAppGate(false);
+   }
+  }
+ });
+ mandGuardObserver.observe(document.body,{childList:true,attributes:true,attributeFilter:["class"]});
+}
+
+function showMandatoryAppGate(isAdminPreview){
+ const isPrev=!!isAdminPreview&&typeof isAdmin==="function"&&isAdmin();
+ if(!isPrev&&!window.isMandatoryAppGateBlocking())return false;
+ if(!isPrev){
+  document.body.classList.add("app-dl-locked");
+  try{closeCart()}catch(e){}
+  try{document.querySelectorAll(".modal-backdrop.show,.wl-ov,.app-invite-ov:not(#mandatoryAppGate)").forEach(el=>{if(el.classList.contains("modal-backdrop"))el.classList.remove("show");else el.remove()})}catch(e){}
+  ensureMandGuardObserver();
+ }
+ const existing=document.getElementById("mandatoryAppGate");
+ const isExh=(window.STORE_MODE==="exhibition");
+ const bLabel=isExh?"معرض نسر البرية الرسمي":"متجر نسر البرية الرسمي";
+ const {isIOS,isInApp,osLabel}=getClientInstallEnv();
+ const logoSrc=(typeof window.__NASR_LOGO==="string"&&window.__NASR_LOGO)||"./pwa-192x192.png";
+ const hasNative=!!((typeof deferredInstallPrompt!=="undefined"&&deferredInstallPrompt)||window.__deferredInstallPrompt);
+ const perksHtml=isExh
+  ?`<div class="mand-perk"><span>⚡</span><span>تصفّح المعرض بسرعة فائقة</span></div>
+    <div class="mand-perk"><span>🏷️</span><span>عروض وخصومات حصرية %</span></div>
+    <div class="mand-perk"><span>💬</span><span>استفسار وطلب فوري عبر واتساب</span></div>
+    <div class="mand-perk"><span>🔔</span><span>إشعارات مباشرة بأحدث المنتجات</span></div>`
+  :`<div class="mand-perk"><span>⚡</span><span>تصفّح أسرع بدون شريط متصفح</span></div>
+    <div class="mand-perk"><span>📦</span><span>متابعة طلباتك لحظة بلحظة</span></div>
+    <div class="mand-perk"><span>🛡️</span><span>تجربة تسوق آمنة ومتكاملة</span></div>
+    <div class="mand-perk"><span>🔔</span><span>إشعارات العروض الحصرية</span></div>`;
+ const guideSteps=isInApp
+  ?`<div class="mand-step-row"><i>1</i><span>أنت تفتح الرابط الآن من <strong>متصفح داخلي لتطبيق آخر</strong> — والمتصفح الداخلي يمنع التثبيت التلقائي.</span></div>
+    <div class="mand-step-row"><i>2</i><span>اضغط القائمة <strong>(⋮)</strong> أو أيقونة المشاركة بالأعلى واختر <strong>«الفتح في المتصفح» (Chrome أو Safari)</strong>.</span></div>
+    <div class="mand-step-row"><i>3</i><span>بمجرد الفتح في المتصفح الرسمي، اضغط زر التحميل وسيتم التثبيت فورًا!</span></div>`
+  :(isIOS
+   ?`<div class="mand-step-row"><i>1</i><span>اضغط أيقونة المشاركة <strong>(⬆️)</strong> في شريط <strong>Safari</strong> بالأسفل.</span></div>
+     <div class="mand-step-row"><i>2</i><span>اختر <strong>«إضافة إلى الصفحة الرئيسية» (Add to Home Screen)</strong> ثم اضغط <strong>«إضافة»</strong>.</span></div>
+     <div class="mand-step-row"><i>3</i><span>افتح تطبيق <strong>نسر البرية</strong> من أيقونته على شاشتك الرئيسية للمتابعة.</span></div>`
+   :`<div class="mand-step-row"><i>1</i><span>اضغط زر <strong>«تحميل وتثبيت التطبيق الآن»</strong> بالأعلى ثم اختر <strong>«تثبيت / Install»</strong>.</span></div>
+     <div class="mand-step-row"><i>2</i><span>إذا لم تظهر النافذة تلقائيًا، افتح قائمة المتصفح <strong>(⋮)</strong> واختر <strong>«تثبيت التطبيق»</strong> أو <strong>«الإضافة إلى الشاشة الرئيسية»</strong>.</span></div>
+     <div class="mand-step-row"><i>3</i><span>أو امسح رمز QR بالأسفل بكاميرا هاتفك للتثبيت الفوري.</span></div>`);
+
+ if(existing){
+  const badge=existing.querySelector(".mand-app-badge");
+  const desc=existing.querySelector(".mand-app-top p");
+  const perks=existing.querySelector(".mand-perks");
+  if(badge)badge.textContent=(isPrev?"👁️ معاينة الإدارة · ":"🔒 خطوة مطلوبة · ")+bLabel;
+  if(desc)desc.textContent=isExh
+   ?"تم تسجيل دخولك بنجاح! لتحقيق أفضل تجربة وتصفّح منتجات المعرض والخصومات، يرجى تحميل التطبيق الرسمي للمتابعة."
+   :"تم تسجيل دخولك بنجاح! لتصفّح كافة المنتجات والطلب بسهولة وأمان، يرجى تحميل تطبيق نسر البرية الرسمي للمتابعة.";
+  if(perks)perks.innerHTML=perksHtml;
+  const dlBtn=existing.querySelector("#mandDlBtn");
+  if(dlBtn&&!dlBtn.disabled)dlBtn.textContent=hasNative?"⬇️ تحميل وتثبيت التطبيق الآن":"📲 تثبيت تطبيق نسر البرية الآن";
+  return true;
+ }
+
+ const ov=document.createElement("div");
+ ov.id="mandatoryAppGate";
+ ov.className="mand-app-ov";
+ if(isPrev)ov.dataset.preview="1";
+ ov.innerHTML=`
+  <div class="mand-app-card" role="dialog" aria-modal="true" aria-label="تحميل تطبيق ${escapeHTML(bLabel)}">
+   ${isPrev?'<button type="button" class="mand-preview-exit" id="mandPrevExit">✕ إغلاق المعاينة (خاص بالإدارة)</button>':""}
+   <div class="mand-app-top">
+    <span class="mand-app-badge">${isPrev?"👁️ معاينة الإدارة · ":"🔒 خطوة مطلوبة · "}${escapeHTML(bLabel)}</span>
+    <div class="mand-app-logo"><img src="${logoSrc}" alt="شعار نسر البرية"></div>
+    <h3>حمّل التطبيق الرسمي للمتابعة 📲</h3>
+    <p>${isExh
+     ?"تم تسجيل دخولك بنجاح! لتحقيق أفضل تجربة وتصفّح منتجات المعرض والخصومات، يرجى تحميل التطبيق الرسمي للمتابعة."
+     :"تم تسجيل دخولك بنجاح! لتصفّح كافة المنتجات والطلب بسهولة وأمان، يرجى تحميل تطبيق نسر البرية الرسمي للمتابعة."}</p>
+   </div>
+   <div class="mand-app-body">
+    <div class="mand-perks">${perksHtml}</div>
+    <div class="mand-cta-wrap">
+     <div class="app-arrow" aria-hidden="true">${typeof INVITE_ARROW!=="undefined"?INVITE_ARROW:""}</div>
+     <button type="button" class="mand-dl-btn" id="mandDlBtn">${hasNative?"⬇️ تحميل وتثبيت التطبيق الآن":"📲 تثبيت تطبيق نسر البرية الآن"}</button>
+    </div>
+    <div class="mand-status-msg hidden" id="mandStatusMsg"></div>
+    <div class="mand-guide${hasNative?" hidden":""}" id="mandGuideBox">
+     <div class="mand-guide-hd">
+      <b>⚡ طريقة التثبيت السريع</b>
+      <span class="mand-guide-os">${escapeHTML(osLabel)}</span>
+     </div>
+     <div class="mand-steps">${guideSteps}</div>
+     <div class="mand-sub-actions">
+      <button type="button" class="mand-sub-btn verify" id="mandVerifyBtn">🔄 تحقّق من التثبيت</button>
+      <button type="button" class="mand-sub-btn" id="mandCopyBtn">🔗 نسخ رابط التطبيق</button>
+      <button type="button" class="mand-sub-btn" id="mandQrToggleBtn">📱 باركود الموبايل</button>
+     </div>
+     <div class="mand-qr-box hidden" id="mandQrBox">
+      <canvas id="mandQrCanvas" width="180" height="180"></canvas>
+      <small>وجّه كاميرا هاتفك نحو الباركود للتثبيت المباشر</small>
+     </div>
+    </div>
+    <div class="mand-foot-trust">🛡️ تطبيق رسمي آمن ومجاني 100% · حسابك وبياناتك محفوظة تلقائيًا عند فتح التطبيق</div>
+   </div>
+  </div>`;
+
+ if(isPrev){
+  const ex=ov.querySelector("#mandPrevExit");
+  if(ex)ex.onclick=()=>ov.remove();
+ }
+
+ const dlBtn=ov.querySelector("#mandDlBtn");
+ const statusBox=ov.querySelector("#mandStatusMsg");
+ const guideBox=ov.querySelector("#mandGuideBox");
+ const copyBtn=ov.querySelector("#mandCopyBtn");
+ const verifyBtn=ov.querySelector("#mandVerifyBtn");
+ const qrToggle=ov.querySelector("#mandQrToggleBtn");
+ const qrBox=ov.querySelector("#mandQrBox");
+
+ const setStatus=msg=>{
+  if(!statusBox)return;
+  if(!msg){statusBox.classList.add("hidden");statusBox.textContent="";return}
+  statusBox.textContent=msg;
+  statusBox.classList.remove("hidden");
+ };
+
+ if(dlBtn){
+  dlBtn.onclick=async()=>{
+   if(isPrev){
+    okToast("👁️ هذه معاينة للإدارة فقط — سيبدأ التثبيت الفعلي هنا للعملاء.");
+    return;
+   }
+   dlBtn.disabled=true;
+   dlBtn.textContent="⏳ جارٍ تجهيز التثبيت المباشر...";
+   setStatus("");
+   const st=typeof triggerNativeInstallPrompt==="function"?await triggerNativeInstallPrompt():"unavailable";
+   dlBtn.disabled=false;
+   if(st==="accepted"){
+    hideMandatoryAppGate(true);
+    return;
+   }
+   dlBtn.textContent="📲 تثبيت تطبيق نسر البرية الآن";
+   if(st==="dismissed"){
+    setStatus("⚠️ يجب إكمال تثبيت التطبيق للمتابعة — اضغط الزر بالأعلى ثم اختر «تثبيت / Install».");
+    return;
+   }
+   if(guideBox)guideBox.classList.remove("hidden");
+   if(isInApp)setStatus("⚠️ المتصفح الداخلي يمنع التثبيت التلقائي — افتح الرابط في Chrome أو Safari بالخطوات بالأسفل.");
+   else if(isIOS)setStatus("📲 على أجهزة آيفون وآيباد اتبع خطوات Safari بالأسفل لإضافة التطبيق للشاشة الرئيسية.");
+   else setStatus("📲 اتبع خطوات التثبيت السريعة بالأسفل أو افتح قائمة المتصفح (⋮) واختر «تثبيت التطبيق».");
+  };
+ }
+ if(copyBtn){
+  copyBtn.onclick=async()=>{
+   const url=location.origin+location.pathname;
+   try{await navigator.clipboard.writeText(url);okToast("✅ تم نسخ الرابط — افتحه في Chrome أو Safari للتثبيت")}
+   catch(e){setStatus("انسخ الرابط التالي وافتحه في المتصفح: "+url)}
+  };
+ }
+ if(verifyBtn){
+  verifyBtn.onclick=async()=>{
+   if(isPrev){ov.remove();return}
+   verifyBtn.disabled=true;
+   verifyBtn.textContent="⏳ جارٍ التحقق...";
+   let ok=false;
+   try{
+    if(typeof detectPlatform==="function"&&detectPlatform()==="app")ok=true;
+    else if(typeof syncInstallState==="function")ok=await syncInstallState();
+   }catch(e){}
+   verifyBtn.disabled=false;
+   verifyBtn.textContent="🔄 تحقّق من التثبيت";
+   if(ok){
+    hideMandatoryAppGate(true);
+   }else{
+    setStatus("⏳ لم يتم رصد تثبيت التطبيق على هذا المتصفح بعد — أكمل التثبيت من الخطوات أعلاه أو افتح التطبيق من أيقونة الشاشة الرئيسية.");
+   }
+  };
+ }
+ if(qrToggle&&qrBox){
+  qrToggle.onclick=()=>{
+   const willShow=qrBox.classList.contains("hidden");
+   qrBox.classList.toggle("hidden",!willShow);
+   if(willShow&&window.drawQrOnCanvas){
+    try{
+     const target=typeof getDefaultAppQrUrl==="function"?getDefaultAppQrUrl():(location.origin+location.pathname+"#/app-download");
+     window.drawQrOnCanvas(qrBox.querySelector("#mandQrCanvas"),target);
+    }catch(e){}
+   }
+  };
+ }
+
+ document.body.appendChild(ov);
+ return true;
+}
+
+function hideMandatoryAppGate(installedSuccess){
+ document.body.classList.remove("app-dl-locked");
+ const existing=document.getElementById("mandatoryAppGate");
+ if(existing&&existing.dataset.preview!=="1")existing.remove();
+ if(installedSuccess){
+  if(typeof okToast==="function")okToast("✅ تم تثبيت تطبيق نسر البرية بنجاح! يمكنك المتابعة الآن");
+  if(window.__pendingDirectBuyAfterInstall&&Array.isArray(window.__pendingDirectBuyAfterInstall)&&window.__pendingDirectBuyAfterInstall.length){
+   const items=window.__pendingDirectBuyAfterInstall.slice();
+   window.__pendingDirectBuyAfterInstall=null;
+   if(typeof checkout==="function"){checkout(items);return}
+  }
+  if(typeof route==="function")route();
+ }
+}
+
+window.evaluateMandatoryAppGate=function(){
+ if(window.isMandatoryAppGateBlocking()){
+  showMandatoryAppGate(false);
+  return true;
+ }
+ const existing=document.getElementById("mandatoryAppGate");
+ if(existing&&existing.dataset.preview==="1")return false;
+ hideMandatoryAppGate(false);
+ return false;
+};
+
+function previewMandatoryAppGate(){
+ if(!isAdmin())return;
+ showMandatoryAppGate(true);
 }
 
 
@@ -3391,6 +3880,11 @@ function parseHash(){
  return {type,arg};
 }
 function route(){
+ if(typeof window.evaluateMandatoryAppGate==="function"&&window.evaluateMandatoryAppGate()){
+  view={type:"home"};
+  setNav(0);hideSuggest();
+  return;
+ }
  const {type,arg}=parseHash();
  const locked=!currentSession;
  if(locked&&type!=="app-download"){
@@ -3428,6 +3922,10 @@ function doSearch(q){
  nav("#/search/"+encodeURIComponent(q));
 }
 function showPage(){
+ if(typeof window.evaluateMandatoryAppGate==="function"&&window.evaluateMandatoryAppGate()){
+  view={type:"home"};
+  return;
+ }
  if(!currentSession&&view.type!=="app-download"){
   view={type:"home"};
   $("homeView").classList.remove("hidden");$("pageView").classList.add("hidden");$("pageView").removeAttribute("data-allow-guest");
@@ -3937,17 +4435,23 @@ function setHero(url){
 }
 async function loadSettings(){
  try{
-  const {data}=await supabaseClient.from("site_settings").select("key,value").in("key",["hero_image","store_display_mode"]);
+  const {data}=await supabaseClient.from("site_settings").select("key,value").in("key",["hero_image","store_display_mode","app_download_prompt_mode"]);
   const map={};(data||[]).forEach(r=>{map[r.key]=r.value});
   setHero(map.hero_image||DEFAULT_HERO);
   if(map.store_display_mode==="store"||map.store_display_mode==="exhibition")applyStoreMode(map.store_display_mode);
   else applyStoreMode(window.STORE_MODE);
- }catch(e){setHero(DEFAULT_HERO);applyStoreMode(window.STORE_MODE)}
+  if(map.app_download_prompt_mode==="mandatory"||map.app_download_prompt_mode==="optional")applyAppDownloadPromptMode(map.app_download_prompt_mode);
+  else applyAppDownloadPromptMode(window.APP_DL_PROMPT_MODE);
+ }catch(e){setHero(DEFAULT_HERO);applyStoreMode(window.STORE_MODE);applyAppDownloadPromptMode(window.APP_DL_PROMPT_MODE)}
  try{
   supabaseClient.channel("store-mode-sync")
    .on("postgres_changes",{event:"*",schema:"public",table:"site_settings",filter:"key=eq.store_display_mode"},p=>{
     const v=p&&p.new&&p.new.value;
     if(v==="store"||v==="exhibition")applyStoreMode(v);
+   })
+   .on("postgres_changes",{event:"*",schema:"public",table:"site_settings",filter:"key=eq.app_download_prompt_mode"},p=>{
+    const v=p&&p.new&&p.new.value;
+    if(v==="mandatory"||v==="optional")applyAppDownloadPromptMode(v);
    }).subscribe();
  }catch(e){}
 }
@@ -4152,6 +4656,7 @@ function renderCart(){
 }
 function openCart(){
  if(window.STORE_MODE==="exhibition")return;
+ if(typeof window.evaluateMandatoryAppGate==="function"&&window.evaluateMandatoryAppGate())return;
  $("cartPanel").classList.add("show");$("overlay").classList.add("show");
  renderCart();
 }
@@ -4211,6 +4716,7 @@ $("addrForm").addEventListener("submit",e=>{
  if(coAddrCb){const f=coAddrCb;coAddrCb=null;f()}
 });
 function openAuth(){
+ if(typeof window.evaluateMandatoryAppGate==="function"&&window.evaluateMandatoryAppGate())return;
  closeCart();openModal("authModal");updateAuthInterface();
 }
 function isAdmin(){return currentRole==="owner"||currentRole==="admin"}
@@ -4260,6 +4766,7 @@ async function refreshRole(){
  }
  if(typeof window.syncNotifPrefFromDB==="function")window.syncNotifPrefFromDB();
  if(window.checkOwnerEvents)window.checkOwnerEvents();
+ if(typeof window.evaluateMandatoryAppGate==="function")window.evaluateMandatoryAppGate();
 }
 async function handleEmailAuth(event){
  event.preventDefault();clearMessage("authMessage");
@@ -4385,7 +4892,10 @@ async function signOutUser(){
  try{await supabaseClient.auth.signOut({scope:"local"})}catch(e){}
  try{Object.keys(localStorage).filter(k=>/^sb-.*-auth-token/.test(k)).forEach(k=>localStorage.removeItem(k))}catch(e){}
  if(typeof directBuyItems!=="undefined")directBuyItems=null;
- currentSession=null;currentRole=null;syncCartOwner();updateAuthInterface();stopNotifications();if(typeof route==="function")route();afterAuthDone("تم تسجيل خروجك بنجاح");
+ window.__pendingDirectBuyAfterInstall=null;
+ currentSession=null;currentRole=null;syncCartOwner();updateAuthInterface();stopNotifications();
+ if(typeof window.evaluateMandatoryAppGate==="function")window.evaluateMandatoryAppGate();
+ if(typeof route==="function")route();afterAuthDone("تم تسجيل خروجك بنجاح");
 }
 /* إعادة التحقق من الصلاحيات باستمرار: لو اتشال مالك يختفي عنده زر الإدارة فورًا */
 setInterval(()=>{if(currentSession&&supabaseClient)refreshRole()},20000);
@@ -5085,6 +5595,8 @@ async function openAdmin(){
  closeCart();openModal("adminModal");
  if($("modeBtnStore"))$("modeBtnStore").classList.toggle("active",window.STORE_MODE==="store");
  if($("modeBtnExh"))$("modeBtnExh").classList.toggle("active",window.STORE_MODE==="exhibition");
+ if($("dlPromptBtnMandatory"))$("dlPromptBtnMandatory").classList.toggle("active",window.APP_DL_PROMPT_MODE==="mandatory");
+ if($("dlPromptBtnOptional"))$("dlPromptBtnOptional").classList.toggle("active",window.APP_DL_PROMPT_MODE==="optional");
  adminTab("overview",document.querySelector(".admin-tab"));
  await loadProducts();renderAdminProducts();
  loadNotifications();
@@ -5661,6 +6173,8 @@ function requestNotifPermissionSafe(){
 
 window.shouldAutoPromptNotifs=function(){
  try{
+  /* رسالة تفعيل الإشعارات تظهر في التطبيق فقط ولا تظهر على الموقع الإلكتروني إطلاقًا */
+  if(typeof detectPlatform!=="function"||detectPlatform()!=="app")return false;
   const cur=getNotifPermSafe();
   if(!("Notification" in window)||cur==="unsupported"||cur==="granted")return false;
   if(notifPromptDismissedThisView)return false;
@@ -5713,6 +6227,9 @@ async function systemNotify(title,body,tagOrProductId){
  return false;
 }
 function refreshNotifUi(){
+ const inApp=typeof detectPlatform==="function"&&detectPlatform()==="app";
+ const authRow=$("authNotifRow");
+ if(authRow)authRow.classList.toggle("hidden",!inApp);
  const perm=getNotifPermSafe();
  const savedInDb=notifDbMarkedGranted||getLocalNotifWasGranted();
  const txt=perm==="granted"
@@ -5756,7 +6273,11 @@ async function enableMobileNotifsFromBtn(btnEl){
   }else{
    window.__nasrNotifUserAction=false;
    await persistNotifPrefToDB(res,true);
-   window.showNotifPermissionPrompt(true);
+   if(typeof detectPlatform==="function"&&detectPlatform()==="app"){
+    window.showNotifPermissionPrompt(true);
+   }else{
+    toast("فعّل الإشعارات من إعدادات المتصفح أو استخدم التطبيق المثبّت.");
+   }
   }
  }catch(e){
   window.__nasrNotifUserAction=false;
@@ -5798,6 +6319,8 @@ function onNotifGrantedNow(silentWelcome){
 }
 window.showNotifPermissionPrompt=function(forceNow){
  try{
+  /* رسالة تفعيل الإشعارات مخصصة للتطبيق فقط ولا تظهر في الموقع نهائيًا */
+  if(typeof detectPlatform!=="function"||detectPlatform()!=="app")return;
   if(!("Notification" in window))return;
   const perm=getNotifPermSafe();
   lastKnownNotifPerm=perm;
@@ -5807,8 +6330,8 @@ window.showNotifPermissionPrompt=function(forceNow){
   }
   if(!forceNow){
    if(!window.shouldAutoPromptNotifs())return;
-   if(document.querySelector(".app-invite-ov:not(.app-notif-ov),.own-ev-ov,.app-update-ov,.modal-backdrop.show"))return;
-  }else if(document.querySelector(".app-invite-ov:not(.app-notif-ov),.own-ev-ov,.app-update-ov,.modal-backdrop.show")){
+   if(document.querySelector(".app-invite-ov:not(.app-notif-ov),.mand-app-ov,.own-ev-ov,.app-update-ov,.modal-backdrop.show"))return;
+  }else if(document.querySelector(".app-invite-ov:not(.app-notif-ov),.mand-app-ov,.own-ev-ov,.app-update-ov,.modal-backdrop.show")){
    window.scheduleNotifPrompt(800);
    return;
   }
@@ -5911,19 +6434,21 @@ window.showNotifPermissionPrompt=function(forceNow){
 let notifScheduleTimer=null;
 window.scheduleNotifPrompt=function(delayMs){
  try{
+  if(typeof detectPlatform!=="function"||detectPlatform()!=="app")return;
   if(!window.shouldAutoPromptNotifs())return;
   if(notifScheduleTimer){clearTimeout(notifScheduleTimer);notifScheduleTimer=null}
   notifScheduleTimer=setTimeout(()=>{
    notifScheduleTimer=null;
+   if(typeof detectPlatform!=="function"||detectPlatform()!=="app")return;
    if(!window.shouldAutoPromptNotifs())return;
-   if(document.querySelector(".app-invite-ov:not(.app-notif-ov),.own-ev-ov,.app-update-ov,.modal-backdrop.show")){
+   if(document.querySelector(".app-invite-ov:not(.app-notif-ov),.mand-app-ov,.own-ev-ov,.app-update-ov,.modal-backdrop.show")){
     return;
    }
    window.showNotifPermissionPrompt(false);
   },typeof delayMs==="number"?delayMs:1000);
  }catch(e){}
 };
-/* مراقبة منضبطة لتغيّر إذن الإشعارات (عند الإغلاق من الإعدادات يتم التنبيه فورًا بدون تكرار مزعج عند الرفض) */
+/* مراقبة منضبطة لتغيّر إذن الإشعارات (عند الإغلاق من الإعدادات يتم التنبيه فورًا في التطبيق فقط بدون تكرار مزعج) */
 (function initNotifPermissionWatcher(){
  if(!("Notification" in window))return;
  let stabT=null;
@@ -5945,7 +6470,7 @@ window.scheduleNotifPrompt=function(delayMs){
      persistNotifPrefToDB(cur,true);
      notifPromptDismissedThisView=false;
      clearNotifDismissTs();
-     if(allowReopenOnRevoke&&window.__nasrInviteFlowDone&&!document.querySelector(".app-notif-ov")){
+     if(allowReopenOnRevoke&&typeof detectPlatform==="function"&&detectPlatform()==="app"&&window.__nasrInviteFlowDone&&!document.querySelector(".app-notif-ov")){
       window.showNotifPermissionPrompt(true);
      }
      return;
@@ -6953,6 +7478,10 @@ function startBroadcastFeed(){
      const m=msg&&msg.payload&&msg.payload.mode;
      if(m==="store"||m==="exhibition")applyStoreMode(m);
     })
+    .on("broadcast",{event:"app_dl_mode"},msg=>{
+     const m=msg&&msg.payload&&msg.payload.mode;
+     if(m==="mandatory"||m==="optional")applyAppDownloadPromptMode(m);
+    })
     .subscribe(status=>{
      window.__nasrBcChReady=(status==="SUBSCRIBED");
      if(status==="SUBSCRIBED")checkBroadcastsOnLoad();
@@ -7294,11 +7823,13 @@ window.aiRefreshStoreData=async function(force){
     })(),
     (async()=>{
      try{
-      const {data}=await supabaseClient.from("site_settings").select("key,value").in("key",["hidden_categories","services_v1","services_visible","wifi_v1","app_release_v1"]);
+      const {data}=await supabaseClient.from("site_settings").select("key,value").in("key",["hidden_categories","services_v1","services_visible","wifi_v1","app_release_v1","store_display_mode","app_download_prompt_mode"]);
       let changed=false,appRel="";
       (data||[]).forEach(r=>{
        if(r.key==="services_visible"){const nx=!(String(r.value)==="0");if(window.servicesVisible!==nx){window.servicesVisible=nx;changed=true}}
        else if(r.key==="app_release_v1"){appRel=String(r.value||"").trim()}
+       else if(r.key==="store_display_mode"){if((r.value==="store"||r.value==="exhibition")&&window.STORE_MODE!==r.value&&typeof applyStoreMode==="function")applyStoreMode(r.value)}
+       else if(r.key==="app_download_prompt_mode"){if((r.value==="mandatory"||r.value==="optional")&&window.APP_DL_PROMPT_MODE!==r.value&&typeof applyAppDownloadPromptMode==="function")applyAppDownloadPromptMode(r.value)}
        else{
         try{
          const v=JSON.parse(r.value);
@@ -8023,6 +8554,7 @@ window.showWelcome=function(user){
 };
 window.maybeWelcome=function(session){
  try{
+  if(typeof window.isMandatoryAppGateBlocking==="function"&&window.isMandatoryAppGateBlocking())return;
   const u=session&&session.user;if(!u||welcomed||recoveryMode)return;
   const mail=String(u.email||"").toLowerCase();
   let pend="";try{pend=String(localStorage.getItem("nasrSignupPending")||"").toLowerCase()}catch(e){}
@@ -9438,6 +9970,7 @@ async function syncInstallState(){
  }catch(e){}
  return false;
 }
+try{document.body.dataset.platform=detectPlatform()}catch(e){}
 window.addEventListener("appinstalled",()=>{
  deferredInstallPrompt=null;
  window.__deferredInstallPrompt=null;
@@ -9445,8 +9978,11 @@ window.addEventListener("appinstalled",()=>{
  window.__appInstalledJustNow=true;
  markAppInstalled("pwa_installed",true);
  document.querySelectorAll(".app-invite-ov").forEach(x=>x.remove());
+ if(typeof hideMandatoryAppGate==="function")hideMandatoryAppGate(true);
  if(typeof view!=="undefined"&&view.type==="app-download"&&typeof renderPage==="function")renderPage();
- setTimeout(()=>{if(typeof window.showNotifPermissionPrompt==="function")window.showNotifPermissionPrompt(true)},900);
+ if(typeof detectPlatform==="function"&&detectPlatform()==="app"){
+  setTimeout(()=>{if(typeof window.showNotifPermissionPrompt==="function")window.showNotifPermissionPrompt(true)},900);
+ }
 });
 window.addEventListener("beforeinstallprompt",e=>{
  e.preventDefault();
@@ -9461,6 +9997,9 @@ window.addEventListener("beforeinstallprompt",e=>{
   dlBtn.textContent="⬇️ تثبيت التطبيق الآن مجانًا";
   dlBtn.style.background="";
  }
+ const mandBtn=document.getElementById("mandDlBtn");
+ if(mandBtn&&!mandBtn.disabled)mandBtn.textContent="⬇️ تحميل وتثبيت التطبيق الآن";
+ if(typeof window.evaluateMandatoryAppGate==="function")window.evaluateMandatoryAppGate();
 });
 document.addEventListener("click",e=>{
  if(window.__nasrUpdating||justUpdatedThisLoad)return;
@@ -9539,7 +10078,9 @@ async function runLiveAppUpdate(ver,swReg,isRemote,btn){
 
 function showAppInviteModal(){
  if(inviteDismissedThisView)return false;
- if(document.querySelector(".app-invite-ov:not(.app-notif-ov),.own-ev-ov,.app-update-ov"))return false;
+ if(window.APP_DL_PROMPT_MODE==="mandatory")return false;
+ if(typeof window.isMandatoryAppGateBlocking==="function"&&window.isMandatoryAppGateBlocking())return false;
+ if(document.querySelector(".app-invite-ov:not(.app-notif-ov),.mand-app-ov,.own-ev-ov,.app-update-ov"))return false;
  if(detectPlatform()==="app"||isAppInstalledLocally())return false;
  if(typeof view!=="undefined"&&view.type==="app-download")return false;
  document.querySelectorAll(".app-notif-ov").forEach(x=>x.remove());
@@ -9567,7 +10108,6 @@ function showAppInviteModal(){
  </div>`;
  const dismiss=()=>{
   inviteDismissedThisView=true;ov.remove();
-  if(typeof window.scheduleNotifPrompt==="function")window.scheduleNotifPrompt(450);
  };
  ov.querySelector(".app-invite-x").onclick=dismiss;
  ov.querySelector(".app-invite-skip").onclick=dismiss;
@@ -9579,13 +10119,11 @@ function showAppInviteModal(){
   if(st==="accepted"){
    ov.remove();
    if(typeof okToast==="function")okToast("✅ تم تثبيت تطبيق نسر البرية على جهازك بنجاح!");
-   setTimeout(()=>{if(typeof window.showNotifPermissionPrompt==="function")window.showNotifPermissionPrompt(true)},700);
    return;
   }
   ov.remove();
   if(typeof nav==="function")nav("#/app-download");
   else location.hash="#/app-download";
-  if(typeof window.scheduleNotifPrompt==="function")window.scheduleNotifPrompt(900);
  };
  document.body.appendChild(ov);
  return true;
@@ -9623,7 +10161,9 @@ function showAppUpdateModal(targetVer,swReg,isRemote){
  </div>`;
  const dismiss=()=>{
   updateDismissedThisView=true;ov.remove();
-  if(typeof window.scheduleNotifPrompt==="function")window.scheduleNotifPrompt(900);
+  if(typeof detectPlatform==="function"&&detectPlatform()==="app"&&typeof window.scheduleNotifPrompt==="function"){
+   window.scheduleNotifPrompt(900);
+  }
  };
  ov.querySelector(".app-invite-x").onclick=dismiss;
  ov.querySelector(".app-invite-skip").onclick=dismiss;
@@ -9805,7 +10345,10 @@ window.renderAppDownloadPage=function(container){
    if(st==="accepted"){
     nowBtn.textContent="✅ تم التثبيت بنجاح!";
     guideMsg.textContent="ممتاز! ستجد أيقونة «نسر البرية» الدائرية على شاشتك الرئيسية الآن بدون شريط متصفح.";
-    setTimeout(()=>{if(typeof window.showNotifPermissionPrompt==="function")window.showNotifPermissionPrompt(true)},900);
+    if(typeof hideMandatoryAppGate==="function")hideMandatoryAppGate(true);
+    if(typeof detectPlatform==="function"&&detectPlatform()==="app"){
+     setTimeout(()=>{if(typeof window.showNotifPermissionPrompt==="function")window.showNotifPermissionPrompt(true)},900);
+    }
     return;
    }
    nowBtn.textContent=prevTx;
@@ -9860,7 +10403,7 @@ function scheduleAppInvite(){
    }catch(e){}
    if(typeof okToast==="function")okToast("✅ تم تحديث التطبيق إلى النسخة الأسرع والأخف بنجاح!");
    else if(typeof toast==="function")toast("✅ تم تحديث التطبيق إلى النسخة الأسرع والأخف بنجاح!");
-   if(typeof window.scheduleNotifPrompt==="function")window.scheduleNotifPrompt(600);
+   if(detectPlatform()==="app"&&typeof window.scheduleNotifPrompt==="function")window.scheduleNotifPrompt(600);
    return;
   }
   if(detectPlatform()==="app"){
@@ -9871,14 +10414,18 @@ function scheduleAppInvite(){
   }
   const installed=await syncInstallState();
   if(installed){
-   const showedUpd=await checkInstalledVersionChange();
+   if(typeof window.evaluateMandatoryAppGate==="function")window.evaluateMandatoryAppGate();
+   await checkInstalledVersionChange();
    window.__nasrInviteFlowDone=true;
-   if(!showedUpd&&typeof window.scheduleNotifPrompt==="function")window.scheduleNotifPrompt(600);
    return;
   }
-  const showedInv=showAppInviteModal();
+  if(window.APP_DL_PROMPT_MODE==="mandatory"){
+   if(typeof window.evaluateMandatoryAppGate==="function")window.evaluateMandatoryAppGate();
+   window.__nasrInviteFlowDone=true;
+   return;
+  }
+  showAppInviteModal();
   window.__nasrInviteFlowDone=true;
-  if(!showedInv&&typeof window.scheduleNotifPrompt==="function")window.scheduleNotifPrompt(600);
  };
  setTimeout(run,600);
 }
