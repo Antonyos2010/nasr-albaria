@@ -2448,6 +2448,30 @@ body.light #adminModeBar,body.light #adminAppPromptBar{
 }
 .app-dl-url-inputs input:focus{border-color:var(--c1);box-shadow:0 0 0 3px rgba(0,217,255,.16)}
 .app-dl-url-inputs .mode-sw-btn{flex:0 0 auto;padding:9px 14px;font-size:12px}
+.admin-audit-box{
+ width:100%;margin-top:4px;padding:11px 13px;border-radius:14px;
+ background:var(--panel);border:1.5px solid rgba(34,197,94,.38);
+ display:flex;flex-direction:column;gap:8px;text-align:right;
+}
+.admin-audit-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+.admin-audit-badge{
+ display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:999px;
+ font-size:11.5px;font-weight:900;background:rgba(34,197,94,.16);color:#4ade80;border:1px solid rgba(34,197,94,.42);
+}
+body.light .admin-audit-badge{background:#ecfdf5;color:#15803d;border-color:#86efac}
+.admin-audit-badge.warn{background:rgba(245,158,11,.15);color:#fbbf24;border-color:rgba(245,158,11,.45)}
+body.light .admin-audit-badge.warn{background:#fffbeb;color:#b45309;border-color:#fcd34d}
+.admin-audit-dot{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor;animation:nasrPulseDot 1.6s ease-in-out infinite}
+@keyframes nasrPulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.82)}}
+.admin-audit-meta{font-size:11.5px;font-weight:800;color:var(--muted);line-height:1.7}
+.admin-audit-actions{display:flex;flex-wrap:wrap;gap:7px}
+.admin-audit-actions .mode-sw-btn{flex:1 1 165px;padding:8px 11px;font-size:11.5px}
+.mand-audit-chip{
+ display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:8px;
+ padding:4px 12px;border-radius:999px;font-size:11px;font-weight:900;
+ background:rgba(34,197,94,.18);border:1px solid rgba(74,222,128,.5);color:#dcfce7;
+}
+.mand-audit-chip.uninst{background:rgba(239,68,68,.24);border-color:rgba(248,113,113,.65);color:#fee2e2}
 
 /* إخفاء صف تفعيل الإشعارات في حساب المستخدم على الموقع الإلكتروني (يظهر في التطبيق فقط) */
 body[data-platform="web"] #authNotifRow{display:none!important}
@@ -3228,7 +3252,19 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
     <button type="button" class="mode-sw-btn dl-opt" id="dlPromptBtnOptional" onclick="setAppDownloadPromptMode('optional')">✨ اختيارية (يمكن تخطيها)</button>
     <button type="button" class="mode-sw-btn dl-prev" onclick="previewMandatoryAppGate()">👁️ معاينة الإجبارية</button>
    </div>
-   <div class="admin-prompt-note">💡 عند اختيار <b>إجبارية</b>: بمجرد تسجيل الدخول أو إنشاء حساب تظهر للعميل نافذة تحميل التطبيق الرسمية ولا تُفتح باقي الصفحات أو يمكن إغلاقها إلا بعد تثبيت التطبيق (تعمل في المتجر والمعرض).</div>
+   <div class="admin-prompt-note">💡 عند اختيار <b>إجبارية</b>: تظهر للعميل نافذة تحميل التطبيق الرسمية ولا تُفتح باقي الصفحات إلا بعد تثبيت التطبيق، مع فحص صامت تلقائي للهاتف كل 3 ثوانٍ. <b>ملاحظة:</b> حساب الإدارة معفى تلقائيًا من القفل حتى لا تُغلق عليك لوحة التحكم — استخدم أزرار الاختبار بالأسفل لتجربة ما يراه العميل.</div>
+   <div class="admin-audit-box" id="adminAuditLiveBox">
+    <div class="admin-audit-top">
+     <span class="admin-audit-badge" id="adminAuditBadge"><i class="admin-audit-dot"></i><span>المعاينة الصامتة كل 3 ثوانٍ: نشطة</span></span>
+     <small class="admin-audit-meta" id="adminAuditCounter">الفحوصات: —</small>
+    </div>
+    <div class="admin-audit-meta" id="adminAuditDetail">جارٍ فحص حالة التطبيق والمنفذ على الجهاز...</div>
+    <div class="admin-audit-actions">
+     <button type="button" class="mode-sw-btn" onclick="runManualAdminDeviceAudit()">🔄 فحص الهاتف الآن</button>
+     <button type="button" class="mode-sw-btn dl-prev" onclick="simulateCustomerUninstallTest()">🧪 تجربة قفل الحذف كعميل</button>
+     <button type="button" class="mode-sw-btn dl-opt" onclick="downloadUpdatedManifestJson()">📄 تحميل manifest.json لاكتشاف الحذف</button>
+    </div>
+   </div>
    <div class="app-dl-url-row">
     <label for="appDirectDlInput">🔗 رابط تحميل التطبيق المباشر (اختياري — اتركه فارغًا للتثبيت التلقائي الفوري للتطبيق PWA)</label>
     <div class="app-dl-url-inputs">
@@ -3854,9 +3890,10 @@ function clearDownloadInitiated(){
 }
 
 window.performDirectAppDownload=async function(sourceTag){
- recordDownloadInitiated(sourceTag||"direct_btn");
+ clearDownloadInitiated();
  const customUrl=window.getConfiguredDirectDlUrl();
  if(customUrl){
+  recordDownloadInitiated(sourceTag||"external_url");
   try{
    const a=document.createElement("a");
    a.href=customUrl;
@@ -3872,7 +3909,13 @@ window.performDirectAppDownload=async function(sourceTag){
   return {status:"external",url:customUrl};
  }
  const st=typeof triggerNativeInstallPrompt==="function"?await triggerNativeInstallPrompt():"unavailable";
- if(st==="dismissed")clearDownloadInitiated();
+ if(st==="accepted"){
+  recordDownloadInitiated(sourceTag||"native_accepted");
+ }else if(st==="unavailable"&&/iPhone|iPad|iPod/i.test(navigator.userAgent||"")){
+  recordDownloadInitiated("ios_manual_guide");
+ }else{
+  clearDownloadInitiated();
+ }
  return {status:st};
 };
 
@@ -3903,6 +3946,7 @@ window.runInteractiveInstallVerification=async function({panelEl,verifyBtn,dlBtn
  if(verifyBtn){verifyBtn.disabled=true;verifyBtn.textContent="⏳ جارٍ التحقق الذكي الآن..."}
  let signalOk=false,byInitiation=false,nativeProofOk=false;
  const hasCustomUrl=!!(typeof window.getConfiguredDirectDlUrl==="function"&&window.getConfiguredDirectDlUrl());
+ const isIOSUa=/iPhone|iPad|iPod/i.test(navigator.userAgent||"");
  const chromiumPromptStillPending=!hasCustomUrl&&!!(window.__installPromptFired&&window.__deferredInstallPrompt);
  const signalPromise=(async()=>{
   try{
@@ -3932,7 +3976,7 @@ window.runInteractiveInstallVerification=async function({panelEl,verifyBtn,dlBtn
  if(!panelEl.isConnected)return false;
  if(detected){
   signalOk=true;
- }else if(wasDownloadInitiatedRecently()&&!chromiumPromptStillPending){
+ }else if(wasDownloadInitiatedRecently()&&!chromiumPromptStillPending&&(hasCustomUrl||isIOSUa)){
   signalOk=true;
   byInitiation=true;
  }
@@ -4067,8 +4111,9 @@ function ensureMandGuardObserver(){
  mandGuardObserver.observe(document.body,{childList:true,attributes:true,attributeFilter:["class"]});
 }
 
-function showMandatoryAppGate(isAdminPreview){
+function showMandatoryAppGate(isAdminPreview,previewOpts){
  const isPrev=!!isAdminPreview&&typeof isAdmin==="function"&&isAdmin();
+ const simUninst=isPrev&&!!(previewOpts&&previewOpts.uninstalledSim);
  if(!isPrev&&!window.isMandatoryAppGateBlocking())return false;
  if(!isPrev){
   document.body.classList.add("app-dl-locked");
@@ -4099,15 +4144,21 @@ function showMandatoryAppGate(isAdminPreview){
      <div class="mand-step-row"><i>2</i><span>إذا لم تظهر النافذة تلقائيًا، افتح قائمة المتصفح <strong>(⋮)</strong> واختر <strong>«تثبيت التطبيق»</strong>.</span></div>
      <div class="mand-step-row"><i>3</i><span>أو امسح الباركود بكاميرا هاتفك للتنزيل السريع.</span></div>`);
  const dlBtnLabel=hasCustomUrl?"⬇️ تحميل التطبيق الآن (رابط مباشر)":"⬇️ تحميل التطبيق الآن";
+ const prevHeadline=simUninst?"تم رصد حذف التطبيق من الهاتف 📲":"حمّل التطبيق الرسمي للمتابعة 📲";
+ const prevDesc=simUninst
+  ?"تم حذف تطبيق نسر البرية من الجهاز! أعد تثبيت التطبيق الآن وسيتم فتح حسابك والمتجر فورًا."
+  :(isExh
+   ?"تم تسجيل دخولك بنجاح! لتحقيق أسرع تجربة وتصفّح منتجات المعرض والخصومات، حمّل التطبيق الرسمي للمتابعة."
+   :"تم تسجيل دخولك بنجاح! لتصفّح كافة المنتجات والطلب بسهولة وأمان، حمّل تطبيق نسر البرية الرسمي للمتابعة.");
 
  if(existing){
   const badge=existing.querySelector(".mand-app-badge");
+  const titleEl=existing.querySelector(".mand-app-top h3");
   const desc=existing.querySelector(".mand-app-top p");
   const perks=existing.querySelector(".mand-perks");
-  if(badge)badge.textContent=(isPrev?"👁️ معاينة الإدارة · ":"🔒 خطوة مطلوبة · ")+bLabel;
-  if(desc)desc.textContent=isExh
-   ?"تم تسجيل دخولك بنجاح! لتحقيق أسرع تجربة وتصفّح منتجات المعرض والخصومات، حمّل التطبيق الرسمي للمتابعة."
-   :"تم تسجيل دخولك بنجاح! لتصفّح كافة المنتجات والطلب بسهولة وأمان، حمّل تطبيق نسر البرية الرسمي للمتابعة.";
+  if(badge)badge.textContent=(isPrev?(simUninst?"🧪 محاكاة رصد حذف التطبيق · ":"👁️ معاينة الإدارة · "):"🔒 خطوة مطلوبة · ")+bLabel;
+  if(titleEl)titleEl.textContent=prevHeadline;
+  if(desc)desc.textContent=prevDesc;
   if(perks)perks.innerHTML=perksHtml;
   const dlBtn=existing.querySelector("#mandDlBtn");
   if(dlBtn&&!dlBtn.disabled)dlBtn.textContent=dlBtnLabel;
@@ -4122,12 +4173,11 @@ function showMandatoryAppGate(isAdminPreview){
   <div class="mand-app-card" role="dialog" aria-modal="true" aria-label="تحميل تطبيق ${escapeHTML(bLabel)}">
    ${isPrev?'<button type="button" class="mand-preview-exit" id="mandPrevExit">✕ إغلاق المعاينة (خاص بالإدارة)</button>':""}
    <div class="mand-app-top">
-    <span class="mand-app-badge">${isPrev?"👁️ معاينة الإدارة · ":"🔒 خطوة مطلوبة · "}${escapeHTML(bLabel)}</span>
+    <span class="mand-app-badge">${isPrev?(simUninst?"🧪 محاكاة رصد حذف التطبيق · ":"👁️ معاينة الإدارة · "):"🔒 خطوة مطلوبة · "}${escapeHTML(bLabel)}</span>
     <div class="mand-app-logo"><img src="${logoSrc}" alt="شعار نسر البرية"></div>
-    <h3>حمّل التطبيق الرسمي للمتابعة 📲</h3>
-    <p>${isExh
-     ?"تم تسجيل دخولك بنجاح! لتحقيق أسرع تجربة وتصفّح منتجات المعرض والخصومات، حمّل التطبيق الرسمي للمتابعة."
-     :"تم تسجيل دخولك بنجاح! لتصفّح كافة المنتجات والطلب بسهولة وأمان، حمّل تطبيق نسر البرية الرسمي للمتابعة."}</p>
+    <h3>${prevHeadline}</h3>
+    <p>${prevDesc}</p>
+    ${isPrev?`<div class="mand-audit-chip ${simUninst?"uninst":""}" id="mandLiveAuditBadge">📡 ${simUninst?"تم رصد الحذف في الفحص الصامت (كل 3 ثوانٍ)":"الفحص الصامت كل 3 ثوانٍ نشط"}</div>`:""}
    </div>
    <div class="mand-app-body">
     <div class="mand-perks">${perksHtml}</div>
@@ -4295,10 +4345,14 @@ window.evaluateMandatoryAppGate=function(){
  return false;
 };
 
-function previewMandatoryAppGate(){
+function previewMandatoryAppGate(opts){
  if(!isAdmin())return;
- showMandatoryAppGate(true);
+ showMandatoryAppGate(true,opts);
 }
+window.simulateCustomerUninstallTest=function(){
+ if(!isAdmin())return;
+ showMandatoryAppGate(true,{uninstalledSim:true});
+};
 
 
 /* ===== التنقل بين الصفحات ===== */
@@ -6059,6 +6113,8 @@ async function openAdmin(){
  if($("dlPromptBtnMandatory"))$("dlPromptBtnMandatory").classList.toggle("active",window.APP_DL_PROMPT_MODE==="mandatory");
  if($("dlPromptBtnOptional"))$("dlPromptBtnOptional").classList.toggle("active",window.APP_DL_PROMPT_MODE==="optional");
  if($("appDirectDlInput"))$("appDirectDlInput").value=window.APP_DIRECT_DL_URL||"";
+ if(typeof window.updateAdminAuditUi==="function")window.updateAdminAuditUi();
+ if(typeof window.runSilentDeviceAppInspection==="function")window.runSilentDeviceAppInspection("admin_open");
  adminTab("overview",document.querySelector(".admin-tab"));
  await loadProducts();renderAdminProducts();
  loadNotifications();
@@ -10727,7 +10783,7 @@ async function syncInstallState(){
   const promptPending=!hasCustomUrl&&!!(window.__installPromptFired&&window.__deferredInstallPrompt);
 
   /* فحص حذف التطبيق الفعلي من الجهاز عبر المتصفح قبل الوثوق بأي حالة محفوظة قديمة */
-  if(promptPending&&(!confirmedAt||Date.now()-confirmedAt>8000)){
+  if(promptPending&&(!confirmedAt||Date.now()-confirmedAt>1500)){
    await handleConfirmedAppUninstall("boot_beforeinstallprompt");
    return false;
   }
@@ -10770,7 +10826,7 @@ async function syncInstallState(){
    const dbSt=await syncInstallStatusFromDBDetail();
    const localUninstAt=(()=>{try{return Number(localStorage.getItem("nasr_app_uninstalled_at")||0)||0}catch(e){return 0}})();
    if(dbSt.installed&&!dbSt.uninstalled&&dbSt.at>localUninstAt&&!promptPending){
-    persistAllLocalInstallFlags(!promptPending);
+    persistAllLocalInstallFlags(false);
     window.__nasrSessionHadLocalInstall=true;
     return true;
    }
@@ -10778,7 +10834,7 @@ async function syncInstallState(){
   }
 
   if(isAppInstalledLocally()&&!promptPending){
-   persistAllLocalInstallFlags(nativeProven||!hasCustomUrl);
+   persistAllLocalInstallFlags(nativeProven);
    persistInstallStatusToDB("local_verified",true);
    window.__nasrSessionHadLocalInstall=true;
    return true;
@@ -10786,7 +10842,7 @@ async function syncInstallState(){
 
   try{
    if(await window.hasCacheAppFlag()&&!promptPending){
-    persistAllLocalInstallFlags(!hasCustomUrl);
+    persistAllLocalInstallFlags(nativeProven);
     persistInstallStatusToDB("cache_flag",true);
     window.__nasrSessionHadLocalInstall=true;
     return true;
@@ -10800,7 +10856,7 @@ async function syncInstallState(){
     localStorage.getItem("nasr_vis_ever_app")==="1"||getCookie("nasr_vis_app")==="1"||
     !!(await getAppVersionSeenAsync());
    if(hasPriorSignal&&!promptPending){
-    persistAllLocalInstallFlags(!hasCustomUrl);
+    persistAllLocalInstallFlags(nativeProven);
     persistInstallStatusToDB("idb_prior",true);
     window.__nasrSessionHadLocalInstall=true;
     return true;
@@ -10835,6 +10891,135 @@ window.__nasrDeviceAuditIntervalMs=NASR_DEVICE_AUDIT_INTERVAL_MS;
 let __nasrAuditBusy=false;
 let __nasrLastResumeAuditAt=0;
 let __nasrLastDbAuditAt=0;
+let __nasrLastManifestReprobeAt=0;
+window.__nasrAuditCount=window.__nasrAuditCount||0;
+window.__nasrManifestInfo={checked:false,hasWebappRelated:false,manifestObj:null};
+
+async function inspectManifestRelatedSupport(forceFetch){
+ if(window.__nasrManifestInfo.checked&&!forceFetch)return window.__nasrManifestInfo;
+ try{
+  const mLink=document.querySelector('link[rel="manifest"]');
+  const mUrl=(mLink&&mLink.getAttribute("href"))||"./manifest.json?v=5";
+  const res=await fetch(mUrl,{cache:"no-store",credentials:"same-origin"});
+  if(res&&res.ok){
+   const obj=await res.json();
+   const rel=Array.isArray(obj&&obj.related_applications)?obj.related_applications:[];
+   const hasWebapp=rel.some(x=>x&&String(x.platform||"").toLowerCase()==="webapp"&&x.url);
+   window.__nasrManifestInfo={checked:true,hasWebappRelated:hasWebapp,manifestObj:obj};
+   return window.__nasrManifestInfo;
+  }
+ }catch(e){}
+ window.__nasrManifestInfo.checked=true;
+ return window.__nasrManifestInfo;
+}
+inspectManifestRelatedSupport(false);
+
+function nudgeChromiumInstallabilityCheck(){
+ try{
+  if(detectPlatform()==="app")return;
+  const now=Date.now();
+  if(now-__nasrLastManifestReprobeAt<12000)return;
+  __nasrLastManifestReprobeAt=now;
+  const link=document.querySelector('link[rel="manifest"]');
+  if(!link||!link.parentNode)return;
+  const href=link.getAttribute("href")||"./manifest.json?v=5";
+  const clone=link.cloneNode(true);
+  clone.setAttribute("href",href);
+  link.remove();
+  document.head.appendChild(clone);
+ }catch(e){}
+}
+
+function recordAuditTelemetry(res){
+ try{
+  window.__nasrAuditCount=(window.__nasrAuditCount||0)+1;
+  window.__nasrAuditMeta={
+   count:window.__nasrAuditCount,
+   lastAt:Date.now(),
+   status:(res&&res.status)||"unknown",
+   reason:(res&&res.reason)||"",
+   trigger:(res&&res.trigger)||"",
+   platform:typeof detectPlatform==="function"?detectPlatform():"web",
+   nativeProven:isNativePwaProvenLocally(),
+   manifestHasRelated:!!(window.__nasrManifestInfo&&window.__nasrManifestInfo.hasWebappRelated),
+   promptPending:!!(window.__installPromptFired&&window.__deferredInstallPrompt)
+  };
+  if(typeof window.updateAdminAuditUi==="function")window.updateAdminAuditUi();
+ }catch(e){}
+}
+
+window.updateAdminAuditUi=function(){
+ try{
+  const meta=window.__nasrAuditMeta;
+  const badge=$("adminAuditBadge"),cnt=$("adminAuditCounter"),det=$("adminAuditDetail");
+  if(!badge||!cnt||!det)return;
+  const count=meta?meta.count:0;
+  const plat=(meta&&meta.platform)||(typeof detectPlatform==="function"?detectPlatform():"web");
+  const st=(meta&&meta.status)||"healthy";
+  const manOk=!!(window.__nasrManifestInfo&&window.__nasrManifestInfo.hasWebappRelated);
+  const instNow=plat==="app"||(typeof isAppInstalledLocally==="function"&&isAppInstalledLocally());
+  cnt.textContent="فحوصات الجلسة: "+count+" · كل 3 ثوانٍ";
+  if(st==="uninstalled"||st==="not_installed"||st==="awaiting_install"){
+   badge.className="admin-audit-badge warn";
+   badge.innerHTML='<i class="admin-audit-dot"></i><span>التطبيق غير مثبّت / محذوف الآن</span>';
+  }else{
+   badge.className="admin-audit-badge";
+   badge.innerHTML='<i class="admin-audit-dot"></i><span>المعاينة الصامتة كل 3 ثوانٍ: مثبّت ويعمل</span>';
+  }
+  const timeStr=meta&&meta.lastAt?new Date(meta.lastAt).toLocaleTimeString("ar-EG"):"الآن";
+  det.textContent="المنفذ: "+(plat==="app"?"داخل التطبيق الرسمي (Standalone)":"متصفح الهاتف/الويب")
+   +" · حالة التثبيت: "+(instNow?"مثبّت":"غير مثبّت")
+   +" · كشف حذف أندرويد (manifest): "+(manOk?"مفعّل ✓":"يحتاج إضافة related_applications")
+   +" · آخر فحص: "+timeStr;
+ }catch(e){}
+};
+
+window.runManualAdminDeviceAudit=async function(){
+ if(!isAdmin())return;
+ const res=await runSilentDeviceAppInspection("admin_manual");
+ window.updateAdminAuditUi();
+ const m=res&&res.status;
+ if(m==="healthy"||m==="reinstalled")okToast("✅ نتيجة الفحص الفوري: التطبيق مثبّت ويعمل بصمت وسلامة");
+ else if(m==="uninstalled")toast("⚠️ نتيجة الفحص الفوري: تم رصد حذف التطبيق من الجهاز!");
+ else toast("ℹ️ حالة الفحص الفوري: التطبيق غير مثبّت بعد على هذا المتصفح");
+};
+
+window.downloadUpdatedManifestJson=function(){
+ try{
+  const baseUrl=location.origin+location.pathname.replace(/[^/]*$/,"");
+  const manifestUrl=baseUrl+"manifest.json";
+  const existing=(window.__nasrManifestInfo&&window.__nasrManifestInfo.manifestObj&&typeof window.__nasrManifestInfo.manifestObj==="object")
+   ?Object.assign({},window.__nasrManifestInfo.manifestObj)
+   :{
+    name:"متجر نسر البرية الرسمي",
+    short_name:"نسر البرية",
+    start_url:"./",
+    scope:"./",
+    display:"standalone",
+    background_color:"#08091b",
+    theme_color:"#08091b",
+    dir:"rtl",
+    lang:"ar",
+    icons:[
+     {src:"./pwa-192x192.png",sizes:"192x192",type:"image/png"},
+     {src:"./pwa-512x512.png",sizes:"512x512",type:"image/png"}
+    ]
+   };
+  existing.id=existing.id||baseUrl;
+  existing.prefer_related_applications=false;
+  const rel=Array.isArray(existing.related_applications)?existing.related_applications.slice():[];
+  if(!rel.some(x=>x&&x.platform==="webapp"&&x.url===manifestUrl)){
+   rel.unshift({platform:"webapp",url:manifestUrl});
+  }
+  existing.related_applications=rel;
+  const blob=new Blob([JSON.stringify(existing,null,2)],{type:"application/manifest+json;charset=utf-8"});
+  const u=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=u;a.download="manifest.json";document.body.appendChild(a);a.click();
+  setTimeout(()=>{try{a.remove();URL.revokeObjectURL(u)}catch(e){}},500);
+  okToast("📄 تم تحميل manifest.json — ارفعه بجانب index.html لتفعيل كشف الحذف الكامل من نظام أندرويد!");
+ }catch(e){toast("تعذر إنشاء manifest.json")}
+};
 
 try{
  if("serviceWorker" in navigator){
@@ -10845,6 +11030,7 @@ try{
 async function runSilentDeviceAppInspection(trigger){
  if(__nasrAuditBusy)return {status:"busy"};
  __nasrAuditBusy=true;
+ const finish=res=>{recordAuditTelemetry(res);return res};
  try{
   if(window.__nasrUpdating||justUpdatedThisLoad)return {status:"updating"};
   if(document.documentElement.classList.contains("g-pre")||document.documentElement.classList.contains("rs-pre"))return {status:"booting"};
@@ -10862,7 +11048,7 @@ async function runSilentDeviceAppInspection(trigger){
    if(document.getElementById("mandatoryAppGate")&&document.getElementById("mandatoryAppGate").dataset.preview!=="1"){
     if(typeof hideMandatoryAppGate==="function")hideMandatoryAppGate(false);
    }
-   return {status:"healthy",reason:"standalone",trigger};
+   return finish({status:"healthy",reason:"standalone",trigger});
   }
 
   const gateEl=document.getElementById("mandatoryAppGate");
@@ -10875,7 +11061,7 @@ async function runSilentDeviceAppInspection(trigger){
     if(await window.pingInstalledAppBridge(240)){
      markAppInstalled("pwa_bridge",true);
      if(typeof hideMandatoryAppGate==="function")hideMandatoryAppGate(true);
-     return {status:"reinstalled",reason:"bridge",trigger};
+     return finish({status:"reinstalled",reason:"bridge",trigger});
     }
    }catch(e){}
    try{
@@ -10887,15 +11073,15 @@ async function runSilentDeviceAppInspection(trigger){
       idbSet("nasr_os_app_seen","1");
       markAppInstalled("related_apps",true);
       if(typeof hideMandatoryAppGate==="function")hideMandatoryAppGate(true);
-      return {status:"reinstalled",reason:"related_apps",trigger};
+      return finish({status:"reinstalled",reason:"related_apps",trigger});
      }
     }
    }catch(e){}
    if(!promptPending&&!isUninstallLockedLocally()&&isAppInstalledLocally()){
     if(typeof hideMandatoryAppGate==="function")hideMandatoryAppGate(true);
-    return {status:"reinstalled",reason:"local_verified",trigger};
+    return finish({status:"reinstalled",reason:"local_verified",trigger});
    }
-   return {status:"awaiting_install",trigger};
+   return finish({status:"awaiting_install",trigger});
   }
 
   /* لو التطبيق مثبّت وموثّق حاليًا: نفّذ معاينة صامتة شاملة للهاتف كل 3 ثوانٍ بدون إظهار أي رسائل */
@@ -10903,7 +11089,7 @@ async function runSilentDeviceAppInspection(trigger){
    /* فحص تطابق القفل المشترك بين التبويبات */
    if(isUninstallLockedLocally()||(await idbGet("nasr_app_uninstalled_lock").catch(()=>""))==="1"){
     await handleConfirmedAppUninstall("audit_3s_cross_tab_lock");
-    return {status:"uninstalled",reason:"cross_tab_lock",trigger};
+    return finish({status:"uninstalled",reason:"cross_tab_lock",trigger});
    }
 
    /* 1) فحص الجسر الحي مع نافذة التطبيق */
@@ -10912,7 +11098,7 @@ async function runSilentDeviceAppInspection(trigger){
      window.__nasrSessionHadLocalInstall=true;
      try{localStorage.setItem("nasr_last_silent_audit_at",String(Date.now()))}catch(e){}
      window.__nasrDeviceAuditStatus="healthy";
-     return {status:"healthy",reason:"bridge_alive",trigger};
+     return finish({status:"healthy",reason:"bridge_alive",trigger});
     }
    }catch(e){}
 
@@ -10928,7 +11114,7 @@ async function runSilentDeviceAppInspection(trigger){
       window.__nasrSessionHadLocalInstall=true;
       try{localStorage.setItem("nasr_last_silent_audit_at",String(Date.now()))}catch(e){}
       window.__nasrDeviceAuditStatus="healthy";
-      return {status:"healthy",reason:"os_apps_present",trigger};
+      return finish({status:"healthy",reason:"os_apps_present",trigger});
      }
      let osWasSeen=false;
      try{
@@ -10939,7 +11125,7 @@ async function runSilentDeviceAppInspection(trigger){
       const apps2=await navigator.getInstalledRelatedApps();
       if(Array.isArray(apps2)&&apps2.length===0){
        await handleConfirmedAppUninstall("audit_3s_os_removed");
-       return {status:"uninstalled",reason:"os_related_apps_removed",trigger};
+       return finish({status:"uninstalled",reason:"os_related_apps_removed",trigger});
       }
      }
     }
@@ -10947,11 +11133,11 @@ async function runSilentDeviceAppInspection(trigger){
 
    /* 3) فحص إشارة المتصفح الفعلية (beforeinstallprompt) — المتصفح لا يطلقها أبدًا إلا إذا كان التطبيق محذوفًا أو غير مثبّت على الهاتف */
    const confirmedAt=(()=>{try{return Number(localStorage.getItem("nasr_pwa_confirmed_at")||0)||0}catch(e){return 0}})();
-   if(promptPending&&(!confirmedAt||Date.now()-confirmedAt>8000)){
-    await new Promise(r=>setTimeout(r,240));
+   if(promptPending&&(!confirmedAt||Date.now()-confirmedAt>1500)){
+    await new Promise(r=>setTimeout(r,200));
     if(!window.__appInstalledJustNow&&detectPlatform()!=="app"&&window.__installPromptFired&&window.__deferredInstallPrompt){
      await handleConfirmedAppUninstall("audit_3s_prompt_reappeared");
-     return {status:"uninstalled",reason:"pwa_prompt_reappeared",trigger};
+     return finish({status:"uninstalled",reason:"pwa_prompt_reappeared",trigger});
     }
    }
 
@@ -10962,7 +11148,7 @@ async function runSilentDeviceAppInspection(trigger){
      if(Array.isArray(regs)&&regs.length>0)window.__nasrSessionHadSw=true;
      else if(window.__nasrSessionHadSw===true&&!(await window.hasCacheAppFlag())&&detectPlatform()!=="app"){
       await handleConfirmedAppUninstall("audit_3s_sw_cleared");
-      return {status:"uninstalled",reason:"sw_and_cache_cleared",trigger};
+      return finish({status:"uninstalled",reason:"sw_and_cache_cleared",trigger});
      }
     }
    }catch(e){}
@@ -10973,7 +11159,7 @@ async function runSilentDeviceAppInspection(trigger){
      await new Promise(r=>setTimeout(r,260));
      if(!(await window.hasCacheAppFlag())&&detectPlatform()!=="app"){
       await handleConfirmedAppUninstall("audit_3s_cache_wiped");
-      return {status:"uninstalled",reason:"cache_wiped_mid_session",trigger};
+      return finish({status:"uninstalled",reason:"cache_wiped_mid_session",trigger});
      }
     }
    }
@@ -10982,7 +11168,7 @@ async function runSilentDeviceAppInspection(trigger){
     const hasCore=!!(localStorage.getItem("nasr_app_installed")==="1"||localStorage.getItem("nasr_app_verified")==="1"||getCookie("nasr_app_inst")==="1");
     if(!hasCore&&!(await window.hasCacheAppFlag())&&detectPlatform()!=="app"){
      await handleConfirmedAppUninstall("audit_3s_flags_wiped");
-     return {status:"uninstalled",reason:"local_flags_wiped",trigger};
+     return finish({status:"uninstalled",reason:"local_flags_wiped",trigger});
     }
    }
 
@@ -10994,7 +11180,7 @@ async function runSilentDeviceAppInspection(trigger){
      const dbSt=await syncInstallStatusFromDBDetail();
      if(dbSt&&dbSt.uninstalled&&dbSt.uninstalledAt>confirmedAt){
       await handleConfirmedAppUninstall("audit_3s_db_uninstalled");
-      return {status:"uninstalled",reason:"db_device_uninstalled",trigger};
+      return finish({status:"uninstalled",reason:"db_device_uninstalled",trigger});
      }
     }catch(e){}
    }
@@ -11003,14 +11189,14 @@ async function runSilentDeviceAppInspection(trigger){
    window.__nasrSessionHadLocalInstall=true;
    try{localStorage.setItem("nasr_last_silent_audit_at",String(Date.now()))}catch(e){}
    window.__nasrDeviceAuditStatus="healthy";
-   return {status:"healthy",reason:"verified_silent",trigger};
+   return finish({status:"healthy",reason:"verified_silent",trigger});
   }
 
   /* غير مثبّت ومش ظاهر البوابة */
   if(window.__nasrInstallSyncSettled&&typeof window.evaluateMandatoryAppGate==="function"){
    window.evaluateMandatoryAppGate();
   }
-  return {status:"not_installed",trigger};
+  return finish({status:"not_installed",trigger});
  }catch(e){
   return {status:"error"};
  }finally{
@@ -11023,8 +11209,8 @@ window.__nasrOnEarlyInstallPrompt=function(){
  try{
   const confirmedAt=(()=>{try{return Number(localStorage.getItem("nasr_pwa_confirmed_at")||0)||0}catch(e){return 0}})();
   const hasCustomUrl=!!(typeof window.getConfiguredDirectDlUrl==="function"&&window.getConfiguredDirectDlUrl());
-  if(!hasCustomUrl&&(!confirmedAt||Date.now()-confirmedAt>8000)){
-   setTimeout(()=>runSilentDeviceAppInspection("beforeinstallprompt"),220);
+  if(!hasCustomUrl&&(!confirmedAt||Date.now()-confirmedAt>1500)){
+   setTimeout(()=>runSilentDeviceAppInspection("beforeinstallprompt"),180);
   }
  }catch(e){}
 };
@@ -11035,21 +11221,32 @@ window.__nasrDeviceAuditTimer=setInterval(()=>{
 },NASR_DEVICE_AUDIT_INTERVAL_MS);
 
 document.addEventListener("visibilitychange",()=>{
- if(document.hidden)return;
+ if(document.hidden){
+  window.__nasrTabHiddenAt=Date.now();
+  return;
+ }
+ const awayMs=window.__nasrTabHiddenAt?(Date.now()-window.__nasrTabHiddenAt):0;
+ if(awayMs>=1000&&typeof detectPlatform==="function"&&detectPlatform()==="web"&&typeof isAppInstalledLocally==="function"&&isAppInstalledLocally()){
+  nudgeChromiumInstallabilityCheck();
+ }
  const now=Date.now();
- if(now-__nasrLastResumeAuditAt<1200)return;
+ if(now-__nasrLastResumeAuditAt<900)return;
  __nasrLastResumeAuditAt=now;
  setTimeout(()=>runSilentDeviceAppInspection("visibility_resume"),220);
 });
 window.addEventListener("pageshow",()=>{
  const now=Date.now();
- if(now-__nasrLastResumeAuditAt<1200)return;
+ if(now-__nasrLastResumeAuditAt<900)return;
  __nasrLastResumeAuditAt=now;
  setTimeout(()=>runSilentDeviceAppInspection("pageshow"),220);
 });
 window.addEventListener("focus",()=>{
+ const awayMs=window.__nasrTabHiddenAt?(Date.now()-window.__nasrTabHiddenAt):0;
+ if(awayMs>=1000&&typeof detectPlatform==="function"&&detectPlatform()==="web"&&typeof isAppInstalledLocally==="function"&&isAppInstalledLocally()){
+  nudgeChromiumInstallabilityCheck();
+ }
  const now=Date.now();
- if(now-__nasrLastResumeAuditAt<1200)return;
+ if(now-__nasrLastResumeAuditAt<900)return;
  __nasrLastResumeAuditAt=now;
  setTimeout(()=>runSilentDeviceAppInspection("window_focus"),220);
 });
