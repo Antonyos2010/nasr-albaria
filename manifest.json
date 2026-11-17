@@ -12,12 +12,6 @@
   "dir": "rtl",
   "lang": "ar",
   "prefer_related_applications": false,
-  "related_applications": [
-    {
-      "platform": "webapp",
-      "url": "https://antonyos2010.github.io/nasr-albaria/manifest.json"
-    }
-  ],
   "icons": [
     {
       "src": "./favicon-48x48.png",
