@@ -2438,16 +2438,31 @@ body.light #adminModeBar,body.light #adminAppPromptBar{
  padding-top:8px;border-top:1px dashed var(--border);
 }
 .app-dl-url-row{
- width:100%;display:flex;flex-direction:column;gap:6px;padding-top:8px;border-top:1px dashed var(--border);text-align:right;
+ width:100%;display:flex;flex-direction:column;gap:8px;padding-top:10px;border-top:1px dashed var(--border);text-align:right;
 }
-.app-dl-url-row label{font-size:11.5px;font-weight:800;color:var(--text)}
+.app-dl-url-row label{font-size:12px;font-weight:900;color:var(--text)}
 .app-dl-url-inputs{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.app-dl-url-inputs input{
+.app-dl-url-inputs input[type="url"]{
  flex:1 1 240px;min-width:0;padding:9px 12px;border-radius:12px;border:1.5px solid var(--border);
  background:var(--bg);color:var(--text);font-size:12.5px;font-weight:700;outline:none;
 }
-.app-dl-url-inputs input:focus{border-color:var(--c1);box-shadow:0 0 0 3px rgba(0,217,255,.16)}
+.app-dl-url-inputs input[type="url"]:focus{border-color:var(--c1);box-shadow:0 0 0 3px rgba(0,217,255,.16)}
 .app-dl-url-inputs .mode-sw-btn{flex:0 0 auto;padding:9px 14px;font-size:12px}
+.apk-upload-btn{
+ background:linear-gradient(135deg,#10b981,#059669)!important;
+ border-color:#10b981!important;color:#fff!important;-webkit-text-fill-color:#fff!important;
+ box-shadow:0 6px 16px rgba(16,185,129,.28);
+}
+.apk-admin-status{
+ display:inline-flex;align-items:center;gap:7px;flex-wrap:wrap;padding:7px 11px;border-radius:11px;
+ font-size:11.5px;font-weight:800;border:1.5px solid rgba(245,158,11,.42);
+ background:rgba(245,158,11,.1);color:#fbbf24;width:fit-content;max-width:100%;
+}
+.apk-admin-status.ok{
+ border-color:rgba(34,197,94,.48);background:rgba(22,163,74,.12);color:#4ade80;
+}
+body.light .apk-admin-status{background:#fffbeb;color:#b45309;border-color:#f59e0b}
+body.light .apk-admin-status.ok{background:#ecfdf5;color:#15803d;border-color:#22c55e}
 .admin-audit-box{
  width:100%;margin-top:4px;padding:11px 13px;border-radius:14px;
  background:var(--panel);border:1.5px solid rgba(34,197,94,.38);
@@ -2527,26 +2542,62 @@ body.light .mand-app-card{
 }
 .mand-admin-skip:hover{border-color:var(--c1);color:var(--text);background:var(--panel2)}
 .mand-app-top{
- position:relative;padding:24px 18px 20px;color:#fff;
- background:radial-gradient(circle at 50% 0%,rgba(0,217,255,.42),transparent 65%),
-  linear-gradient(135deg,#071645,#1747d6 55%,#7c1ee6);
+ position:relative;padding:24px 18px 20px;color:#fff;overflow:hidden;
+ background:radial-gradient(circle at 50% 0%,rgba(0,217,255,.44),transparent 64%),
+  radial-gradient(circle at 12% 85%,rgba(16,185,129,.22),transparent 48%),
+  linear-gradient(135deg,#06143d,#133ec4 52%,#701ae0);
+}
+.mand-app-top::before,.app-invite-top::before{
+ content:"";position:absolute;inset:0;pointer-events:none;opacity:.14;
+ background-image:radial-gradient(rgba(255,255,255,.75) 1px,transparent 1px);
+ background-size:18px 18px;
+}
+.mand-app-top>*,.app-invite-top>*{position:relative;z-index:1}
+.mand-app-top.is-uninstalled{
+ background:radial-gradient(circle at 50% 0%,rgba(251,146,60,.4),transparent 64%),
+  linear-gradient(135deg,#2a0b24,#9a1b43 52%,#6d14b8);
 }
 .mand-app-badge{
- display:inline-flex;align-items:center;gap:6px;padding:4px 13px;border-radius:999px;
+ display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:999px;
  font-size:11px;font-weight:900;letter-spacing:.15px;
  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.45);color:#fff;
- margin-bottom:11px;
+ margin-bottom:12px;backdrop-filter:blur(6px);
 }
+.mand-app-logo,.app-invite-logo,.dl-hero-ic{position:relative;overflow:visible!important}
 .mand-app-logo{
- width:88px;height:88px;margin:0 auto 11px;border-radius:50%;overflow:hidden;
- background:#fff;border:3px solid rgba(255,255,255,.94);
- box-shadow:0 0 0 6px rgba(255,255,255,.18),0 16px 34px rgba(0,0,0,.5);
+ width:92px;height:92px;margin:0 auto 12px;border-radius:50%;
+ background:#fff;border:3px solid rgba(255,255,255,.95);
+ box-shadow:0 0 0 6px rgba(255,255,255,.16),0 0 28px rgba(0,217,255,.38),0 16px 34px rgba(0,0,0,.5);
  display:grid;place-items:center;
 }
 .mand-app-logo img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+.apk-os-dot{
+ position:absolute;bottom:-3px;left:-3px;
+ display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:999px;
+ background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;
+ border:2px solid #fff;font-size:10px;font-weight:900;letter-spacing:.4px;
+ box-shadow:0 4px 12px rgba(0,0,0,.45);
+}
 .mand-app-top h3{font-size:20px;font-weight:900;line-height:1.45;color:#fff;margin:0}
 .mand-app-top p{margin:6px auto 0;max-width:34ch;font-size:12.5px;font-weight:700;color:#e8f2ff;line-height:1.7}
 .mand-app-body{padding:16px 18px 20px;display:flex;flex-direction:column;gap:12px}
+.apk-spec-grid{
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;
+}
+.apk-spec-pill{
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+ padding:9px 6px;border-radius:14px;background:var(--panel2);border:1px solid var(--border);
+ text-align:center;
+}
+.apk-spec-pill i{font-style:normal;font-size:16px;line-height:1}
+.apk-spec-pill b{font-size:11px;font-weight:900;color:var(--text);line-height:1.25}
+.apk-spec-pill small{font-size:10px;font-weight:700;color:var(--muted);line-height:1.2}
+.apk-ready-chip{
+ display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:0 auto;
+ padding:5px 13px;border-radius:999px;font-size:11.5px;font-weight:900;
+ background:rgba(34,197,94,.13);border:1px solid rgba(34,197,94,.42);color:#4ade80;
+}
+body.light .apk-ready-chip{background:#ecfdf5;border-color:#86efac;color:#15803d}
 .mand-perks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .mand-perk{
  display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 10px;border-radius:12px;
@@ -3594,11 +3645,14 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
     </div>
    </div>
    <div class="app-dl-url-row">
-    <label for="appDirectDlInput">🔗 رابط تحميل التطبيق المباشر (اختياري — اتركه فارغًا للتثبيت التلقائي الفوري للتطبيق PWA)</label>
+    <label for="appDirectDlInput">🤖 ملف التطبيق الرسمي للأندرويد (APK) — ارفع ملف .apk أو الصق رابط التحميل المباشر</label>
+    <div class="apk-admin-status" id="adminApkStatusPill">⏳ جارٍ التحقق من حالة ملف APK...</div>
     <div class="app-dl-url-inputs">
-     <input id="appDirectDlInput" type="url" dir="ltr" placeholder="https://... (APK أو رابط المتجر أو اتركه فارغًا للتثبيت المباشر)">
+     <input id="appDirectDlInput" type="url" dir="ltr" placeholder="https://... (رابط ملف .apk المباشر)">
+     <input id="appApkFileInput" type="file" accept=".apk,application/vnd.android.package-archive,application/octet-stream" class="hidden" onchange="handleAdminApkFileSelected(this)">
+     <button type="button" class="mode-sw-btn apk-upload-btn" id="adminApkUploadBtn" onclick="document.getElementById('appApkFileInput')&&document.getElementById('appApkFileInput').click()">📤 رفع ملف APK</button>
      <button type="button" class="mode-sw-btn dl-opt" onclick="saveAppDirectDownloadUrl()">💾 حفظ الرابط</button>
-     <button type="button" class="mode-sw-btn" onclick="clearAppDirectDownloadUrl()">↺ التثبيت التلقائي</button>
+     <button type="button" class="mode-sw-btn" onclick="clearAppDirectDownloadUrl()">↺ مسح الرابط</button>
     </div>
    </div>
   </div>
@@ -4152,11 +4206,58 @@ window.APP_QR_TARGET_URL=(()=>{
 function sanitizeAppDlUrl(raw){
  const s=String(raw||"").trim();
  if(!s)return "";
- if(/^https?:\/\//i.test(s)||s.startsWith("/"))return s;
+ if(/^https?:\/\//i.test(s)||s.startsWith("/")||s.startsWith("./"))return s;
  return "";
 }
+window.__BUNDLED_APK_URL=window.__BUNDLED_APK_URL||"";
+let __bundledApkProbePromise=null;
+window.probeBundledApkUrl=function(){
+ if(window.__BUNDLED_APK_URL)return Promise.resolve(window.__BUNDLED_APK_URL);
+ if(__bundledApkProbePromise)return __bundledApkProbePromise;
+ __bundledApkProbePromise=(async()=>{
+  const candidates=["./nasr-albaria.apk","./app-release.apk"];
+  for(const cand of candidates){
+   try{
+    const res=await fetch(cand,{method:"HEAD",cache:"no-store",credentials:"same-origin"});
+    if(!res||!res.ok)continue;
+    const ct=String(res.headers.get("content-type")||"").toLowerCase();
+    if(ct.includes("text/html"))continue;
+    window.__BUNDLED_APK_URL=new URL(cand,location.href).href;
+    if(typeof window.updateAdminApkStatusUi==="function")window.updateAdminApkStatusUi();
+    return window.__BUNDLED_APK_URL;
+   }catch(e){}
+  }
+  return "";
+ })();
+ return __bundledApkProbePromise;
+};
+try{setTimeout(()=>{window.probeBundledApkUrl()},450)}catch(e){}
+
 window.getConfiguredDirectDlUrl=function(){
- return sanitizeAppDlUrl(window.APP_DIRECT_DL_URL);
+ return sanitizeAppDlUrl(window.APP_DIRECT_DL_URL)||sanitizeAppDlUrl(window.__BUNDLED_APK_URL)||"";
+};
+window.getEffectiveApkDownloadUrl=function(){
+ return window.getConfiguredDirectDlUrl();
+};
+window.updateAdminApkStatusUi=function(){
+ const pill=$("adminApkStatusPill");
+ if(!pill)return;
+ const custom=sanitizeAppDlUrl(window.APP_DIRECT_DL_URL);
+ const bundled=sanitizeAppDlUrl(window.__BUNDLED_APK_URL);
+ const active=custom||bundled;
+ if(active){
+  let fname="nasr-albaria.apk";
+  try{
+   const u=new URL(active,location.href);
+   const base=u.pathname.split("/").pop();
+   if(base)fname=decodeURIComponent(base);
+  }catch(e){}
+  pill.className="apk-admin-status ok";
+  pill.innerHTML=`✅ ملف التطبيق جاهز للتحميل المباشر (${escapeHTML(fname)}) — سيظهر للمستخدمين تحميل APK مباشرة`;
+ }else{
+  pill.className="apk-admin-status";
+  pill.innerHTML="ℹ️ لم يتم ربط ملف APK بعد — اضغط «📤 رفع ملف APK» أو الصق رابط ملف .apk المباشر بالأسفل";
+ }
 };
 function applyAppDirectDownloadUrl(url){
  const clean=sanitizeAppDlUrl(url);
@@ -4167,6 +4268,7 @@ function applyAppDirectDownloadUrl(url){
  }catch(e){}
  const inp=$("appDirectDlInput");
  if(inp&&document.activeElement!==inp)inp.value=clean;
+ window.updateAdminApkStatusUi();
 }
 async function saveAppDirectDownloadUrl(){
  if(!isAdmin())return;
@@ -4174,7 +4276,7 @@ async function saveAppDirectDownloadUrl(){
  const raw=inp?inp.value.trim():"";
  const clean=sanitizeAppDlUrl(raw);
  if(raw&&!clean){
-  toast("أدخل رابطًا صحيحًا يبدأ بـ https:// أو اتركه فارغًا للتثبيت التلقائي.");
+  toast("أدخل رابطًا صحيحًا يبدأ بـ https:// لملف APK أو اتركه فارغًا.");
   return;
  }
  applyAppDirectDownloadUrl(clean);
@@ -4185,7 +4287,7 @@ async function saveAppDirectDownloadUrl(){
  try{
   if(window.__nasrBcCh)window.__nasrBcCh.send({type:"broadcast",event:"app_dl_url",payload:{url:clean}});
  }catch(e){}
- okToast(clean?"✅ تم حفظ رابط التحميل المباشر للتطبيق":"✅ تم التبديل إلى التثبيت التلقائي الرسمي (PWA)");
+ okToast(clean?"✅ تم حفظ رابط تحميل التطبيق (APK) المباشر بنجاح":"✅ تم مسح الرابط المخصص");
 }
 async function clearAppDirectDownloadUrl(){
  if(!isAdmin())return;
@@ -4193,6 +4295,49 @@ async function clearAppDirectDownloadUrl(){
  if(inp)inp.value="";
  await saveAppDirectDownloadUrl();
 }
+window.handleAdminApkFileSelected=async function(input){
+ if(!isAdmin())return;
+ const file=input&&input.files&&input.files[0];
+ if(!file)return;
+ const btn=$("adminApkUploadBtn");
+ const pill=$("adminApkStatusPill");
+ const resetInp=()=>{try{input.value=""}catch(e){}};
+ if(!/\.apk$/i.test(file.name)&&file.type!=="application/vnd.android.package-archive"){
+  toast("يرجى اختيار ملف تطبيق أندرويد بصيغة APK فقط (.apk)");
+  resetInp();
+  return;
+ }
+ if(btn){btn.disabled=true;btn.textContent="⏳ جارٍ رفع ملف APK..."}
+ if(pill){
+  pill.className="apk-admin-status";
+  pill.textContent=`⏳ جارٍ رفع ${file.name} (${(file.size/(1024*1024)).toFixed(1)} MB)...`;
+ }
+ try{
+  const safePath="app-releases/nasr-albaria-"+Date.now()+".apk";
+  let upErr=null;
+  let res=await supabaseClient.storage.from(IMAGE_BUCKET).upload(safePath,file,{contentType:"application/vnd.android.package-archive",upsert:true});
+  upErr=res&&res.error;
+  if(upErr){
+   const res2=await supabaseClient.storage.from(IMAGE_BUCKET).upload(safePath,file,{contentType:"application/octet-stream",upsert:true});
+   upErr=res2&&res2.error;
+  }
+  if(upErr)throw upErr;
+  const {data}=supabaseClient.storage.from(IMAGE_BUCKET).getPublicUrl(safePath);
+  const pubUrl=data&&data.publicUrl;
+  if(!pubUrl)throw new Error("تعذر استخراج رابط الملف العام");
+  const inp=$("appDirectDlInput");
+  if(inp)inp.value=pubUrl;
+  await saveAppDirectDownloadUrl();
+  okToast("✅ تم رفع ملف APK وربطه بجميع رسائل تحميل التطبيق بنجاح!");
+ }catch(e){
+  const msg=String((e&&e.message)||e||"");
+  toast("تعذر رفع ملف APK مباشرة للسحابة ("+(msg.slice(0,80)||"قيود نوع الملف")+") — ضع nasr-albaria.apk في GitHub Pages أو الصق رابط التحميل المباشر هنا.");
+  window.updateAdminApkStatusUi();
+ }finally{
+  if(btn){btn.disabled=false;btn.textContent="📤 رفع ملف APK"}
+  resetInp();
+ }
+};
 function applyAdminQrTargetUrl(url){
  const clean=sanitizeAppDlUrl(url);
  window.APP_QR_TARGET_URL=clean;
@@ -4245,44 +4390,43 @@ function clearDownloadInitiated(){
  try{localStorage.removeItem("nasr_dl_init_at")}catch(e){}
 }
 
-function triggerInstantAppPackageDownload(){
+function getApkFilenameFromUrl(url){
  try{
-  const isExh=(window.STORE_MODE==="exhibition");
-  const title=isExh?"معرض نسر البرية الرسمي":"متجر نسر البرية الرسمي";
-  const targetUrl="https://antonyos2010.github.io/nasr-albaria/";
-  const fname=(isExh?"معرض-نسر-البرية":"متجر-نسر-البرية")+".html";
-  const htmlDoc='<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><title>'+title+'</title><meta http-equiv="refresh" content="0;url='+targetUrl+'"><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#070a18;color:#fff;font-family:system-ui,sans-serif;text-align:center}a{color:#00e5ff;font-weight:900;text-decoration:none;padding:14px 28px;border:2px solid #00e5ff;border-radius:999px;display:inline-block;margin-top:14px}</style></head><body><div><h2>'+title+' 🦅</h2><a href="'+targetUrl+'">فتح التطبيق الآن</a></div><script>location.replace("'+targetUrl+'")<\/script></body></html>';
-  const blob=new Blob([htmlDoc],{type:"text/html;charset=utf-8"});
-  const bUrl=URL.createObjectURL(blob);
+  const u=new URL(url,location.href);
+  const seg=decodeURIComponent((u.pathname||"").split("/").pop()||"");
+  if(/\.apk$/i.test(seg))return seg;
+ }catch(e){}
+ return "nasr-albaria.apk";
+}
+
+function triggerApkDirectFileDownload(apkUrl){
+ try{
+  const fname=getApkFilenameFromUrl(apkUrl);
   const a=document.createElement("a");
-  a.href=bUrl;
-  a.download=fname;
+  a.href=apkUrl;
+  a.setAttribute("download",fname);
+  a.rel="noopener noreferrer";
   a.style.display="none";
   document.body.appendChild(a);
   a.click();
-  setTimeout(()=>{try{a.remove();URL.revokeObjectURL(bUrl)}catch(e){}},2500);
-  return true;
- }catch(e){return false}
+  setTimeout(()=>{try{a.remove()}catch(e){}},500);
+  return fname;
+ }catch(e){
+  try{location.assign(apkUrl)}catch(err){}
+  return "nasr-albaria.apk";
+ }
 }
 
 window.performDirectAppDownload=async function(sourceTag){
  clearDownloadInitiated();
- const customUrl=window.getConfiguredDirectDlUrl();
- if(customUrl){
-  recordDownloadInitiated(sourceTag||"external_url");
-  try{
-   const a=document.createElement("a");
-   a.href=customUrl;
-   a.setAttribute("download","");
-   a.rel="noopener noreferrer";
-   a.style.display="none";
-   document.body.appendChild(a);
-   a.click();
-   setTimeout(()=>{try{a.remove()}catch(e){}},300);
-  }catch(e){
-   try{location.href=customUrl}catch(err){}
-  }
-  return {status:"external",url:customUrl};
+ let apkUrl=window.getEffectiveApkDownloadUrl();
+ if(!apkUrl){
+  try{apkUrl=await Promise.race([window.probeBundledApkUrl(),new Promise(r=>setTimeout(()=>r(""),900))])}catch(e){apkUrl=""}
+ }
+ if(apkUrl){
+  recordDownloadInitiated("apk_downloading");
+  const fname=triggerApkDirectFileDownload(apkUrl);
+  return {status:"apk_downloading",url:apkUrl,filename:fname};
  }
  const st=typeof triggerNativeInstallPrompt==="function"?await triggerNativeInstallPrompt():"unavailable";
  if(st==="accepted"){
@@ -4293,12 +4437,8 @@ window.performDirectAppDownload=async function(sourceTag){
   clearDownloadInitiated();
   return {status:"dismissed"};
  }
- if(triggerInstantAppPackageDownload()){
-  recordDownloadInitiated("direct_downloaded");
-  return {status:"direct_downloaded"};
- }
  clearDownloadInitiated();
- return {status:"unavailable"};
+ return {status:"apk_not_configured"};
 };
 
 window.runInteractiveInstallVerification=async function({panelEl,verifyBtn,dlBtn,isPreview,onPass}){
@@ -4360,7 +4500,7 @@ window.runInteractiveInstallVerification=async function({panelEl,verifyBtn,dlBtn
  if(!panelEl.isConnected)return false;
  if(detected){
   signalOk=true;
- }else if(wasDownloadInitiatedRecently()&&!chromiumPromptStillPending&&(hasCustomUrl||dlSrc==="direct_downloaded")){
+ }else if(wasDownloadInitiatedRecently()&&!chromiumPromptStillPending&&(hasCustomUrl||dlSrc==="apk_downloading"||dlSrc==="direct_downloaded")){
   signalOk=true;
   byInitiation=true;
  }
@@ -4523,29 +4663,32 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
  const isExh=(window.STORE_MODE==="exhibition");
  const bLabel=isExh?"معرض نسر البرية الرسمي":"متجر نسر البرية الرسمي";
  const logoSrc=(typeof window.__NASR_LOGO==="string"&&window.__NASR_LOGO)||"./pwa-192x192.png";
- const hasCustomUrl=!!window.getConfiguredDirectDlUrl();
- const perksHtml=isExh
-  ?`<div class="mand-perk"><span>⚡</span><span>تصفّح المعرض بسرعة فائقة</span></div>
-    <div class="mand-perk"><span>💬</span><span>طلب واستفسار فوري عبر واتساب</span></div>`
-  :`<div class="mand-perk"><span>⚡</span><span>تصفّح أسرع بدون شريط متصفح</span></div>
-    <div class="mand-perk"><span>🔔</span><span>إشعارات العروض والخصومات</span></div>`;
- const dlBtnLabel=hasCustomUrl?"⬇️ تحميل التطبيق الآن (رابط مباشر)":"⬇️ تحميل التطبيق الآن";
- const prevHeadline=wasUninstalledNow?"تم رصد حذف التطبيق من الجهاز 📲":"حمّل التطبيق الرسمي للمتابعة 📲";
+ const hasCustomUrl=!!(typeof window.getEffectiveApkDownloadUrl==="function"&&window.getEffectiveApkDownloadUrl());
+ const apkSpecsHtml=`
+  <div class="apk-spec-grid">
+   <div class="apk-spec-pill"><i>🤖</i><b>Android APK</b><small>تطبيق رسمي مباشر</small></div>
+   <div class="apk-spec-pill"><i>⚡</i><b>تشغيل فوري</b><small>بدون شريط متصفح</small></div>
+   <div class="apk-spec-pill"><i>🛡️</i><b>آمن 100%</b><small>مفحوص وموثّق</small></div>
+  </div>`;
+ const dlBtnLabel=hasCustomUrl?"⬇️ تحميل التطبيق الآن (APK)":"⬇️ تحميل تطبيق الأندرويد (APK)";
+ const prevHeadline=wasUninstalledNow?"تم رصد حذف التطبيق من الجهاز! 📲":"حمّل تطبيق نسر البرية الرسمي (APK) 📲";
  const prevDesc=wasUninstalledNow
-  ?"تم حذف تطبيق نسر البرية من الجهاز! اضغط الزر أدناه لتحميل التطبيق فورًا وسيتم فتح حسابك والمتجر مباشرة."
+  ?"تم حذف تطبيق نسر البرية من الجهاز! اضغط الزر بالأسفل لتحميل ملف التطبيق (APK) فورًا وسيُفتح حسابك والمتجر مباشرة."
   :(isExh
-   ?"تم تسجيل دخولك بنجاح! لتحقيق أسرع تجربة وتصفّح منتجات المعرض والخصومات، اضغط لتحميل التطبيق مباشرة."
-   :"تم تسجيل دخولك بنجاح! لتصفّح كافة المنتجات والطلب بسهولة وأمان، اضغط لتحميل تطبيق نسر البرية مباشرة.");
+   ?"تم تسجيل دخولك بنجاح! لتحقيق أسرع تجربة وتصفّح منتجات المعرض والخصومات، حمّل التطبيق الرسمي (APK) الآن."
+   :"تم تسجيل دخولك بنجاح! لتصفّح كافة المنتجات والطلب بسهولة وأمان، حمّل تطبيق نسر البرية الرسمي (APK) الآن.");
 
  if(existing){
+  const topEl=existing.querySelector(".mand-app-top");
+  if(topEl)topEl.classList.toggle("is-uninstalled",!!wasUninstalledNow);
   const badge=existing.querySelector(".mand-app-badge");
   const titleEl=existing.querySelector(".mand-app-top h3");
   const desc=existing.querySelector(".mand-app-top p");
-  const perks=existing.querySelector(".mand-perks");
-  if(badge)badge.textContent=(isPrev?(simUninst?"🧪 محاكاة رصد حذف التطبيق · ":"👁️ معاينة الإدارة · "):"🔒 خطوة مطلوبة · ")+bLabel;
+  const specs=existing.querySelector(".apk-spec-grid");
+  if(badge)badge.textContent=(isPrev?(simUninst?"🧪 محاكاة رصد حذف التطبيق · ":"👁️ معاينة الإدارة · "):(wasUninstalledNow?"🚨 إعادة التثبيت المطلوبة · ":"🤖 الإصدار الرسمي للأندرويد · "))+bLabel;
   if(titleEl)titleEl.textContent=prevHeadline;
   if(desc)desc.textContent=prevDesc;
-  if(perks)perks.innerHTML=perksHtml;
+  if(specs)specs.outerHTML=apkSpecsHtml;
   const dlBtn=existing.querySelector("#mandDlBtn");
   if(dlBtn&&!dlBtn.disabled)dlBtn.textContent=dlBtnLabel;
   return true;
@@ -4556,25 +4699,26 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
  ov.className="mand-app-ov";
  if(isPrev)ov.dataset.preview="1";
  ov.innerHTML=`
-  <div class="mand-app-card" role="dialog" aria-modal="true" aria-label="تحميل تطبيق ${escapeHTML(bLabel)}">
+  <div class="mand-app-card" role="dialog" aria-modal="true" aria-label="تحميل تطبيق ${escapeHTML(bLabel)} APK">
    ${isPrev?'<button type="button" class="mand-preview-exit" id="mandPrevExit">✕ إغلاق المعاينة (خاص بالإدارة)</button>':""}
-   <div class="mand-app-top">
-    <span class="mand-app-badge">${isPrev?(simUninst?"🧪 محاكاة رصد حذف التطبيق · ":"👁️ معاينة الإدارة · "):"🔒 خطوة مطلوبة · "}${escapeHTML(bLabel)}</span>
-    <div class="mand-app-logo"><img src="${logoSrc}" alt="شعار نسر البرية"></div>
+   <div class="mand-app-top ${wasUninstalledNow?"is-uninstalled":""}">
+    <span class="mand-app-badge">${isPrev?(simUninst?"🧪 محاكاة رصد حذف التطبيق · ":"👁️ معاينة الإدارة · "):(wasUninstalledNow?"🚨 إعادة التثبيت المطلوبة · ":"🤖 الإصدار الرسمي للأندرويد · ")}${escapeHTML(bLabel)}</span>
+    <div class="mand-app-logo"><img src="${logoSrc}" alt="شعار نسر البرية"><span class="apk-os-dot">APK ✓</span></div>
     <h3>${prevHeadline}</h3>
     <p>${prevDesc}</p>
     ${(isPrev||wasUninstalledNow)?`<div class="mand-audit-chip ${wasUninstalledNow?"uninst":""}" id="mandLiveAuditBadge">📡 ${wasUninstalledNow?"تم رصد الحذف في الفحص الصامت (كل 3 ثوانٍ)":"الفحص الصامت كل 3 ثوانٍ نشط"}</div>`:""}
    </div>
    <div class="mand-app-body">
-    <div class="mand-perks">${perksHtml}</div>
+    ${apkSpecsHtml}
+    ${hasCustomUrl?'<div class="apk-ready-chip">📦 ملف التطبيق (APK) جاهز للتحميل المباشر الآن</div>':""}
     <div class="mand-cta-wrap">
      <div class="app-arrow" aria-hidden="true">${typeof INVITE_ARROW!=="undefined"?INVITE_ARROW:""}</div>
      <button type="button" class="mand-dl-btn" id="mandDlBtn">${dlBtnLabel}</button>
     </div>
-    <button type="button" class="mand-verify-pill" id="mandVerifyBtn">✓ تم التحميل — تحقّق والمتابعة الآن</button>
+    <button type="button" class="mand-verify-pill" id="mandVerifyBtn">✓ اكتمل تحميل وتثبيت APK — تحقّق والدخول الآن</button>
     <div class="verify-panel hidden" id="mandVerifyPanel"></div>
     ${(!isPrev&&isAdmUser)?'<button type="button" class="mand-admin-skip" id="mandAdminSkipBtn">⚙️ تخطي مؤقت للإدارة (فتح لوحة التحكم)</button>':""}
-    <div class="mand-foot-trust">🛡️ تحميل فوري وآمن 100% · حسابك وبياناتك محفوظة تلقائيًا</div>
+    <div class="mand-foot-trust">🛡️ تحميل مباشر بصيغة APK الرسمية · حسابك وبياناتك محفوظة تلقائيًا</div>
    </div>
   </div>`;
 
@@ -4594,16 +4738,16 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
  const verifyBtn=ov.querySelector("#mandVerifyBtn");
  const verifyPanel=ov.querySelector("#mandVerifyPanel");
 
- const showVerifyBanner=(msg,isOk)=>{
+ const showVerifyBanner=(msg,isOk,extraHtml)=>{
   if(!verifyPanel)return;
   verifyPanel.classList.remove("hidden");
-  verifyPanel.innerHTML=`<div class="verify-result ${isOk?"ok":"warn"}">${escapeHTML(msg)}</div>`;
+  verifyPanel.innerHTML=`<div class="verify-result ${isOk?"ok":"warn"}"><span>${escapeHTML(msg)}</span>${extraHtml||""}</div>`;
  };
 
  if(dlBtn){
   dlBtn.onclick=async()=>{
    dlBtn.disabled=true;
-   dlBtn.textContent="⏳ جارٍ بدء التحميل المباشر...";
+   dlBtn.textContent="⏳ جارٍ تجهيز وتحميل ملف APK...";
    const res=await window.performDirectAppDownload(isPrev?"admin_preview_mand":"mandatory_gate");
    dlBtn.disabled=false;
    dlBtn.textContent=dlBtnLabel;
@@ -4612,12 +4756,27 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
     hideMandatoryAppGate(true);
     return;
    }
-   if(res.status==="external"||res.status==="direct_downloaded"){
-    if(verifyBtn)verifyBtn.textContent="✅ اكتمل التحميل — تحقّق وادخل للمتجر الآن";
-    showVerifyBanner("📥 بدأ تحميل التطبيق مباشرة على جهازك الآن! اضغط «تحقّق والمتابعة الآن» للدخول فورًا.",true);
+   if(res.status==="apk_downloading"){
+    if(verifyBtn)verifyBtn.textContent="✅ اكتمل تثبيت ملف APK — تحقّق والدخول الآن";
+    showVerifyBanner("📥 بدأ تحميل ملف التطبيق ("+(res.filename||"nasr-albaria.apk")+") على جهازك! افتحه لتثبيت التطبيق ثم اضغط «تحقّق والدخول الآن».",true);
     return;
    }
-   showVerifyBanner("⚠️ اضغط «تحميل التطبيق الآن» مرة أخرى لإتمام التثبيت المباشر.",false);
+   if(res.status==="apk_not_configured"){
+    if(isAdmUser){
+     showVerifyBanner("⚙️ لم يتم رفع أو ربط ملف APK في الإعدادات بعد — ارفع ملف APK أو الصق رابطه المباشر في لوحة الإدارة.",false,'<button type="button" class="verify-res-btn" id="mandGoUploadApkBtn">📤 رفع أو ربط ملف APK الآن</button>');
+     const goBtn=verifyPanel&&verifyPanel.querySelector("#mandGoUploadApkBtn");
+     if(goBtn)goBtn.onclick=()=>{
+      if(isPrev)ov.remove();
+      else{try{sessionStorage.setItem("nasr_admin_gate_skip","1")}catch(e){}hideMandatoryAppGate(false)}
+      try{if(typeof openAdmin==="function")openAdmin()}catch(e){}
+      setTimeout(()=>{try{const r=$("adminAppPromptBar");if(r)r.scrollIntoView({behavior:"smooth",block:"center"})}catch(e){}},260);
+     };
+     return;
+    }
+    showVerifyBanner("⚠️ التحميل المباشر لملف APK قيد التحديث من الإدارة حاليًا — تأكد من التصفح عبر Google Chrome واضغط «تحميل التطبيق الآن» مرة أخرى.",false);
+    return;
+   }
+   showVerifyBanner("⚠️ اضغط «تحميل التطبيق الآن (APK)» مرة أخرى لإتمام التحميل والتثبيت.",false);
   };
  }
  if(verifyBtn){
@@ -4636,6 +4795,12 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
  }
 
  document.body.appendChild(ov);
+ window.probeBundledApkUrl().then(u=>{
+  if(u&&ov.isConnected){
+   const b=ov.querySelector("#mandDlBtn");
+   if(b&&!b.disabled)b.textContent="⬇️ تحميل التطبيق الآن (APK)";
+  }
+ }).catch(()=>{});
  return true;
 }
 
@@ -6469,6 +6634,8 @@ async function openAdmin(){
  if($("dlPromptBtnMandatory"))$("dlPromptBtnMandatory").classList.toggle("active",window.APP_DL_PROMPT_MODE==="mandatory");
  if($("dlPromptBtnOptional"))$("dlPromptBtnOptional").classList.toggle("active",window.APP_DL_PROMPT_MODE==="optional");
  if($("appDirectDlInput"))$("appDirectDlInput").value=window.APP_DIRECT_DL_URL||"";
+ if(typeof window.updateAdminApkStatusUi==="function")window.updateAdminApkStatusUi();
+ if(typeof window.probeBundledApkUrl==="function")window.probeBundledApkUrl();
  if(typeof window.updateAdminAuditUi==="function")window.updateAdminAuditUi();
  if(typeof window.runSilentDeviceAppInspection==="function")window.runSilentDeviceAppInspection("admin_open");
  adminTab("overview",document.querySelector(".admin-tab"));
@@ -11671,12 +11838,12 @@ window.addEventListener("beforeinstallprompt",e=>{
  window.__installPromptFired=true;
  const dlBtn=document.getElementById("dlNowBtn");
  if(dlBtn&&typeof view!=="undefined"&&view.type==="app-download"&&!isAppInstalledLocally()){
-  dlBtn.textContent=window.getConfiguredDirectDlUrl()?"⬇️ تحميل التطبيق الآن (رابط مباشر)":"⬇️ تثبيت التطبيق الآن مجانًا";
+  dlBtn.textContent="⬇️ تحميل التطبيق الآن (APK) مجانًا";
   dlBtn.style.background="";
  }
  const mandBtn=document.getElementById("mandDlBtn");
  if(mandBtn&&!mandBtn.disabled){
-  mandBtn.textContent=window.getConfiguredDirectDlUrl()?"⬇️ تحميل التطبيق الآن (رابط مباشر)":"⬇️ تحميل التطبيق الآن";
+  mandBtn.textContent=window.getEffectiveApkDownloadUrl()?"⬇️ تحميل التطبيق الآن (APK)":"⬇️ تحميل تطبيق الأندرويد (APK)";
  }
  if(typeof window.__nasrOnEarlyInstallPrompt==="function")window.__nasrOnEarlyInstallPrompt(e);
  if(typeof window.evaluateMandatoryAppGate==="function")window.evaluateMandatoryAppGate();
@@ -11766,22 +11933,23 @@ function showAppInviteModal(){
  document.querySelectorAll(".app-notif-ov").forEach(x=>x.remove());
  const bLabel=window.STORE_MODE==="exhibition"?"معرض نسر البرية":"متجر نسر البرية";
  const ov=document.createElement("div");ov.className="app-invite-ov";
- ov.innerHTML=`<div class="app-invite-card" role="dialog" aria-modal="true" aria-label="التطبيق الرسمي لـ ${bLabel}">
+ ov.innerHTML=`<div class="app-invite-card" role="dialog" aria-modal="true" aria-label="التطبيق الرسمي لـ ${bLabel} APK">
   <button type="button" class="app-invite-x" aria-label="إغلاق">×</button>
   <div class="app-invite-top">
-   <span class="app-invite-badge">التطبيق الرسمي لـ ${bLabel}</span>
-   <div class="app-invite-logo"><img src="${NASR_LOGO_DATA}" alt="شعار نسر البرية"></div>
-   <h3>تطبيق نسر البرية بين إيديك الآن! 📱</h3>
+   <span class="app-invite-badge">🤖 النسخة الرسمية للأندرويد · APK</span>
+   <div class="app-invite-logo"><img src="${NASR_LOGO_DATA}" alt="شعار نسر البرية"><span class="apk-os-dot">APK ✓</span></div>
+   <h3>حمّل تطبيق نسر البرية الرسمي (APK) 📲</h3>
    <p>تصفّح أسرع بدون شريط متصفح مع إشعارات فورية بأحدث المنتجات والعروض والخصومات أول بأول.</p>
   </div>
   <div class="app-invite-body">
-   <div class="app-invite-perks">
-    <div><span>⚡</span><span>فتح فوري وتصفّح سريع</span></div>
-    <div><span>🔔</span><span>تنبيهات العروض والخصومات</span></div>
+   <div class="apk-spec-grid" style="margin-bottom:12px">
+    <div class="apk-spec-pill"><i>🤖</i><b>Android APK</b><small>تطبيق رسمي</small></div>
+    <div class="apk-spec-pill"><i>⚡</i><b>تشغيل فوري</b><small>أسرع وأخف</small></div>
+    <div class="apk-spec-pill"><i>🛡️</i><b>آمن 100%</b><small>مفحوص وموثّق</small></div>
    </div>
    <div class="app-invite-cta">
     <div class="app-arrow" aria-hidden="true">${INVITE_ARROW}</div>
-    <button type="button" class="app-invite-btn">حمل الان</button>
+    <button type="button" class="app-invite-btn">⬇️ تحميل التطبيق الآن (APK)</button>
    </div>
    <button type="button" class="app-invite-skip">المتابعة داخل المتصفح</button>
   </div>
@@ -11794,21 +11962,28 @@ function showAppInviteModal(){
  ov.addEventListener("click",e=>{if(e.target===ov)dismiss()});
  const ctaBtn=ov.querySelector(".app-invite-btn");
  ctaBtn.onclick=async()=>{
-  ctaBtn.disabled=true;ctaBtn.textContent="⏳ جارٍ بدء التحميل...";
+  ctaBtn.disabled=true;ctaBtn.textContent="⏳ جارٍ تجهيز تحميل APK...";
   const res=await window.performDirectAppDownload("optional_invite");
   if(res.status==="accepted"){
    ov.remove();
    if(typeof okToast==="function")okToast("✅ تم تثبيت تطبيق نسر البرية على جهازك بنجاح!");
    return;
   }
-  if(res.status==="external"||res.status==="direct_downloaded"){
+  if(res.status==="apk_downloading"){
    ov.remove();
-   if(typeof okToast==="function")okToast("📥 بدأ تحميل التطبيق مباشرة على جهازك الآن!");
+   if(typeof okToast==="function")okToast("📥 بدأ تحميل ملف التطبيق ("+(res.filename||"nasr-albaria.apk")+") مباشرة على جهازك!");
    return;
   }
-  ov.remove();
-  if(typeof nav==="function")nav("#/app-download");
-  else location.hash="#/app-download";
+  ctaBtn.disabled=false;
+  ctaBtn.textContent="⬇️ تحميل التطبيق الآن (APK)";
+  if(res.status==="apk_not_configured"&&typeof isAdmin==="function"&&isAdmin()){
+   ov.remove();
+   try{if(typeof openAdmin==="function")openAdmin()}catch(e){}
+   setTimeout(()=>{try{const r=$("adminAppPromptBar");if(r)r.scrollIntoView({behavior:"smooth",block:"center"})}catch(e){}},260);
+   if(typeof toast==="function")toast("⚙️ ارفع ملف APK أو أضف رابط التحميل المباشر من لوحة الإدارة بالأعلى.");
+   return;
+  }
+  if(typeof toast==="function")toast("⚠️ التحميل المباشر لملف APK قيد التحديث حاليًا — تأكد من التصفح عبر Chrome أو جرّب مرة أخرى.");
  };
  document.body.appendChild(ov);
  return true;
@@ -11967,31 +12142,36 @@ window.renderAppDownloadPage=function(container){
  const remoteSeen=getRemoteRelSeen();
  const hasRemoteNew=!!(lastRemoteRelease&&remoteSeen&&lastRemoteRelease!==remoteSeen&&lastRemoteRelease!==APP_VERSION);
  const needsUpdate=installedNow&&!justUpdatedThisLoad&&((seenMajor&&seenMajor!==APP_VERSION)||hasRemoteNew);
- const hasCustomUrl=!!(typeof window.getConfiguredDirectDlUrl==="function"&&window.getConfiguredDirectDlUrl());
+ const hasCustomUrl=!!(typeof window.getEffectiveApkDownloadUrl==="function"&&window.getEffectiveApkDownloadUrl());
  const bLabel=window.STORE_MODE==="exhibition"?"معرض نسر البرية":"متجر نسر البرية";
  const btnClass=needsUpdate?"dl-btn upd":(installedNow?"dl-btn installed":"dl-btn pulse-focus");
  const btnText=needsUpdate
   ?"🔄 حدّث التطبيق الآن — نسخة أسرع وأخف"
   :(installedNow
    ?"🚀 التطبيق مثبّت ومحدّث — فتح المتجر الآن"
-   :(hasCustomUrl?"⬇️ تحميل التطبيق الآن (رابط مباشر)":"⬇️ تحميل التطبيق الآن مجانًا"));
+   :(hasCustomUrl?"⬇️ تحميل التطبيق الآن (APK)":"⬇️ تحميل تطبيق الأندرويد (APK)"));
  const heroSubtitle=needsUpdate
   ?"نسخة أسرع وأخف مع تحسينات شاملة ومزايا أحدث — حدّث فورًا بضغطة واحدة."
   :(installedNow
    ?"التطبيق جاهز ويعمل بأحدث إصدار على جهازك — يمكنك الدخول مباشرة الآن."
-   :"اضغط زر التحميل المباشر بالأعلى لتنزيل التطبيق الرسمي وتصفّح جميع المنتجات فورًا.");
+   :"اضغط زر التحميل المباشر بالأعلى لتنزيل تطبيق الأندرويد الرسمي (APK) وتصفّح جميع المنتجات فورًا.");
 
  container.innerHTML=`
   <div class="dl-page">
    <div class="dl-hero-direct">
     <div class="dl-hero-in">
-     <span class="dl-os-badge">${needsUpdate?"تحديث متاح الآن · "+esc(osLabel):(installedNow?"✅ مثبّت على جهازك · "+esc(osLabel):"التطبيق الرسمي · "+esc(osLabel))}</span>
-     <div class="dl-hero-ic"><img src="${NASR_LOGO_DATA}" alt="شعار نسر البرية"></div>
-     <h2>${needsUpdate?"تحديث تطبيق "+bLabel:"تطبيق "+bLabel+" الرسمي 📲"}</h2>
+     <span class="dl-os-badge">${needsUpdate?"تحديث متاح الآن · "+esc(osLabel):(installedNow?"✅ مثبّت على جهازك · "+esc(osLabel):"🤖 النسخة الرسمية (APK) · "+esc(osLabel))}</span>
+     <div class="dl-hero-ic"><img src="${NASR_LOGO_DATA}" alt="شعار نسر البرية"><span class="apk-os-dot">APK ✓</span></div>
+     <h2>${needsUpdate?"تحديث تطبيق "+bLabel:"تطبيق "+bLabel+" الرسمي (APK) 📲"}</h2>
      <p>${heroSubtitle}</p>
+     <div class="apk-spec-grid" style="width:100%;margin-bottom:14px">
+      <div class="apk-spec-pill"><i>🤖</i><b>Android APK</b><small>ملف تطبيق أصلي</small></div>
+      <div class="apk-spec-pill"><i>⚡</i><b>تشغيل فوري</b><small>بدون شريط متصفح</small></div>
+      <div class="apk-spec-pill"><i>🛡️</i><b>آمن 100%</b><small>مفحوص وموثّق</small></div>
+     </div>
      <div class="dl-direct-actions">
       <button type="button" class="${btnClass}" id="dlNowBtn">${btnText}</button>
-      ${installedNow?"":'<button type="button" class="dl-btn verify-btn" id="dlVerifyBtn">✓ تم التحميل — تحقّق وادخل للمتجر الآن</button>'}
+      ${installedNow?"":'<button type="button" class="dl-btn verify-btn" id="dlVerifyBtn">✓ تم تحميل وتثبيت APK — تحقّق والدخول الآن</button>'}
       <div class="verify-panel hidden" id="dlVerifyPanel"></div>
       <button type="button" class="dl-btn sec" id="dlCopyBtn">🔗 نسخ رابط التحميل المباشر للمشاركة</button>
       <div id="dlGuideMsg" style="font-size:12.5px;font-weight:800;color:var(--muted);line-height:1.75"></div>
@@ -12000,8 +12180,8 @@ window.renderAppDownloadPage=function(container){
    </div>
 
    <div class="qr-card">
-    <h3 style="margin:0 0 6px;font-size:17px;font-weight:900">📱 باركود التحميل المباشر</h3>
-    <p style="margin:0 0 8px;font-size:12.5px;color:var(--muted);font-weight:700">وجّه كاميرا أي هاتف نحو الباركود للوصول فورًا لزر التحميل المباشر</p>
+    <h3 style="margin:0 0 6px;font-size:17px;font-weight:900">📱 باركود التحميل المباشر (APK)</h3>
+    <p style="margin:0 0 8px;font-size:12.5px;color:var(--muted);font-weight:700">وجّه كاميرا أي هاتف نحو الباركود للوصول فورًا لزر تحميل التطبيق (APK)</p>
     <div class="qr-poster">
      <div class="qr-poster-top"><img src="${NASR_LOGO_DATA}" alt="شعار نسر البرية"><b>${bLabel} الرسمي</b></div>
      <div class="qr-canvas-box"><canvas id="dlQrCanvas" width="220" height="220"></canvas></div>
@@ -12042,7 +12222,7 @@ window.renderAppDownloadPage=function(container){
    }
    nowBtn.disabled=true;
    const prevTx=nowBtn.textContent;
-   nowBtn.textContent="⏳ جارٍ بدء التحميل المباشر...";
+   nowBtn.textContent="⏳ جارٍ تجهيز وتحميل ملف APK...";
    const res=await window.performDirectAppDownload("qr_dl_page");
    nowBtn.disabled=false;
    if(res.status==="accepted"){
@@ -12056,15 +12236,19 @@ window.renderAppDownloadPage=function(container){
     return;
    }
    nowBtn.textContent=prevTx;
-   if(res.status==="external"||res.status==="direct_downloaded"){
-    if(verifyBtn)verifyBtn.textContent="✅ اكتمل التحميل — تحقّق وادخل للمتجر الآن";
+   if(res.status==="apk_downloading"){
+    if(verifyBtn)verifyBtn.textContent="✅ اكتمل تثبيت APK — تحقّق وادخل للمتجر الآن";
     if(verifyPanel){
      verifyPanel.classList.remove("hidden");
-     verifyPanel.innerHTML='<div class="verify-result ok">📥 بدأ تحميل التطبيق مباشرة على جهازك الآن! اضغط «تحقّق وادخل للمتجر الآن» للدخول فورًا.</div>';
+     verifyPanel.innerHTML='<div class="verify-result ok">📥 بدأ تحميل ملف التطبيق ('+esc(res.filename||"nasr-albaria.apk")+') على جهازك الآن! افتح الملف للتثبيت ثم اضغط «تحقّق وادخل للمتجر الآن».</div>';
     }
     return;
    }
-   guideMsg.textContent="اضغط الزر بالأعلى مرة أخرى لبدء التحميل المباشر.";
+   if(res.status==="apk_not_configured"&&typeof isAdmin==="function"&&isAdmin()){
+    guideMsg.innerHTML='⚙️ لم يتم رفع أو ربط ملف APK في الإدارة بعد — <button type="button" class="verify-res-btn" onclick="openAdmin()">رفع/ربط ملف APK الآن</button>';
+    return;
+   }
+   guideMsg.textContent="التحميل المباشر لملف APK يتم تجهيزه — تأكد من استخدام متصفح Google Chrome واضغط الزر مرة أخرى.";
   };
  }
  if(verifyBtn){
