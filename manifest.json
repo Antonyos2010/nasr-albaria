@@ -16,6 +16,10 @@
   "related_applications": [
     {
       "platform": "webapp",
+      "url": "https://antonyos2010.github.io/nasr-albaria/manifest.json?v=5"
+    },
+    {
+      "platform": "webapp",
       "url": "https://antonyos2010.github.io/nasr-albaria/manifest.json"
     },
     {
