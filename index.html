@@ -58,7 +58,7 @@
  --red:#ff2d46;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;scroll-padding-top:90px;overflow-x:clip}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
 body{
  font-family:'Cairo',sans-serif;color:var(--text);
  background:radial-gradient(ellipse at 10% 5%,#19104a 0,transparent 35%),
@@ -2438,31 +2438,16 @@ body.light #adminModeBar,body.light #adminAppPromptBar{
  padding-top:8px;border-top:1px dashed var(--border);
 }
 .app-dl-url-row{
- width:100%;display:flex;flex-direction:column;gap:8px;padding-top:10px;border-top:1px dashed var(--border);text-align:right;
+ width:100%;display:flex;flex-direction:column;gap:6px;padding-top:8px;border-top:1px dashed var(--border);text-align:right;
 }
-.app-dl-url-row label{font-size:12px;font-weight:900;color:var(--text)}
+.app-dl-url-row label{font-size:11.5px;font-weight:800;color:var(--text)}
 .app-dl-url-inputs{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.app-dl-url-inputs input[type="url"]{
+.app-dl-url-inputs input{
  flex:1 1 240px;min-width:0;padding:9px 12px;border-radius:12px;border:1.5px solid var(--border);
  background:var(--bg);color:var(--text);font-size:12.5px;font-weight:700;outline:none;
 }
-.app-dl-url-inputs input[type="url"]:focus{border-color:var(--c1);box-shadow:0 0 0 3px rgba(0,217,255,.16)}
+.app-dl-url-inputs input:focus{border-color:var(--c1);box-shadow:0 0 0 3px rgba(0,217,255,.16)}
 .app-dl-url-inputs .mode-sw-btn{flex:0 0 auto;padding:9px 14px;font-size:12px}
-.apk-upload-btn{
- background:linear-gradient(135deg,#10b981,#059669)!important;
- border-color:#10b981!important;color:#fff!important;-webkit-text-fill-color:#fff!important;
- box-shadow:0 6px 16px rgba(16,185,129,.28);
-}
-.apk-admin-status{
- display:inline-flex;align-items:center;gap:7px;flex-wrap:wrap;padding:7px 11px;border-radius:11px;
- font-size:11.5px;font-weight:800;border:1.5px solid rgba(245,158,11,.42);
- background:rgba(245,158,11,.1);color:#fbbf24;width:fit-content;max-width:100%;
-}
-.apk-admin-status.ok{
- border-color:rgba(34,197,94,.48);background:rgba(22,163,74,.12);color:#4ade80;
-}
-body.light .apk-admin-status{background:#fffbeb;color:#b45309;border-color:#f59e0b}
-body.light .apk-admin-status.ok{background:#ecfdf5;color:#15803d;border-color:#22c55e}
 .admin-audit-box{
  width:100%;margin-top:4px;padding:11px 13px;border-radius:14px;
  background:var(--panel);border:1.5px solid rgba(34,197,94,.38);
@@ -2542,62 +2527,26 @@ body.light .mand-app-card{
 }
 .mand-admin-skip:hover{border-color:var(--c1);color:var(--text);background:var(--panel2)}
 .mand-app-top{
- position:relative;padding:24px 18px 20px;color:#fff;overflow:hidden;
- background:radial-gradient(circle at 50% 0%,rgba(0,217,255,.44),transparent 64%),
-  radial-gradient(circle at 12% 85%,rgba(16,185,129,.22),transparent 48%),
-  linear-gradient(135deg,#06143d,#133ec4 52%,#701ae0);
-}
-.mand-app-top::before,.app-invite-top::before{
- content:"";position:absolute;inset:0;pointer-events:none;opacity:.14;
- background-image:radial-gradient(rgba(255,255,255,.75) 1px,transparent 1px);
- background-size:18px 18px;
-}
-.mand-app-top>*,.app-invite-top>*{position:relative;z-index:1}
-.mand-app-top.is-uninstalled{
- background:radial-gradient(circle at 50% 0%,rgba(251,146,60,.4),transparent 64%),
-  linear-gradient(135deg,#2a0b24,#9a1b43 52%,#6d14b8);
+ position:relative;padding:24px 18px 20px;color:#fff;
+ background:radial-gradient(circle at 50% 0%,rgba(0,217,255,.42),transparent 65%),
+  linear-gradient(135deg,#071645,#1747d6 55%,#7c1ee6);
 }
 .mand-app-badge{
- display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:999px;
+ display:inline-flex;align-items:center;gap:6px;padding:4px 13px;border-radius:999px;
  font-size:11px;font-weight:900;letter-spacing:.15px;
  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.45);color:#fff;
- margin-bottom:12px;backdrop-filter:blur(6px);
+ margin-bottom:11px;
 }
-.mand-app-logo,.app-invite-logo,.dl-hero-ic{position:relative;overflow:visible!important}
 .mand-app-logo{
- width:92px;height:92px;margin:0 auto 12px;border-radius:50%;
- background:#fff;border:3px solid rgba(255,255,255,.95);
- box-shadow:0 0 0 6px rgba(255,255,255,.16),0 0 28px rgba(0,217,255,.38),0 16px 34px rgba(0,0,0,.5);
+ width:88px;height:88px;margin:0 auto 11px;border-radius:50%;overflow:hidden;
+ background:#fff;border:3px solid rgba(255,255,255,.94);
+ box-shadow:0 0 0 6px rgba(255,255,255,.18),0 16px 34px rgba(0,0,0,.5);
  display:grid;place-items:center;
 }
 .mand-app-logo img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
-.apk-os-dot{
- position:absolute;bottom:-3px;left:-3px;
- display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:999px;
- background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;
- border:2px solid #fff;font-size:10px;font-weight:900;letter-spacing:.4px;
- box-shadow:0 4px 12px rgba(0,0,0,.45);
-}
 .mand-app-top h3{font-size:20px;font-weight:900;line-height:1.45;color:#fff;margin:0}
 .mand-app-top p{margin:6px auto 0;max-width:34ch;font-size:12.5px;font-weight:700;color:#e8f2ff;line-height:1.7}
 .mand-app-body{padding:16px 18px 20px;display:flex;flex-direction:column;gap:12px}
-.apk-spec-grid{
- display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;
-}
-.apk-spec-pill{
- display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
- padding:9px 6px;border-radius:14px;background:var(--panel2);border:1px solid var(--border);
- text-align:center;
-}
-.apk-spec-pill i{font-style:normal;font-size:16px;line-height:1}
-.apk-spec-pill b{font-size:11px;font-weight:900;color:var(--text);line-height:1.25}
-.apk-spec-pill small{font-size:10px;font-weight:700;color:var(--muted);line-height:1.2}
-.apk-ready-chip{
- display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:0 auto;
- padding:5px 13px;border-radius:999px;font-size:11.5px;font-weight:900;
- background:rgba(34,197,94,.13);border:1px solid rgba(34,197,94,.42);color:#4ade80;
-}
-body.light .apk-ready-chip{background:#ecfdf5;border-color:#86efac;color:#15803d}
 .mand-perks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .mand-perk{
  display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 10px;border-radius:12px;
@@ -2784,7 +2733,7 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
 .fx-box{height:var(--svc-box-h,56vw);max-height:75dvh}
 
 /* ===== شاشة الإعلانات الاحترافية «ضع اعلانك هنا» ===== */
-#billboardAdsSection{margin-top:8px;position:relative;display:block;width:100%}
+#billboardAdsSection{overflow-x:clip;margin-top:8px}
 .bb-head{
  display:flex;align-items:center;justify-content:space-between;gap:12px;
  margin:22px 0 12px;flex-wrap:wrap;
@@ -2825,24 +2774,39 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
 
 .bb-stage{
  position:relative;
- width:var(--bb-w,100vw);
- max-width:100vw;
- margin-left:calc(50% - (var(--bb-w,100vw) / 2));
- margin-right:calc(50% - (var(--bb-w,100vw) / 2));
- height:var(--bb-h,75dvh);
- min-height:clamp(300px,52dvh,420px);
+ width:100%;
+ margin-inline:0;
+ height:var(--bb-h,56vw);
+ min-height:140px;
+ max-height:82dvh;
+ border-radius:16px;
  overflow:hidden;
  background:#040611;
- border-top:2px solid rgba(0,217,255,.65);
- border-bottom:2px solid rgba(166,0,255,.7);
+ border:2px solid rgba(0,217,255,.65);
  box-shadow:0 18px 46px rgba(0,0,0,.45),0 0 28px rgba(8,123,255,.25);
  isolation:isolate;
  direction:ltr;
  touch-action:pan-y;
  -webkit-user-select:none;user-select:none;
+ transition:height .35s cubic-bezier(.4,0,.2,1);
+}
+.bb-stage:not(.bb-has-empty){
+ width:100vw;
+ max-width:100vw;
+ margin-inline:calc(50% - 50vw);
+ border-inline:0;
+ border-radius:0;
+}
+.bb-stage.bb-has-empty{
+ width:100%;
+ margin-inline:0;
+ border-radius:16px;
+ height:auto!important;
+ min-height:310px;
+ max-height:none;
 }
 .bb-stage::before{
- content:"";position:absolute;inset:0;z-index:5;pointer-events:none;
+ content:"";position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:inherit;
  box-shadow:inset 0 0 36px rgba(0,217,255,.16),inset 0 0 0 1px rgba(255,255,255,.1);
 }
 .bb-bg-img{
@@ -2934,7 +2898,7 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
  background-size:34px 34px;
 }
 .bb-empty-card{
- position:relative;z-index:2;max-width:min(520px,92vw);max-height:calc(100% - 20px);overflow-y:auto;padding:24px 22px;border-radius:26px;
+ position:relative;z-index:2;max-width:520px;padding:24px 22px;border-radius:26px;
  background:rgba(9,13,36,.78);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
  border:1.5px solid rgba(0,229,255,.48);
  box-shadow:0 20px 55px rgba(0,0,0,.55),0 0 34px rgba(0,229,255,.16);
@@ -3014,10 +2978,8 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
  border-radius:14px;background:var(--panel2);border:1.5px solid rgba(0,217,255,.35);
 }
 .ad-picked-head{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;font-weight:800;color:var(--text)}
-.ad-picked-grid{display:flex;flex-wrap:wrap;gap:10px}
-.ad-picked-item{position:relative;width:64px;height:64px;flex:none}
-.ad-picked-thumb{width:64px;height:64px;border-radius:12px;object-fit:cover;border:2px solid var(--c1);background:#000;display:block}
-.ad-picked-rm{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;border:1.5px solid #fff;background:#ef4444;color:#fff;font-size:13px;font-weight:900;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.ad-picked-grid{display:flex;flex-wrap:wrap;gap:8px}
+.ad-picked-thumb{width:64px;height:64px;border-radius:12px;object-fit:cover;border:2px solid var(--c1);background:#000}
 .ads-ttl-badge{
  display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;
  font-size:11px;font-weight:900;background:#087bff22;color:#38bdf8;border:1px solid #38bdf866;
@@ -3645,14 +3607,11 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
     </div>
    </div>
    <div class="app-dl-url-row">
-    <label for="appDirectDlInput">🤖 ملف التطبيق الرسمي للأندرويد (APK) — ارفع ملف .apk أو الصق رابط التحميل المباشر</label>
-    <div class="apk-admin-status" id="adminApkStatusPill">⏳ جارٍ التحقق من حالة ملف APK...</div>
+    <label for="appDirectDlInput">🔗 رابط تحميل التطبيق المباشر (اختياري — اتركه فارغًا للتثبيت التلقائي الفوري للتطبيق PWA)</label>
     <div class="app-dl-url-inputs">
-     <input id="appDirectDlInput" type="url" dir="ltr" placeholder="https://... (رابط ملف .apk المباشر)">
-     <input id="appApkFileInput" type="file" accept=".apk,application/vnd.android.package-archive,application/octet-stream" class="hidden" onchange="handleAdminApkFileSelected(this)">
-     <button type="button" class="mode-sw-btn apk-upload-btn" id="adminApkUploadBtn" onclick="document.getElementById('appApkFileInput')&&document.getElementById('appApkFileInput').click()">📤 رفع ملف APK</button>
+     <input id="appDirectDlInput" type="url" dir="ltr" placeholder="https://... (APK أو رابط المتجر أو اتركه فارغًا للتثبيت المباشر)">
      <button type="button" class="mode-sw-btn dl-opt" onclick="saveAppDirectDownloadUrl()">💾 حفظ الرابط</button>
-     <button type="button" class="mode-sw-btn" onclick="clearAppDirectDownloadUrl()">↺ مسح الرابط</button>
+     <button type="button" class="mode-sw-btn" onclick="clearAppDirectDownloadUrl()">↺ التثبيت التلقائي</button>
     </div>
    </div>
   </div>
@@ -3753,7 +3712,7 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
     <div class="field px-field">
      <label>اختر صورة أو عدة صور إعلانات من جهازك</label>
      <input id="adFilesInput" class="px-file" type="file" accept="image/*" multiple>
-     <button type="button" class="px-up" id="adFilesDropLabel" style="width:100%;text-align:right;cursor:pointer"><span class="px-up-ic">🖼️</span><span class="px-up-tx" id="adFilesDropTx">اضغط هنا لاختيار صورة أو عدة صور من جهازك</span></button>
+     <label class="px-up" for="adFilesInput" id="adFilesDropLabel"><span class="px-up-ic">🖼️</span><span class="px-up-tx" id="adFilesDropTx">اضغط هنا لاختيار صورة أو عدة صور من جهازك</span></label>
     </div>
     <div id="adPickedPreview" class="ad-picked-bar hidden"></div>
     <div class="field"><label>أو الصق رابط صورة مباشر</label><input id="adUrlInput" type="text" inputmode="url" dir="ltr" placeholder="https://..."></div>
@@ -4206,58 +4165,11 @@ window.APP_QR_TARGET_URL=(()=>{
 function sanitizeAppDlUrl(raw){
  const s=String(raw||"").trim();
  if(!s)return "";
- if(/^https?:\/\//i.test(s)||s.startsWith("/")||s.startsWith("./"))return s;
+ if(/^https?:\/\//i.test(s)||s.startsWith("/"))return s;
  return "";
 }
-window.__BUNDLED_APK_URL=window.__BUNDLED_APK_URL||"";
-let __bundledApkProbePromise=null;
-window.probeBundledApkUrl=function(){
- if(window.__BUNDLED_APK_URL)return Promise.resolve(window.__BUNDLED_APK_URL);
- if(__bundledApkProbePromise)return __bundledApkProbePromise;
- __bundledApkProbePromise=(async()=>{
-  const candidates=["./nasr-albaria.apk","./app-release.apk"];
-  for(const cand of candidates){
-   try{
-    const res=await fetch(cand,{method:"HEAD",cache:"no-store",credentials:"same-origin"});
-    if(!res||!res.ok)continue;
-    const ct=String(res.headers.get("content-type")||"").toLowerCase();
-    if(ct.includes("text/html"))continue;
-    window.__BUNDLED_APK_URL=new URL(cand,location.href).href;
-    if(typeof window.updateAdminApkStatusUi==="function")window.updateAdminApkStatusUi();
-    return window.__BUNDLED_APK_URL;
-   }catch(e){}
-  }
-  return "";
- })();
- return __bundledApkProbePromise;
-};
-try{setTimeout(()=>{window.probeBundledApkUrl()},450)}catch(e){}
-
 window.getConfiguredDirectDlUrl=function(){
- return sanitizeAppDlUrl(window.APP_DIRECT_DL_URL)||sanitizeAppDlUrl(window.__BUNDLED_APK_URL)||"";
-};
-window.getEffectiveApkDownloadUrl=function(){
- return window.getConfiguredDirectDlUrl();
-};
-window.updateAdminApkStatusUi=function(){
- const pill=$("adminApkStatusPill");
- if(!pill)return;
- const custom=sanitizeAppDlUrl(window.APP_DIRECT_DL_URL);
- const bundled=sanitizeAppDlUrl(window.__BUNDLED_APK_URL);
- const active=custom||bundled;
- if(active){
-  let fname="nasr-albaria.apk";
-  try{
-   const u=new URL(active,location.href);
-   const base=u.pathname.split("/").pop();
-   if(base)fname=decodeURIComponent(base);
-  }catch(e){}
-  pill.className="apk-admin-status ok";
-  pill.innerHTML=`✅ ملف التطبيق جاهز للتحميل المباشر (${escapeHTML(fname)}) — سيظهر للمستخدمين تحميل APK مباشرة`;
- }else{
-  pill.className="apk-admin-status";
-  pill.innerHTML="ℹ️ لم يتم ربط ملف APK بعد — اضغط «📤 رفع ملف APK» أو الصق رابط ملف .apk المباشر بالأسفل";
- }
+ return sanitizeAppDlUrl(window.APP_DIRECT_DL_URL);
 };
 function applyAppDirectDownloadUrl(url){
  const clean=sanitizeAppDlUrl(url);
@@ -4268,7 +4180,6 @@ function applyAppDirectDownloadUrl(url){
  }catch(e){}
  const inp=$("appDirectDlInput");
  if(inp&&document.activeElement!==inp)inp.value=clean;
- window.updateAdminApkStatusUi();
 }
 async function saveAppDirectDownloadUrl(){
  if(!isAdmin())return;
@@ -4276,7 +4187,7 @@ async function saveAppDirectDownloadUrl(){
  const raw=inp?inp.value.trim():"";
  const clean=sanitizeAppDlUrl(raw);
  if(raw&&!clean){
-  toast("أدخل رابطًا صحيحًا يبدأ بـ https:// لملف APK أو اتركه فارغًا.");
+  toast("أدخل رابطًا صحيحًا يبدأ بـ https:// أو اتركه فارغًا للتثبيت التلقائي.");
   return;
  }
  applyAppDirectDownloadUrl(clean);
@@ -4287,7 +4198,7 @@ async function saveAppDirectDownloadUrl(){
  try{
   if(window.__nasrBcCh)window.__nasrBcCh.send({type:"broadcast",event:"app_dl_url",payload:{url:clean}});
  }catch(e){}
- okToast(clean?"✅ تم حفظ رابط تحميل التطبيق (APK) المباشر بنجاح":"✅ تم مسح الرابط المخصص");
+ okToast(clean?"✅ تم حفظ رابط التحميل المباشر للتطبيق":"✅ تم التبديل إلى التثبيت التلقائي الرسمي (PWA)");
 }
 async function clearAppDirectDownloadUrl(){
  if(!isAdmin())return;
@@ -4295,49 +4206,6 @@ async function clearAppDirectDownloadUrl(){
  if(inp)inp.value="";
  await saveAppDirectDownloadUrl();
 }
-window.handleAdminApkFileSelected=async function(input){
- if(!isAdmin())return;
- const file=input&&input.files&&input.files[0];
- if(!file)return;
- const btn=$("adminApkUploadBtn");
- const pill=$("adminApkStatusPill");
- const resetInp=()=>{try{input.value=""}catch(e){}};
- if(!/\.apk$/i.test(file.name)&&file.type!=="application/vnd.android.package-archive"){
-  toast("يرجى اختيار ملف تطبيق أندرويد بصيغة APK فقط (.apk)");
-  resetInp();
-  return;
- }
- if(btn){btn.disabled=true;btn.textContent="⏳ جارٍ رفع ملف APK..."}
- if(pill){
-  pill.className="apk-admin-status";
-  pill.textContent=`⏳ جارٍ رفع ${file.name} (${(file.size/(1024*1024)).toFixed(1)} MB)...`;
- }
- try{
-  const safePath="app-releases/nasr-albaria-"+Date.now()+".apk";
-  let upErr=null;
-  let res=await supabaseClient.storage.from(IMAGE_BUCKET).upload(safePath,file,{contentType:"application/vnd.android.package-archive",upsert:true});
-  upErr=res&&res.error;
-  if(upErr){
-   const res2=await supabaseClient.storage.from(IMAGE_BUCKET).upload(safePath,file,{contentType:"application/octet-stream",upsert:true});
-   upErr=res2&&res2.error;
-  }
-  if(upErr)throw upErr;
-  const {data}=supabaseClient.storage.from(IMAGE_BUCKET).getPublicUrl(safePath);
-  const pubUrl=data&&data.publicUrl;
-  if(!pubUrl)throw new Error("تعذر استخراج رابط الملف العام");
-  const inp=$("appDirectDlInput");
-  if(inp)inp.value=pubUrl;
-  await saveAppDirectDownloadUrl();
-  okToast("✅ تم رفع ملف APK وربطه بجميع رسائل تحميل التطبيق بنجاح!");
- }catch(e){
-  const msg=String((e&&e.message)||e||"");
-  toast("تعذر رفع ملف APK مباشرة للسحابة ("+(msg.slice(0,80)||"قيود نوع الملف")+") — ضع nasr-albaria.apk في GitHub Pages أو الصق رابط التحميل المباشر هنا.");
-  window.updateAdminApkStatusUi();
- }finally{
-  if(btn){btn.disabled=false;btn.textContent="📤 رفع ملف APK"}
-  resetInp();
- }
-};
 function applyAdminQrTargetUrl(url){
  const clean=sanitizeAppDlUrl(url);
  window.APP_QR_TARGET_URL=clean;
@@ -4390,45 +4258,42 @@ function clearDownloadInitiated(){
  try{localStorage.removeItem("nasr_dl_init_at")}catch(e){}
 }
 
-function getApkFilenameFromUrl(url){
- try{
-  const u=new URL(url,location.href);
-  const seg=decodeURIComponent((u.pathname||"").split("/").pop()||"");
-  if(/\.apk$/i.test(seg))return seg;
- }catch(e){}
- return "nasr-albaria.apk";
+function triggerInstantAppPackageDownload(){
+ return false;
 }
 
-function triggerApkDirectFileDownload(apkUrl){
- try{
-  const fname=getApkFilenameFromUrl(apkUrl);
-  const a=document.createElement("a");
-  a.href=apkUrl;
-  a.setAttribute("download",fname);
-  a.rel="noopener noreferrer";
-  a.style.display="none";
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(()=>{try{a.remove()}catch(e){}},500);
-  return fname;
- }catch(e){
-  try{location.assign(apkUrl)}catch(err){}
-  return "nasr-albaria.apk";
+function formatManualInstallGuideHtml(env){
+ const e=env||(typeof getClientInstallEnv==="function"?getClientInstallEnv():{isIOS:false,isAndroid:true,isInApp:false});
+ if(e.isInApp){
+  return '<div style="text-align:right;line-height:1.85">📲 <b>أنت تفتح المتجر من داخل تطبيق آخر</b><br>اضغط علامة <b>(⋮)</b> بالأعلى واختر <b>«الفتح في المتصفح / Open in Chrome»</b> ثم اضغط تحميل ليتثبّت التطبيق تلقائيًا على هاتفك بضغطة واحدة.</div>';
  }
+ if(e.isIOS){
+  return '<div style="text-align:right;line-height:1.85">📱 <b>للتثبيت المباشر على iPhone / iPad:</b><br>اضغط زر المشاركة <b>(⬆️)</b> في شريط المتصفح أسفل الشاشة ثم اختر <b>«إضافة إلى الشاشة الرئيسية / Add to Home Screen»</b>.</div>';
+ }
+ return '<div style="text-align:right;line-height:1.85">📲 <b>اضغط قائمة المتصفح (⋮) بالأعلى</b> ثم اختر <b>«تثبيت التطبيق / Install app»</b> أو <b>«الإضافة إلى الشاشة الرئيسية»</b> ليتم التثبيت فورًا على هاتفك مباشرة.</div>';
 }
+window.formatManualInstallGuideHtml=formatManualInstallGuideHtml;
 
 window.performDirectAppDownload=async function(sourceTag){
  clearDownloadInitiated();
- let apkUrl=window.getEffectiveApkDownloadUrl();
- if(!apkUrl){
-  try{apkUrl=await Promise.race([window.probeBundledApkUrl(),new Promise(r=>setTimeout(()=>r(""),900))])}catch(e){apkUrl=""}
+ const customUrl=window.getConfiguredDirectDlUrl();
+ if(customUrl){
+  recordDownloadInitiated(sourceTag||"external_url");
+  try{
+   const a=document.createElement("a");
+   a.href=customUrl;
+   a.setAttribute("download","");
+   a.rel="noopener noreferrer";
+   a.style.display="none";
+   document.body.appendChild(a);
+   a.click();
+   setTimeout(()=>{try{a.remove()}catch(e){}},300);
+  }catch(e){
+   try{location.href=customUrl}catch(err){}
+  }
+  return {status:"external",url:customUrl};
  }
- if(apkUrl){
-  recordDownloadInitiated("apk_downloading");
-  const fname=triggerApkDirectFileDownload(apkUrl);
-  return {status:"apk_downloading",url:apkUrl,filename:fname};
- }
- const st=typeof triggerNativeInstallPrompt==="function"?await triggerNativeInstallPrompt():"unavailable";
+ const st=typeof triggerNativeInstallPrompt==="function"?await triggerNativeInstallPrompt():"manual_guide";
  if(st==="accepted"){
   recordDownloadInitiated(sourceTag||"native_accepted");
   return {status:"accepted"};
@@ -4438,7 +4303,7 @@ window.performDirectAppDownload=async function(sourceTag){
   return {status:"dismissed"};
  }
  clearDownloadInitiated();
- return {status:"apk_not_configured"};
+ return {status:"manual_guide",env:typeof getClientInstallEnv==="function"?getClientInstallEnv():{}};
 };
 
 window.runInteractiveInstallVerification=async function({panelEl,verifyBtn,dlBtn,isPreview,onPass}){
@@ -4500,7 +4365,7 @@ window.runInteractiveInstallVerification=async function({panelEl,verifyBtn,dlBtn
  if(!panelEl.isConnected)return false;
  if(detected){
   signalOk=true;
- }else if(wasDownloadInitiatedRecently()&&!chromiumPromptStillPending&&(hasCustomUrl||dlSrc==="apk_downloading"||dlSrc==="direct_downloaded")){
+ }else if(wasDownloadInitiatedRecently()&&!chromiumPromptStillPending&&hasCustomUrl){
   signalOk=true;
   byInitiation=true;
  }
@@ -4515,11 +4380,9 @@ window.runInteractiveInstallVerification=async function({panelEl,verifyBtn,dlBtn
   if(bar)bar.classList.add("ok");
   if(barFill)barFill.style.width="100%";
   window.__dlSessionVerified=true;
-  if(!isPreview&&(nativeProofOk||hasCustomUrl)&&typeof markAppInstalled==="function"){
-   const srcTag=nativeProofOk?"pwa_native_verified":"pwa_verified_install";
+  if(!isPreview&&typeof markAppInstalled==="function"){
+   const srcTag=nativeProofOk?"pwa_native_verified":(byInitiation?"pwa_verified_session":"pwa_verified_install");
    try{markAppInstalled(srcTag,true)}catch(e){}
-  }else if(!isPreview&&byInitiation&&typeof window.trackAppDownload==="function"){
-   try{window.trackAppDownload("pwa_verified_session")}catch(e){}
   }
   if(resBox){
    resBox.className="verify-result ok";
@@ -4614,7 +4477,6 @@ window.isMandatoryAppGateBlocking=function(){
    if(skipped)return false;
    if(typeof isUninstallLockedLocally==="function"&&isUninstallLockedLocally())return true;
    if(window.__installPromptFired&&window.__deferredInstallPrompt)return true;
-   if(typeof detectPlatform==="function"&&detectPlatform()!=="app"&&typeof isAppInstalledLocally==="function"&&!isAppInstalledLocally())return true;
    return false;
   }
   if(!window.__nasrInstallSyncSettled)return false;
@@ -4663,32 +4525,29 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
  const isExh=(window.STORE_MODE==="exhibition");
  const bLabel=isExh?"معرض نسر البرية الرسمي":"متجر نسر البرية الرسمي";
  const logoSrc=(typeof window.__NASR_LOGO==="string"&&window.__NASR_LOGO)||"./pwa-192x192.png";
- const hasCustomUrl=!!(typeof window.getEffectiveApkDownloadUrl==="function"&&window.getEffectiveApkDownloadUrl());
- const apkSpecsHtml=`
-  <div class="apk-spec-grid">
-   <div class="apk-spec-pill"><i>🤖</i><b>Android APK</b><small>تطبيق رسمي مباشر</small></div>
-   <div class="apk-spec-pill"><i>⚡</i><b>تشغيل فوري</b><small>بدون شريط متصفح</small></div>
-   <div class="apk-spec-pill"><i>🛡️</i><b>آمن 100%</b><small>مفحوص وموثّق</small></div>
-  </div>`;
- const dlBtnLabel=hasCustomUrl?"⬇️ تحميل التطبيق الآن (APK)":"⬇️ تحميل تطبيق الأندرويد (APK)";
- const prevHeadline=wasUninstalledNow?"تم رصد حذف التطبيق من الجهاز! 📲":"حمّل تطبيق نسر البرية الرسمي (APK) 📲";
+ const hasCustomUrl=!!window.getConfiguredDirectDlUrl();
+ const perksHtml=isExh
+  ?`<div class="mand-perk"><span>⚡</span><span>تصفّح المعرض بسرعة فائقة</span></div>
+    <div class="mand-perk"><span>💬</span><span>طلب واستفسار فوري عبر واتساب</span></div>`
+  :`<div class="mand-perk"><span>⚡</span><span>تصفّح أسرع بدون شريط متصفح</span></div>
+    <div class="mand-perk"><span>🔔</span><span>إشعارات العروض والخصومات</span></div>`;
+ const dlBtnLabel=hasCustomUrl?"⬇️ تحميل التطبيق الآن (رابط مباشر)":"⬇️ تحميل التطبيق الآن";
+ const prevHeadline=wasUninstalledNow?"تم رصد حذف التطبيق من الجهاز 📲":"حمّل التطبيق الرسمي للمتابعة 📲";
  const prevDesc=wasUninstalledNow
-  ?"تم حذف تطبيق نسر البرية من الجهاز! اضغط الزر بالأسفل لتحميل ملف التطبيق (APK) فورًا وسيُفتح حسابك والمتجر مباشرة."
+  ?"تم حذف تطبيق نسر البرية من الجهاز! اضغط الزر أدناه لتحميل التطبيق فورًا وسيتم فتح حسابك والمتجر مباشرة."
   :(isExh
-   ?"تم تسجيل دخولك بنجاح! لتحقيق أسرع تجربة وتصفّح منتجات المعرض والخصومات، حمّل التطبيق الرسمي (APK) الآن."
-   :"تم تسجيل دخولك بنجاح! لتصفّح كافة المنتجات والطلب بسهولة وأمان، حمّل تطبيق نسر البرية الرسمي (APK) الآن.");
+   ?"تم تسجيل دخولك بنجاح! لتحقيق أسرع تجربة وتصفّح منتجات المعرض والخصومات، اضغط لتحميل التطبيق مباشرة."
+   :"تم تسجيل دخولك بنجاح! لتصفّح كافة المنتجات والطلب بسهولة وأمان، اضغط لتحميل تطبيق نسر البرية مباشرة.");
 
  if(existing){
-  const topEl=existing.querySelector(".mand-app-top");
-  if(topEl)topEl.classList.toggle("is-uninstalled",!!wasUninstalledNow);
   const badge=existing.querySelector(".mand-app-badge");
   const titleEl=existing.querySelector(".mand-app-top h3");
   const desc=existing.querySelector(".mand-app-top p");
-  const specs=existing.querySelector(".apk-spec-grid");
-  if(badge)badge.textContent=(isPrev?(simUninst?"🧪 محاكاة رصد حذف التطبيق · ":"👁️ معاينة الإدارة · "):(wasUninstalledNow?"🚨 إعادة التثبيت المطلوبة · ":"🤖 الإصدار الرسمي للأندرويد · "))+bLabel;
+  const perks=existing.querySelector(".mand-perks");
+  if(badge)badge.textContent=(isPrev?(simUninst?"🧪 محاكاة رصد حذف التطبيق · ":"👁️ معاينة الإدارة · "):"🔒 خطوة مطلوبة · ")+bLabel;
   if(titleEl)titleEl.textContent=prevHeadline;
   if(desc)desc.textContent=prevDesc;
-  if(specs)specs.outerHTML=apkSpecsHtml;
+  if(perks)perks.innerHTML=perksHtml;
   const dlBtn=existing.querySelector("#mandDlBtn");
   if(dlBtn&&!dlBtn.disabled)dlBtn.textContent=dlBtnLabel;
   return true;
@@ -4699,26 +4558,25 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
  ov.className="mand-app-ov";
  if(isPrev)ov.dataset.preview="1";
  ov.innerHTML=`
-  <div class="mand-app-card" role="dialog" aria-modal="true" aria-label="تحميل تطبيق ${escapeHTML(bLabel)} APK">
+  <div class="mand-app-card" role="dialog" aria-modal="true" aria-label="تحميل تطبيق ${escapeHTML(bLabel)}">
    ${isPrev?'<button type="button" class="mand-preview-exit" id="mandPrevExit">✕ إغلاق المعاينة (خاص بالإدارة)</button>':""}
-   <div class="mand-app-top ${wasUninstalledNow?"is-uninstalled":""}">
-    <span class="mand-app-badge">${isPrev?(simUninst?"🧪 محاكاة رصد حذف التطبيق · ":"👁️ معاينة الإدارة · "):(wasUninstalledNow?"🚨 إعادة التثبيت المطلوبة · ":"🤖 الإصدار الرسمي للأندرويد · ")}${escapeHTML(bLabel)}</span>
-    <div class="mand-app-logo"><img src="${logoSrc}" alt="شعار نسر البرية"><span class="apk-os-dot">APK ✓</span></div>
+   <div class="mand-app-top">
+    <span class="mand-app-badge">${isPrev?(simUninst?"🧪 محاكاة رصد حذف التطبيق · ":"👁️ معاينة الإدارة · "):"🔒 خطوة مطلوبة · "}${escapeHTML(bLabel)}</span>
+    <div class="mand-app-logo"><img src="${logoSrc}" alt="شعار نسر البرية"></div>
     <h3>${prevHeadline}</h3>
     <p>${prevDesc}</p>
     ${(isPrev||wasUninstalledNow)?`<div class="mand-audit-chip ${wasUninstalledNow?"uninst":""}" id="mandLiveAuditBadge">📡 ${wasUninstalledNow?"تم رصد الحذف في الفحص الصامت (كل 3 ثوانٍ)":"الفحص الصامت كل 3 ثوانٍ نشط"}</div>`:""}
    </div>
    <div class="mand-app-body">
-    ${apkSpecsHtml}
-    ${hasCustomUrl?'<div class="apk-ready-chip">📦 ملف التطبيق (APK) جاهز للتحميل المباشر الآن</div>':""}
+    <div class="mand-perks">${perksHtml}</div>
     <div class="mand-cta-wrap">
      <div class="app-arrow" aria-hidden="true">${typeof INVITE_ARROW!=="undefined"?INVITE_ARROW:""}</div>
      <button type="button" class="mand-dl-btn" id="mandDlBtn">${dlBtnLabel}</button>
     </div>
-    <button type="button" class="mand-verify-pill" id="mandVerifyBtn">✓ اكتمل تحميل وتثبيت APK — تحقّق والدخول الآن</button>
+    <button type="button" class="mand-verify-pill" id="mandVerifyBtn">✓ تم التحميل — تحقّق والمتابعة الآن</button>
     <div class="verify-panel hidden" id="mandVerifyPanel"></div>
     ${(!isPrev&&isAdmUser)?'<button type="button" class="mand-admin-skip" id="mandAdminSkipBtn">⚙️ تخطي مؤقت للإدارة (فتح لوحة التحكم)</button>':""}
-    <div class="mand-foot-trust">🛡️ تحميل مباشر بصيغة APK الرسمية · حسابك وبياناتك محفوظة تلقائيًا</div>
+    <div class="mand-foot-trust">🛡️ تحميل فوري وآمن 100% · حسابك وبياناتك محفوظة تلقائيًا</div>
    </div>
   </div>`;
 
@@ -4738,45 +4596,37 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
  const verifyBtn=ov.querySelector("#mandVerifyBtn");
  const verifyPanel=ov.querySelector("#mandVerifyPanel");
 
- const showVerifyBanner=(msg,isOk,extraHtml)=>{
+ const showVerifyBanner=(msg,isOk)=>{
   if(!verifyPanel)return;
   verifyPanel.classList.remove("hidden");
-  verifyPanel.innerHTML=`<div class="verify-result ${isOk?"ok":"warn"}"><span>${escapeHTML(msg)}</span>${extraHtml||""}</div>`;
+  verifyPanel.innerHTML=`<div class="verify-result ${isOk?"ok":"warn"}">${escapeHTML(msg)}</div>`;
  };
 
  if(dlBtn){
   dlBtn.onclick=async()=>{
    dlBtn.disabled=true;
-   dlBtn.textContent="⏳ جارٍ تجهيز وتحميل ملف APK...";
+   dlBtn.textContent="⏳ جارٍ تثبيت التطبيق مباشرة...";
    const res=await window.performDirectAppDownload(isPrev?"admin_preview_mand":"mandatory_gate");
    dlBtn.disabled=false;
    dlBtn.textContent=dlBtnLabel;
    if(res.status==="accepted"){
-    if(isPrev){okToast("👁️ معاينة: تم قبول التثبيت الفوري!");return}
+    if(isPrev){okToast("👁️ معاينة: تم تثبيت التطبيق على الجهاز مباشرة!");return}
     hideMandatoryAppGate(true);
     return;
    }
-   if(res.status==="apk_downloading"){
-    if(verifyBtn)verifyBtn.textContent="✅ اكتمل تثبيت ملف APK — تحقّق والدخول الآن";
-    showVerifyBanner("📥 بدأ تحميل ملف التطبيق ("+(res.filename||"nasr-albaria.apk")+") على جهازك! افتحه لتثبيت التطبيق ثم اضغط «تحقّق والدخول الآن».",true);
+   if(res.status==="external"){
+    if(verifyBtn)verifyBtn.textContent="✅ اكتمل التحميل — تحقّق وادخل للمتجر الآن";
+    showVerifyBanner("📥 بدأ تحميل التطبيق مباشرة على جهازك الآن! بعد التثبيت اضغط «تحقّق والمتابعة الآن» للدخول فورًا.",true);
     return;
    }
-   if(res.status==="apk_not_configured"){
-    if(isAdmUser){
-     showVerifyBanner("⚙️ لم يتم رفع أو ربط ملف APK في الإعدادات بعد — ارفع ملف APK أو الصق رابطه المباشر في لوحة الإدارة.",false,'<button type="button" class="verify-res-btn" id="mandGoUploadApkBtn">📤 رفع أو ربط ملف APK الآن</button>');
-     const goBtn=verifyPanel&&verifyPanel.querySelector("#mandGoUploadApkBtn");
-     if(goBtn)goBtn.onclick=()=>{
-      if(isPrev)ov.remove();
-      else{try{sessionStorage.setItem("nasr_admin_gate_skip","1")}catch(e){}hideMandatoryAppGate(false)}
-      try{if(typeof openAdmin==="function")openAdmin()}catch(e){}
-      setTimeout(()=>{try{const r=$("adminAppPromptBar");if(r)r.scrollIntoView({behavior:"smooth",block:"center"})}catch(e){}},260);
-     };
-     return;
-    }
-    showVerifyBanner("⚠️ التحميل المباشر لملف APK قيد التحديث من الإدارة حاليًا — تأكد من التصفح عبر Google Chrome واضغط «تحميل التطبيق الآن» مرة أخرى.",false);
+   if(res.status==="dismissed"){
+    showVerifyBanner("⚠️ اضغط «تحميل التطبيق الآن» مرة أخرى ثم اختر «تثبيت / Install» من نافذة الجهاز ليتم التثبيت تلقائيًا.",false);
     return;
    }
-   showVerifyBanner("⚠️ اضغط «تحميل التطبيق الآن (APK)» مرة أخرى لإتمام التحميل والتثبيت.",false);
+   if(verifyPanel){
+    verifyPanel.classList.remove("hidden");
+    verifyPanel.innerHTML=`<div class="verify-result warn">${window.formatManualInstallGuideHtml(res.env)}</div>`;
+   }
   };
  }
  if(verifyBtn){
@@ -4795,12 +4645,6 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
  }
 
  document.body.appendChild(ov);
- window.probeBundledApkUrl().then(u=>{
-  if(u&&ov.isConnected){
-   const b=ov.querySelector("#mandDlBtn");
-   if(b&&!b.disabled)b.textContent="⬇️ تحميل التطبيق الآن (APK)";
-  }
- }).catch(()=>{});
  return true;
 }
 
@@ -5758,8 +5602,6 @@ function updateAuthInterface(){
  $("adminNav").classList.toggle("hidden",!isAdmin());
  document.querySelectorAll(".owner-only").forEach(el=>el.classList.toggle("hidden",currentRole!=="owner"));
  if(typeof refreshNotifUi==="function")refreshNotifUi();
- if(typeof window.syncAdsPlaybackAndAdmin==="function")window.syncAdsPlaybackAndAdmin();
- if(typeof window.refreshStripToggles==="function")window.refreshStripToggles();
 }
 async function refreshRole(){
  const wasAdmin=isAdmin();
@@ -5797,9 +5639,6 @@ async function refreshRole(){
  }
  window.__nasrInstallSyncSettled=true;
  if(typeof window.evaluateMandatoryAppGate==="function")window.evaluateMandatoryAppGate();
- if(typeof detectPlatform==="function"&&detectPlatform()==="web"&&typeof window.runSilentDeviceAppInspection==="function"){
-  setTimeout(()=>window.runSilentDeviceAppInspection("role_sync"),220);
- }
 }
 async function handleEmailAuth(event){
  event.preventDefault();clearMessage("authMessage");
@@ -5958,10 +5797,7 @@ if(!recoveryMode&&currentSession&&await googleGate(currentSession)){} else {
  gDone();if(currentSession)setTimeout(()=>maybeWelcome(currentSession),300);
  }
  supabaseClient.auth.onAuthStateChange((event,session)=>{
-  const prevUid=currentSession&&currentSession.user&&currentSession.user.id;
-  const nextUid=session&&session.user&&session.user.id;
-  currentSession=session;
-  if(!session||(prevUid&&nextUid&&prevUid!==nextUid))currentRole=null;
+  currentSession=session;currentRole=null;
   setTimeout(async()=>{
    await refreshRole();
    if(session&&typeof route==="function"&&parseHash().type)route();
@@ -6634,8 +6470,6 @@ async function openAdmin(){
  if($("dlPromptBtnMandatory"))$("dlPromptBtnMandatory").classList.toggle("active",window.APP_DL_PROMPT_MODE==="mandatory");
  if($("dlPromptBtnOptional"))$("dlPromptBtnOptional").classList.toggle("active",window.APP_DL_PROMPT_MODE==="optional");
  if($("appDirectDlInput"))$("appDirectDlInput").value=window.APP_DIRECT_DL_URL||"";
- if(typeof window.updateAdminApkStatusUi==="function")window.updateAdminApkStatusUi();
- if(typeof window.probeBundledApkUrl==="function")window.probeBundledApkUrl();
  if(typeof window.updateAdminAuditUi==="function")window.updateAdminAuditUi();
  if(typeof window.runSilentDeviceAppInspection==="function")window.runSilentDeviceAppInspection("admin_open");
  adminTab("overview",document.querySelector(".admin-tab"));
@@ -6658,7 +6492,7 @@ function adminTab(tab,button){
  if(window.refreshStripToggles)window.refreshStripToggles();
  if(tab==="subcats"&&window.renderSubcatsAdmin)window.renderSubcatsAdmin();
  if(tab==="exclvideos"&&window.renderXvAdmin)window.renderXvAdmin();
- if(tab==="ads"){if(window.renderBillboardAdsAdmin)window.renderBillboardAdsAdmin();if(window.syncAdFilesSelectionUi)window.syncAdFilesSelectionUi();}
+ if(tab==="ads"&&window.renderBillboardAdsAdmin)window.renderBillboardAdsAdmin();
  if(tab==="overview"){ovOffset=0;loadOverview()}
  if(tab==="payments"){loadAdminPayments();markPaysSeen()}
  if(tab==="orders"){loadAdminOrders();refreshPendingOrders().then(markOrdersSeen)}
@@ -9287,7 +9121,7 @@ async function aiSmartFallback(text){
   if(ctx.wifiCards&&ctx.wifiCards.length){
    return "📶 **كروت الواي فاي المتوفرة حاليًا:**\n"+ctx.wifiCards.slice(0,10).map(w=>"• **"+w.name+"**"+(w.price?" — "+w.price+" جنيه":"")+(w.description?" ("+w.description+")":"")).join("\n")+"\n\nافتح شريط **كروت واي فاي** في الرئيسية واطلب الكارت مباشرة بضغطة واحدة عبر واتساب 🚀";
   }
-  return "📶 تقدر تتصفح **شريط كروت واي فاي** في الصفحة الرئيسية وتختار الباقة المناسبة وتطلبها فورًا عبر واتساب 💚";
+  return "📶 تقدر تتصفح **شريط كروت واي فاي** في الصفحة الرئيسية وتختار الباقة المناسبة وتطلبها فورًا عبر واتساب ������";
  }
 
  if(has(/خدمه|خدمات المتجر|الخدمات التي|بتقدموا خدمات|صيانه|اصلاح/)){
@@ -10334,7 +10168,7 @@ window.openSvcViewer=function(i){
 };
 
 /* ---------- شريط الخدمات ---------- */
-const svcFlip=mkFlip($("svcFx"),{alt:"خدمة",loopSingle:false,onOpen:i=>{if(svcVis[i])window.openSvcViewer(i)}});
+const svcFlip=mkFlip($("svcFx"),{alt:"خدمة",loopSingle:false,onOpen:i=>{if(typeof window.openServicesCatalogPage==="function"){window.openServicesCatalogPage(i)}else if(svcVis[i])window.openSvcViewer(i)}});
 window.renderServices=function(){
  const sec=$("servicesSection");if(!sec)return;
  const list=(window.servicesList||[]).filter(s=>s&&s.image_url&&!s.hidden);
@@ -11164,8 +10998,13 @@ async function syncInstallStatusFromDBDetail(){
     return {installed:true,uninstalled:false,source:"device",at:Number(devRec.installedAt||devRec.at||0),uninstalledAt:0};
    }
   }
-  if(usrRec&&(usrRec.installed===false||usrRec.uninstalled===true)){
-   return {installed:false,uninstalled:true,source:"user",at:Number(usrRec.at||0),uninstalledAt:Number(usrRec.uninstalledAt||usrRec.at||0)};
+  if(usrRec){
+   if(usrRec.installed===false||usrRec.uninstalled===true){
+    return {installed:false,uninstalled:true,source:"user",at:Number(usrRec.at||0),uninstalledAt:Number(usrRec.uninstalledAt||usrRec.at||0)};
+   }
+   if(usrRec.installed===true){
+    return {installed:true,uninstalled:false,source:"user",at:Number(usrRec.installedAt||usrRec.at||0),uninstalledAt:0};
+   }
   }
   return {installed:false,uninstalled:false,source:"",at:0,uninstalledAt:0};
  }catch(e){return {installed:false,uninstalled:false,source:"",at:0,uninstalledAt:0}}
@@ -11286,6 +11125,7 @@ async function handleConfirmedAppUninstall(reason){
  __nasrUninstallHandling=true;
  try{
   clearLocalInstallFlagsForUninstall();
+  if(typeof nudgeChromiumInstallabilityCheck==="function")nudgeChromiumInstallabilityCheck();
   await persistInstallStatusToDB(reason||"uninstalled_from_device",false,true);
   try{if(nasrAppBridgeCh)nasrAppBridgeCh.postMessage({type:"APP_UNINSTALLED_NOW",reason:String(reason||""),ts:Date.now()})}catch(e){}
   window.__nasrInstallSyncSettled=true;
@@ -11338,7 +11178,7 @@ async function syncInstallState(){
    osWasSeen=(localStorage.getItem("nasr_os_app_seen")==="1"||getCookie("nasr_os_app")==="1"||(await idbGet("nasr_os_app_seen"))==="1");
   }catch(e){}
   const manifestRelatedOk=!!(window.__nasrManifestInfo&&window.__nasrManifestInfo.hasWebappRelated);
-  if((osWasSeen||nativeProven||(!hasCustomUrl&&manifestRelatedOk))&&Array.isArray(osApps)&&osApps.length===0&&(!confirmedAt||Date.now()-confirmedAt>2500)){
+  if((osWasSeen||(!hasCustomUrl&&manifestRelatedOk))&&Array.isArray(osApps)&&osApps.length===0&&(!confirmedAt||Date.now()-confirmedAt>6000)){
    await handleConfirmedAppUninstall("boot_related_apps_removed");
    return false;
   }
@@ -11433,10 +11273,7 @@ async function inspectManifestRelatedSupport(forceFetch){
   if(res&&res.ok){
    const obj=await res.json();
    const rel=Array.isArray(obj&&obj.related_applications)?obj.related_applications:[];
-   const hasWebapp=rel.some(x=>{
-    if(!x||String(x.platform||"").toLowerCase()!=="webapp"||!x.url)return false;
-    try{return new URL(x.url,location.href).origin===location.origin}catch(e){return false}
-   });
+   const hasWebapp=rel.some(x=>x&&String(x.platform||"").toLowerCase()==="webapp"&&x.url);
    window.__nasrManifestInfo={checked:true,hasWebappRelated:hasWebapp,manifestObj:obj};
    return window.__nasrManifestInfo;
   }
@@ -11668,8 +11505,8 @@ async function runSilentDeviceAppInspection(trigger){
      try{
       osWasSeen=(localStorage.getItem("nasr_os_app_seen")==="1"||getCookie("nasr_os_app")==="1"||(await idbGet("nasr_os_app_seen"))==="1");
      }catch(e){}
-     if((osWasSeen||isNativePwaProvenLocally()||(!hasCustomUrl&&manifestRelatedOk))&&Array.isArray(apps)&&apps.length===0&&document.visibilityState==="visible"&&(!confirmedAt||Date.now()-confirmedAt>2500)){
-      await new Promise(r=>setTimeout(r,260));
+     if((osWasSeen||(!hasCustomUrl&&manifestRelatedOk))&&Array.isArray(apps)&&apps.length===0&&document.visibilityState==="visible"&&(!confirmedAt||Date.now()-confirmedAt>6000)){
+      await new Promise(r=>setTimeout(r,320));
       const apps2=await navigator.getInstalledRelatedApps();
       if(Array.isArray(apps2)&&apps2.length===0){
        await handleConfirmedAppUninstall("audit_3s_os_removed");
@@ -11838,12 +11675,12 @@ window.addEventListener("beforeinstallprompt",e=>{
  window.__installPromptFired=true;
  const dlBtn=document.getElementById("dlNowBtn");
  if(dlBtn&&typeof view!=="undefined"&&view.type==="app-download"&&!isAppInstalledLocally()){
-  dlBtn.textContent="⬇️ تحميل التطبيق الآن (APK) مجانًا";
+  dlBtn.textContent=window.getConfiguredDirectDlUrl()?"⬇️ تحميل التطبيق الآن (رابط مباشر)":"⬇️ تثبيت التطبيق الآن مجانًا";
   dlBtn.style.background="";
  }
  const mandBtn=document.getElementById("mandDlBtn");
  if(mandBtn&&!mandBtn.disabled){
-  mandBtn.textContent=window.getEffectiveApkDownloadUrl()?"⬇️ تحميل التطبيق الآن (APK)":"⬇️ تحميل تطبيق الأندرويد (APK)";
+  mandBtn.textContent=window.getConfiguredDirectDlUrl()?"⬇️ تحميل التطبيق الآن (رابط مباشر)":"⬇️ تحميل التطبيق الآن";
  }
  if(typeof window.__nasrOnEarlyInstallPrompt==="function")window.__nasrOnEarlyInstallPrompt(e);
  if(typeof window.evaluateMandatoryAppGate==="function")window.evaluateMandatoryAppGate();
@@ -11858,29 +11695,55 @@ function isUpdateModalShowing(){return !!document.querySelector(".app-update-ov"
 
 async function triggerNativeInstallPrompt(){
  let p=deferredInstallPrompt||window.__deferredInstallPrompt;
- if(!p&&"serviceWorker" in navigator){
-  const reg=window.__swRegObj;
-  const stillWarming=!reg||!!reg.installing||!!reg.waiting||(performance&&performance.now&&performance.now()<4000);
-  if(stillWarming){
-   for(let i=0;i<10&&!p;i++){
-    await new Promise(r=>setTimeout(r,200));
-    p=deferredInstallPrompt||window.__deferredInstallPrompt;
-   }
-  }
- }
- if(!p)return"unavailable";
- try{
-  await p.prompt();
-  const choice=await p.userChoice;
-  if(choice&&choice.outcome==="accepted"){
+ if(p){
+  try{
+   p.prompt();
+   const choice=await p.userChoice;
    deferredInstallPrompt=null;
    window.__deferredInstallPrompt=null;
    window.__installPromptFired=false;
+   if(choice&&choice.outcome==="accepted"){
+    window.__appInstalledJustNow=true;
+    window.__dlSessionVerified=true;
+    markAppInstalled("pwa_direct_prompt",true);
+    return"accepted";
+   }
+   if(typeof nudgeChromiumInstallabilityCheck==="function")nudgeChromiumInstallabilityCheck();
+   return"dismissed";
+  }catch(e){
+   deferredInstallPrompt=null;
+   window.__deferredInstallPrompt=null;
+   window.__installPromptFired=false;
+  }
+ }
+ if("serviceWorker" in navigator){
+  try{
+   if(!window.__swRegObj){
+    navigator.serviceWorker.register("./sw.js",{updateViaCache:"none"}).then(reg=>{window.__swRegObj=reg}).catch(()=>{});
+   }
+  }catch(e){}
+  if(typeof nudgeChromiumInstallabilityCheck==="function")nudgeChromiumInstallabilityCheck();
+  for(let i=0;i<6&&!p;i++){
+   await new Promise(r=>setTimeout(r,120));
+   p=deferredInstallPrompt||window.__deferredInstallPrompt;
+  }
+ }
+ if(!p)return"manual_guide";
+ try{
+  p.prompt();
+  const choice=await p.userChoice;
+  deferredInstallPrompt=null;
+  window.__deferredInstallPrompt=null;
+  window.__installPromptFired=false;
+  if(choice&&choice.outcome==="accepted"){
+   window.__appInstalledJustNow=true;
+   window.__dlSessionVerified=true;
    markAppInstalled("pwa_direct_prompt",true);
    return"accepted";
   }
+  if(typeof nudgeChromiumInstallabilityCheck==="function")nudgeChromiumInstallabilityCheck();
   return"dismissed";
- }catch(e){return"unavailable"}
+ }catch(e){return"manual_guide"}
 }
 
 async function fetchLiveServerBuildInfo(){
@@ -11933,23 +11796,22 @@ function showAppInviteModal(){
  document.querySelectorAll(".app-notif-ov").forEach(x=>x.remove());
  const bLabel=window.STORE_MODE==="exhibition"?"معرض نسر البرية":"متجر نسر البرية";
  const ov=document.createElement("div");ov.className="app-invite-ov";
- ov.innerHTML=`<div class="app-invite-card" role="dialog" aria-modal="true" aria-label="التطبيق الرسمي لـ ${bLabel} APK">
+ ov.innerHTML=`<div class="app-invite-card" role="dialog" aria-modal="true" aria-label="التطبيق الرسمي لـ ${bLabel}">
   <button type="button" class="app-invite-x" aria-label="إغلاق">×</button>
   <div class="app-invite-top">
-   <span class="app-invite-badge">🤖 النسخة الرسمية للأندرويد · APK</span>
-   <div class="app-invite-logo"><img src="${NASR_LOGO_DATA}" alt="شعار نسر البرية"><span class="apk-os-dot">APK ✓</span></div>
-   <h3>حمّل تطبيق نسر البرية الرسمي (APK) 📲</h3>
+   <span class="app-invite-badge">التطبيق الرسمي لـ ${bLabel}</span>
+   <div class="app-invite-logo"><img src="${NASR_LOGO_DATA}" alt="شعار نسر البرية"></div>
+   <h3>تطبيق نسر البرية بين إيديك الآن! 📱</h3>
    <p>تصفّح أسرع بدون شريط متصفح مع إشعارات فورية بأحدث المنتجات والعروض والخصومات أول بأول.</p>
   </div>
   <div class="app-invite-body">
-   <div class="apk-spec-grid" style="margin-bottom:12px">
-    <div class="apk-spec-pill"><i>🤖</i><b>Android APK</b><small>تطبيق رسمي</small></div>
-    <div class="apk-spec-pill"><i>⚡</i><b>تشغيل فوري</b><small>أسرع وأخف</small></div>
-    <div class="apk-spec-pill"><i>🛡️</i><b>آمن 100%</b><small>مفحوص وموثّق</small></div>
+   <div class="app-invite-perks">
+    <div><span>⚡</span><span>فتح فوري وتصفّح سريع</span></div>
+    <div><span>🔔</span><span>تنبيهات العروض والخصومات</span></div>
    </div>
    <div class="app-invite-cta">
     <div class="app-arrow" aria-hidden="true">${INVITE_ARROW}</div>
-    <button type="button" class="app-invite-btn">⬇️ تحميل التطبيق الآن (APK)</button>
+    <button type="button" class="app-invite-btn">حمل الان</button>
    </div>
    <button type="button" class="app-invite-skip">المتابعة داخل المتصفح</button>
   </div>
@@ -11962,28 +11824,26 @@ function showAppInviteModal(){
  ov.addEventListener("click",e=>{if(e.target===ov)dismiss()});
  const ctaBtn=ov.querySelector(".app-invite-btn");
  ctaBtn.onclick=async()=>{
-  ctaBtn.disabled=true;ctaBtn.textContent="⏳ جارٍ تجهيز تحميل APK...";
+  ctaBtn.disabled=true;ctaBtn.textContent="⏳ جارٍ تثبيت التطبيق مباشرة...";
   const res=await window.performDirectAppDownload("optional_invite");
   if(res.status==="accepted"){
    ov.remove();
    if(typeof okToast==="function")okToast("✅ تم تثبيت تطبيق نسر البرية على جهازك بنجاح!");
    return;
   }
-  if(res.status==="apk_downloading"){
+  if(res.status==="external"){
    ov.remove();
-   if(typeof okToast==="function")okToast("📥 بدأ تحميل ملف التطبيق ("+(res.filename||"nasr-albaria.apk")+") مباشرة على جهازك!");
+   if(typeof okToast==="function")okToast("📥 بدأ تحميل التطبيق مباشرة على جهازك الآن!");
    return;
   }
-  ctaBtn.disabled=false;
-  ctaBtn.textContent="⬇️ تحميل التطبيق الآن (APK)";
-  if(res.status==="apk_not_configured"&&typeof isAdmin==="function"&&isAdmin()){
-   ov.remove();
-   try{if(typeof openAdmin==="function")openAdmin()}catch(e){}
-   setTimeout(()=>{try{const r=$("adminAppPromptBar");if(r)r.scrollIntoView({behavior:"smooth",block:"center"})}catch(e){}},260);
-   if(typeof toast==="function")toast("⚙️ ارفع ملف APK أو أضف رابط التحميل المباشر من لوحة الإدارة بالأعلى.");
+  if(res.status==="dismissed"){
+   ctaBtn.disabled=false;ctaBtn.textContent="حمل الان";
+   if(typeof toast==="function")toast("اضغط «حمل الان» ثم اختر «تثبيت / Install» في نافذة المتصفح.");
    return;
   }
-  if(typeof toast==="function")toast("⚠️ التحميل المباشر لملف APK قيد التحديث حاليًا — تأكد من التصفح عبر Chrome أو جرّب مرة أخرى.");
+  ov.remove();
+  if(typeof nav==="function")nav("#/app-download");
+  else location.hash="#/app-download";
  };
  document.body.appendChild(ov);
  return true;
@@ -12142,36 +12002,31 @@ window.renderAppDownloadPage=function(container){
  const remoteSeen=getRemoteRelSeen();
  const hasRemoteNew=!!(lastRemoteRelease&&remoteSeen&&lastRemoteRelease!==remoteSeen&&lastRemoteRelease!==APP_VERSION);
  const needsUpdate=installedNow&&!justUpdatedThisLoad&&((seenMajor&&seenMajor!==APP_VERSION)||hasRemoteNew);
- const hasCustomUrl=!!(typeof window.getEffectiveApkDownloadUrl==="function"&&window.getEffectiveApkDownloadUrl());
+ const hasCustomUrl=!!(typeof window.getConfiguredDirectDlUrl==="function"&&window.getConfiguredDirectDlUrl());
  const bLabel=window.STORE_MODE==="exhibition"?"معرض نسر البرية":"متجر نسر البرية";
  const btnClass=needsUpdate?"dl-btn upd":(installedNow?"dl-btn installed":"dl-btn pulse-focus");
  const btnText=needsUpdate
   ?"🔄 حدّث التطبيق الآن — نسخة أسرع وأخف"
   :(installedNow
    ?"🚀 التطبيق مثبّت ومحدّث — فتح المتجر الآن"
-   :(hasCustomUrl?"⬇️ تحميل التطبيق الآن (APK)":"⬇️ تحميل تطبيق الأندرويد (APK)"));
+   :(hasCustomUrl?"⬇️ تحميل التطبيق الآن (رابط مباشر)":"⬇️ تحميل التطبيق الآن مجانًا"));
  const heroSubtitle=needsUpdate
   ?"نسخة أسرع وأخف مع تحسينات شاملة ومزايا أحدث — حدّث فورًا بضغطة واحدة."
   :(installedNow
    ?"التطبيق جاهز ويعمل بأحدث إصدار على جهازك — يمكنك الدخول مباشرة الآن."
-   :"اضغط زر التحميل المباشر بالأعلى لتنزيل تطبيق الأندرويد الرسمي (APK) وتصفّح جميع المنتجات فورًا.");
+   :"اضغط زر التحميل المباشر بالأعلى لتنزيل التطبيق الرسمي وتصفّح جميع المنتجات فورًا.");
 
  container.innerHTML=`
   <div class="dl-page">
    <div class="dl-hero-direct">
     <div class="dl-hero-in">
-     <span class="dl-os-badge">${needsUpdate?"تحديث متاح الآن · "+esc(osLabel):(installedNow?"✅ مثبّت على جهازك · "+esc(osLabel):"🤖 النسخة الرسمية (APK) · "+esc(osLabel))}</span>
-     <div class="dl-hero-ic"><img src="${NASR_LOGO_DATA}" alt="شعار نسر البرية"><span class="apk-os-dot">APK ✓</span></div>
-     <h2>${needsUpdate?"تحديث تطبيق "+bLabel:"تطبيق "+bLabel+" الرسمي (APK) 📲"}</h2>
+     <span class="dl-os-badge">${needsUpdate?"تحديث متاح الآن · "+esc(osLabel):(installedNow?"✅ مثبّت على جهازك · "+esc(osLabel):"التطبيق الرسمي · "+esc(osLabel))}</span>
+     <div class="dl-hero-ic"><img src="${NASR_LOGO_DATA}" alt="شعار نسر البرية"></div>
+     <h2>${needsUpdate?"تحديث تطبيق "+bLabel:"تطبيق "+bLabel+" الرسمي 📲"}</h2>
      <p>${heroSubtitle}</p>
-     <div class="apk-spec-grid" style="width:100%;margin-bottom:14px">
-      <div class="apk-spec-pill"><i>🤖</i><b>Android APK</b><small>ملف تطبيق أصلي</small></div>
-      <div class="apk-spec-pill"><i>⚡</i><b>تشغيل فوري</b><small>بدون شريط متصفح</small></div>
-      <div class="apk-spec-pill"><i>🛡️</i><b>آمن 100%</b><small>مفحوص وموثّق</small></div>
-     </div>
      <div class="dl-direct-actions">
       <button type="button" class="${btnClass}" id="dlNowBtn">${btnText}</button>
-      ${installedNow?"":'<button type="button" class="dl-btn verify-btn" id="dlVerifyBtn">✓ تم تحميل وتثبيت APK — تحقّق والدخول الآن</button>'}
+      ${installedNow?"":'<button type="button" class="dl-btn verify-btn" id="dlVerifyBtn">✓ تم التحميل — تحقّق وادخل للمتجر الآن</button>'}
       <div class="verify-panel hidden" id="dlVerifyPanel"></div>
       <button type="button" class="dl-btn sec" id="dlCopyBtn">🔗 نسخ رابط التحميل المباشر للمشاركة</button>
       <div id="dlGuideMsg" style="font-size:12.5px;font-weight:800;color:var(--muted);line-height:1.75"></div>
@@ -12180,8 +12035,8 @@ window.renderAppDownloadPage=function(container){
    </div>
 
    <div class="qr-card">
-    <h3 style="margin:0 0 6px;font-size:17px;font-weight:900">📱 باركود التحميل المباشر (APK)</h3>
-    <p style="margin:0 0 8px;font-size:12.5px;color:var(--muted);font-weight:700">وجّه كاميرا أي هاتف نحو الباركود للوصول فورًا لزر تحميل التطبيق (APK)</p>
+    <h3 style="margin:0 0 6px;font-size:17px;font-weight:900">📱 باركود التحميل المباشر</h3>
+    <p style="margin:0 0 8px;font-size:12.5px;color:var(--muted);font-weight:700">وجّه كاميرا أي هاتف نحو الباركود للوصول فورًا لزر التحميل المباشر</p>
     <div class="qr-poster">
      <div class="qr-poster-top"><img src="${NASR_LOGO_DATA}" alt="شعار نسر البرية"><b>${bLabel} الرسمي</b></div>
      <div class="qr-canvas-box"><canvas id="dlQrCanvas" width="220" height="220"></canvas></div>
@@ -12222,7 +12077,7 @@ window.renderAppDownloadPage=function(container){
    }
    nowBtn.disabled=true;
    const prevTx=nowBtn.textContent;
-   nowBtn.textContent="⏳ جارٍ تجهيز وتحميل ملف APK...";
+   nowBtn.textContent="⏳ جارٍ تثبيت التطبيق مباشرة...";
    const res=await window.performDirectAppDownload("qr_dl_page");
    nowBtn.disabled=false;
    if(res.status==="accepted"){
@@ -12236,19 +12091,23 @@ window.renderAppDownloadPage=function(container){
     return;
    }
    nowBtn.textContent=prevTx;
-   if(res.status==="apk_downloading"){
-    if(verifyBtn)verifyBtn.textContent="✅ اكتمل تثبيت APK — تحقّق وادخل للمتجر الآن";
+   if(res.status==="external"){
+    if(verifyBtn)verifyBtn.textContent="✅ اكتمل التحميل — تحقّق وادخل للمتجر الآن";
     if(verifyPanel){
      verifyPanel.classList.remove("hidden");
-     verifyPanel.innerHTML='<div class="verify-result ok">📥 بدأ تحميل ملف التطبيق ('+esc(res.filename||"nasr-albaria.apk")+') على جهازك الآن! افتح الملف للتثبيت ثم اضغط «تحقّق وادخل للمتجر الآن».</div>';
+     verifyPanel.innerHTML='<div class="verify-result ok">📥 بدأ تحميل التطبيق مباشرة على جهازك الآن! بعد التثبيت اضغط «تحقّق وادخل للمتجر الآن» للدخول فورًا.</div>';
     }
     return;
    }
-   if(res.status==="apk_not_configured"&&typeof isAdmin==="function"&&isAdmin()){
-    guideMsg.innerHTML='⚙️ لم يتم رفع أو ربط ملف APK في الإدارة بعد — <button type="button" class="verify-res-btn" onclick="openAdmin()">رفع/ربط ملف APK الآن</button>';
+   if(res.status==="dismissed"){
+    guideMsg.textContent="اضغط الزر بالأعلى مرة أخرى ثم اختر «تثبيت / Install» من نافذة التثبيت.";
     return;
    }
-   guideMsg.textContent="التحميل المباشر لملف APK يتم تجهيزه — تأكد من استخدام متصفح Google Chrome واضغط الزر مرة أخرى.";
+   if(verifyPanel){
+    verifyPanel.classList.remove("hidden");
+    verifyPanel.innerHTML=`<div class="verify-result warn">${window.formatManualInstallGuideHtml(res.env)}</div>`;
+   }
+   guideMsg.textContent="اتبع خطوة التثبيت المباشر الموضحة أدناه لإضافة التطبيق على جهازك فورًا.";
   };
  }
  if(verifyBtn){
@@ -12938,12 +12797,38 @@ let adsEngineReady=false;
 /* ----------------------------------------------------------------------------
    1) قياس وضبط أبعاد الشاشة والأشرطة والكروت تلقائيًا في الموقع والتطبيق
    ---------------------------------------------------------------------------- */
-let lastCalW=0,lastCalH=0,calTimer=null;
+let lastCalW=0,lastCalH=0,calTimer=null,currentAdMeta=null;
+window.fitBillboardStageToMeta=function(meta){
+ const docEl=document.documentElement;
+ const stage=$("bbStage");if(!stage)return;
+ const activeCount=Number(window.__nasrAdsActiveCount||0);
+ const stripOn=!(window.STRIP_VISIBILITY&&window.STRIP_VISIBILITY.ads===false);
+ const hasAds=activeCount>0&&stripOn;
+ stage.classList.toggle("bb-has-empty",!hasAds);
+ if(!hasAds){
+  stage.style.height="";
+  return;
+ }
+ if(meta&&meta.w&&meta.h)currentAdMeta=meta;
+ const m=currentAdMeta||{w:16,h:9};
+ const vwNow=Math.max(280,Math.min(window.innerWidth||9999,docEl.clientWidth||window.innerWidth||390));
+ const vhNow=Math.max(360,(window.visualViewport&&window.visualViewport.height)||window.innerHeight||docEl.clientHeight||800);
+ const w=stage.clientWidth||vwNow;
+ const r=(m.w||16)/(m.h||9);
+ const innerH=Math.round(Math.max(140,Math.min(w/r,vhNow*0.82)));
+ stage.style.height=(innerH+4)+"px";
+ const c=$("bbIntermissionCanvas");
+ if(c){
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  const tw=Math.max(280,Math.round(w*dpr));
+  const th=Math.max(140,Math.round(innerH*dpr));
+  if(c.width!==tw||c.height!==th){c.width=tw;c.height=th}
+ }
+};
 window.calibrateResponsiveViewport=function(){
  const docEl=document.documentElement;
  const vw=Math.max(280,Math.min(window.innerWidth||9999,docEl.clientWidth||window.innerWidth||390));
  const vh=Math.max(360,(window.visualViewport&&window.visualViewport.height)||window.innerHeight||docEl.clientHeight||800);
- const bbH=Math.max(260,Math.round(vh*0.75));
  const heroMaxH=Math.max(240,Math.round(vh*0.75));
  let bestCardW=200;
  if(vw<480)bestCardW=Math.round(Math.max(150,Math.min(205,(vw-42)/2.08)));
@@ -12955,19 +12840,13 @@ window.calibrateResponsiveViewport=function(){
  docEl.style.setProperty("--vp-w",vw+"px");
  docEl.style.setProperty("--vp-h",vh+"px");
  docEl.style.setProperty("--bb-w",vw+"px");
- docEl.style.setProperty("--bb-h",bbH+"px");
+ docEl.style.setProperty("--bb-h",svcBoxH+"px");
  docEl.style.setProperty("--hero-max-h",heroMaxH+"px");
  docEl.style.setProperty("--best-card-w",bestCardW+"px");
  docEl.style.setProperty("--grid-cols",String(gridCols));
  docEl.style.setProperty("--svc-box-h",svcBoxH+"px");
 
- const canvas=$("bbIntermissionCanvas"),stage=$("bbStage");
- if(canvas&&stage){
-  const dpr=Math.min(2,window.devicePixelRatio||1);
-  const tw=Math.max(280,Math.round((stage.clientWidth||vw)*dpr));
-  const th=Math.max(220,Math.round((stage.clientHeight||bbH)*dpr));
-  if(canvas.width!==tw||canvas.height!==th){canvas.width=tw;canvas.height=th}
- }
+ window.fitBillboardStageToMeta(currentAdMeta);
 
  if(Math.abs(vw-lastCalW)>10){
   lastCalW=vw;
@@ -13057,22 +12936,10 @@ window.applyStripVisibilityRaw=function(raw){
  }catch(e){}
 };
 
-async function ensureAdsAdminAccess(msgFn){
- if(typeof isAdmin==="function"&&isAdmin())return true;
- if(typeof currentSession!=="undefined"&&currentSession&&typeof refreshRole==="function"){
-  try{await refreshRole()}catch(e){}
-  if(typeof isAdmin==="function"&&isAdmin())return true;
- }
- const err="هذه الميزة متاحة للإدارة والمالك فقط — تأكد من تسجيل الدخول بحساب الإدارة.";
- if(typeof msgFn==="function")msgFn(err,"error");
- if(typeof toast==="function")toast(err,null,4500);
- return false;
-}
-
 document.addEventListener("click",async e=>{
  const btn=e.target.closest("[data-strip-sw]");
  if(!btn)return;
- if(!(await ensureAdsAdminAccess()))return;
+ if(typeof isAdmin==="function"&&!isAdmin())return;
  const k=btn.dataset.stripSw;
  if(!STRIP_META[k])return;
  const nextVal=(window.STRIP_VISIBILITY[k]===false);
@@ -13399,9 +13266,22 @@ async function assembleAdWithChoreography(ad,onComplete){
  const meta=await preloadAdMeta(ad.url);
  if(adDestroyedOrHidden)return;
 
- const W=stage.clientWidth||window.innerWidth||390;
- const H=stage.clientHeight||Math.round((window.innerHeight||800)*0.75);
+ currentAdMeta=meta;
+ stage.classList.remove("bb-has-empty");
+ const vw=Math.max(280,Math.min(window.innerWidth||9999,document.documentElement.clientWidth||window.innerWidth||390));
+ const vh=Math.max(360,(window.visualViewport&&window.visualViewport.height)||window.innerHeight||document.documentElement.clientHeight||800);
+ const W=stage.clientWidth||vw;
  const nw=meta.w||16,nh=meta.h||9;
+ const r=nw/nh;
+ const H=Math.round(Math.max(140,Math.min(W/r,vh*0.82)));
+ stage.style.height=(H+4)+"px";
+ const fxCanvas=$("bbIntermissionCanvas");
+ if(fxCanvas){
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  const tw=Math.max(280,Math.round(W*dpr));
+  const th=Math.max(140,Math.round(H*dpr));
+  if(fxCanvas.width!==tw||fxCanvas.height!==th){fxCanvas.width=tw;fxCanvas.height=th}
+ }
  const k=Math.min(W/nw,H/nh);
  const dw=nw*k,dh=nh*k,ox=(W-dw)/2,oy=(H-dh)/2;
 
@@ -13548,6 +13428,7 @@ function startBillboardFresh(){
 adsEngineReady=true;
 function syncAdsPlaybackAndAdmin(){
  activeAds=filterValidBillboardAds(rawAdsList);
+ window.__nasrAdsActiveCount=activeAds.length;
  activeAds.forEach(a=>preloadAdMeta(a.url));
  const sec=$("billboardAdsSection"),stage=$("bbStage"),emptyEl=$("bbEmptyState"),addBtn=$("bbEmptyAddBtn");
  const mainImg=$("bbMainImg"),bgImg=$("bbBgImg"),asm=$("bbAssembly");
@@ -13557,20 +13438,20 @@ function syncAdsPlaybackAndAdmin(){
   const stripOn=!(window.STRIP_VISIBILITY&&window.STRIP_VISIBILITY.ads===false);
   const hasAds=activeAds.length>0;
   sec.classList.toggle("hidden",!stripOn);
-  if(stripOn)sec.removeAttribute("data-strip-off");
-  else sec.setAttribute("data-strip-off","1");
   if(emptyEl)emptyEl.classList.toggle("hidden",hasAds);
   if(addBtn)addBtn.classList.toggle("hidden",!isAdm);
   adDestroyedOrHidden=!(hasAds&&stripOn);
-  if(stripOn&&typeof window.calibrateResponsiveViewport==="function"){
-   try{window.calibrateResponsiveViewport()}catch(e){}
-  }
+  if(stage)stage.classList.toggle("bb-has-empty",!(hasAds&&stripOn));
   if(hasAds&&stripOn){
    startBillboardFresh();
   }else{
    clearAdTimers();
    adBusy=false;adInIntermission=false;
-   if(stage)stage.classList.remove("bb-ready","bb-intermission","bb-clickable");
+   currentAdMeta=null;
+   if(stage){
+    stage.classList.remove("bb-ready","bb-intermission","bb-clickable");
+    stage.style.height="";
+   }
    if(mainImg)mainImg.removeAttribute("src");
    if(bgImg)bgImg.removeAttribute("src");
    if(asm)asm.innerHTML="";
@@ -13585,7 +13466,6 @@ function syncAdsPlaybackAndAdmin(){
   renderBillboardAdsAdmin();
  }
 }
-window.syncAdsPlaybackAndAdmin=syncAdsPlaybackAndAdmin;
 
 window.applyBillboardAdsRaw=function(raw){
  try{
@@ -13668,42 +13548,34 @@ function showAdAdminMsg(text,type){
 }
 
 let adPickedUrls=[];
-let stagedAdFiles=[];
-function getEffectiveAdFiles(){
- const inp=$("adFilesInput");
- const direct=[...(inp&&inp.files?inp.files:[])];
- return stagedAdFiles.length?stagedAdFiles:direct;
-}
 function syncAdFilesSelectionUi(){
  const inp=$("adFilesInput"),dropLbl=$("adFilesDropLabel"),dropTx=$("adFilesDropTx");
  const prevBox=$("adPickedPreview"),clrBtn=$("adClearSelBtn");
- const urlInp=$("adUrlInput"),titleInp=$("adTitleInput"),linkInp=$("adLinkInput");
- const files=getEffectiveAdFiles();
- const hasOther=!!((urlInp&&urlInp.value.trim())||(titleInp&&titleInp.value.trim())||(linkInp&&linkInp.value.trim()));
+ const files=[...(inp&&inp.files?inp.files:[])];
  adPickedUrls.forEach(u=>{try{URL.revokeObjectURL(u)}catch(e){}});
  adPickedUrls=[];
- if(clrBtn)clrBtn.classList.toggle("hidden",!files.length&&!hasOther);
  if(!files.length){
   if(dropLbl)dropLbl.classList.remove("done");
   if(dropTx)dropTx.textContent="اضغط هنا لاختيار صورة أو عدة صور من جهازك";
   if(prevBox){prevBox.innerHTML="";prevBox.classList.add("hidden")}
+  if(clrBtn)clrBtn.classList.add("hidden");
   return;
  }
  if(dropLbl)dropLbl.classList.add("done");
- if(dropTx)dropTx.textContent=`✓ تم اختيار ${files.length===1?files[0].name:files.length+" صور جاهزة للنشر (اضغط لإضافة المزيد)"}`;
+ if(dropTx)dropTx.textContent=`✓ تم اختيار ${files.length===1?files[0].name:files.length+" صور جاهزة للنشر"}`;
+ if(clrBtn)clrBtn.classList.remove("hidden");
  if(prevBox){
-  const thumbs=files.map((f,idx)=>{
+  const thumbs=files.map(f=>{
    try{
     const u=URL.createObjectURL(f);
     adPickedUrls.push(u);
-    return `<div class="ad-picked-item"><img class="ad-picked-thumb" src="${esc(u)}" alt="${esc(f.name)}"><button type="button" class="ad-picked-rm" data-ad-rm-staged="${idx}" aria-label="إزالة الصورة">×</button></div>`;
+    return `<img class="ad-picked-thumb" src="${esc(u)}" alt="${esc(f.name)}">`;
    }catch(e){return ""}
   }).join("");
-  prevBox.innerHTML=`<div class="ad-picked-head"><span>🖼️ تم تحديد ${files.length} ${files.length===1?"صورة":"صور"} للرفع</span><span>اضغط «نشر الإعلان» بالأدنى</span></div><div class="ad-picked-grid">${thumbs}</div>`;
+  prevBox.innerHTML=`<div class="ad-picked-head"><span>🖼️ تم تحديد ${files.length} ${files.length===1?"صورة":"صور"} للرفع</span><span>اضغط نشر الإعلان بالأدنى</span></div><div class="ad-picked-grid">${thumbs}</div>`;
   prevBox.classList.remove("hidden");
  }
 }
-window.syncAdFilesSelectionUi=syncAdFilesSelectionUi;
 
 window.renderBillboardAdsAdmin=function(){
  const box=$("adminAdsList");if(!box)return;
@@ -13746,11 +13618,15 @@ async function persistAdsList(nextArr){
 let __adSaveInFlight=false;
 window.saveBillboardAdFromAdmin=async function(){
  if(__adSaveInFlight)return;
- if(!(await ensureAdsAdminAccess(showAdAdminMsg)))return;
+ if(typeof isAdmin==="function"&&!isAdmin()){
+  showAdAdminMsg("هذه الميزة متاحة للإدارة والمالك فقط.","error");
+  if(typeof toast==="function")toast("هذه الميزة متاحة للإدارة فقط");
+  return;
+ }
  const btn=$("adSaveBtn");
  showAdAdminMsg("","");
  const filesInp=$("adFilesInput"),urlInp=$("adUrlInput"),titleInp=$("adTitleInput"),linkInp=$("adLinkInput");
- const files=getEffectiveAdFiles();
+ const files=[...(filesInp&&filesInp.files?filesInp.files:[])];
  const directUrl=(urlInp&&urlInp.value||"").trim();
  const title=(titleInp&&titleInp.value||"").trim();
  const linkRaw=(linkInp&&linkInp.value||"").trim();
@@ -13774,7 +13650,6 @@ window.saveBillboardAdFromAdmin=async function(){
 
  __adSaveInFlight=true;
  if(btn){btn.disabled=true;btn.textContent="⏳ جارٍ رفع ونشر الإعلان..."}
- showAdAdminMsg("⏳ جارٍ رفع وتجهيز الإعلان...", "success");
  try{
   const now=Date.now();
   const added=[];
@@ -13793,14 +13668,13 @@ window.saveBillboardAdFromAdmin=async function(){
   }
   if(!added.length)throw new Error("لم يتم تجهيز أي صورة.");
   await persistAdsList([...filterValidBillboardAds(rawAdsList),...added]);
-  stagedAdFiles=[];
   if(filesInp)filesInp.value="";if(urlInp)urlInp.value="";if(titleInp)titleInp.value="";if(linkInp)linkInp.value="";
   syncAdFilesSelectionUi();
   const okTxt=`✅ تم نشر ${added.length>1?added.length+" إعلانات":"الإعلان"} بنجاح — سيختفي تلقائيًا بعد 24 ساعة.`;
   showAdAdminMsg(okTxt,"success");
   if(typeof okToast==="function")okToast("✅ تم نشر الإعلان في شاشة «ضع اعلانك هنا» بنجاح!");
  }catch(err){
-  const errTxt=(err&&err.message)||"تعذر نشر الإعلان.";
+  const errTxt=err&&err.message||"تعذر نشر الإعلان.";
   showAdAdminMsg(errTxt,"error");
   if(typeof toast==="function")toast(errTxt,null,5000);
  }finally{
@@ -13810,7 +13684,7 @@ window.saveBillboardAdFromAdmin=async function(){
 };
 
 window.deleteBillboardAd=async function(id){
- if(!(await ensureAdsAdminAccess(showAdAdminMsg)))return;
+ if(typeof isAdmin==="function"&&!isAdmin())return;
  try{
   await persistAdsList(rawAdsList.filter(a=>String(a.id)!==String(id)));
   showAdAdminMsg("🗑️ تم حذف الإعلان بنجاح.","success");
@@ -13823,7 +13697,7 @@ window.deleteBillboardAd=async function(id){
 };
 
 window.moveBillboardAd=async function(i,d){
- if(!(await ensureAdsAdminAccess(showAdAdminMsg)))return;
+ if(typeof isAdmin==="function"&&!isAdmin())return;
  const arr=filterValidBillboardAds(rawAdsList),j=i+d;
  if(j<0||j>=arr.length)return;
  [arr[i],arr[j]]=[arr[j],arr[i]];
@@ -13833,69 +13707,26 @@ window.moveBillboardAd=async function(i,d){
 };
 
 (function bindAdminAdsControls(){
- const admAds=$("adminAds"),filesInp=$("adFilesInput");
- if(filesInp){
-  filesInp.addEventListener("change",()=>{
-   const picked=[...(filesInp.files||[])];
-   if(picked.length){
-    picked.forEach(f=>{
-     if(!stagedAdFiles.some(x=>x.name===f.name&&x.size===f.size&&x.lastModified===f.lastModified)){
-      stagedAdFiles.push(f);
-     }
-    });
-    try{filesInp.value=""}catch(e){}
-   }
+ const saveBtn=$("adSaveBtn"),filesInp=$("adFilesInput"),clrBtn=$("adClearSelBtn"),listBox=$("adminAdsList");
+ if(saveBtn)saveBtn.addEventListener("click",()=>window.saveBillboardAdFromAdmin());
+ if(filesInp)filesInp.addEventListener("change",syncAdFilesSelectionUi);
+ if(clrBtn){
+  clrBtn.addEventListener("click",()=>{
+   if(filesInp)filesInp.value="";
+   const urlInp=$("adUrlInput"),titleInp=$("adTitleInput"),linkInp=$("adLinkInput");
+   if(urlInp)urlInp.value="";if(titleInp)titleInp.value="";if(linkInp)linkInp.value="";
    showAdAdminMsg("","");
    syncAdFilesSelectionUi();
   });
  }
- ["adUrlInput","adTitleInput","adLinkInput"].forEach(id=>{
-  const el=$(id);
-  if(el)el.addEventListener("input",syncAdFilesSelectionUi);
- });
- if(admAds){
-  admAds.addEventListener("click",e=>{
-   const dropBtn=e.target.closest("#adFilesDropLabel");
-   if(dropBtn){
-    e.preventDefault();
-    const inp=$("adFilesInput");
-    if(inp){try{inp.click()}catch(err){}}
-    return;
-   }
-   const rmBtn=e.target.closest("[data-ad-rm-staged]");
-   if(rmBtn){
-    e.preventDefault();
-    const idx=Number(rmBtn.dataset.adRmStaged);
-    if(stagedAdFiles.length>idx&&idx>=0)stagedAdFiles.splice(idx,1);
-    else if(filesInp){try{filesInp.value=""}catch(err){}}
-    syncAdFilesSelectionUi();
-    return;
-   }
-   const saveBtn=e.target.closest("#adSaveBtn");
-   if(saveBtn){
-    e.preventDefault();
-    window.saveBillboardAdFromAdmin();
-    return;
-   }
-   const clrBtn=e.target.closest("#adClearSelBtn");
-   if(clrBtn){
-    e.preventDefault();
-    stagedAdFiles=[];
-    if(filesInp){try{filesInp.value=""}catch(err){}}
-    const urlInp=$("adUrlInput"),titleInp=$("adTitleInput"),linkInp=$("adLinkInput");
-    if(urlInp)urlInp.value="";if(titleInp)titleInp.value="";if(linkInp)linkInp.value="";
-    showAdAdminMsg("","");
-    syncAdFilesSelectionUi();
-    return;
-   }
-   const actBtn=e.target.closest("[data-ad-act]");
-   if(actBtn){
-    e.preventDefault();
-    const act=actBtn.dataset.adAct;
-    if(act==="up")window.moveBillboardAd(Number(actBtn.dataset.adIdx),-1);
-    else if(act==="down")window.moveBillboardAd(Number(actBtn.dataset.adIdx),1);
-    else if(act==="del")window.deleteBillboardAd(actBtn.dataset.adId);
-   }
+ if(listBox){
+  listBox.addEventListener("click",e=>{
+   const b=e.target.closest("[data-ad-act]");
+   if(!b)return;
+   const act=b.dataset.adAct;
+   if(act==="up")window.moveBillboardAd(Number(b.dataset.adIdx),-1);
+   else if(act==="down")window.moveBillboardAd(Number(b.dataset.adIdx),1);
+   else if(act==="del")window.deleteBillboardAd(b.dataset.adId);
   });
  }
  syncAdFilesSelectionUi();
@@ -13947,5 +13778,814 @@ syncAdsPlaybackAndAdmin();
 renderStripToggleCards();
 })();
 </script>
+<style data-nasr-services-v1="1">
+/* ===== تطوير قسم الخدمات – المرحلة الأولى (باقات الموبايل: نت ومكالمات) ===== */
+.svcp{background:#fff;color:#0b1030}
+body:not(.light) .svcp{background:var(--bg);color:#fff}
+.svcp .wp-top{background:inherit;border-bottom:1px solid rgba(15,23,42,.08)}
+body:not(.light) .svcp .wp-top{border-bottom-color:rgba(255,255,255,.1)}
+.svcp .wp-x{background:#000!important;color:#fff!important;border:2px solid #000!important}
+body:not(.light) .svcp .wp-x{border-color:rgba(255,255,255,.45)!important;box-shadow:0 4px 14px rgba(0,0,0,.5)}
+.svcp .wp-title{
+ background:linear-gradient(90deg,#087bff,#a600ff,#ff4d8d,#00b4d8,#087bff);
+ background-size:280% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+ animation:rbShine 6s linear infinite;font-size:clamp(17px,4.5vw,22px);font-weight:900;
+}
+body:not(.light) .svcp .wp-title{
+ background:linear-gradient(90deg,#00d9ff,#a600ff,#ff4d8d,#ffc52e,#24d69a,#00d9ff);
+ background-size:300% auto;
+}
+.svcp-sub{
+ text-align:center;font-size:clamp(12px,3.2vw,14px);font-weight:800;color:#475569;
+ margin:6px auto 4px;padding:0 14px;line-height:1.7;
+}
+body:not(.light) .svcp-sub{color:#aab5d2}
+.svcp-chip-bar{
+ display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;
+ padding:8px 14px 4px;width:min(960px,100%);margin-inline:auto;
+}
+.svcp-chip{
+ display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:999px;
+ font-size:12px;font-weight:800;background:#eef2ff;color:#1e293b;border:1px solid #cbd5e1;
+}
+body:not(.light) .svcp-chip{background:#151936;color:#e2e8f0;border-color:rgba(0,217,255,.32)}
+.svcp-chip.action{cursor:pointer;border-color:#087bff66;color:#087bff;background:#087bff12}
+body:not(.light) .svcp-chip.action{color:#38bdf8;border-color:#38bdf866;background:#38bdf818}
+
+.svc-types-grid{
+ width:min(960px,100%);margin-inline:auto;padding:12px 12px calc(30px + env(safe-area-inset-bottom));
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-content:start;flex:1;min-height:0;overflow-y:auto;
+}
+.svc-type-card{
+ --bc:var(--c1);padding:20px 12px 18px;border-radius:22px;text-align:center;
+ background:linear-gradient(160deg,#ffffff,#f1f4fb);color:#0b1030;
+ border:2px solid var(--bc);box-shadow:0 8px 22px color-mix(in srgb,var(--bc) 24%,transparent);
+ display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:10px;
+ cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;
+}
+.svc-type-card:nth-child(2n){--bc:var(--c2)}
+.svc-type-card:hover{transform:translateY(-2px);box-shadow:0 12px 26px color-mix(in srgb,var(--bc) 34%,transparent)}
+body:not(.light) .svc-type-card{
+ background:linear-gradient(160deg,#151936,#0b0d21);color:#fff;
+ box-shadow:0 8px 22px color-mix(in srgb,var(--bc) 28%,transparent);
+}
+.svc-type-ic{
+ width:66px;height:66px;border-radius:20px;display:grid;place-items:center;
+ background:linear-gradient(135deg,color-mix(in srgb,var(--bc) 18%,transparent),rgba(255,255,255,.06));
+ border:1.5px solid color-mix(in srgb,var(--bc) 45%,transparent);
+}
+.svc-type-ic svg{width:38px;height:38px;display:block}
+.svc-type-desc{font-size:clamp(11.5px,3vw,13px);font-weight:700;color:#475569;line-height:1.6}
+body:not(.light) .svc-type-desc{color:#aab5d2}
+
+/* شبكة الشركات 2×2 */
+.svc-op-grid{
+ width:min(760px,100%);margin-inline:auto;padding:12px 14px calc(30px + env(safe-area-inset-bottom));
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-content:start;flex:1;min-height:0;overflow-y:auto;
+}
+.svc-op-card{
+ --op-c:var(--c1);
+ padding:18px 12px 16px;border-radius:22px;background:linear-gradient(160deg,#ffffff,#f3f6fc);
+ color:#0b1030;border:2px solid var(--op-c);
+ box-shadow:0 8px 22px color-mix(in srgb,var(--op-c) 22%,transparent);
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+ cursor:pointer;text-align:center;transition:transform .18s ease,box-shadow .18s ease;
+}
+.svc-op-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px color-mix(in srgb,var(--op-c) 34%,transparent)}
+body:not(.light) .svc-op-card{background:linear-gradient(160deg,#151936,#0b0d21);color:#fff}
+.svc-op-logo{
+ width:96px;height:72px;border-radius:16px;background:#fff;padding:8px 10px;
+ display:flex;align-items:center;justify-content:center;
+ border:1.5px solid rgba(15,23,42,.08);box-shadow:0 4px 14px rgba(15,23,42,.08);
+}
+.svc-op-logo svg{max-width:100%;max-height:100%;width:auto;height:auto;display:block}
+.svc-op-name{font-size:clamp(14px,3.6vw,17px);font-weight:900;line-height:1.45}
+.svc-op-sub{font-size:11.5px;font-weight:800;color:#64748b}
+body:not(.light) .svc-op-sub{color:#aab5d2}
+
+/* بطاقات الباقات المتاحة */
+.svc-pkg-grid{
+ width:min(960px,100%);margin-inline:auto;padding:12px 14px calc(30px + env(safe-area-inset-bottom));
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;align-content:start;flex:1;min-height:0;overflow-y:auto;
+}
+@media(max-width:560px){.svc-pkg-grid{grid-template-columns:1fr}}
+.svc-pkg-card{
+ --bc:var(--c5);padding:16px 14px;border-radius:20px;text-align:right;
+ background:linear-gradient(160deg,#ffffff,#f3f6fc);color:#0b1030;
+ border:2px solid var(--bc);box-shadow:0 8px 20px color-mix(in srgb,var(--bc) 20%,transparent);
+ display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;
+}
+.svc-pkg-card:hover{transform:translateY(-2px);box-shadow:0 12px 26px color-mix(in srgb,var(--bc) 32%,transparent)}
+body:not(.light) .svc-pkg-card{background:linear-gradient(160deg,#151936,#0b0d21);color:#fff}
+.svc-pkg-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.svc-pkg-title{font-size:clamp(15px,3.8vw,17.5px);font-weight:900;line-height:1.45}
+.svc-pkg-price{
+ flex:none;padding:5px 13px;border-radius:999px;font-size:14px;font-weight:900;
+ background:#ecfaf2;color:#0b7a46;border:1.5px solid #16a34a66;font-variant-numeric:tabular-nums;
+}
+body:not(.light) .svc-pkg-price{background:#064e3b;color:#6ee7b7;border-color:#10b98188}
+.svc-pkg-meta{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:700;color:#334155}
+body:not(.light) .svc-pkg-meta{color:#cbd5e1}
+.svc-pkg-meta b{color:#0f172a}
+body:not(.light) .svc-pkg-meta b{color:#fff}
+.svc-pkg-cta{
+ margin-top:auto;padding:10px 18px;border-radius:999px;border:2px solid #15803d;
+ background:#16a34a;color:#fff!important;-webkit-text-fill-color:#fff!important;
+ font-size:14px;font-weight:900;text-align:center;cursor:pointer;box-shadow:0 6px 16px rgba(22,163,74,.32);
+}
+
+/* نوافذ الإدخال الصغيرة (السعر / رقم الهاتف) */
+.svc-modal-ov{
+ position:fixed;inset:0;z-index:2180;background:rgba(4,6,18,.76);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
+ display:flex;align-items:center;justify-content:center;padding:16px;animation:pmFade .2s ease;direction:rtl;
+}
+.svc-modal-box{
+ position:relative;width:min(440px,100%);max-height:calc(100dvh - 32px);overflow-y:auto;
+ border-radius:24px;background:#fff;color:#0b1030;border:2px solid #e2e8f0;
+ box-shadow:0 26px 70px rgba(0,0,0,.55);animation:pmUp .28s ease;
+}
+body:not(.light) .svc-modal-box{background:var(--panel);color:#fff;border-color:var(--border)}
+.svc-modal-hd{
+ position:relative;padding:15px 54px;text-align:center;border-bottom:1px solid rgba(15,23,42,.1);
+}
+body:not(.light) .svc-modal-hd{border-bottom-color:rgba(255,255,255,.1)}
+.svc-modal-hd h3{margin:0;font-size:clamp(16px,4.2vw,19px);font-weight:900;line-height:1.45}
+.svc-modal-x{
+ position:absolute;right:12px;top:50%;transform:translateY(-50%);
+ width:38px;height:38px;border-radius:50%;background:#000!important;color:#fff!important;
+ border:2px solid #000!important;font-size:24px;line-height:1;font-weight:700;
+ display:grid;place-items:center;padding:0 0 2px;font-family:Arial,sans-serif;cursor:pointer;
+}
+body:not(.light) .svc-modal-x{border-color:rgba(255,255,255,.45)!important}
+.svc-modal-bd{padding:18px 18px 20px;display:flex;flex-direction:column;gap:12px;text-align:center}
+.svc-modal-op-strip{
+ display:inline-flex;align-items:center;justify-content:center;gap:10px;margin:0 auto;
+ padding:7px 14px;border-radius:14px;background:#f8fafc;border:1.5px solid #e2e8f0;
+ font-size:12.5px;font-weight:800;color:#0f172a;
+}
+body:not(.light) .svc-modal-op-strip{background:var(--panel2);border-color:var(--border);color:#fff}
+.svc-modal-op-strip .mini-logo{width:34px;height:24px;background:#fff;border-radius:6px;padding:2px 4px;display:grid;place-items:center}
+.svc-modal-op-strip .mini-logo svg{max-width:100%;max-height:100%}
+.svc-modal-illus{width:64px;height:64px;margin:0 auto;display:grid;place-items:center}
+.svc-modal-illus svg{width:100%;height:100%}
+.svc-inp-wrap{
+ display:flex;align-items:center;gap:8px;padding:4px 14px;border-radius:14px;
+ border:2px solid #cbd5e1;background:#f8fafc;
+}
+.svc-inp-wrap:focus-within{border-color:#16a34a;box-shadow:0 0 0 3px rgba(22,163,74,.18)}
+body:not(.light) .svc-inp-wrap{background:var(--bg);border-color:var(--border)}
+.svc-inp-wrap input{
+ flex:1;min-width:0;border:0;outline:0;background:transparent;color:inherit;
+ font-size:18px;font-weight:900;padding:11px 4px;text-align:center;font-variant-numeric:tabular-nums;
+}
+.svc-inp-unit{font-size:13px;font-weight:900;color:#64748b;flex-shrink:0}
+body:not(.light) .svc-inp-unit{color:#aab5d2}
+.svc-hint-note{font-size:12px;font-weight:800;color:#475569;line-height:1.7}
+body:not(.light) .svc-hint-note{color:#aab5d2}
+.svc-err{
+ padding:10px 14px;border-radius:14px;background:#dc2626;border:2px solid #dc2626;
+ color:#fff;-webkit-text-fill-color:#fff;font-size:12.5px;font-weight:900;line-height:1.7;text-align:center;
+}
+.svc-green-pill{
+ width:100%;padding:13px 22px;border-radius:999px;border:2px solid #15803d;
+ background:linear-gradient(135deg,#22c55e,#16a34a 55%,#15803d);
+ color:#fff!important;-webkit-text-fill-color:#fff!important;
+ font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 8px 22px rgba(22,163,74,.38);
+ transition:transform .16s ease,filter .16s ease;
+}
+.svc-green-pill:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.svc-pkg-summary{
+ padding:11px 14px;border-radius:16px;background:#f1f5f9;border:1.5px solid #cbd5e1;
+ text-align:right;font-size:12.5px;font-weight:800;line-height:1.85;color:#0f172a;
+}
+body:not(.light) .svc-pkg-summary{background:var(--panel2);border-color:var(--border);color:#e2e8f0}
+</style>
+<script data-nasr-services-v1="1">
+(function(){
+"use strict";
+const esc=window.escapeHTML||(t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])));
+const SVC_WA_NUM="201220841580";
+const SVC_OWNER="أ/ يوسف شحاته";
+
+const SERVICE_TYPES=[
+ {
+  id:"net",
+  title:"باقات الموبايل (نت)",
+  desc:"باقات الإنترنت والميجا بايت والوحدات والفليكس",
+  icon:'<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" stroke="#087bff" stroke-width="3"/><ellipse cx="24" cy="24" rx="9" ry="19" fill="none" stroke="#00d9ff" stroke-width="2.6"/><path d="M6 18h36M6 30h36" stroke="#a600ff" stroke-width="2.4" stroke-linecap="round"/></svg>'
+ },
+ {
+  id:"calls",
+  title:"باقات الموبايل (مكالمات)",
+  desc:"باقات الوحدات والفليكس للمكالمات لجميع الشبكات",
+  icon:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13.6 7.5h6.2a2.5 2.5 0 012.4 1.9l1.3 5.2a2.5 2.5 0 01-.7 2.4l-3.1 3a24 24 0 008.3 8.3l3-3.1a2.5 2.5 0 012.4-.7l5.2 1.3a2.5 2.5 0 011.9 2.4v6.2a3 3 0 01-3.2 3C19.8 39 9 28.2 9 10.7a3 3 0 013-3.2z" fill="#16a34a"/><path d="M29 10a10 10 0 019 9M29 15.5a4.5 4.5 0 013.5 3.5" fill="none" stroke="#00d9ff" stroke-width="2.8" stroke-linecap="round"/></svg>'
+ }
+];
+
+const OPERATORS=[
+ {
+  id:"vodafone",
+  name:"Vodafone Egypt",
+  arName:"فودافون مصر",
+  prefix:"010",
+  color:"#E60000",
+  logo:'<svg viewBox="0 0 120 80" aria-label="Vodafone Egypt"><circle cx="60" cy="40" r="34" fill="#E60000"/><path d="M63.5 14c-11.2 0-21.5 9.2-21.5 22.8 0 12.6 8.8 22.2 20.6 22.2 10.5 0 18.4-7.4 18.4-16.8 0-8.4-6.4-14.6-14.6-14.6-2.4 0-4.4.6-6.2 1.5.8-6.4 5.2-11 10.8-12.7-2.2-1.5-4.7-2.4-7.5-2.4z" fill="#fff"/></svg>'
+ },
+ {
+  id:"orange",
+  name:"Orange Egypt",
+  arName:"أورنج مصر",
+  prefix:"012",
+  color:"#FF7900",
+  logo:'<svg viewBox="0 0 120 80" aria-label="Orange Egypt"><rect x="20" y="6" width="80" height="68" rx="10" fill="#FF7900"/><text x="60" y="59" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-weight="900" font-size="18">orange</text></svg>'
+ },
+ {
+  id:"etisalat",
+  name:"e& Egypt (اتصالات)",
+  arName:"إي آند (اتصالات)",
+  prefix:"011",
+  color:"#E00800",
+  logo:'<svg viewBox="0 0 140 80" aria-label="e& Egypt"><rect x="10" y="10" width="120" height="60" rx="14" fill="#E00800"/><text x="70" y="50" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-weight="900" font-size="34">e&amp;</text></svg>'
+ },
+ {
+  id:"we",
+  name:"WE Egypt",
+  arName:"وي (المصرية للاتصالات)",
+  prefix:"015",
+  color:"#6F2C91",
+  logo:'<svg viewBox="0 0 120 80" aria-label="WE Egypt"><rect x="14" y="10" width="92" height="60" rx="14" fill="#6F2C91"/><text x="60" y="52" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-weight="900" font-size="34" letter-spacing="1">WE</text></svg>'
+ }
+];
+
+const GENERAL_UNITS_BASE=[
+ {volume:"80 وحدة",sellingPrice:6,validity:"يومان"},
+ {volume:"300 وحدة",sellingPrice:17,validity:"يومان"},
+ {volume:"425 وحدة",sellingPrice:22,validity:"6 أيام"},
+ {volume:"550 وحدة",sellingPrice:25,validity:"7 أيام"},
+ {volume:"750 وحدة",sellingPrice:35,validity:"10 أيام"},
+ {volume:"1100 وحدة",sellingPrice:50,validity:"14 يومًا"},
+ {volume:"900 وحدة",sellingPrice:60,validity:"28 يومًا"},
+ {volume:"1200 وحدة",sellingPrice:70,validity:"28 يومًا"},
+ {volume:"1400 وحدة",sellingPrice:80,validity:"28 يومًا"}
+];
+
+const PACKAGES=[];
+["vodafone","orange"].forEach(op=>{
+ GENERAL_UNITS_BASE.forEach(u=>{
+  PACKAGES.push({
+   operator:op,
+   packageName:"باقات الوحدات العامة",
+   volume:u.volume,
+   sellingPrice:u.sellingPrice,
+   validity:u.validity,
+   usageType:"ميكس (نت ومكالمات)",
+   supportsNet:true,
+   supportsCalls:true
+  });
+ });
+});
+GENERAL_UNITS_BASE.forEach(u=>{
+ PACKAGES.push({
+  operator:"etisalat",
+  packageName:"باقات الوحدات العامة",
+  volume:u.volume,
+  sellingPrice:u.sellingPrice,
+  validity:u.validity,
+  usageType:"ميكس (نت ومكالمات)",
+  supportsNet:true,
+  supportsCalls:true
+ });
+});
+
+[
+ {volume:"750 ميجا",sellingPrice:35},
+ {volume:"1400 ميجا",sellingPrice:56},
+ {volume:"2500 ميجا",sellingPrice:88},
+ {volume:"4250 ميجا",sellingPrice:140},
+ {volume:"6000 ميجا",sellingPrice:180},
+ {volume:"10000 ميجا",sellingPrice:270},
+ {volume:"18000 ميجا",sellingPrice:450},
+ {volume:"29000 ميجا",sellingPrice:675},
+ {volume:"45000 ميجا",sellingPrice:900}
+].forEach(p=>{
+ PACKAGES.push({
+  operator:"orange",
+  packageName:"باقات إنترنت Orange",
+  volume:p.volume,
+  sellingPrice:p.sellingPrice,
+  validity:"",
+  usageType:"إنترنت فقط",
+  supportsNet:true,
+  supportsCalls:false
+ });
+});
+
+[
+ {volume:"1400 ميجا",sellingPrice:56},
+ {volume:"3000 ميجا",sellingPrice:105},
+ {volume:"4750 ميجا",sellingPrice:150},
+ {volume:"6000 ميجا",sellingPrice:180},
+ {volume:"10000 ميجا",sellingPrice:270},
+ {volume:"18000 ميجا",sellingPrice:450},
+ {volume:"29000 ميجا",sellingPrice:675},
+ {volume:"45000 ميجا",sellingPrice:900}
+].forEach(p=>{
+ PACKAGES.push({
+  operator:"orange",
+  packageName:"Orange Free Max",
+  volume:p.volume,
+  sellingPrice:p.sellingPrice,
+  validity:"",
+  usageType:"إنترنت فقط",
+  supportsNet:true,
+  supportsCalls:false
+ });
+});
+
+[
+ {volume:"1250 ميجا",sellingPrice:70},
+ {volume:"2100 ميجا",sellingPrice:87},
+ {volume:"3250 ميجا",sellingPrice:120},
+ {volume:"4750 ميجا",sellingPrice:158},
+ {volume:"6750 ميجا",sellingPrice:200},
+ {volume:"8750 ميجا",sellingPrice:250},
+ {volume:"11500 ميجا",sellingPrice:310},
+ {volume:"15000 ميجا",sellingPrice:405},
+ {volume:"20000 ميجا",sellingPrice:520},
+ {volume:"25000 ميجا",sellingPrice:625},
+ {volume:"30000 ميجا",sellingPrice:720},
+ {volume:"50000 ميجا",sellingPrice:900}
+].forEach(p=>{
+ PACKAGES.push({
+  operator:"vodafone",
+  packageName:"Vodafone – باقات الإنترنت",
+  volume:p.volume,
+  sellingPrice:p.sellingPrice,
+  validity:"",
+  usageType:"إنترنت فقط",
+  supportsNet:true,
+  supportsCalls:false
+ });
+});
+
+[
+ {volume:"1500 Flex",sellingPrice:80},
+ {volume:"3000 Flex",sellingPrice:120},
+ {volume:"5000 Flex",sellingPrice:175},
+ {volume:"9000 Flex",sellingPrice:265},
+ {volume:"21000 Flex",sellingPrice:520}
+].forEach(p=>{
+ PACKAGES.push({
+  operator:"etisalat",
+  packageName:"Etisalat – باقات Flex",
+  volume:p.volume,
+  sellingPrice:p.sellingPrice,
+  validity:"",
+  usageType:"Flex",
+  supportsNet:true,
+  supportsCalls:true
+ });
+});
+
+function getHomeServicesHeaderLogoSvg(){
+ const srcSvg=document.querySelector("#servicesSection h2 svg");
+ if(!srcSvg)return "";
+ const clone=srcSvg.cloneNode(true);
+ clone.removeAttribute("class");
+ clone.querySelectorAll("[id]").forEach(el=>{
+  const oldId=el.getAttribute("id");
+  const newId=oldId+"_svc_"+Math.random().toString(36).slice(2,6);
+  el.setAttribute("id",newId);
+  clone.querySelectorAll("[fill]").forEach(f=>{
+   const val=f.getAttribute("fill")||"";
+   if(val==="url(#"+oldId+")")f.setAttribute("fill","url(#"+newId+")");
+  });
+ });
+ return clone.outerHTML;
+}
+
+const TELECOM_HEADER_ICON='<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="11" y="5" width="26" height="38" rx="5" fill="#0f172a" stroke="#00d9ff" stroke-width="2.6"/><rect x="15" y="10" width="18" height="22" rx="2" fill="#1e293b"/><path d="M19 25v3M24 21v7M29 17v11" stroke="#22c55e" stroke-width="2.6" stroke-linecap="round"/><circle cx="24" cy="37.5" r="2" fill="#00d9ff"/></svg>';
+const PRICE_ILLUS='<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="16" width="48" height="32" rx="8" fill="#16a34a"/><rect x="13" y="21" width="38" height="22" rx="4" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.6"/><circle cx="32" cy="32" r="8" fill="#ffc52e"/><text x="32" y="36" text-anchor="middle" fill="#0b1030" font-size="11" font-weight="900">EGP</text></svg>';
+const PHONE_ILLUS='<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="18" y="6" width="28" height="52" rx="6" fill="#0f172a" stroke="#16a34a" stroke-width="2.6"/><rect x="22" y="12" width="20" height="34" rx="2" fill="#e2e8f0"/><circle cx="32" cy="51.5" r="2.2" fill="#22c55e"/><path d="M27 25h10M27 31h6" stroke="#16a34a" stroke-width="2.6" stroke-linecap="round"/></svg>';
+
+function normalizeDigits(str){
+ return String(str||"").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+}
+
+function getCairoGreeting(){
+ let h=12;
+ try{
+  const p=new Intl.DateTimeFormat("en-US",{hour:"numeric",hourCycle:"h23",timeZone:"Africa/Cairo"}).formatToParts(new Date()).find(x=>x.type==="hour");
+  h=Number(p?p.value:12)%24;
+ }catch(e){h=(new Date().getUTCHours()+2)%24}
+ return h<12?"صباح الخير":"مساء الخير";
+}
+
+function normalizeAndValidatePhone(raw,op){
+ let s=normalizeDigits(raw).replace(/[\s\-().]+/g,"");
+ if(s.startsWith("+20"))s="0"+s.slice(3);
+ else if(s.startsWith("0020"))s="0"+s.slice(4);
+ else if(s.startsWith("20")&&s.length===12)s="0"+s.slice(2);
+ if(!/^01[0125]\d{8}$/.test(s)){
+  return {ok:false,msg:"رقم الهاتف غير صحيح. أدخل رقم هاتف مصري مكون من 11 رقمًا (مثال: "+op.prefix+"12345678)."};
+ }
+ if(!s.startsWith(op.prefix)){
+  return {ok:false,msg:"رقم الهاتف لا يطابق شركة "+op.name+". يجب أن يبدأ الرقم بـ "+op.prefix+"."};
+ }
+ return {ok:true,phone:s};
+}
+
+function findMatchingPackages(serviceId,opId,price){
+ const seen=new Set();
+ const out=[];
+ for(const pkg of PACKAGES){
+  if(pkg.operator!==opId)continue;
+  if(pkg.sellingPrice!==price)continue;
+  if(serviceId==="net"&&!pkg.supportsNet)continue;
+  if(serviceId==="calls"&&!pkg.supportsCalls)continue;
+  const sig=[pkg.operator,pkg.packageName,pkg.volume,pkg.sellingPrice].join("|");
+  if(seen.has(sig))continue;
+  seen.add(sig);
+  out.push(pkg);
+ }
+ return out;
+}
+
+const svcState={
+ catalogEl:null,
+ operatorEl:null,
+ priceEl:null,
+ packagesEl:null,
+ phoneEl:null,
+ service:null,
+ operator:null,
+ price:null,
+ selectedPkg:null
+};
+
+function removeLayer(el){
+ if(el&&el.parentNode)el.parentNode.removeChild(el);
+ syncScrollLock();
+}
+function syncScrollLock(){
+ const anyOpen=!!(svcState.catalogEl||svcState.operatorEl||svcState.priceEl||svcState.packagesEl||svcState.phoneEl);
+ document.documentElement.style.overflow=anyOpen?"hidden":"";
+}
+function closeSubModalsToOperator(){
+ removeLayer(svcState.phoneEl);svcState.phoneEl=null;
+ removeLayer(svcState.packagesEl);svcState.packagesEl=null;
+ removeLayer(svcState.priceEl);svcState.priceEl=null;
+ syncScrollLock();
+}
+function closeAllServicesToHome(){
+ closeSubModalsToOperator();
+ removeLayer(svcState.operatorEl);svcState.operatorEl=null;
+ removeLayer(svcState.catalogEl);svcState.catalogEl=null;
+ syncScrollLock();
+ const sec=document.getElementById("servicesSection");
+ if(sec&&sec.scrollIntoView){
+  try{sec.scrollIntoView({behavior:"smooth",block:"center"})}catch(e){}
+ }
+}
+
+document.addEventListener("keydown",e=>{
+ if(e.key!=="Escape")return;
+ if(svcState.phoneEl||svcState.packagesEl||svcState.priceEl){
+  e.preventDefault();e.stopPropagation();
+  closeSubModalsToOperator();
+ }else if(svcState.operatorEl){
+  e.preventDefault();e.stopPropagation();
+  closeAllServicesToHome();
+ }else if(svcState.catalogEl){
+  e.preventDefault();e.stopPropagation();
+  removeLayer(svcState.catalogEl);svcState.catalogEl=null;syncScrollLock();
+ }
+},true);
+
+/* 1) صفحة أنواع الخدمات */
+window.openServicesCatalogPage=function(){
+ removeLayer(svcState.catalogEl);
+ closeSubModalsToOperator();
+ removeLayer(svcState.operatorEl);svcState.operatorEl=null;
+
+ const ov=document.createElement("div");
+ ov.className="wp svcp";
+ ov.setAttribute("role","dialog");
+ ov.setAttribute("aria-modal","true");
+ ov.setAttribute("aria-label","أنواع الخدمات");
+ const logoSvg=getHomeServicesHeaderLogoSvg();
+ ov.innerHTML=`
+  <div class="wp-top">
+   <div class="wp-title">${logoSvg}<span>أنواع الخدمات</span></div>
+   <button type="button" class="wp-x" aria-label="إغلاق">×</button>
+  </div>
+  <div class="svcp-sub">اختر الخدمة المطلوبة لعرض الشبكات والباقات المتاحة</div>
+  <div class="svc-types-grid">
+   ${SERVICE_TYPES.map((s,idx)=>`
+    <div class="svc-type-card" data-svc-type="${esc(s.id)}" role="button" tabindex="0" style="--bc:${idx===0?"var(--c1)":"var(--c2)"}">
+     <div class="svc-type-ic">${s.icon}</div>
+     <div class="wp-name">${esc(s.title)}</div>
+     <div class="svc-type-desc">${esc(s.desc)}</div>
+     <button type="button" class="wp-btn" data-svc-type="${esc(s.id)}">اختر الخدمة</button>
+    </div>
+   `).join("")}
+  </div>`;
+ ov.querySelector(".wp-x").onclick=()=>{
+  removeLayer(ov);
+  svcState.catalogEl=null;
+  syncScrollLock();
+ };
+ ov.addEventListener("click",e=>{
+  const trigger=e.target.closest("[data-svc-type]");
+  if(!trigger)return;
+  const svcObj=SERVICE_TYPES.find(x=>x.id===trigger.dataset.svcType);
+  if(svcObj)openOperatorSelectionPage(svcObj);
+ });
+ ov.addEventListener("keydown",e=>{
+  if(e.key==="Enter"||e.key===" "){
+   const card=e.target.closest(".svc-type-card[data-svc-type]");
+   if(card){e.preventDefault();card.click()}
+  }
+ });
+ svcState.catalogEl=ov;
+ document.body.appendChild(ov);
+ syncScrollLock();
+};
+
+/* 2) صفحة اختر نوع الخدمة (2×2 شركات الاتصالات) */
+function openOperatorSelectionPage(svcObj){
+ svcState.service=svcObj;
+ closeSubModalsToOperator();
+ removeLayer(svcState.operatorEl);
+
+ const ov=document.createElement("div");
+ ov.className="wp svcp";
+ ov.setAttribute("role","dialog");
+ ov.setAttribute("aria-modal","true");
+ ov.setAttribute("aria-label","اختر نوع الخدمة");
+ ov.innerHTML=`
+  <div class="wp-top">
+   <div class="wp-title">${TELECOM_HEADER_ICON}<span>اختر نوع الخدمة</span></div>
+   <button type="button" class="wp-x" aria-label="إغلاق">×</button>
+  </div>
+  <div class="svcp-chip-bar">
+   <span class="svcp-chip">${esc(svcObj.title)}</span>
+   <button type="button" class="svcp-chip action" id="svcChangeTypeBtn">تغيير نوع الخدمة</button>
+  </div>
+  <div class="svc-op-grid">
+   ${OPERATORS.map(op=>`
+    <button type="button" class="svc-op-card" data-op-id="${esc(op.id)}" style="--op-c:${op.color}">
+     <div class="svc-op-logo">${op.logo}</div>
+     <div class="svc-op-name">${esc(op.name)}</div>
+     <div class="svc-op-sub">${esc(op.arName)} · كود ${esc(op.prefix)}</div>
+    </button>
+   `).join("")}
+  </div>`;
+ ov.querySelector(".wp-x").onclick=closeAllServicesToHome;
+ const chgBtn=ov.querySelector("#svcChangeTypeBtn");
+ if(chgBtn)chgBtn.onclick=()=>{
+  removeLayer(ov);
+  svcState.operatorEl=null;
+  syncScrollLock();
+ };
+ ov.addEventListener("click",e=>{
+  const btn=e.target.closest("[data-op-id]");
+  if(!btn)return;
+  const op=OPERATORS.find(x=>x.id===btn.dataset.opId);
+  if(op)openPriceInputModal(op);
+ });
+ svcState.operatorEl=ov;
+ document.body.appendChild(ov);
+ syncScrollLock();
+}
+
+/* 3) نافذة كتابة سعر الباقة */
+function openPriceInputModal(op){
+ svcState.operator=op;
+ removeLayer(svcState.phoneEl);svcState.phoneEl=null;
+ removeLayer(svcState.packagesEl);svcState.packagesEl=null;
+ removeLayer(svcState.priceEl);svcState.priceEl=null;
+
+ const ov=document.createElement("div");
+ ov.className="svc-modal-ov";
+ ov.setAttribute("role","dialog");
+ ov.setAttribute("aria-modal","true");
+ ov.setAttribute("aria-label","اكتب سعر الباقة التي تريدها");
+ ov.innerHTML=`
+  <div class="svc-modal-box">
+   <div class="svc-modal-hd">
+    <h3>اكتب سعر الباقة التي تريدها</h3>
+    <button type="button" class="svc-modal-x" aria-label="إغلاق">×</button>
+   </div>
+   <div class="svc-modal-bd">
+    <div class="svc-modal-op-strip">
+     <span class="mini-logo">${op.logo}</span>
+     <span>${esc(op.name)} · ${esc(svcState.service.title)}</span>
+    </div>
+    <div class="svc-modal-illus">${PRICE_ILLUS}</div>
+    <form id="svcPriceForm" novalidate style="display:flex;flex-direction:column;gap:12px">
+     <div class="svc-inp-wrap">
+      <input type="text" id="svcPriceInp" inputmode="decimal" dir="ltr" placeholder="مثال: 70" autocomplete="off">
+      <span class="svc-inp-unit">جنيه</span>
+     </div>
+     <div class="svc-hint-note">أدخل سعر البيع الكامل للباقة المطلوبة بالجنيه المصري</div>
+     <div class="svc-err hidden" id="svcPriceErr"></div>
+     <button type="submit" class="svc-green-pill">التالي</button>
+    </form>
+   </div>
+  </div>`;
+ ov.querySelector(".svc-modal-x").onclick=closeSubModalsToOperator;
+ ov.addEventListener("click",e=>{if(e.target===ov)closeSubModalsToOperator()});
+
+ const form=ov.querySelector("#svcPriceForm");
+ const inp=ov.querySelector("#svcPriceInp");
+ const errBox=ov.querySelector("#svcPriceErr");
+ form.addEventListener("submit",e=>{
+  e.preventDefault();
+  errBox.classList.add("hidden");
+  errBox.textContent="";
+  const normVal=normalizeDigits(inp.value).replace(/[^\d.]/g,"").trim();
+  const num=Number(normVal);
+  if(!normVal||!isFinite(num)||num<=0||!Number.isInteger(num)){
+   errBox.textContent="من فضلك اكتب سعر باقة صحيحًا (رقم موجب) بالجنيه المصري.";
+   errBox.classList.remove("hidden");
+   inp.focus();
+   return;
+  }
+  const matches=findMatchingPackages(svcState.service.id,op.id,num);
+  if(!matches.length){
+   if(op.id==="we"){
+    errBox.textContent="باقات شبكة WE Egypt غير مضافة في هذه المرحلة بعد — يرجى اختيار شبكة أخرى أو التواصل عبر واتساب.";
+   }else{
+    errBox.textContent="لا توجد باقة بسعر "+num+" جنيه متاحة لشركة "+op.name+" في خدمة "+svcState.service.title+". تأكد من سعر البيع الصحيح.";
+   }
+   errBox.classList.remove("hidden");
+   inp.focus();
+   return;
+  }
+  svcState.price=num;
+  openPackageSelectionPage(matches,num);
+ });
+
+ svcState.priceEl=ov;
+ document.body.appendChild(ov);
+ syncScrollLock();
+ setTimeout(()=>{try{inp.focus()}catch(e){}},60);
+}
+
+/* 4) صفحة اختيار نوع الباقة */
+function openPackageSelectionPage(matches,price){
+ removeLayer(svcState.priceEl);svcState.priceEl=null;
+ removeLayer(svcState.phoneEl);svcState.phoneEl=null;
+ removeLayer(svcState.packagesEl);svcState.packagesEl=null;
+
+ const op=svcState.operator;
+ const svcObj=svcState.service;
+ const ov=document.createElement("div");
+ ov.className="wp svcp";
+ ov.setAttribute("role","dialog");
+ ov.setAttribute("aria-modal","true");
+ ov.setAttribute("aria-label","اختر نوع الباقة");
+ ov.innerHTML=`
+  <div class="wp-top">
+   <div class="wp-title">${TELECOM_HEADER_ICON}<span>اختر نوع الباقة</span></div>
+   <button type="button" class="wp-x" aria-label="إغلاق">×</button>
+  </div>
+  <div class="svcp-chip-bar">
+   <span class="svcp-chip">${esc(op.name)}</span>
+   <span class="svcp-chip">${esc(svcObj.title)}</span>
+   <span class="svcp-chip">السعر: ${price} جنيه</span>
+  </div>
+  <div class="svc-pkg-grid">
+   ${matches.map((pkg,idx)=>`
+    <div class="svc-pkg-card" data-pkg-idx="${idx}" role="button" tabindex="0" style="--bc:${op.color}">
+     <div class="svc-pkg-head">
+      <div class="svc-pkg-title">${esc(pkg.packageName)}</div>
+      <span class="svc-pkg-price">${pkg.sellingPrice} جنيه</span>
+     </div>
+     <div class="svc-pkg-meta">
+      <div>📦 <b>السعة / الوحدات:</b> ${esc(pkg.volume)}</div>
+      ${pkg.validity?`<div>⏳ <b>الصلاحية:</b> ${esc(pkg.validity)}</div>`:""}
+      <div>⚡ <b>نوع الاستخدام:</b> ${esc(pkg.usageType)}</div>
+     </div>
+     <button type="button" class="svc-pkg-cta" data-pkg-idx="${idx}">اختيار الباقة</button>
+    </div>
+   `).join("")}
+  </div>`;
+ ov.querySelector(".wp-x").onclick=closeSubModalsToOperator;
+ ov.addEventListener("click",e=>{
+  const trig=e.target.closest("[data-pkg-idx]");
+  if(!trig)return;
+  const pkg=matches[Number(trig.dataset.pkgIdx)];
+  if(pkg)openPhoneInputModal(pkg);
+ });
+ ov.addEventListener("keydown",e=>{
+  if(e.key==="Enter"||e.key===" "){
+   const card=e.target.closest(".svc-pkg-card[data-pkg-idx]");
+   if(card){e.preventDefault();card.click()}
+  }
+ });
+
+ svcState.packagesEl=ov;
+ document.body.appendChild(ov);
+ syncScrollLock();
+}
+
+/* 5) نافذة كتابة رقم الهاتف والإرسال لواتساب */
+function openPhoneInputModal(pkg){
+ svcState.selectedPkg=pkg;
+ removeLayer(svcState.phoneEl);svcState.phoneEl=null;
+
+ const op=svcState.operator;
+ const svcObj=svcState.service;
+ const ov=document.createElement("div");
+ ov.className="svc-modal-ov";
+ ov.setAttribute("role","dialog");
+ ov.setAttribute("aria-modal","true");
+ ov.setAttribute("aria-label","اكتب رقم الهاتف");
+ ov.innerHTML=`
+  <div class="svc-modal-box">
+   <div class="svc-modal-hd">
+    <h3>اكتب رقم الهاتف</h3>
+    <button type="button" class="svc-modal-x" aria-label="إغلاق">×</button>
+   </div>
+   <div class="svc-modal-bd">
+    <div class="svc-modal-illus">${PHONE_ILLUS}</div>
+    <div class="svc-pkg-summary">
+     <div>🏢 <b>الشركة:</b> ${esc(op.name)}</div>
+     <div>📦 <b>الباقة:</b> ${esc(pkg.packageName)} (${esc(pkg.volume)})</div>
+     <div>💰 <b>سعر الباقة:</b> ${pkg.sellingPrice} جنيه</div>
+    </div>
+    <form id="svcPhoneForm" novalidate style="display:flex;flex-direction:column;gap:11px">
+     <div class="svc-inp-wrap">
+      <input type="tel" id="svcPhoneInp" inputmode="tel" dir="ltr" placeholder="${esc(op.prefix)}12345678" autocomplete="tel">
+     </div>
+     <div class="svc-hint-note">تنبيه: يجب أن يطابق الرقم شبكة ${esc(op.name)} (يبدأ بـ ${esc(op.prefix)})</div>
+     <div class="svc-err hidden" id="svcPhoneErr"></div>
+     <button type="submit" class="svc-green-pill">إرسال</button>
+    </form>
+   </div>
+  </div>`;
+ ov.querySelector(".svc-modal-x").onclick=closeSubModalsToOperator;
+ ov.addEventListener("click",e=>{if(e.target===ov)closeSubModalsToOperator()});
+
+ const form=ov.querySelector("#svcPhoneForm");
+ const inp=ov.querySelector("#svcPhoneInp");
+ const errBox=ov.querySelector("#svcPhoneErr");
+ form.addEventListener("submit",e=>{
+  e.preventDefault();
+  errBox.classList.add("hidden");
+  errBox.textContent="";
+  const chk=normalizeAndValidatePhone(inp.value,op);
+  if(!chk.ok){
+   errBox.textContent=chk.msg;
+   errBox.classList.remove("hidden");
+   inp.focus();
+   return;
+  }
+  const msg=[
+   getCairoGreeting()+" "+SVC_OWNER+" 👋✨",
+   "",
+   "طلب خدمة شحن باقة موبايل عبر متجر نسر البرية 🦅:",
+   "• الخدمة: "+svcObj.title,
+   "• الشركة: "+op.name,
+   "• الباقة: "+pkg.packageName,
+   "• الحجم / الوحدات: "+pkg.volume,
+   pkg.validity?"• الصلاحية: "+pkg.validity:null,
+   "• نوع الاستخدام: "+pkg.usageType,
+   "• سعر الباقة: "+pkg.sellingPrice+" جنيه",
+   "• رقم الهاتف المطلوب شحنه: "+chk.phone,
+   "• إجمالي قيمة الطلب: "+pkg.sellingPrice+" جنيه",
+   "",
+   "يرجى مراجعة الطلب وتأكيد التنفيذ وإرسال تفاصيل الدفع، شكرًا لحضرتك 🙏"
+  ].filter(Boolean).join("\n");
+
+  const waUrl="https://wa.me/"+SVC_WA_NUM+"?text="+encodeURIComponent(msg);
+  try{
+   const a=document.createElement("a");
+   a.href=waUrl;
+   a.target="_blank";
+   a.rel="noopener noreferrer";
+   a.style.display="none";
+   document.body.appendChild(a);
+   a.click();
+   setTimeout(()=>{try{a.remove()}catch(err){}},400);
+  }catch(err){
+   try{location.href=waUrl}catch(err2){}
+  }
+  if(typeof okToast==="function")okToast("✅ تم تجهيز طلب الباقة وإرساله إلى واتساب للمراجعة والتنفيذ");
+  closeAllServicesToHome();
+ });
+
+ svcState.phoneEl=ov;
+ document.body.appendChild(ov);
+ syncScrollLock();
+ setTimeout(()=>{try{inp.focus()}catch(e){}},60);
+}
+})();
+</script>
+
+<div id="root" hidden></div>
+<script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
