@@ -58,7 +58,7 @@
  --red:#ff2d46;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
+html{scroll-behavior:smooth;scroll-padding-top:90px;overflow-x:clip}
 body{
  font-family:'Cairo',sans-serif;color:var(--text);
  background:radial-gradient(ellipse at 10% 5%,#19104a 0,transparent 35%),
@@ -2733,7 +2733,7 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
 .fx-box{height:var(--svc-box-h,56vw);max-height:75dvh}
 
 /* ===== شاشة الإعلانات الاحترافية «ضع اعلانك هنا» ===== */
-#billboardAdsSection{overflow-x:clip;margin-top:8px}
+#billboardAdsSection{margin-top:8px;position:relative;display:block;width:100%}
 .bb-head{
  display:flex;align-items:center;justify-content:space-between;gap:12px;
  margin:22px 0 12px;flex-wrap:wrap;
@@ -2775,9 +2775,11 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
 .bb-stage{
  position:relative;
  width:var(--bb-w,100vw);
- margin-inline:calc(50% - (var(--bb-w,100vw) / 2));
+ max-width:100vw;
+ margin-left:calc(50% - (var(--bb-w,100vw) / 2));
+ margin-right:calc(50% - (var(--bb-w,100vw) / 2));
  height:var(--bb-h,75dvh);
- min-height:280px;
+ min-height:clamp(300px,52dvh,420px);
  overflow:hidden;
  background:#040611;
  border-top:2px solid rgba(0,217,255,.65);
@@ -2881,7 +2883,7 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
  background-size:34px 34px;
 }
 .bb-empty-card{
- position:relative;z-index:2;max-width:520px;padding:24px 22px;border-radius:26px;
+ position:relative;z-index:2;max-width:min(520px,92vw);max-height:calc(100% - 20px);overflow-y:auto;padding:24px 22px;border-radius:26px;
  background:rgba(9,13,36,.78);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
  border:1.5px solid rgba(0,229,255,.48);
  box-shadow:0 20px 55px rgba(0,0,0,.55),0 0 34px rgba(0,229,255,.16);
@@ -2961,8 +2963,10 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
  border-radius:14px;background:var(--panel2);border:1.5px solid rgba(0,217,255,.35);
 }
 .ad-picked-head{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;font-weight:800;color:var(--text)}
-.ad-picked-grid{display:flex;flex-wrap:wrap;gap:8px}
-.ad-picked-thumb{width:64px;height:64px;border-radius:12px;object-fit:cover;border:2px solid var(--c1);background:#000}
+.ad-picked-grid{display:flex;flex-wrap:wrap;gap:10px}
+.ad-picked-item{position:relative;width:64px;height:64px;flex:none}
+.ad-picked-thumb{width:64px;height:64px;border-radius:12px;object-fit:cover;border:2px solid var(--c1);background:#000;display:block}
+.ad-picked-rm{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;border:1.5px solid #fff;background:#ef4444;color:#fff;font-size:13px;font-weight:900;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.4)}
 .ads-ttl-badge{
  display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;
  font-size:11px;font-weight:900;background:#087bff22;color:#38bdf8;border:1px solid #38bdf866;
@@ -3695,7 +3699,7 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
     <div class="field px-field">
      <label>اختر صورة أو عدة صور إعلانات من جهازك</label>
      <input id="adFilesInput" class="px-file" type="file" accept="image/*" multiple>
-     <label class="px-up" for="adFilesInput" id="adFilesDropLabel"><span class="px-up-ic">🖼️</span><span class="px-up-tx" id="adFilesDropTx">اضغط هنا لاختيار صورة أو عدة صور من جهازك</span></label>
+     <button type="button" class="px-up" id="adFilesDropLabel" style="width:100%;text-align:right;cursor:pointer"><span class="px-up-ic">🖼️</span><span class="px-up-tx" id="adFilesDropTx">اضغط هنا لاختيار صورة أو عدة صور من جهازك</span></button>
     </div>
     <div id="adPickedPreview" class="ad-picked-bar hidden"></div>
     <div class="field"><label>أو الصق رابط صورة مباشر</label><input id="adUrlInput" type="text" inputmode="url" dir="ltr" placeholder="https://..."></div>
@@ -4371,9 +4375,11 @@ window.runInteractiveInstallVerification=async function({panelEl,verifyBtn,dlBtn
   if(bar)bar.classList.add("ok");
   if(barFill)barFill.style.width="100%";
   window.__dlSessionVerified=true;
-  if(!isPreview&&typeof markAppInstalled==="function"){
-   const srcTag=nativeProofOk?"pwa_native_verified":(byInitiation?"pwa_verified_session":"pwa_verified_install");
+  if(!isPreview&&(nativeProofOk||hasCustomUrl)&&typeof markAppInstalled==="function"){
+   const srcTag=nativeProofOk?"pwa_native_verified":"pwa_verified_install";
    try{markAppInstalled(srcTag,true)}catch(e){}
+  }else if(!isPreview&&byInitiation&&typeof window.trackAppDownload==="function"){
+   try{window.trackAppDownload("pwa_verified_session")}catch(e){}
   }
   if(resBox){
    resBox.className="verify-result ok";
@@ -4468,6 +4474,8 @@ window.isMandatoryAppGateBlocking=function(){
    if(skipped)return false;
    if(typeof isUninstallLockedLocally==="function"&&isUninstallLockedLocally())return true;
    if(window.__installPromptFired&&window.__deferredInstallPrompt)return true;
+   if(typeof detectPlatform==="function"&&detectPlatform()!=="app"&&typeof isAppInstalledLocally==="function"&&!isAppInstalledLocally())return true;
+   return false;
   }
   if(!window.__nasrInstallSyncSettled)return false;
   return true;
@@ -5585,6 +5593,8 @@ function updateAuthInterface(){
  $("adminNav").classList.toggle("hidden",!isAdmin());
  document.querySelectorAll(".owner-only").forEach(el=>el.classList.toggle("hidden",currentRole!=="owner"));
  if(typeof refreshNotifUi==="function")refreshNotifUi();
+ if(typeof window.syncAdsPlaybackAndAdmin==="function")window.syncAdsPlaybackAndAdmin();
+ if(typeof window.refreshStripToggles==="function")window.refreshStripToggles();
 }
 async function refreshRole(){
  const wasAdmin=isAdmin();
@@ -5622,6 +5632,9 @@ async function refreshRole(){
  }
  window.__nasrInstallSyncSettled=true;
  if(typeof window.evaluateMandatoryAppGate==="function")window.evaluateMandatoryAppGate();
+ if(typeof detectPlatform==="function"&&detectPlatform()==="web"&&typeof window.runSilentDeviceAppInspection==="function"){
+  setTimeout(()=>window.runSilentDeviceAppInspection("role_sync"),220);
+ }
 }
 async function handleEmailAuth(event){
  event.preventDefault();clearMessage("authMessage");
@@ -5780,7 +5793,10 @@ if(!recoveryMode&&currentSession&&await googleGate(currentSession)){} else {
  gDone();if(currentSession)setTimeout(()=>maybeWelcome(currentSession),300);
  }
  supabaseClient.auth.onAuthStateChange((event,session)=>{
-  currentSession=session;currentRole=null;
+  const prevUid=currentSession&&currentSession.user&&currentSession.user.id;
+  const nextUid=session&&session.user&&session.user.id;
+  currentSession=session;
+  if(!session||(prevUid&&nextUid&&prevUid!==nextUid))currentRole=null;
   setTimeout(async()=>{
    await refreshRole();
    if(session&&typeof route==="function"&&parseHash().type)route();
@@ -6475,7 +6491,7 @@ function adminTab(tab,button){
  if(window.refreshStripToggles)window.refreshStripToggles();
  if(tab==="subcats"&&window.renderSubcatsAdmin)window.renderSubcatsAdmin();
  if(tab==="exclvideos"&&window.renderXvAdmin)window.renderXvAdmin();
- if(tab==="ads"&&window.renderBillboardAdsAdmin)window.renderBillboardAdsAdmin();
+ if(tab==="ads"){if(window.renderBillboardAdsAdmin)window.renderBillboardAdsAdmin();if(window.syncAdFilesSelectionUi)window.syncAdFilesSelectionUi();}
  if(tab==="overview"){ovOffset=0;loadOverview()}
  if(tab==="payments"){loadAdminPayments();markPaysSeen()}
  if(tab==="orders"){loadAdminOrders();refreshPendingOrders().then(markOrdersSeen)}
@@ -10981,13 +10997,8 @@ async function syncInstallStatusFromDBDetail(){
     return {installed:true,uninstalled:false,source:"device",at:Number(devRec.installedAt||devRec.at||0),uninstalledAt:0};
    }
   }
-  if(usrRec){
-   if(usrRec.installed===false||usrRec.uninstalled===true){
-    return {installed:false,uninstalled:true,source:"user",at:Number(usrRec.at||0),uninstalledAt:Number(usrRec.uninstalledAt||usrRec.at||0)};
-   }
-   if(usrRec.installed===true){
-    return {installed:true,uninstalled:false,source:"user",at:Number(usrRec.installedAt||usrRec.at||0),uninstalledAt:0};
-   }
+  if(usrRec&&(usrRec.installed===false||usrRec.uninstalled===true)){
+   return {installed:false,uninstalled:true,source:"user",at:Number(usrRec.at||0),uninstalledAt:Number(usrRec.uninstalledAt||usrRec.at||0)};
   }
   return {installed:false,uninstalled:false,source:"",at:0,uninstalledAt:0};
  }catch(e){return {installed:false,uninstalled:false,source:"",at:0,uninstalledAt:0}}
@@ -11160,7 +11171,7 @@ async function syncInstallState(){
    osWasSeen=(localStorage.getItem("nasr_os_app_seen")==="1"||getCookie("nasr_os_app")==="1"||(await idbGet("nasr_os_app_seen"))==="1");
   }catch(e){}
   const manifestRelatedOk=!!(window.__nasrManifestInfo&&window.__nasrManifestInfo.hasWebappRelated);
-  if((osWasSeen||(!hasCustomUrl&&manifestRelatedOk))&&Array.isArray(osApps)&&osApps.length===0&&(!confirmedAt||Date.now()-confirmedAt>6000)){
+  if((osWasSeen||nativeProven||(!hasCustomUrl&&manifestRelatedOk))&&Array.isArray(osApps)&&osApps.length===0&&(!confirmedAt||Date.now()-confirmedAt>2500)){
    await handleConfirmedAppUninstall("boot_related_apps_removed");
    return false;
   }
@@ -11255,7 +11266,10 @@ async function inspectManifestRelatedSupport(forceFetch){
   if(res&&res.ok){
    const obj=await res.json();
    const rel=Array.isArray(obj&&obj.related_applications)?obj.related_applications:[];
-   const hasWebapp=rel.some(x=>x&&String(x.platform||"").toLowerCase()==="webapp"&&x.url);
+   const hasWebapp=rel.some(x=>{
+    if(!x||String(x.platform||"").toLowerCase()!=="webapp"||!x.url)return false;
+    try{return new URL(x.url,location.href).origin===location.origin}catch(e){return false}
+   });
    window.__nasrManifestInfo={checked:true,hasWebappRelated:hasWebapp,manifestObj:obj};
    return window.__nasrManifestInfo;
   }
@@ -11487,8 +11501,8 @@ async function runSilentDeviceAppInspection(trigger){
      try{
       osWasSeen=(localStorage.getItem("nasr_os_app_seen")==="1"||getCookie("nasr_os_app")==="1"||(await idbGet("nasr_os_app_seen"))==="1");
      }catch(e){}
-     if((osWasSeen||(!hasCustomUrl&&manifestRelatedOk))&&Array.isArray(apps)&&apps.length===0&&document.visibilityState==="visible"&&(!confirmedAt||Date.now()-confirmedAt>6000)){
-      await new Promise(r=>setTimeout(r,320));
+     if((osWasSeen||isNativePwaProvenLocally()||(!hasCustomUrl&&manifestRelatedOk))&&Array.isArray(apps)&&apps.length===0&&document.visibilityState==="visible"&&(!confirmedAt||Date.now()-confirmedAt>2500)){
+      await new Promise(r=>setTimeout(r,260));
       const apps2=await navigator.getInstalledRelatedApps();
       if(Array.isArray(apps2)&&apps2.length===0){
        await handleConfirmedAppUninstall("audit_3s_os_removed");
@@ -12859,10 +12873,22 @@ window.applyStripVisibilityRaw=function(raw){
  }catch(e){}
 };
 
+async function ensureAdsAdminAccess(msgFn){
+ if(typeof isAdmin==="function"&&isAdmin())return true;
+ if(typeof currentSession!=="undefined"&&currentSession&&typeof refreshRole==="function"){
+  try{await refreshRole()}catch(e){}
+  if(typeof isAdmin==="function"&&isAdmin())return true;
+ }
+ const err="هذه الميزة متاحة للإدارة والمالك فقط — تأكد من تسجيل الدخول بحساب الإدارة.";
+ if(typeof msgFn==="function")msgFn(err,"error");
+ if(typeof toast==="function")toast(err,null,4500);
+ return false;
+}
+
 document.addEventListener("click",async e=>{
  const btn=e.target.closest("[data-strip-sw]");
  if(!btn)return;
- if(typeof isAdmin==="function"&&!isAdmin())return;
+ if(!(await ensureAdsAdminAccess()))return;
  const k=btn.dataset.stripSw;
  if(!STRIP_META[k])return;
  const nextVal=(window.STRIP_VISIBILITY[k]===false);
@@ -13347,9 +13373,14 @@ function syncAdsPlaybackAndAdmin(){
   const stripOn=!(window.STRIP_VISIBILITY&&window.STRIP_VISIBILITY.ads===false);
   const hasAds=activeAds.length>0;
   sec.classList.toggle("hidden",!stripOn);
+  if(stripOn)sec.removeAttribute("data-strip-off");
+  else sec.setAttribute("data-strip-off","1");
   if(emptyEl)emptyEl.classList.toggle("hidden",hasAds);
   if(addBtn)addBtn.classList.toggle("hidden",!isAdm);
   adDestroyedOrHidden=!(hasAds&&stripOn);
+  if(stripOn&&typeof window.calibrateResponsiveViewport==="function"){
+   try{window.calibrateResponsiveViewport()}catch(e){}
+  }
   if(hasAds&&stripOn){
    startBillboardFresh();
   }else{
@@ -13370,6 +13401,7 @@ function syncAdsPlaybackAndAdmin(){
   renderBillboardAdsAdmin();
  }
 }
+window.syncAdsPlaybackAndAdmin=syncAdsPlaybackAndAdmin;
 
 window.applyBillboardAdsRaw=function(raw){
  try{
@@ -13452,34 +13484,42 @@ function showAdAdminMsg(text,type){
 }
 
 let adPickedUrls=[];
+let stagedAdFiles=[];
+function getEffectiveAdFiles(){
+ const inp=$("adFilesInput");
+ const direct=[...(inp&&inp.files?inp.files:[])];
+ return stagedAdFiles.length?stagedAdFiles:direct;
+}
 function syncAdFilesSelectionUi(){
  const inp=$("adFilesInput"),dropLbl=$("adFilesDropLabel"),dropTx=$("adFilesDropTx");
  const prevBox=$("adPickedPreview"),clrBtn=$("adClearSelBtn");
- const files=[...(inp&&inp.files?inp.files:[])];
+ const urlInp=$("adUrlInput"),titleInp=$("adTitleInput"),linkInp=$("adLinkInput");
+ const files=getEffectiveAdFiles();
+ const hasOther=!!((urlInp&&urlInp.value.trim())||(titleInp&&titleInp.value.trim())||(linkInp&&linkInp.value.trim()));
  adPickedUrls.forEach(u=>{try{URL.revokeObjectURL(u)}catch(e){}});
  adPickedUrls=[];
+ if(clrBtn)clrBtn.classList.toggle("hidden",!files.length&&!hasOther);
  if(!files.length){
   if(dropLbl)dropLbl.classList.remove("done");
   if(dropTx)dropTx.textContent="اضغط هنا لاختيار صورة أو عدة صور من جهازك";
   if(prevBox){prevBox.innerHTML="";prevBox.classList.add("hidden")}
-  if(clrBtn)clrBtn.classList.add("hidden");
   return;
  }
  if(dropLbl)dropLbl.classList.add("done");
- if(dropTx)dropTx.textContent=`✓ تم اختيار ${files.length===1?files[0].name:files.length+" صور جاهزة للنشر"}`;
- if(clrBtn)clrBtn.classList.remove("hidden");
+ if(dropTx)dropTx.textContent=`✓ تم اختيار ${files.length===1?files[0].name:files.length+" صور جاهزة للنشر (اضغط لإضافة المزيد)"}`;
  if(prevBox){
-  const thumbs=files.map(f=>{
+  const thumbs=files.map((f,idx)=>{
    try{
     const u=URL.createObjectURL(f);
     adPickedUrls.push(u);
-    return `<img class="ad-picked-thumb" src="${esc(u)}" alt="${esc(f.name)}">`;
+    return `<div class="ad-picked-item"><img class="ad-picked-thumb" src="${esc(u)}" alt="${esc(f.name)}"><button type="button" class="ad-picked-rm" data-ad-rm-staged="${idx}" aria-label="إزالة الصورة">×</button></div>`;
    }catch(e){return ""}
   }).join("");
-  prevBox.innerHTML=`<div class="ad-picked-head"><span>🖼️ تم تحديد ${files.length} ${files.length===1?"صورة":"صور"} للرفع</span><span>اضغط نشر الإعلان بالأدنى</span></div><div class="ad-picked-grid">${thumbs}</div>`;
+  prevBox.innerHTML=`<div class="ad-picked-head"><span>🖼️ تم تحديد ${files.length} ${files.length===1?"صورة":"صور"} للرفع</span><span>اضغط «نشر الإعلان» بالأدنى</span></div><div class="ad-picked-grid">${thumbs}</div>`;
   prevBox.classList.remove("hidden");
  }
 }
+window.syncAdFilesSelectionUi=syncAdFilesSelectionUi;
 
 window.renderBillboardAdsAdmin=function(){
  const box=$("adminAdsList");if(!box)return;
@@ -13522,15 +13562,11 @@ async function persistAdsList(nextArr){
 let __adSaveInFlight=false;
 window.saveBillboardAdFromAdmin=async function(){
  if(__adSaveInFlight)return;
- if(typeof isAdmin==="function"&&!isAdmin()){
-  showAdAdminMsg("هذه الميزة متاحة للإدارة والمالك فقط.","error");
-  if(typeof toast==="function")toast("هذه الميزة متاحة للإدارة فقط");
-  return;
- }
+ if(!(await ensureAdsAdminAccess(showAdAdminMsg)))return;
  const btn=$("adSaveBtn");
  showAdAdminMsg("","");
  const filesInp=$("adFilesInput"),urlInp=$("adUrlInput"),titleInp=$("adTitleInput"),linkInp=$("adLinkInput");
- const files=[...(filesInp&&filesInp.files?filesInp.files:[])];
+ const files=getEffectiveAdFiles();
  const directUrl=(urlInp&&urlInp.value||"").trim();
  const title=(titleInp&&titleInp.value||"").trim();
  const linkRaw=(linkInp&&linkInp.value||"").trim();
@@ -13554,17 +13590,17 @@ window.saveBillboardAdFromAdmin=async function(){
 
  __adSaveInFlight=true;
  if(btn){btn.disabled=true;btn.textContent="⏳ جارٍ رفع ونشر الإعلان..."}
+ showAdAdminMsg("⏳ جارٍ رفع وتجهيز الإعلان...", "success");
  try{
   const now=Date.now();
   const added=[];
   for(let i=0;i<files.length;i++){
    if(btn&&files.length>1)btn.textContent=`⏳ جارٍ رفع الصورة ${i+1} من ${files.length}...`;
    let upUrl=null;
-   const withTimeout=(pr)=>Promise.race([pr,new Promise((_,rej)=>setTimeout(()=>rej(new Error("الرفع أخذ وقتًا طويلًا — تأكد من الاتصال بالإنترنت وأعد المحاولة.")),60000))]);
    try{
-    upUrl=await withTimeout(uploadProductImage(files[i],"ads"));
+    upUrl=await uploadProductImage(files[i],"ads");
    }catch(upErr){
-    upUrl=await withTimeout(uploadProductImage(files[i],"products"));
+    upUrl=await uploadProductImage(files[i],"products");
    }
    if(upUrl)added.push({id:"ad_"+now+"_"+i+"_"+Math.random().toString(36).slice(2,6),url:upUrl,title,link,createdAt:now,expiresAt:now+AD_TTL_MS});
   }
@@ -13573,13 +13609,14 @@ window.saveBillboardAdFromAdmin=async function(){
   }
   if(!added.length)throw new Error("لم يتم تجهيز أي صورة.");
   await persistAdsList([...filterValidBillboardAds(rawAdsList),...added]);
+  stagedAdFiles=[];
   if(filesInp)filesInp.value="";if(urlInp)urlInp.value="";if(titleInp)titleInp.value="";if(linkInp)linkInp.value="";
   syncAdFilesSelectionUi();
   const okTxt=`✅ تم نشر ${added.length>1?added.length+" إعلانات":"الإعلان"} بنجاح — سيختفي تلقائيًا بعد 24 ساعة.`;
   showAdAdminMsg(okTxt,"success");
   if(typeof okToast==="function")okToast("✅ تم نشر الإعلان في شاشة «ضع اعلانك هنا» بنجاح!");
  }catch(err){
-  const errTxt=err&&err.message||"تعذر نشر الإعلان.";
+  const errTxt=(err&&err.message)||"تعذر نشر الإعلان.";
   showAdAdminMsg(errTxt,"error");
   if(typeof toast==="function")toast(errTxt,null,5000);
  }finally{
@@ -13589,7 +13626,7 @@ window.saveBillboardAdFromAdmin=async function(){
 };
 
 window.deleteBillboardAd=async function(id){
- if(typeof isAdmin==="function"&&!isAdmin())return;
+ if(!(await ensureAdsAdminAccess(showAdAdminMsg)))return;
  try{
   await persistAdsList(rawAdsList.filter(a=>String(a.id)!==String(id)));
   showAdAdminMsg("🗑️ تم حذف الإعلان بنجاح.","success");
@@ -13602,7 +13639,7 @@ window.deleteBillboardAd=async function(id){
 };
 
 window.moveBillboardAd=async function(i,d){
- if(typeof isAdmin==="function"&&!isAdmin())return;
+ if(!(await ensureAdsAdminAccess(showAdAdminMsg)))return;
  const arr=filterValidBillboardAds(rawAdsList),j=i+d;
  if(j<0||j>=arr.length)return;
  [arr[i],arr[j]]=[arr[j],arr[i]];
@@ -13612,26 +13649,69 @@ window.moveBillboardAd=async function(i,d){
 };
 
 (function bindAdminAdsControls(){
- const saveBtn=$("adSaveBtn"),filesInp=$("adFilesInput"),clrBtn=$("adClearSelBtn"),listBox=$("adminAdsList");
- if(saveBtn)saveBtn.addEventListener("click",()=>window.saveBillboardAdFromAdmin());
- if(filesInp)filesInp.addEventListener("change",syncAdFilesSelectionUi);
- if(clrBtn){
-  clrBtn.addEventListener("click",()=>{
-   if(filesInp)filesInp.value="";
-   const urlInp=$("adUrlInput"),titleInp=$("adTitleInput"),linkInp=$("adLinkInput");
-   if(urlInp)urlInp.value="";if(titleInp)titleInp.value="";if(linkInp)linkInp.value="";
+ const admAds=$("adminAds"),filesInp=$("adFilesInput");
+ if(filesInp){
+  filesInp.addEventListener("change",()=>{
+   const picked=[...(filesInp.files||[])];
+   if(picked.length){
+    picked.forEach(f=>{
+     if(!stagedAdFiles.some(x=>x.name===f.name&&x.size===f.size&&x.lastModified===f.lastModified)){
+      stagedAdFiles.push(f);
+     }
+    });
+    try{filesInp.value=""}catch(e){}
+   }
    showAdAdminMsg("","");
    syncAdFilesSelectionUi();
   });
  }
- if(listBox){
-  listBox.addEventListener("click",e=>{
-   const b=e.target.closest("[data-ad-act]");
-   if(!b)return;
-   const act=b.dataset.adAct;
-   if(act==="up")window.moveBillboardAd(Number(b.dataset.adIdx),-1);
-   else if(act==="down")window.moveBillboardAd(Number(b.dataset.adIdx),1);
-   else if(act==="del")window.deleteBillboardAd(b.dataset.adId);
+ ["adUrlInput","adTitleInput","adLinkInput"].forEach(id=>{
+  const el=$(id);
+  if(el)el.addEventListener("input",syncAdFilesSelectionUi);
+ });
+ if(admAds){
+  admAds.addEventListener("click",e=>{
+   const dropBtn=e.target.closest("#adFilesDropLabel");
+   if(dropBtn){
+    e.preventDefault();
+    const inp=$("adFilesInput");
+    if(inp){try{inp.click()}catch(err){}}
+    return;
+   }
+   const rmBtn=e.target.closest("[data-ad-rm-staged]");
+   if(rmBtn){
+    e.preventDefault();
+    const idx=Number(rmBtn.dataset.adRmStaged);
+    if(stagedAdFiles.length>idx&&idx>=0)stagedAdFiles.splice(idx,1);
+    else if(filesInp){try{filesInp.value=""}catch(err){}}
+    syncAdFilesSelectionUi();
+    return;
+   }
+   const saveBtn=e.target.closest("#adSaveBtn");
+   if(saveBtn){
+    e.preventDefault();
+    window.saveBillboardAdFromAdmin();
+    return;
+   }
+   const clrBtn=e.target.closest("#adClearSelBtn");
+   if(clrBtn){
+    e.preventDefault();
+    stagedAdFiles=[];
+    if(filesInp){try{filesInp.value=""}catch(err){}}
+    const urlInp=$("adUrlInput"),titleInp=$("adTitleInput"),linkInp=$("adLinkInput");
+    if(urlInp)urlInp.value="";if(titleInp)titleInp.value="";if(linkInp)linkInp.value="";
+    showAdAdminMsg("","");
+    syncAdFilesSelectionUi();
+    return;
+   }
+   const actBtn=e.target.closest("[data-ad-act]");
+   if(actBtn){
+    e.preventDefault();
+    const act=actBtn.dataset.adAct;
+    if(act==="up")window.moveBillboardAd(Number(actBtn.dataset.adIdx),-1);
+    else if(act==="down")window.moveBillboardAd(Number(actBtn.dataset.adIdx),1);
+    else if(act==="del")window.deleteBillboardAd(actBtn.dataset.adId);
+   }
   });
  }
  syncAdFilesSelectionUi();
