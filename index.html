@@ -2852,27 +2852,17 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
 }
 .bb-stage.bb-intermission .bb-cap-bar{opacity:0;transform:translateY(8px)}
 
-.bb-nav-btn{
- position:absolute;top:50%;transform:translateY(-50%);z-index:7;
- width:42px;height:42px;border-radius:50%;
- border:1.5px solid rgba(255,255,255,.32);
- background:rgba(6,9,24,.58);color:#fff;font-size:20px;font-weight:900;
- display:grid;place-items:center;cursor:pointer;
- -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
- transition:transform .2s ease,background .2s ease,border-color .2s ease;
-}
-.bb-nav-btn:hover{background:rgba(0,217,255,.35);border-color:#00e5ff;transform:translateY(-50%) scale(1.08)}
-.bb-nav-btn.prev{left:12px}
-.bb-nav-btn.next{right:12px}
+.bb-nav-btn{display:none!important}
 .bb-dots{
  position:absolute;left:0;right:0;bottom:14px;z-index:7;
  display:flex;justify-content:center;gap:7px;padding:0 16px;
+ pointer-events:none;
 }
-.bb-dots button{
- width:9px;height:9px;padding:0;border:0;border-radius:99px;
- background:rgba(255,255,255,.48);cursor:pointer;transition:all .3s ease;
+.bb-dots span{
+ display:block;width:9px;height:9px;padding:0;border:0;border-radius:99px;
+ background:rgba(255,255,255,.48);transition:all .3s ease;pointer-events:none;
 }
-.bb-dots button.on{
+.bb-dots span.on{
  width:28px;background:linear-gradient(90deg,#00e5ff,#a600ff,#ff3d8d);
  box-shadow:0 0 12px rgba(0,229,255,.7);
 }
@@ -3959,7 +3949,7 @@ function showMessage(id,message,type="success"){
 }
 function clearMessage(id){const box=$(id);if(box)box.className="message"}
 function openModal(id){$(id).classList.add("show")}
-function closeModal(id){$(id).classList.remove("show");if(id==="checkoutModal"&&typeof directBuyItems!=="undefined")directBuyItems=null;if(id==="authModal"&&!currentSession&&typeof directBuyItems!=="undefined")directBuyItems=null;if(id==="adminModal"&&typeof payOpen!=="undefined"){payOpen={};document.querySelectorAll(".ps-card.open").forEach(c=>c.classList.remove("open"))}if(!document.querySelector(".modal-backdrop.show")&&typeof window.scheduleNotifPrompt==="function"&&typeof window.shouldAutoPromptNotifs==="function"&&window.shouldAutoPromptNotifs())window.scheduleNotifPrompt(650)}
+function closeModal(id){$(id).classList.remove("show");if(id==="checkoutModal"&&typeof directBuyItems!=="undefined")directBuyItems=null;if(id==="authModal"&&!currentSession&&typeof directBuyItems!=="undefined")directBuyItems=null;if(id==="adminModal"&&typeof payOpen!=="undefined"){payOpen={};document.querySelectorAll(".ps-card.open").forEach(c=>c.classList.remove("open"))}}
 function backdropClose(event,id){if(event.target.id===id)closeModal(id)}
 function thumb(p){
  return p.image_url?`<img class="thumb" src="${escapeHTML(p.image_url)}" alt="">`:'<div class="thumb">📦</div>';
@@ -4130,6 +4120,8 @@ function applyStoreMode(mode){
  if(mandGate&&typeof showMandatoryAppGate==="function"){
   showMandatoryAppGate(mandGate.dataset.preview==="1");
  }
+ if(typeof window.aiSyncModeUi==="function")window.aiSyncModeUi();
+ if(typeof window.aiRefreshStoreData==="function")window.aiRefreshStoreData(true);
 }
 try{applyStoreMode(window.STORE_MODE)}catch(e){}
 async function setStoreDisplayMode(mode){
@@ -4265,12 +4257,14 @@ function triggerInstantAppPackageDownload(){
 function formatManualInstallGuideHtml(env){
  const e=env||(typeof getClientInstallEnv==="function"?getClientInstallEnv():{isIOS:false,isAndroid:true,isInApp:false});
  if(e.isInApp){
-  return '<div style="text-align:right;line-height:1.85">📲 <b>أنت تفتح المتجر من داخل تطبيق آخر</b><br>اضغط علامة <b>(⋮)</b> بالأعلى واختر <b>«الفتح في المتصفح / Open in Chrome»</b> ثم اضغط تحميل ليتثبّت التطبيق تلقائيًا على هاتفك بضغطة واحدة.</div>';
+  const curHref=String(location.href||"").replace(/^https?:\/\//i,"");
+  const chromeIntent="intent://"+curHref+"#Intent;scheme=https;package=com.android.chrome;end";
+  return '<div style="text-align:right;line-height:1.85">📲 <b>للتثبيت المباشر على جهازك:</b><br>المتصفح الداخلي لا يسمح بتنزيل التطبيقات مباشرة — اضغط الزر أدناه للفتح في متصفح <b>Chrome</b> ليبدأ تثبيت التطبيق فورًا:<br><a href="'+escapeHTML(chromeIntent)+'" style="display:inline-block;margin-top:8px;padding:9px 16px;border-radius:999px;background:#087bff;color:#fff;font-weight:900;text-decoration:none">🚀 فتح وتثبيت التطبيق في Chrome</a></div>';
  }
  if(e.isIOS){
-  return '<div style="text-align:right;line-height:1.85">📱 <b>للتثبيت المباشر على iPhone / iPad:</b><br>اضغط زر المشاركة <b>(⬆️)</b> في شريط المتصفح أسفل الشاشة ثم اختر <b>«إضافة إلى الشاشة الرئيسية / Add to Home Screen»</b>.</div>';
+  return '<div style="text-align:right;line-height:1.85">📱 <b>للتثبيت المباشر على iPhone / iPad:</b><br>اضغط زر المشاركة <b>(⬆️)</b> في شريط متصفح Safari أسفل الشاشة ثم اختر <b>«إضافة إلى الشاشة الرئيسية / Add to Home Screen»</b>.</div>';
  }
- return '<div style="text-align:right;line-height:1.85">📲 <b>اضغط قائمة المتصفح (⋮) بالأعلى</b> ثم اختر <b>«تثبيت التطبيق / Install app»</b> أو <b>«الإضافة إلى الشاشة الرئيسية»</b> ليتم التثبيت فورًا على هاتفك مباشرة.</div>';
+ return '<div style="text-align:right;line-height:1.85">📲 <b>اضغط قائمة المتصفح (⋮) بالأعلى</b> ثم اختر <b>«تثبيت التطبيق / Install app»</b> أو <b>«الإضافة إلى الشاشة الرئيسية»</b> ليتم التثبيت فورًا على جهازك مباشرة.</div>';
 }
 window.formatManualInstallGuideHtml=formatManualInstallGuideHtml;
 
@@ -4294,9 +4288,9 @@ window.performDirectAppDownload=async function(sourceTag){
   return {status:"external",url:customUrl};
  }
  const st=typeof triggerNativeInstallPrompt==="function"?await triggerNativeInstallPrompt():"manual_guide";
- if(st==="accepted"){
+ if(st==="accepted"||st==="already_installed"){
   recordDownloadInitiated(sourceTag||"native_accepted");
-  return {status:"accepted"};
+  return {status:"accepted",alreadyInstalled:st==="already_installed"};
  }
  if(st==="dismissed"){
   clearDownloadInitiated();
@@ -4341,10 +4335,8 @@ window.runInteractiveInstallVerification=async function({panelEl,verifyBtn,dlBtn
    if(typeof detectPlatform==="function"&&detectPlatform()==="app"){nativeProofOk=true;return true}
    if(window.__appInstalledJustNow){nativeProofOk=true;return true}
    if(typeof navigator.getInstalledRelatedApps==="function"){
-    if(typeof window.inspectManifestRelatedSupport==="function"){await Promise.race([window.inspectManifestRelatedSupport(false),new Promise(r=>setTimeout(r,350))])}
     const apps=await navigator.getInstalledRelatedApps();
     if(Array.isArray(apps)&&apps.length>0){nativeProofOk=true;return true}
-    if(Array.isArray(apps)&&apps.length===0&&!hasCustomUrl&&window.__nasrManifestInfo&&window.__nasrManifestInfo.hasWebappRelated){return false}
    }
    if(typeof window.pingInstalledAppBridge==="function"&&(await window.pingInstalledAppBridge(380))){nativeProofOk=true;return true}
    if(chromiumPromptStillPending)return false;
@@ -4469,16 +4461,6 @@ window.isMandatoryAppGateBlocking=function(){
   if(window.__dlSessionVerified||window.__appInstalledJustNow)return false;
   if(typeof detectPlatform==="function"&&detectPlatform()==="app")return false;
   if(typeof isAppInstalledLocally==="function"&&isAppInstalledLocally())return false;
-  if(typeof isAdmin==="function"&&isAdmin()){
-   const admEl=document.getElementById("adminModal");
-   if(admEl&&admEl.classList.contains("show"))return false;
-   let skipped=false;
-   try{skipped=sessionStorage.getItem("nasr_admin_gate_skip")==="1"}catch(e){}
-   if(skipped)return false;
-   if(typeof isUninstallLockedLocally==="function"&&isUninstallLockedLocally())return true;
-   if(window.__installPromptFired&&window.__deferredInstallPrompt)return true;
-   return false;
-  }
   if(!window.__nasrInstallSyncSettled)return false;
   return true;
  }catch(e){return false}
@@ -4575,7 +4557,6 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
     </div>
     <button type="button" class="mand-verify-pill" id="mandVerifyBtn">✓ تم التحميل — تحقّق والمتابعة الآن</button>
     <div class="verify-panel hidden" id="mandVerifyPanel"></div>
-    ${(!isPrev&&isAdmUser)?'<button type="button" class="mand-admin-skip" id="mandAdminSkipBtn">⚙️ تخطي مؤقت للإدارة (فتح لوحة التحكم)</button>':""}
     <div class="mand-foot-trust">🛡️ تحميل فوري وآمن 100% · حسابك وبياناتك محفوظة تلقائيًا</div>
    </div>
   </div>`;
@@ -4583,13 +4564,6 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
  if(isPrev){
   const ex=ov.querySelector("#mandPrevExit");
   if(ex)ex.onclick=()=>ov.remove();
- }
- const admSkipBtn=ov.querySelector("#mandAdminSkipBtn");
- if(admSkipBtn){
-  admSkipBtn.onclick=()=>{
-   try{sessionStorage.setItem("nasr_admin_gate_skip","1")}catch(e){}
-   hideMandatoryAppGate(false);
-  };
  }
 
  const dlBtn=ov.querySelector("#mandDlBtn");
@@ -4610,7 +4584,8 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
    dlBtn.disabled=false;
    dlBtn.textContent=dlBtnLabel;
    if(res.status==="accepted"){
-    if(isPrev){okToast("👁️ معاينة: تم تثبيت التطبيق على الجهاز مباشرة!");return}
+    if(isPrev){okToast(res.alreadyInstalled?"👁️ معاينة: التطبيق مثبّت بالفعل على الجهاز!":"👁️ معاينة: تم تثبيت التطبيق على الجهاز مباشرة!");return}
+    if(typeof okToast==="function")okToast(res.alreadyInstalled?"✅ التطبيق مثبّت بالفعل على جهازك — جارٍ فتح المتجر الآن":"✅ تم تثبيت تطبيق نسر البرية على جهازك بنجاح!");
     hideMandatoryAppGate(true);
     return;
    }
@@ -6799,9 +6774,12 @@ function startNotifications(){
      return;
     }
     if(n.id!=null){if(seenStatIds.has(n.id))return;seenStatIds.add(n.id)}
-    const t=String(n.title||"إشعار جديد");
-    toast("🔔 "+t+" — "+String(n.body||""));
-    systemNotify((window.STORE_MODE==="exhibition"?"معرض نسر البرية":"متجر نسر البرية")+" 🦅",t+"\n"+String(n.body||""),"stat-"+(n.id||Date.now()));
+    const t=String(n.title||"").trim();
+    const b=String(n.body||"").trim();
+    if(b&&b!=="نص الإشعار سيظهر هنا..."&&b!=="undefined"&&b!=="null"){
+     toast("🔔 "+(t||"إشعار جديد")+" — "+b);
+     systemNotify((window.STORE_MODE==="exhibition"?"معرض نسر البرية":"متجر نسر البرية")+" 🦅",(t||"إشعار جديد")+"\n"+b,"stat-"+(n.id||Date.now()));
+    }
     if($("adminModal").classList.contains("show")&&currentAdminTab==="notifications")loadNotifications().then(markAllRead);
     else loadNotifications();
     if($("adminModal").classList.contains("show")&&currentAdminTab==="overview")loadOverview();
@@ -7052,16 +7030,7 @@ function requestNotifPermissionSafe(){
 }
 
 window.shouldAutoPromptNotifs=function(){
- try{
-  /* رسالة تفعيل الإشعارات تظهر في التطبيق فقط ولا تظهر على الموقع الإلكتروني إطلاقًا */
-  if(typeof detectPlatform!=="function"||detectPlatform()!=="app")return false;
-  const cur=getNotifPermSafe();
-  if(!("Notification" in window)||cur==="unsupported"||cur==="granted")return false;
-  if(notifPromptDismissedThisView)return false;
-  const dis=getNotifDismissTs();
-  if(dis&&(Date.now()-dis)<NOTIF_DISMISS_COOLDOWN)return false;
-  return true;
- }catch(e){return false}
+ return false;
 };
 
 async function systemNotify(title,body,tagOrProductId){
@@ -7324,27 +7293,14 @@ window.showNotifPermissionPrompt=function(forceNow){
  }catch(e){}
 };
 let notifScheduleTimer=null;
-window.scheduleNotifPrompt=function(delayMs){
- try{
-  if(typeof detectPlatform!=="function"||detectPlatform()!=="app")return;
-  if(!window.shouldAutoPromptNotifs())return;
-  if(notifScheduleTimer){clearTimeout(notifScheduleTimer);notifScheduleTimer=null}
-  notifScheduleTimer=setTimeout(()=>{
-   notifScheduleTimer=null;
-   if(typeof detectPlatform!=="function"||detectPlatform()!=="app")return;
-   if(!window.shouldAutoPromptNotifs())return;
-   if(document.querySelector(".app-invite-ov:not(.app-notif-ov),.mand-app-ov,.own-ev-ov,.app-update-ov,.modal-backdrop.show")){
-    return;
-   }
-   window.showNotifPermissionPrompt(false);
-  },typeof delayMs==="number"?delayMs:1000);
- }catch(e){}
+window.scheduleNotifPrompt=function(){
+ /* تم إيقاف إظهار رسالة الإشعارات التلقائية عند الدخول — التفعيل يتم فقط عند ضغط المستخدم يدويًا من حسابه أو الإدارة */
 };
-/* مراقبة منضبطة لتغيّر إذن الإشعارات (عند الإغلاق من الإعدادات يتم التنبيه فورًا في التطبيق فقط بدون تكرار مزعج) */
+/* مراقبة هادئة لتغيّر إذن الإشعارات عند المنح من الإعدادات بدون إظهار نوافذ تلقائية مزعجة */
 (function initNotifPermissionWatcher(){
  if(!("Notification" in window))return;
  let stabT=null;
- const checkPermChange=(allowReopenOnRevoke)=>{
+ const checkPermChange=()=>{
   clearTimeout(stabT);
   stabT=setTimeout(()=>{
    const cur=getNotifPermSafe();
@@ -7360,11 +7316,6 @@ window.scheduleNotifPrompt=function(delayMs){
      markLocalNotifGranted(false);
      notifDbMarkedGranted=false;
      persistNotifPrefToDB(cur,true);
-     notifPromptDismissedThisView=false;
-     clearNotifDismissTs();
-     if(allowReopenOnRevoke&&typeof detectPlatform==="function"&&detectPlatform()==="app"&&window.__nasrInviteFlowDone&&!document.querySelector(".app-notif-ov")){
-      window.showNotifPermissionPrompt(true);
-     }
      return;
     }
    }else if(cur==="granted"&&!notifDbMarkedGranted){
@@ -8211,7 +8162,7 @@ function markBcSeen(n){
 function showBroadcast(n,forceShow){
  if(!n||typeof n!=="object")return;
  const cleanBody=String(n.body==null?"":n.body).trim();
- if(!cleanBody||cleanBody==="نص الإشعار سيظهر هنا..."||cleanBody==="undefined"||cleanBody==="null")return;
+ if(!cleanBody||cleanBody==="نص الإشعار سيظهر هنا..."||cleanBody==="undefined"||cleanBody==="null"||cleanBody.length<2)return;
  if(!forceShow&&isBcSeen(n))return;
  const runKey=bcKey(n)||cleanBody;
  if(!window.__nasrShownBcRuntime)window.__nasrShownBcRuntime=new Set();
@@ -8588,16 +8539,20 @@ fillCategorySelect();renderCategories();renderCart();route();
 </div>
 
 <script data-nasr-core="1">
-/* ===== نسر البرية - المساعد الذكي + الصوت المصري الطبيعي ===== */
-const AI_WELCOME="أهلاً بيك في **نسر البرية** 🦅✨\n\nأنا مساعدك الذكي العالمي، اسألني في أي حاجة في الدنيا أو بره الكوكب وأرد عليك فورًا 💡\n🛍️ عن المنتجات والأسعار والمخزون والشحن وطرق الدفع وكروت الواي فاي\n🌍 عن الفضاء والكواكب والعلوم والتاريخ والدين والرياضة والبرمجة وأي موضوع!\n🎙️ وتقدر تسمع ردودي بصوت مصري طبيعي أو تتكلم من المايك\n\nاسألني براحتك 😉";
-const AI_CHIPS=["إيه أحدث المنتجات؟ 🆕","أسعار الشحن 🚚","إزاي أطلب؟ 🛒","طرق الدفع 💳","معلومة عن الفضاء 🪐"];
-const AI_UNKNOWN_MSG="عذرًا لم نفهم سؤالك 😔✨\nبرجاء إغلاق المحادثة والنزول إلى أسفل الشاشة الرئيسية للمتجر 👇📱\nواضغط على زر «تواصل معنا عبر واتساب» 💬💚 وأرسل سؤالك إلى خدمة العملاء، وسيتم الرد عليك في أسرع وقت 🚀🦅";
+/* ===== نسر البرية - المساعد الذكي + الصوت المصري الطبيعي + وعي حي بالمتجر والمعرض ===== */
+const AI_WELCOME_STORE="أهلاً بيك في **متجر نسر البرية الرسمي** 🦅✨\n\nأنا مساعدك الذكي العالمي، اسألني في أي حاجة في العالم أو عن المتجر وأرد عليك فورًا بالإجابات الحقيقية 💡\n🛍️ عن أحدث المنتجات، الأسعار، العروض، المخزون، الشحن، طرق الدفع، كروت الواي فاي، وباقات الموبايل!\n🌍 عن الفضاء، العلوم، التاريخ، الدين، البرمجة، الرياضة، الأخبار، وأي موضوع في الدنيا!\n\nاسألني براحتك 😉";
+const AI_WELCOME_EXH="أهلاً بيك في **معرض نسر البرية الرسمي** 🦅✨\n\nأنا مساعدك الذكي العالمي، اسألني في أي حاجة في العالم أو عن المعرض وأرد عليك فورًا 💡\n🏷️ عن أحدث منتجات المعرض، الأقسام، نسب الخصومات %، كروت الواي فاي، وباقات الموبايل!\n🌍 عن الفضاء، العلوم، التاريخ، الدين، البرمجة، الرياضة، الأخبار، وأي موضوع في الدنيا!\n\nاسألني براحتك 😉";
+const AI_CHIPS_STORE=["إيه أحدث المنتجات؟ 🆕","أسعار الشحن 🚚","إزاي أطلب؟ 🛒","طرق الدفع 💳","معلومة عن الفضاء 🪐"];
+const AI_CHIPS_EXH=["إيه أحدث المنتجات؟ 🆕","نسب الخصومات % 🏷️","أقسام المعرض 📂","باقات الموبايل 📱","معلومة عن الفضاء 🪐"];
+const getAiWelcome=()=>window.STORE_MODE==="exhibition"?AI_WELCOME_EXH:AI_WELCOME_STORE;
+const getAiChips=()=>window.STORE_MODE==="exhibition"?AI_CHIPS_EXH:AI_CHIPS_STORE;
+const AI_UNKNOWN_MSG="عذرًا لم أتمكن من الاتصال بالمحرك حاليًا 😔✨\nبرجاء إغلاق المحادثة والنزول إلى أسفل الشاشة الرئيسية 👇📱\nواضغط على زر «تواصل معنا عبر واتساب» 💬💚 وأرسل سؤالك لخدمة العملاء، وسيتم الرد عليك فورًا 🚀🦅";
 const AI_SESSION_KEY="nasr_ai_session_v1";
 const AI_RESET_MS=4*60*1000;
 const AI_API_BASES=(()=>{
  const arr=[""];
  const host=location.origin||"";
- ["https://ais-pre-22s5cwf3mynxxccvyxl367-479737711533.europe-west2.run.app","https://ais-dev-22s5cwf3mynxxccvyxl367-479737711533.europe-west2.run.app"].forEach(u=>{if(u&&u!==host)arr.push(u)});
+ ["https://ais-dev-jsd5yak7uk266obpdzsgas-479737711533.europe-west2.run.app","https://ais-pre-jsd5yak7uk266obpdzsgas-479737711533.europe-west2.run.app"].forEach(u=>{if(u&&u!==host)arr.push(u)});
  return arr;
 })();
 let aiHist=[],aiBusy=false,aiStarted=false,aiName="",aiVoiceOn=false,aiCtx=null,aiAudio=null,aiAudioBtn=null,aiClosedAt=0;
@@ -8633,7 +8588,7 @@ function aiRestoreSession(){
   aiSaveSession(0);
   const box=aiEl("aiMsgs");
   if(box&&!box.children.length){
-   aiAdd("assistant","مرحبًا **"+aiName.replace(/\*/g,"")+"** 👋🦅✨\n\n"+AI_WELCOME);
+   aiAdd("assistant","مرحبًا **"+aiName.replace(/\*/g,"")+"** 👋🦅✨\n\n"+getAiWelcome());
    aiHist.forEach(m=>{if(m&&m.content)aiAdd(m.role==="user"?"user":"assistant",m.content)});
   }
   return true;
@@ -8762,12 +8717,38 @@ window.aiRefreshStoreData=async function(force){
  })();
  return aiSyncPromise;
 };
+let aiRtSubscribed=false;
+window.aiSyncModeUi=function(){
+ try{
+  const chipsEl=aiEl("aiChips");
+  if(chipsEl){
+   const chips=getAiChips();
+   chipsEl.innerHTML=chips.map((c,i)=>'<button type="button" data-i="'+i+'">'+escapeHTML(c)+'</button>').join("");
+   chipsEl.classList.toggle("hidden",aiHist.length>0);
+  }
+ }catch(e){}
+};
 window.aiStartAutoSync=function(){
- if(aiSyncTimer)return;
- aiLastSyncAt=Date.now();
- aiSyncTimer=setInterval(()=>{window.aiRefreshStoreData(true)},3*60*1000);
- document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now()-aiLastSyncAt>=3*60*1000)window.aiRefreshStoreData(false)});
- window.addEventListener("focus",()=>{if(Date.now()-aiLastSyncAt>=3*60*1000)window.aiRefreshStoreData(false)});
+ if(!aiSyncTimer){
+  aiLastSyncAt=Date.now();
+  aiSyncTimer=setInterval(()=>{window.aiRefreshStoreData(true)},90*1000);
+  document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now()-aiLastSyncAt>=45*1000)window.aiRefreshStoreData(true)});
+  window.addEventListener("focus",()=>{if(Date.now()-aiLastSyncAt>=45*1000)window.aiRefreshStoreData(true)});
+ }
+ if(!aiRtSubscribed&&typeof supabaseClient!=="undefined"&&supabaseClient&&typeof supabaseClient.channel==="function"){
+  aiRtSubscribed=true;
+  try{
+   let rtDebounce=null;
+   const triggerRt=()=>{clearTimeout(rtDebounce);rtDebounce=setTimeout(()=>{window.aiRefreshStoreData(true)},400)};
+   supabaseClient.channel("nasr_ai_live_sync")
+    .on("postgres_changes",{event:"*",schema:"public",table:"products"},triggerRt)
+    .on("postgres_changes",{event:"*",schema:"public",table:"categories"},triggerRt)
+    .on("postgres_changes",{event:"*",schema:"public",table:"site_settings"},triggerRt)
+    .on("postgres_changes",{event:"*",schema:"public",table:"payment_settings"},triggerRt)
+    .on("postgres_changes",{event:"*",schema:"public",table:"shipping_rates"},triggerRt)
+    .subscribe();
+  }catch(e){}
+ }
 };
 
 function aiPayList(){
@@ -8790,27 +8771,88 @@ function aiPayList(){
 }
 
 function aiStoreContext(){
- let categories=[],prods=[],shippingRates=[],payments=[],wifiCards=[],services=[];
+ const isExh=window.STORE_MODE==="exhibition";
+ let categories=[],prods=[],shippingRates=[],payments=[],wifiCards=[],services=[],billboardAds=[];
  try{categories=categoriesList.filter(c=>c.name!=="الكل"&&(!window.isCatHidden||!window.isCatHidden(c.name))).map(c=>c.name)}catch(e){}
  try{
-  prods=(products||[]).slice(0,220).map(p=>({
-   name:p.name||"",category:p.category||"",price:Number(p.price||0),
-   oldPrice:Number(p.old_price||0),stock:Number(p.stock||0),description:p.description||""
-  }));
+  prods=(products||[]).slice(0,220).map(p=>{
+   const pr=Number(p.price||0),op=Number(p.old_price||0);
+   const discPct=(op>pr&&pr>0)?Math.round(((op-pr)/op)*100):0;
+   const base={
+    name:p.name||"",
+    category:p.category||"",
+    subcategory:p.subcategory||"",
+    description:p.description||"",
+    discountPct:discPct,
+    isBestSeller:!!p.is_best_seller,
+    isExclusive:!!p.is_exclusive
+   };
+   if(!isExh){
+    base.price=pr;
+    base.oldPrice=op;
+    base.stock=Number(p.stock||0);
+   }
+   return base;
+  });
  }catch(e){}
- try{shippingRates=Object.entries(SHIPPING_RATES||{}).map(([city,cost])=>({city,cost:Number(cost||0)}))}catch(e){}
- try{payments=aiPayList()}catch(e){}
+ if(!isExh){
+  try{shippingRates=Object.entries(SHIPPING_RATES||{}).map(([city,cost])=>({city,cost:Number(cost||0)}))}catch(e){}
+  try{payments=aiPayList()}catch(e){}
+ }
  try{
   if(window.W&&Array.isArray(window.W.types)){
-   wifiCards=window.W.types.map(w=>({name:w.name||"",price:w.price||"",description:w.description||""}));
+   wifiCards=window.W.types.map(w=>isExh
+    ?{name:w.name||"",description:w.description||""}
+    :{name:w.name||"",price:w.price||"",description:w.description||""}
+   );
   }
  }catch(e){}
  try{
   if(Array.isArray(window.servicesList)){
-   services=window.servicesList.filter(s=>s&&!s.hidden).map(s=>s.description||"خدمة متجر نسر البرية");
+   services=window.servicesList.filter(s=>s&&!s.hidden).map(s=>s.description||"خدمة نسر البرية");
   }
  }catch(e){}
- return {owner:"أ/ يوسف شحاته",lastSyncedAt:new Date(aiLastSyncAt||Date.now()).toLocaleTimeString("ar-EG"),categories,products:prods,shippingRates,payments,wifiCards,services};
+ const telecomServices={
+  enabled:true,
+  serviceTypes:[
+   "باقات الموبايل (نت)",
+   "باقات الموبايل (مكالمات)"
+  ],
+  operators:[
+   {name:"Vodafone Egypt",arName:"فودافون",prefix:"010"},
+   {name:"Orange Egypt",arName:"أورنج",prefix:"012"},
+   {name:"e& Egypt",arName:"اتصالات",prefix:"011"},
+   {name:"WE Egypt",arName:"وي (المصرية للاتصالات)",prefix:"015"}
+  ],
+  packages:Array.isArray(window.__nasrTelecomPackages)?window.__nasrTelecomPackages.map(pk=>({
+   operator:pk.operator,
+   packageName:pk.packageName,
+   volume:pk.volume,
+   sellingPrice:pk.sellingPrice,
+   validity:pk.validity||"",
+   usageType:pk.usageType||""
+  })):[]
+ };
+ try{
+  if(Array.isArray(window.__nasrBillboardAdsSnapshot)){
+   billboardAds=window.__nasrBillboardAdsSnapshot.slice(0,10).map(a=>({title:a.title||""})).filter(a=>a.title);
+  }
+ }catch(e){}
+ return {
+  storeMode:isExh?"exhibition":"store",
+  brandName:isExh?"معرض نسر البرية الرسمي":"متجر نسر البرية الرسمي",
+  owner:"أ/ يوسف شحاته",
+  lastSyncedAt:new Date(aiLastSyncAt||Date.now()).toLocaleTimeString("ar-EG"),
+  totalProducts:Array.isArray(products)?products.length:0,
+  categories,
+  products:prods,
+  shippingRates,
+  payments,
+  wifiCards,
+  services,
+  telecomServices,
+  billboardAds
+ };
 }
 
 /* ===== محرك ذكاء احترافي عالمي (دقة عالية + ارتباط كامل بالسؤال + تحديث حي للمتجر) ===== */
@@ -9060,15 +9102,21 @@ async function aiSmartFallback(text){
  if(!n||!/[\u0600-\u06FFa-zA-Z0-9]{2,}/.test(text))return AI_UNKNOWN_MSG;
  const has=re=>re.test(n);
  const greetName=aiName||"يا غالي";
+ const isExh=window.STORE_MODE==="exhibition";
+ const placeName=isExh?"معرض نسر البرية الرسمي":"متجر نسر البرية الرسمي";
 
  if(has(/^(سلام|السلام|اهلا|مرحبا|هلو|هاي|صباح|مساء|ازيك|عامل ايه|اخبارك|كيف حالك|احوالك)/)&&n.split(" ").length<=6){
-  return "أهلاً بيك يا **"+greetName+"** 🦅✨ منوّر متجر نسر البرية الرسمي!\nأقدر أساعدك في أي منتج أو سعر أو شحن أو طرق الدفع، وكمان تقدر تسألني أي سؤال في الدنيا أو الفضاء والعلوم والتاريخ وأرد عليك فورًا 💡😊";
+  return isExh
+   ?"أهلاً بيك يا **"+greetName+"** 🦅✨ منوّر **"+placeName+"**!\nأقدر أساعدك في أي منتج داخل المعرض أو الأقسام ونسب الخصم % وكروت الواي فاي وباقات الموبايل، وكمان تقدر تسألني أي سؤال في العالم وأرد عليك فورًا 💡😊"
+   :"أهلاً بيك يا **"+greetName+"** 🦅✨ منوّر **"+placeName+"**!\nأقدر أساعدك في أي منتج أو سعر أو شحن أو طرق الدفع، وكمان تقدر تسألني أي سؤال في الدنيا أو الفضاء والعلوم والتاريخ وأرد عليك فورًا 💡😊";
  }
  if(has(/^(شكرا|تسلم|جزاك|يعطيك|متشكر|الف شكر|الله ينور|تسلم ايدك)/)){
-  return "العفو يا **"+greetName+"** 🤍🦅 ده واجبنا! لو احتجت أي استفسار تاني عن المتجر أو أي سؤال في العالم أنا معاك لحظة بلحظة ✨";
+  return "العفو يا **"+greetName+"** 🤍🦅 ده واجبنا! لو احتجت أي استفسار تاني عن "+(isExh?"المعرض":"المتجر")+" أو أي سؤال في العالم أنا معاك لحظة بلحظة ✨";
  }
  if(has(/مين انت|انت مين|اسمك ايه|عرف نفسك|بتعمل ايه|بتفهم ايه|تقدر تساعدني في ايه/)){
-  return "أنا **نسر البرية - المساعد الذكي** 🦅🤖✨\n• بعرف كل بيانات **متجر نسر البرية** الحية تلقائيًا (المنتجات، الأسعار، العروض، الشحن، وكل طرق الدفع المحدّثة).\n• وكمان بجاوبك باحترافية على **أي سؤال في العالم** (علوم، فضاء، تاريخ، دين، برمجة، صحة، ترجمة، حسابات) بدقة متناهية 🌍💡";
+  return isExh
+   ?"أنا **نسر البرية - المساعد الذكي** 🦅🤖✨\n• بعرف كل بيانات **معرض نسر البرية** الحية تلقائيًا (المنتجات، المواصفات، الأقسام، نسب الخصومات %، كروت الواي فاي، وباقات الموبايل).\n• وكمان بجاوبك باحترافية على **أي سؤال في العالم** (علوم، فضاء، تاريخ، دين، برمجة، صحة، ترجمة، حسابات) بدقة متناهية 🌍💡"
+   :"أنا **نسر البرية - المساعد الذكي** 🦅🤖✨\n• بعرف كل بيانات **متجر نسر البرية** الحية تلقائيًا (المنتجات، الأسعار، العروض، الشحن، وكل طرق الدفع المحدّثة، وباقات الموبايل).\n• وكمان بجاوبك باحترافية على **أي سؤال في العالم** (علوم، فضاء، تاريخ، دين، برمجة، صحة، ترجمة، حسابات) بدقة متناهية 🌍💡";
  }
  if(has(/الساعه|الوقت|التاريخ|النهارده كام|تاريخ اليوم/)){
   const nowStr=new Date().toLocaleString("ar-EG",{timeZone:"Africa/Cairo",dateStyle:"full",timeStyle:"short"});
@@ -9076,6 +9124,9 @@ async function aiSmartFallback(text){
  }
 
  if(has(/طرق الدفع|وسائل الدفع|الدفع المتاح|ازاي ادفع|كيف ادفع|الدفع|فودافون كاش|انستا باي|instapay|فيزا|ماستركارد|بطاق|كروت الدفع|كارت بنكي|تحويل|فوري|تقسيط|عند الاستلام/)){
+  if(isExh){
+   return "ℹ️ نحن حاليًا في **وضع المعرض** لعرض المنتجات والأقسام ونسب الخصومات % والخدمات داخل **معرض نسر البرية الرسمي** 🦅✨\nنظام الدفع والشراء الأونلاين غير مفعّل في وضع المعرض — ولأي استفسار مباشر تواصل معنا عبر زر **واتساب** أسفل الشاشة الرئيسية 💬💚";
+  }
   try{await window.aiRefreshStoreData(false)}catch(e){}
   const ctx=aiStoreContext();
   const enabled=(ctx.payments||[]).filter(p=>p.enabled);
@@ -9097,6 +9148,9 @@ async function aiSmartFallback(text){
  }
 
  if(has(/شحن|توصيل|مصاريف|ديليفري|محافظه|محافظات/)){
+  if(isExh){
+   return "ℹ️ في **وضع المعرض** يتم استعراض المنتجات والمواصفات والخصومات والخدمات فقط، ولا يتوفر نظام شحن أو توصيل أونلاين داخل وضع المعرض 🦅✨\nللتواصل المباشر مع **أ/ يوسف شحاته** اضغط زر **واتساب** أسفل الشاشة الرئيسية 💬💚";
+  }
   try{
    const e=Object.entries(SHIPPING_RATES||{});
    const hit=e.find(([k])=>n.indexOf(aiNorm(k).replace(/^ال/,""))>-1);
@@ -9106,44 +9160,59 @@ async function aiSmartFallback(text){
  }
 
  if(has(/ازاي اطلب|كيف اطلب|طريقه الطلب|اطلب ازاي|سله|شراء|حسابي|طلبي|تتبع|استبدال|استرجاع|ضمان/)){
+  if(isExh){
+   return "ℹ️ في **وضع المعرض** يمكنك تصفح كافة المنتجات ومواصفاتها ونسب الخصومات % بكل سهولة 🦅✨\nوللاستفسار أو التنسيق المباشر يمكنك الضغط على زر **التواصل عبر واتساب** في أي منتج أو أسفل الشاشة الرئيسية 💬💚";
+  }
   return "🛒 **خطوات الطلب السريع وتتبع الطلب في متجر نسر البرية:**\n1️⃣ افتح أي منتج واضغط **«⚡ شراء الآن»** أو أضفه للسلة.\n2️⃣ أدخل عنوان التوصيل بدقة واختر المحافظة.\n3️⃣ اختر طريقة الدفع المناسبة وارفع صورة إثبات الدفع.\n4️⃣ تابع حالة طلبك لحظة بلحظة من صفحة **«طلباتي»** 📦✨";
  }
 
- if(has(/الاقسام|اقسام المتجر|بتبيعوا ايه|بتبيعو ايه|عندكم ايه|منتجاتكم عباره عن ايه|محتويات المتجر/)){
+ if(has(/الاقسام|اقسام المتجر|اقسام المعرض|بتبيعوا ايه|بتبيعو ايه|عندكم ايه|منتجاتكم عباره عن ايه|محتويات المتجر|محتويات المعرض/)){
   const ctx=aiStoreContext();
   if(ctx.categories&&ctx.categories.length){
-   return "📂 **أقسام متجر نسر البرية المتاحة الآن:**\n"+ctx.categories.map(c=>"• **"+c+"**").join("\n")+"\n\nتقدر تسألني عن أي قسم أو منتج محدد وأجيبلك الأسعار والمواصفات فورًا 🛍️🦅";
+   return "📂 **أقسام "+placeName+" المتاحة الآن:**\n"+ctx.categories.map(c=>"• **"+c+"**").join("\n")+"\n\nتقدر تسألني عن أي قسم أو منتج محدد وأجيبلك "+(isExh?"المواصفات والخصومات %":"الأسعار والمواصفات")+" فورًا 🛍️🦅";
   }
+ }
+
+ if(has(/باقات الموبايل|باقه نت|باقات نت|باقه مكالمات|باقات مكالمات|فليكس|flex|فودافون|اورنج|اتصالات|وي/)){
+  return "📱✨ **خدمة باقات الموبايل في "+placeName+":**\nنوفر عبر قسم **الخدمات** باقات الموبايل:\n1️⃣ **باقات الموبايل (نت)**\n2️⃣ **باقات الموبايل (مكالمات / وحدات وفليكس)**\nللشبكات الأربع: **Vodafone Egypt** و**Orange Egypt** و**e& Egypt (اتصالات)** و**WE Egypt**.\nافتح شريط **الخدمات** واختر نوع الخدمة ثم الشبكة واكتب السعر المطلوب وسيظهر لك كل الباقات المتاحة فورًا 🚀🦅";
  }
 
  if(has(/واي فاي|كروت|كارت نت|انترنت|wifi/)&&!has(/سرعه الواي فاي|راوتر|تردد/)){
   const ctx=aiStoreContext();
   if(ctx.wifiCards&&ctx.wifiCards.length){
-   return "📶 **كروت الواي فاي المتوفرة حاليًا:**\n"+ctx.wifiCards.slice(0,10).map(w=>"• **"+w.name+"**"+(w.price?" — "+w.price+" جنيه":"")+(w.description?" ("+w.description+")":"")).join("\n")+"\n\nافتح شريط **كروت واي فاي** في الرئيسية واطلب الكارت مباشرة بضغطة واحدة عبر واتساب 🚀";
+   return "📶 **كروت الواي فاي المتوفرة حاليًا:**\n"+ctx.wifiCards.slice(0,10).map(w=>"• **"+w.name+"**"+(!isExh&&w.price?" — "+w.price+" جنيه":"")+(w.description?" ("+w.description+")":"")).join("\n")+"\n\nافتح شريط **كروت واي فاي** في الرئيسية واطلب الكارت مباشرة بضغطة واحدة عبر واتساب 🚀";
   }
-  return "📶 تقدر تتصفح **شريط كروت واي فاي** في الصفحة الرئيسية وتختار الباقة المناسبة وتطلبها فورًا عبر واتساب ������";
+  return "📶 تقدر تتصفح **شريط كروت واي فاي** في الصفحة الرئيسية وتختار الباقة المناسبة وتطلبها فورًا عبر واتساب 💚";
  }
 
- if(has(/خدمه|خدمات المتجر|الخدمات التي|بتقدموا خدمات|صيانه|اصلاح/)){
+ if(has(/خدمه|خدمات المتجر|خدمات المعرض|الخدمات التي|بتقدموا خدمات|صيانه|اصلاح/)){
   const ctx=aiStoreContext();
-  if(ctx.services&&ctx.services.length){
-   return "🛠️ **الخدمات التي يقدمها متجر نسر البرية:**\n"+ctx.services.slice(0,10).map(s=>"• "+s).join("\n")+" ✨";
+  const tSvcs=Array.isArray(ctx.telecomServices)?ctx.telecomServices:(ctx.telecomServices&&Array.isArray(ctx.telecomServices.serviceTypes)?ctx.telecomServices.serviceTypes:[]);
+  const list=[...tSvcs,...(ctx.services||[])];
+  if(list.length){
+   return "🛠️ **الخدمات التي يقدمها "+placeName+":**\n"+list.slice(0,12).map(s=>"• "+s).join("\n")+" ✨";
   }
  }
 
- if(has(/مالك المتجر|صاحب المتجر|يوسف شحاته|واتساب|تواصل مع|تليفون المتجر|رقم المتجر|خدمه العملاء/)){
-  return "👑 متجر **نسر البرية الرسمي** بإدارة **أ/ يوسف شحاته** 🦅\nللتواصل المباشر مع خدمة العملاء، انزل إلى أسفل الشاشة الرئيسية واضغط على زر **«تواصل معنا عبر واتساب»** 💬💚 وهنرد عليك فورًا!";
+ if(has(/مالك المتجر|مالك المعرض|صاحب المتجر|صاحب المعرض|يوسف شحاته|واتساب|تواصل مع|تليفون المتجر|رقم المتجر|خدمه العملاء/)){
+  return "👑 **"+placeName+"** بإدارة **أ/ يوسف شحاته** 🦅\nللتواصل المباشر مع خدمة العملاء، انزل إلى أسفل الشاشة الرئيسية واضغط على زر **«تواصل معنا عبر واتساب»** 💬💚 وهنرد عليك فورًا!";
  }
 
- if(has(/احدث|جديد|عروض|خصم|تخفيض|متوفر|اكثر مبيعا|ارخص|اغلي|اعلي سعر|اقل سعر/)&&has(/منتج|منتجات|المتجر|عندكم|اسعار|سعر|عروض|خصم|موبايل|سماعه|شاحن|كابل|باور/)){
-  const avail=(products||[]).filter(p=>Number(p.stock)>0);
+ if(has(/احدث|جديد|عروض|خصم|تخفيض|متوفر|اكثر مبيعا|ارخص|اغلي|اعلي سعر|اقل سعر/)&&has(/منتج|منتجات|المتجر|المعرض|عندكم|اسعار|سعر|عروض|خصم|موبايل|سماعه|شاحن|كابل|باور/)){
+  const avail=isExh?(products||[]):(products||[]).filter(p=>Number(p.stock)>0);
   if(avail.length){
    let list=avail.slice();
-   let hdr="🔥 **مختارات متوفرة الآن في متجر نسر البرية:**";
+   let hdr="🔥 **مختارات متوفرة الآن في "+placeName+":**";
    if(has(/خصم|عروض|تخفيض/)){const d=avail.filter(p=>p.old_price&&Number(p.old_price)>Number(p.price));if(d.length){list=d;hdr="🏷️ **أقوى العروض والخصومات المتاحة الآن:**"}}
-   else if(has(/ارخص|اقل سعر/)){list=avail.slice().sort((a,b)=>Number(a.price)-Number(b.price));hdr="💰 **أقل الأسعار المتوفرة في المتجر حاليًا:**"}
-   else if(has(/اغلي|اعلي سعر/)){list=avail.slice().sort((a,b)=>Number(b.price)-Number(a.price));hdr="💎 **أعلى المنتجات فئة في المتجر حاليًا:**"}
-   return hdr+"\n"+list.slice(0,6).map(p=>"• **"+p.name+"** — **"+p.price+" جنيه**"+(p.old_price&&Number(p.old_price)>Number(p.price)?" (بدل "+p.old_price+")":"")+" ✅").join("\n")+"\n\nاضغط على أي منتج في المتجر لمعاينة مواصفاته وإتمام الطلب 🛒🦅";
+   else if(!isExh&&has(/ارخص|اقل سعر/)){list=avail.slice().sort((a,b)=>Number(a.price)-Number(b.price));hdr="💰 **أقل الأسعار المتوفرة في المتجر حاليًا:**"}
+   else if(!isExh&&has(/اغلي|اعلي سعر/)){list=avail.slice().sort((a,b)=>Number(b.price)-Number(a.price));hdr="💎 **أعلى المنتجات فئة في المتجر حاليًا:**"}
+   const fmtProd=p=>{
+    const pr=Number(p.price||0),op=Number(p.old_price||0);
+    const pct=(op>pr&&pr>0)?Math.round(((op-pr)/op)*100):0;
+    if(isExh)return "• **"+p.name+"**"+(pct?" (خصم **"+pct+"%** 🏷️)":"")+(p.description?" — _"+String(p.description).slice(0,60)+"_":"");
+    return "• **"+p.name+"** — **"+p.price+" جنيه**"+(op>pr?" (بدل "+op+")":"")+" ✅";
+   };
+   return hdr+"\n"+list.slice(0,6).map(fmtProd).join("\n")+"\n\nاضغط على أي منتج في الرئيسية لمعاينة تفاصيله كاملة 🦅";
   }
  }
 
@@ -9153,18 +9222,24 @@ async function aiSmartFallback(text){
    const stop=/(^| )(عايز|عاوز|ابغي|عندكم|عندك|فيه|في|ايه|اقترحلي|اقترح|سعر|بكام|كام|ثمن|منتج|المنتجات|لو|سمحت|ممكن|من|ده|دي|بكده|ارخص|احسن|افضل|ما هو|ما هي|ايه هي|هل يوجد)(?= |$)/g;
    const cleanQ=n.replace(stop," ").replace(/\s+/g," ").trim();
    if(cleanQ.length>=2){
+    const fmtHit=p=>{
+     const pr=Number(p.price||0),op=Number(p.old_price||0);
+     const pct=(op>pr&&pr>0)?Math.round(((op-pr)/op)*100):0;
+     if(isExh)return "• **"+p.name+"**"+(pct?" — خصم **"+pct+"%** 🏷️":"")+(p.description?"\n  _"+String(p.description).slice(0,80)+"_":"");
+     return "• **"+p.name+"** — **"+p.price+" جنيه** "+(Number(p.stock)>0?"(متوفر "+p.stock+" قطعة ✅)":"(نفد المخزون ❌)")+(p.description?"\n  _"+String(p.description).slice(0,80)+"_":"");
+    };
     const catHit=(categoriesList||[]).find(c=>c.name!=="الكل"&&cleanQ.includes(aiNorm(c.name)));
     if(catHit){
      const inCat=products.filter(p=>p.category===catHit.name).slice(0,6);
      if(inCat.length){
-      return "📦 **منتجات قسم «"+catHit.name+"» المتاحة حاليًا:**\n"+inCat.map(p=>"• **"+p.name+"** — **"+p.price+" جنيه** "+(Number(p.stock)>0?"✅":"❌ نفد")).join("\n")+"\n\nتقدر تفتح القسم من الرئيسية وتطلب فورًا 🦅🛒";
+      return "📦 **منتجات قسم «"+catHit.name+"» المتاحة حاليًا:**\n"+inCat.map(fmtHit).join("\n")+"\n\nتقدر تفتح القسم من الرئيسية وتعاين التفاصيل فورًا 🦅✨";
      }
     }
     if(typeof searchProducts==="function"){
      const res=searchProducts(cleanQ);
      const hits=(res.exact&&res.exact.length?res.exact:[]).slice(0,5);
      if(hits.length){
-      return "🛍️ **نتائج البحث الحية من متجر نسر البرية الآن:**\n"+hits.map(p=>"• **"+p.name+"** — **"+p.price+" جنيه** "+(Number(p.stock)>0?"(متوفر "+p.stock+" قطعة ✅)":"(نفد المخزون ❌)")+(p.description?"\n  _"+String(p.description).slice(0,80)+"_":"")).join("\n")+"\n\nاضغط على المنتج في المتجر لإضافته للسلة أو شرائه فورًا 🦅✨";
+      return "🛍️ **نتائج البحث الحية من "+placeName+" الآن:**\n"+hits.map(fmtHit).join("\n")+"\n\nاضغط على المنتج من الرئيسية لمشاهدته بالكامل 🦅✨";
      }
     }
    }
@@ -9173,8 +9248,11 @@ async function aiSmartFallback(text){
 
  for(const item of AI_KNOWLEDGE){
   if(item.re.test(n)){
-   const ans=item.fn(n);
-   if(ans)return ans;
+   let ans=item.fn(n);
+   if(ans){
+    if(isExh)ans=ans.replace(/بنشحن لكل محافظات مصر[^.!]*[.!]?/g,"نخدمكم في **معرض نسر البرية الرسمي** بأعلى جودة").replace(/متجر نسر البرية/g,"معرض نسر البرية");
+    return ans;
+   }
   }
  }
 
@@ -9191,7 +9269,7 @@ async function aiAsk(userText){
   storeContext:aiStoreContext()
  });
  for(const base of AI_API_BASES){
-  const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),18000);
+  const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),24000);
   try{
    const r=await fetch(base+"/api/ai/chat",{
     method:"POST",headers:{"Content-Type":"application/json"},signal:ctl.signal,body:payload
@@ -9282,11 +9360,11 @@ function aiStartChat(){
  aiEl("aiGate").classList.add("hidden");
  aiEl("aiMsgs").classList.remove("hidden");aiEl("aiChips").classList.remove("hidden");aiEl("aiForm").classList.remove("hidden");
  if(!aiEl("aiMsgs").children.length){
-  aiAdd("assistant","مرحبًا **"+aiName.replace(/\*/g,"")+"** 👋🦅✨\n\n"+AI_WELCOME);
+  aiAdd("assistant","مرحبًا **"+aiName.replace(/\*/g,"")+"** 👋🦅✨\n\n"+getAiWelcome());
  }
  aiSaveSession(0);
  aiDing();
- aiEl("aiChips").innerHTML=AI_CHIPS.map((c,i)=>'<button type="button" data-i="'+i+'">'+escapeHTML(c)+'</button>').join("");
+ if(typeof window.aiSyncModeUi==="function")window.aiSyncModeUi();
  setTimeout(()=>aiEl("aiInput").focus(),100);
 }
 function aiSubmitName(){
@@ -9316,8 +9394,7 @@ function openAI(){
  }else{
   aiEl("aiGate").classList.add("hidden");
   aiEl("aiMsgs").classList.remove("hidden");aiEl("aiForm").classList.remove("hidden");
-  aiEl("aiChips").innerHTML=AI_CHIPS.map((c,i)=>'<button type="button" data-i="'+i+'">'+escapeHTML(c)+'</button>').join("");
-  aiEl("aiChips").classList.toggle("hidden",aiHist.length>0);
+  if(typeof window.aiSyncModeUi==="function")window.aiSyncModeUi();
   setTimeout(()=>{const b=aiEl("aiMsgs");b.scrollTop=b.scrollHeight},50);
  }
 }
@@ -9368,7 +9445,7 @@ aiEl("aiMic").addEventListener("click",()=>{
   aiRec.start();
  }catch(e){toast("🎙️ التحدث بالصوت مش متاح على المتصفح ده")}
 });
-aiEl("aiChips").addEventListener("click",e=>{const b=e.target.closest("button");if(b)aiSend(AI_CHIPS[Number(b.dataset.i)])});
+aiEl("aiChips").addEventListener("click",e=>{const b=e.target.closest("button");if(b){const chips=getAiChips();if(chips[Number(b.dataset.i)])aiSend(chips[Number(b.dataset.i)])}});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&aiEl("aiPage").classList.contains("show"))closeAI()});
 </script>
 <script data-nasr-core="1">
@@ -10992,22 +11069,22 @@ async function syncInstallStatusFromDBDetail(){
   const usrRec=uk?parseRec(data.find(r=>r.key===uk)):null;
   if(devRec){
    if(devRec.installed===false||devRec.uninstalled===true){
-    return {installed:false,uninstalled:true,source:"device",at:Number(devRec.at||0),uninstalledAt:Number(devRec.uninstalledAt||devRec.at||0)};
+    return {installed:false,uninstalled:true,reason:String(devRec.reason||""),source:"device",at:Number(devRec.at||0),uninstalledAt:Number(devRec.uninstalledAt||devRec.at||0)};
    }
    if(devRec.installed===true){
-    return {installed:true,uninstalled:false,source:"device",at:Number(devRec.installedAt||devRec.at||0),uninstalledAt:0};
+    return {installed:true,uninstalled:false,reason:String(devRec.src||""),source:"device",at:Number(devRec.installedAt||devRec.at||0),uninstalledAt:0};
    }
   }
   if(usrRec){
    if(usrRec.installed===false||usrRec.uninstalled===true){
-    return {installed:false,uninstalled:true,source:"user",at:Number(usrRec.at||0),uninstalledAt:Number(usrRec.uninstalledAt||usrRec.at||0)};
+    return {installed:false,uninstalled:true,reason:String(usrRec.reason||""),source:"user",at:Number(usrRec.at||0),uninstalledAt:Number(usrRec.uninstalledAt||usrRec.at||0)};
    }
    if(usrRec.installed===true){
-    return {installed:true,uninstalled:false,source:"user",at:Number(usrRec.installedAt||usrRec.at||0),uninstalledAt:0};
+    return {installed:true,uninstalled:false,reason:String(usrRec.src||""),source:"user",at:Number(usrRec.installedAt||usrRec.at||0),uninstalledAt:0};
    }
   }
-  return {installed:false,uninstalled:false,source:"",at:0,uninstalledAt:0};
- }catch(e){return {installed:false,uninstalled:false,source:"",at:0,uninstalledAt:0}}
+  return {installed:false,uninstalled:false,reason:"",source:"",at:0,uninstalledAt:0};
+ }catch(e){return {installed:false,uninstalled:false,reason:"",source:"",at:0,uninstalledAt:0}}
 }
 async function syncInstallStatusFromDB(){
  const d=await syncInstallStatusFromDBDetail();
@@ -11017,6 +11094,7 @@ function persistAllLocalInstallFlags(markNativeProof){
  try{
   localStorage.removeItem("nasr_app_uninstalled_lock");
   localStorage.removeItem("nasr_app_uninstalled_at");
+  localStorage.removeItem("nasr_app_uninstalled_reason");
   localStorage.setItem("nasr_app_installed","1");
   localStorage.setItem("nasr_app_verified","1");
   localStorage.setItem("nasr_pwa_was_installed","1");
@@ -11036,7 +11114,7 @@ function persistAllLocalInstallFlags(markNativeProof){
  }
  setCacheAppFlag();
 }
-function clearLocalInstallFlagsForUninstall(){
+function clearLocalInstallFlagsForUninstall(reasonStr){
  try{
   [
    "nasr_app_installed","nasr_app_verified","nasr_pwa_was_installed",
@@ -11046,6 +11124,7 @@ function clearLocalInstallFlagsForUninstall(){
   ].forEach(k=>localStorage.removeItem(k));
   localStorage.setItem("nasr_app_uninstalled_lock","1");
   localStorage.setItem("nasr_app_uninstalled_at",String(Date.now()));
+  if(reasonStr)localStorage.setItem("nasr_app_uninstalled_reason",String(reasonStr));
  }catch(e){}
  try{
   sessionStorage.removeItem("nasr_dl_init_at");
@@ -11086,7 +11165,7 @@ function markAppInstalled(src,isExplicitNewInstallOrUpdate){
   }
  }catch(e){}
  const sStr=String(src||"");
- const isNativeSrc=/app_launch|app_first_open|pwa_installed|pwa_direct_prompt|pwa_bridge|related_apps|pwa_native_verified|pwa_silent_detect/i.test(sStr)||detectPlatform()==="app";
+ const isNativeSrc=/app_launch|app_first_open|pwa_installed|pwa_direct_prompt|pwa_bridge|related_apps|pwa_native_verified|pwa_silent_detect|pwa_already_present|recover_false_uninstall/i.test(sStr)||detectPlatform()==="app";
  window.__dlSessionVerified=true;
  window.__nasrDeviceAuditStatus="healthy";
  persistAllLocalInstallFlags(isNativeSrc);
@@ -11124,7 +11203,7 @@ async function handleConfirmedAppUninstall(reason){
  if(__nasrUninstallHandling)return false;
  __nasrUninstallHandling=true;
  try{
-  clearLocalInstallFlagsForUninstall();
+  clearLocalInstallFlagsForUninstall(reason||"uninstalled_from_device");
   if(typeof nudgeChromiumInstallabilityCheck==="function")nudgeChromiumInstallabilityCheck();
   await persistInstallStatusToDB(reason||"uninstalled_from_device",false,true);
   try{if(nasrAppBridgeCh)nasrAppBridgeCh.postMessage({type:"APP_UNINSTALLED_NOW",reason:String(reason||""),ts:Date.now()})}catch(e){}
@@ -11141,12 +11220,11 @@ window.handleConfirmedAppUninstall=handleConfirmedAppUninstall;
 async function syncInstallState(){
  try{
   if(detectPlatform()==="app"){markAppInstalled("app_launch",false);return true}
-  const hasCustomUrl=!!(typeof window.getConfiguredDirectDlUrl==="function"&&window.getConfiguredDirectDlUrl());
   const nativeProven=isNativePwaProvenLocally();
   const confirmedAt=(()=>{try{return Number(localStorage.getItem("nasr_pwa_confirmed_at")||0)||0}catch(e){return 0}})();
   const promptPending=!!(window.__installPromptFired&&window.__deferredInstallPrompt);
 
-  /* فحص حذف التطبيق الفعلي من الجهاز عبر المتصفح قبل الوثوق بأي حالة محفوظة قديمة */
+  /* إذا أطلق المتصفح نفسه حدث التثبيت beforeinstallprompt فهذا يثبت أن التطبيق غير مثبّت فعليًا */
   if(promptPending&&(!confirmedAt||Date.now()-confirmedAt>1500)){
    await handleConfirmedAppUninstall("boot_beforeinstallprompt");
    return false;
@@ -11154,13 +11232,12 @@ async function syncInstallState(){
   if(window.__appInstalledJustNow||window.__dlSessionVerified){markAppInstalled("pwa_installed",true);return true}
 
   if(typeof window.inspectManifestRelatedSupport==="function"){
-   try{await Promise.race([window.inspectManifestRelatedSupport(false),new Promise(r=>setTimeout(r,650))])}catch(e){}
+   try{await Promise.race([window.inspectManifestRelatedSupport(false),new Promise(r=>setTimeout(r,450))])}catch(e){}
   }
 
-  let osApps=null;
   try{
    if(typeof navigator.getInstalledRelatedApps==="function"){
-    osApps=await navigator.getInstalledRelatedApps();
+    const osApps=await navigator.getInstalledRelatedApps();
     if(Array.isArray(osApps)&&osApps.length>0){
      try{localStorage.setItem("nasr_os_app_seen","1")}catch(e){}
      setCookie("nasr_os_app","1");
@@ -11173,16 +11250,6 @@ async function syncInstallState(){
    }
   }catch(e){}
 
-  let osWasSeen=false;
-  try{
-   osWasSeen=(localStorage.getItem("nasr_os_app_seen")==="1"||getCookie("nasr_os_app")==="1"||(await idbGet("nasr_os_app_seen"))==="1");
-  }catch(e){}
-  const manifestRelatedOk=!!(window.__nasrManifestInfo&&window.__nasrManifestInfo.hasWebappRelated);
-  if((osWasSeen||(!hasCustomUrl&&manifestRelatedOk))&&Array.isArray(osApps)&&osApps.length===0&&(!confirmedAt||Date.now()-confirmedAt>6000)){
-   await handleConfirmedAppUninstall("boot_related_apps_removed");
-   return false;
-  }
-
   try{
    if(await window.pingInstalledAppBridge(260)){markAppInstalled("pwa_bridge",true);window.__nasrSessionHadLocalInstall=true;return true}
   }catch(e){}
@@ -11193,9 +11260,11 @@ async function syncInstallState(){
   }
   if(locked){
    const dbSt=await syncInstallStatusFromDBDetail();
+   const localReason=(()=>{try{return String(localStorage.getItem("nasr_app_uninstalled_reason")||"")}catch(e){return ""}})();
+   const isBogusRelatedLock=/related_apps_removed|os_removed/i.test(localReason)||/related_apps_removed|os_removed/i.test(dbSt.reason||"");
    const localUninstAt=(()=>{try{return Number(localStorage.getItem("nasr_app_uninstalled_at")||0)||0}catch(e){return 0}})();
-   if(dbSt.installed&&!dbSt.uninstalled&&dbSt.at>localUninstAt&&!promptPending){
-    persistAllLocalInstallFlags(false);
+   if((dbSt.installed&&!dbSt.uninstalled&&dbSt.at>localUninstAt&&!promptPending)||(isBogusRelatedLock&&!promptPending)){
+    markAppInstalled("recover_false_uninstall",false);
     window.__nasrSessionHadLocalInstall=true;
     return true;
    }
@@ -11232,16 +11301,17 @@ async function syncInstallState(){
 
   try{
    const dbSt=await syncInstallStatusFromDBDetail();
-   if(dbSt.uninstalled){
-    clearLocalInstallFlagsForUninstall();
+   const isBogusDbLock=dbSt.uninstalled&&/related_apps_removed|os_removed/i.test(dbSt.reason||"");
+   if(dbSt.uninstalled&&!isBogusDbLock){
+    clearLocalInstallFlagsForUninstall(dbSt.reason||"db_uninstalled");
     return false;
    }
-   if(dbSt.installed){
+   if(dbSt.installed||isBogusDbLock){
     if(promptPending){
      await handleConfirmedAppUninstall("boot_db_prompt_pending");
      return false;
     }
-    persistAllLocalInstallFlags(false);
+    markAppInstalled(isBogusDbLock?"recover_false_uninstall":"db_synced",false);
     return true;
    }
   }catch(e){}
@@ -11501,18 +11571,6 @@ async function runSilentDeviceAppInspection(trigger){
       window.__nasrDeviceAuditStatus="healthy";
       return finish({status:"healthy",reason:"os_apps_present",trigger});
      }
-     let osWasSeen=false;
-     try{
-      osWasSeen=(localStorage.getItem("nasr_os_app_seen")==="1"||getCookie("nasr_os_app")==="1"||(await idbGet("nasr_os_app_seen"))==="1");
-     }catch(e){}
-     if((osWasSeen||(!hasCustomUrl&&manifestRelatedOk))&&Array.isArray(apps)&&apps.length===0&&document.visibilityState==="visible"&&(!confirmedAt||Date.now()-confirmedAt>6000)){
-      await new Promise(r=>setTimeout(r,320));
-      const apps2=await navigator.getInstalledRelatedApps();
-      if(Array.isArray(apps2)&&apps2.length===0){
-       await handleConfirmedAppUninstall("audit_3s_os_removed");
-       return finish({status:"uninstalled",reason:"os_related_apps_removed",trigger});
-      }
-     }
     }
    }catch(e){}
 
@@ -11664,9 +11722,6 @@ window.addEventListener("appinstalled",()=>{
  document.querySelectorAll(".app-invite-ov").forEach(x=>x.remove());
  if(typeof hideMandatoryAppGate==="function")hideMandatoryAppGate(true);
  if(typeof view!=="undefined"&&view.type==="app-download"&&typeof renderPage==="function")renderPage();
- if(typeof detectPlatform==="function"&&detectPlatform()==="app"){
-  setTimeout(()=>{if(typeof window.showNotifPermissionPrompt==="function")window.showNotifPermissionPrompt(true)},900);
- }
 });
 window.addEventListener("beforeinstallprompt",e=>{
  e.preventDefault();
@@ -11716,6 +11771,28 @@ async function triggerNativeInstallPrompt(){
    window.__installPromptFired=false;
   }
  }
+ if(detectPlatform()==="app"){
+  markAppInstalled("app_launch",false);
+  return"already_installed";
+ }
+ try{
+  const checks=await Promise.allSettled([
+   typeof window.pingInstalledAppBridge==="function"?window.pingInstalledAppBridge(260):Promise.resolve(false),
+   typeof navigator.getInstalledRelatedApps==="function"?navigator.getInstalledRelatedApps():Promise.resolve([]),
+   typeof syncInstallStatusFromDBDetail==="function"?syncInstallStatusFromDBDetail():Promise.resolve({})
+  ]);
+  const bridgeOk=checks[0].status==="fulfilled"&&!!checks[0].value;
+  const relApps=checks[1].status==="fulfilled"&&Array.isArray(checks[1].value)?checks[1].value:[];
+  const dbSt=(checks[2].status==="fulfilled"&&checks[2].value)||{};
+  if(bridgeOk||relApps.length>0){
+   markAppInstalled("pwa_already_present",true);
+   return"already_installed";
+  }
+  if(!window.__installPromptFired&&dbSt.installed&&!dbSt.uninstalled){
+   markAppInstalled("pwa_already_present",true);
+   return"already_installed";
+  }
+ }catch(e){}
  if("serviceWorker" in navigator){
   try{
    if(!window.__swRegObj){
@@ -11723,12 +11800,18 @@ async function triggerNativeInstallPrompt(){
    }
   }catch(e){}
   if(typeof nudgeChromiumInstallabilityCheck==="function")nudgeChromiumInstallabilityCheck();
-  for(let i=0;i<6&&!p;i++){
+  for(let i=0;i<9&&!p;i++){
    await new Promise(r=>setTimeout(r,120));
    p=deferredInstallPrompt||window.__deferredInstallPrompt;
   }
  }
- if(!p)return"manual_guide";
+ if(!p){
+  if(!window.__installPromptFired&&(isAppInstalledLocally()||wasAlreadyKnownBeforeBoot)){
+   markAppInstalled("pwa_already_present",true);
+   return"already_installed";
+  }
+  return"manual_guide";
+ }
  try{
   p.prompt();
   const choice=await p.userChoice;
@@ -11828,7 +11911,7 @@ function showAppInviteModal(){
   const res=await window.performDirectAppDownload("optional_invite");
   if(res.status==="accepted"){
    ov.remove();
-   if(typeof okToast==="function")okToast("✅ تم تثبيت تطبيق نسر البرية على جهازك بنجاح!");
+   if(typeof okToast==="function")okToast(res.alreadyInstalled?"✅ التطبيق مثبّت بالفعل على جهازك — يمكنك استخدامه مباشرة!":"✅ تم تثبيت تطبيق نسر البرية على جهازك بنجاح!");
    return;
   }
   if(res.status==="external"){
@@ -11881,9 +11964,6 @@ function showAppUpdateModal(targetVer,swReg,isRemote){
  </div>`;
  const dismiss=()=>{
   updateDismissedThisView=true;ov.remove();
-  if(typeof detectPlatform==="function"&&detectPlatform()==="app"&&typeof window.scheduleNotifPrompt==="function"){
-   window.scheduleNotifPrompt(900);
-  }
  };
  ov.querySelector(".app-invite-x").onclick=dismiss;
  ov.querySelector(".app-invite-skip").onclick=dismiss;
@@ -12082,12 +12162,9 @@ window.renderAppDownloadPage=function(container){
    nowBtn.disabled=false;
    if(res.status==="accepted"){
     nowBtn.className="dl-btn installed";
-    nowBtn.textContent="🚀 تم التثبيت بنجاح — فتح المتجر الآن";
-    guideMsg.textContent="ممتاز! تم تثبيت تطبيق نسر البرية على جهازك بنجاح.";
+    nowBtn.textContent=res.alreadyInstalled?"🚀 التطبيق مثبّت بالفعل — فتح المتجر الآن":"🚀 تم التثبيت بنجاح — فتح المتجر الآن";
+    guideMsg.textContent=res.alreadyInstalled?"التطبيق مثبّت بالفعل على جهازك ويعمل بأحدث إصدار.":"ممتاز! تم تثبيت تطبيق نسر البرية على جهازك بنجاح.";
     if(typeof hideMandatoryAppGate==="function")hideMandatoryAppGate(true);
-    if(typeof detectPlatform==="function"&&detectPlatform()==="app"){
-     setTimeout(()=>{if(typeof window.showNotifPermissionPrompt==="function")window.showNotifPermissionPrompt(true)},900);
-    }
     return;
    }
    nowBtn.textContent=prevTx;
@@ -12164,13 +12241,11 @@ function scheduleAppInvite(){
    }catch(e){}
    if(typeof okToast==="function")okToast("✅ تم تحديث التطبيق إلى النسخة الأسرع والأخف بنجاح!");
    else if(typeof toast==="function")toast("✅ تم تحديث التطبيق إلى النسخة الأسرع والأخف بنجاح!");
-   if(detectPlatform()==="app"&&typeof window.scheduleNotifPrompt==="function")window.scheduleNotifPrompt(600);
    return;
   }
   if(detectPlatform()==="app"){
-   const showedUpd=await checkInstalledVersionChange();
+   await checkInstalledVersionChange();
    window.__nasrInviteFlowDone=true;
-   if(!showedUpd&&typeof window.scheduleNotifPrompt==="function")window.scheduleNotifPrompt(600);
    return;
   }
   const installed=await syncInstallState();
@@ -13389,9 +13464,9 @@ function renderAdDots(){
  const box=$("bbDots"),prevBtn=$("bbPrevBtn"),nextBtn=$("bbNextBtn");
  if(!box)return;
  const many=activeAds.length>1;
- if(prevBtn)prevBtn.classList.toggle("hidden",!many);
- if(nextBtn)nextBtn.classList.toggle("hidden",!many);
- box.innerHTML=many?activeAds.map((_,i)=>`<button type="button" class="${i===curAdIdx?"on":""}" data-bb-dot="${i}" aria-label="إعلان ${i+1}"></button>`).join(""):"";
+ if(prevBtn)prevBtn.classList.add("hidden");
+ if(nextBtn)nextBtn.classList.add("hidden");
+ box.innerHTML=many?activeAds.map((_,i)=>`<span class="${i===curAdIdx?"on":""}" aria-hidden="true"></span>`).join(""):"";
 }
 
 function scheduleNextCycle(){
@@ -13429,6 +13504,7 @@ adsEngineReady=true;
 function syncAdsPlaybackAndAdmin(){
  activeAds=filterValidBillboardAds(rawAdsList);
  window.__nasrAdsActiveCount=activeAds.length;
+ window.__nasrBillboardAdsSnapshot=activeAds.map(a=>({title:a.title||"",link:a.link||""}));
  activeAds.forEach(a=>preloadAdMeta(a.url));
  const sec=$("billboardAdsSection"),stage=$("bbStage"),emptyEl=$("bbEmptyState"),addBtn=$("bbEmptyAddBtn");
  const mainImg=$("bbMainImg"),bgImg=$("bbBgImg"),asm=$("bbAssembly");
@@ -13476,9 +13552,9 @@ window.applyBillboardAdsRaw=function(raw){
  }catch(e){}
 };
 
-/* التفاعل على شاشة الإعلانات */
+/* التفاعل على شاشة الإعلانات (تدوير تلقائي فقط بين الإعلانات بدون تقليب يدوي) */
 (function initBillboardInteractions(){
- const stage=$("bbStage"),dots=$("bbDots"),prev=$("bbPrevBtn"),next=$("bbNextBtn"),emptyAdd=$("bbEmptyAddBtn");
+ const stage=$("bbStage"),emptyAdd=$("bbEmptyAddBtn");
  if(emptyAdd){
   emptyAdd.addEventListener("click",e=>{
    e.stopPropagation();
@@ -13495,28 +13571,10 @@ window.applyBillboardAdsRaw=function(raw){
   });
  }
  if(!stage)return;
- if(prev)prev.onclick=e=>{e.stopPropagation();if(activeAds.length>1)advanceBillboardWithIntermission(curAdIdx-1)};
- if(next)next.onclick=e=>{e.stopPropagation();if(activeAds.length>1)advanceBillboardWithIntermission(curAdIdx+1)};
- if(dots)dots.onclick=e=>{
-  const b=e.target.closest("[data-bb-dot]");
-  if(b){e.stopPropagation();const i=Number(b.dataset.bbDot);if(i!==curAdIdx)advanceBillboardWithIntermission(i)}
- };
- let touchStartX=null;
  stage.addEventListener("pointerenter",e=>{if(e.pointerType==="mouse")adHoldPause=true});
  stage.addEventListener("pointerleave",e=>{if(e.pointerType==="mouse")adHoldPause=false});
- stage.addEventListener("touchstart",e=>{adHoldPause=true;touchStartX=e.touches&&e.touches[0]?e.touches[0].clientX:null},{passive:true});
- stage.addEventListener("touchend",e=>{
-  adHoldPause=false;
-  if(touchStartX!=null&&e.changedTouches&&e.changedTouches[0]){
-   const dx=e.changedTouches[0].clientX-touchStartX;
-   if(Math.abs(dx)>45&&activeAds.length>1){
-    advanceBillboardWithIntermission(dx>0?curAdIdx-1:curAdIdx+1);
-   }
-  }
-  touchStartX=null;
- },{passive:true});
  stage.addEventListener("click",e=>{
-  if(e.target.closest(".bb-nav-btn,[data-bb-dot],#bbEmptyAddBtn"))return;
+  if(e.target.closest("#bbEmptyAddBtn"))return;
   const ad=activeAds[curAdIdx];
   if(!ad)return;
   if(ad.link&&/^https?:\/\//i.test(ad.link)){
@@ -13779,11 +13837,11 @@ renderStripToggleCards();
 })();
 </script>
 <style data-nasr-services-v1="1">
-/* ===== تطوير قسم الخدمات – المرحلة الأولى (باقات الموبايل: نت ومكالمات) ===== */
-.svcp{background:#fff;color:#0b1030}
+/* ===== تطوير قسم الخدمات – المرحلة الأولى (واجهة احترافية متكاملة) ===== */
+.svcp{background:#f8fafc;color:#0b1030}
 body:not(.light) .svcp{background:var(--bg);color:#fff}
-.svcp .wp-top{background:inherit;border-bottom:1px solid rgba(15,23,42,.08)}
-body:not(.light) .svcp .wp-top{border-bottom-color:rgba(255,255,255,.1)}
+.svcp .wp-top{background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid rgba(15,23,42,.08)}
+body:not(.light) .svcp .wp-top{background:rgba(8,9,27,.9);border-bottom-color:rgba(255,255,255,.1)}
 .svcp .wp-x{background:#000!important;color:#fff!important;border:2px solid #000!important}
 body:not(.light) .svcp .wp-x{border-color:rgba(255,255,255,.45)!important;box-shadow:0 4px 14px rgba(0,0,0,.5)}
 .svcp .wp-title{
@@ -13797,119 +13855,202 @@ body:not(.light) .svcp .wp-title{
 }
 .svcp-sub{
  text-align:center;font-size:clamp(12px,3.2vw,14px);font-weight:800;color:#475569;
- margin:6px auto 4px;padding:0 14px;line-height:1.7;
+ margin:8px auto 4px;padding:0 14px;line-height:1.7;
 }
 body:not(.light) .svcp-sub{color:#aab5d2}
 .svcp-chip-bar{
  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;
- padding:8px 14px 4px;width:min(960px,100%);margin-inline:auto;
+ padding:10px 14px 4px;width:min(960px,100%);margin-inline:auto;
 }
 .svcp-chip{
- display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:999px;
- font-size:12px;font-weight:800;background:#eef2ff;color:#1e293b;border:1px solid #cbd5e1;
+ display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;
+ font-size:12px;font-weight:800;background:#fff;color:#1e293b;border:1.5px solid #cbd5e1;
+ box-shadow:0 2px 8px rgba(15,23,42,.05);
 }
 body:not(.light) .svcp-chip{background:#151936;color:#e2e8f0;border-color:rgba(0,217,255,.32)}
-.svcp-chip.action{cursor:pointer;border-color:#087bff66;color:#087bff;background:#087bff12}
+.svcp-chip.action{cursor:pointer;border-color:#087bff66;color:#087bff;background:#087bff12;transition:transform .15s ease}
+.svcp-chip.action:hover{transform:translateY(-1px)}
 body:not(.light) .svcp-chip.action{color:#38bdf8;border-color:#38bdf866;background:#38bdf818}
 
 .svc-types-grid{
- width:min(960px,100%);margin-inline:auto;padding:12px 12px calc(30px + env(safe-area-inset-bottom));
- display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-content:start;flex:1;min-height:0;overflow-y:auto;
+ width:min(960px,100%);margin-inline:auto;padding:14px 12px calc(30px + env(safe-area-inset-bottom));
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-content:start;flex:1;min-height:0;overflow-y:auto;
 }
 .svc-type-card{
- --bc:var(--c1);padding:20px 12px 18px;border-radius:22px;text-align:center;
- background:linear-gradient(160deg,#ffffff,#f1f4fb);color:#0b1030;
- border:2px solid var(--bc);box-shadow:0 8px 22px color-mix(in srgb,var(--bc) 24%,transparent);
- display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:10px;
- cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;
+ --bc:#087bff;padding:22px 12px 18px;border-radius:24px;text-align:center;position:relative;overflow:hidden;
+ background:linear-gradient(165deg,#ffffff,#f1f5fe);color:#0b1030;
+ border:2px solid color-mix(in srgb,var(--bc) 68%,transparent);
+ box-shadow:0 10px 26px color-mix(in srgb,var(--bc) 20%,transparent);
+ display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:11px;
+ cursor:pointer;transition:transform .2s ease,box-shadow .2s ease;
 }
-.svc-type-card:nth-child(2n){--bc:var(--c2)}
-.svc-type-card:hover{transform:translateY(-2px);box-shadow:0 12px 26px color-mix(in srgb,var(--bc) 34%,transparent)}
+.svc-type-card:nth-child(2n){--bc:#10b981}
+.svc-type-card:hover{transform:translateY(-3px);box-shadow:0 16px 34px color-mix(in srgb,var(--bc) 30%,transparent)}
 body:not(.light) .svc-type-card{
- background:linear-gradient(160deg,#151936,#0b0d21);color:#fff;
- box-shadow:0 8px 22px color-mix(in srgb,var(--bc) 28%,transparent);
+ background:linear-gradient(165deg,#171c3d,#0c0f24);color:#fff;
+ box-shadow:0 10px 26px color-mix(in srgb,var(--bc) 26%,transparent);
 }
 .svc-type-ic{
- width:66px;height:66px;border-radius:20px;display:grid;place-items:center;
- background:linear-gradient(135deg,color-mix(in srgb,var(--bc) 18%,transparent),rgba(255,255,255,.06));
- border:1.5px solid color-mix(in srgb,var(--bc) 45%,transparent);
+ width:82px;height:82px;border-radius:24px;display:grid;place-items:center;
+ background:transparent;border:none;filter:drop-shadow(0 8px 18px color-mix(in srgb,var(--bc) 38%,transparent));
+ transition:transform .22s ease;
 }
-.svc-type-ic svg{width:38px;height:38px;display:block}
+.svc-type-card:hover .svc-type-ic{transform:scale(1.06) translateY(-2px)}
+.svc-type-ic svg{width:76px;height:76px;display:block}
 .svc-type-desc{font-size:clamp(11.5px,3vw,13px);font-weight:700;color:#475569;line-height:1.6}
 body:not(.light) .svc-type-desc{color:#aab5d2}
 
-/* شبكة الشركات 2×2 */
+/* شبكة الشركات 2×2 بشعارات رسمية مطابقة */
 .svc-op-grid{
- width:min(760px,100%);margin-inline:auto;padding:12px 14px calc(30px + env(safe-area-inset-bottom));
+ width:min(760px,100%);margin-inline:auto;padding:14px 14px calc(30px + env(safe-area-inset-bottom));
  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-content:start;flex:1;min-height:0;overflow-y:auto;
 }
 .svc-op-card{
- --op-c:var(--c1);
- padding:18px 12px 16px;border-radius:22px;background:linear-gradient(160deg,#ffffff,#f3f6fc);
- color:#0b1030;border:2px solid var(--op-c);
- box-shadow:0 8px 22px color-mix(in srgb,var(--op-c) 22%,transparent);
+ --op-c:var(--c1);padding:18px 12px 16px;border-radius:24px;position:relative;overflow:hidden;
+ background:linear-gradient(165deg,#ffffff,#f4f7fc);
+ color:#0b1030;border:2px solid color-mix(in srgb,var(--op-c) 65%,transparent);
+ box-shadow:0 10px 24px color-mix(in srgb,var(--op-c) 18%,transparent);
  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
- cursor:pointer;text-align:center;transition:transform .18s ease,box-shadow .18s ease;
+ cursor:pointer;text-align:center;transition:transform .2s ease,box-shadow .2s ease;
 }
-.svc-op-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px color-mix(in srgb,var(--op-c) 34%,transparent)}
-body:not(.light) .svc-op-card{background:linear-gradient(160deg,#151936,#0b0d21);color:#fff}
+.svc-op-card::before{
+ content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--op-c);opacity:.9;
+}
+.svc-op-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px color-mix(in srgb,var(--op-c) 30%,transparent)}
+body:not(.light) .svc-op-card{background:linear-gradient(165deg,#171c3d,#0c0f24);color:#fff}
 .svc-op-logo{
- width:96px;height:72px;border-radius:16px;background:#fff;padding:8px 10px;
+ width:118px;height:78px;border-radius:18px;background:#fff;padding:6px 8px;
  display:flex;align-items:center;justify-content:center;
- border:1.5px solid rgba(15,23,42,.08);box-shadow:0 4px 14px rgba(15,23,42,.08);
+ border:1.5px solid rgba(15,23,42,.09);box-shadow:0 6px 16px rgba(15,23,42,.1);
 }
-.svc-op-logo svg{max-width:100%;max-height:100%;width:auto;height:auto;display:block}
+.svc-op-logo svg{width:100%;height:100%;display:block}
 .svc-op-name{font-size:clamp(14px,3.6vw,17px);font-weight:900;line-height:1.45}
 .svc-op-sub{font-size:11.5px;font-weight:800;color:#64748b}
 body:not(.light) .svc-op-sub{color:#aab5d2}
 
-/* بطاقات الباقات المتاحة */
+/* بانر وبطاقات الباقات العالمية */
+.svc-pkg-banner{
+ --op-c:#087bff;
+ width:min(932px,calc(100% - 28px));margin:10px auto 2px;padding:14px 16px;border-radius:22px;
+ background:linear-gradient(135deg,#ffffff,color-mix(in srgb,var(--op-c) 8%,#f8fafc));
+ border:2px solid color-mix(in srgb,var(--op-c) 45%,transparent);
+ box-shadow:0 10px 26px color-mix(in srgb,var(--op-c) 16%,transparent);
+ display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;
+}
+body:not(.light) .svc-pkg-banner{
+ background:linear-gradient(135deg,#171c3d,color-mix(in srgb,var(--op-c) 18%,#0c0f24));
+ border-color:color-mix(in srgb,var(--op-c) 55%,transparent);
+}
+.svc-pkg-b-brand{display:flex;align-items:center;gap:12px;min-width:0}
+.svc-pkg-b-logo{
+ width:76px;height:52px;border-radius:14px;background:#fff;padding:4px 6px;flex:none;
+ display:flex;align-items:center;justify-content:center;
+ border:1.5px solid rgba(15,23,42,.1);box-shadow:0 4px 12px rgba(15,23,42,.12);
+}
+.svc-pkg-b-logo svg{width:100%;height:100%;display:block}
+.svc-pkg-b-txt h4{margin:0;font-size:clamp(14.5px,3.8vw,17px);font-weight:900;color:inherit}
+.svc-pkg-b-txt p{margin:2px 0 0;font-size:12px;font-weight:800;color:#475569}
+body:not(.light) .svc-pkg-b-txt p{color:#cbd5e1}
+.svc-pkg-b-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.svc-pkg-b-price{
+ padding:7px 15px;border-radius:999px;font-size:14px;font-weight:900;
+ background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;font-variant-numeric:tabular-nums;
+ box-shadow:0 6px 16px rgba(22,163,74,.28);
+}
+.svc-pkg-edit-btn{
+ padding:7px 14px;border-radius:999px;font-size:12.5px;font-weight:900;cursor:pointer;
+ background:#fff;color:#0b1030;border:1.5px solid #cbd5e1;transition:transform .15s ease;
+}
+.svc-pkg-edit-btn:hover{transform:translateY(-1px)}
+body:not(.light) .svc-pkg-edit-btn{background:#1e293b;color:#fff;border-color:rgba(255,255,255,.24)}
+
 .svc-pkg-grid{
- width:min(960px,100%);margin-inline:auto;padding:12px 14px calc(30px + env(safe-area-inset-bottom));
- display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;align-content:start;flex:1;min-height:0;overflow-y:auto;
+ width:min(960px,100%);margin-inline:auto;padding:12px 14px calc(32px + env(safe-area-inset-bottom));
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-content:start;flex:1;min-height:0;overflow-y:auto;
 }
 @media(max-width:560px){.svc-pkg-grid{grid-template-columns:1fr}}
 .svc-pkg-card{
- --bc:var(--c5);padding:16px 14px;border-radius:20px;text-align:right;
- background:linear-gradient(160deg,#ffffff,#f3f6fc);color:#0b1030;
- border:2px solid var(--bc);box-shadow:0 8px 20px color-mix(in srgb,var(--bc) 20%,transparent);
- display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;
+ --bc:#087bff;position:relative;overflow:hidden;padding:18px 15px 15px;border-radius:24px;text-align:right;
+ background:linear-gradient(165deg,#ffffff,#f4f7fd);color:#0b1030;
+ border:2px solid color-mix(in srgb,var(--bc) 60%,transparent);
+ box-shadow:0 10px 26px color-mix(in srgb,var(--bc) 18%,transparent);
+ display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease;
 }
-.svc-pkg-card:hover{transform:translateY(-2px);box-shadow:0 12px 26px color-mix(in srgb,var(--bc) 32%,transparent)}
-body:not(.light) .svc-pkg-card{background:linear-gradient(160deg,#151936,#0b0d21);color:#fff}
-.svc-pkg-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.svc-pkg-title{font-size:clamp(15px,3.8vw,17.5px);font-weight:900;line-height:1.45}
+.svc-pkg-card::before{
+ content:"";position:absolute;inset:0 0 auto 0;height:4px;
+ background:linear-gradient(90deg,var(--bc),color-mix(in srgb,var(--bc) 45%,#38bdf8));
+}
+.svc-pkg-card:hover{transform:translateY(-3px);box-shadow:0 16px 34px color-mix(in srgb,var(--bc) 28%,transparent)}
+body:not(.light) .svc-pkg-card{
+ background:linear-gradient(165deg,#171c3d,#0c0f24);color:#fff;
+ box-shadow:0 12px 28px color-mix(in srgb,var(--bc) 24%,transparent);
+}
+.svc-pkg-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.svc-pkg-op-tag{
+ display:inline-flex;align-items:center;gap:7px;font-size:clamp(13.5px,3.6vw,15.5px);font-weight:900;line-height:1.4;
+}
+.svc-pkg-op-dot{width:10px;height:10px;border-radius:50%;background:var(--bc);flex:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--bc) 24%,transparent)}
 .svc-pkg-price{
- flex:none;padding:5px 13px;border-radius:999px;font-size:14px;font-weight:900;
+ flex:none;padding:6px 14px;border-radius:999px;font-size:14px;font-weight:900;
  background:#ecfaf2;color:#0b7a46;border:1.5px solid #16a34a66;font-variant-numeric:tabular-nums;
 }
 body:not(.light) .svc-pkg-price{background:#064e3b;color:#6ee7b7;border-color:#10b98188}
-.svc-pkg-meta{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:700;color:#334155}
-body:not(.light) .svc-pkg-meta{color:#cbd5e1}
-.svc-pkg-meta b{color:#0f172a}
-body:not(.light) .svc-pkg-meta b{color:#fff}
-.svc-pkg-cta{
- margin-top:auto;padding:10px 18px;border-radius:999px;border:2px solid #15803d;
- background:#16a34a;color:#fff!important;-webkit-text-fill-color:#fff!important;
- font-size:14px;font-weight:900;text-align:center;cursor:pointer;box-shadow:0 6px 16px rgba(22,163,74,.32);
+.svc-pkg-vol-hero{
+ padding:12px 14px;border-radius:16px;text-align:center;
+ background:linear-gradient(135deg,color-mix(in srgb,var(--bc) 10%,#f8fafc),color-mix(in srgb,var(--bc) 4%,#fff));
+ border:1.5px solid color-mix(in srgb,var(--bc) 28%,transparent);
 }
+body:not(.light) .svc-pkg-vol-hero{
+ background:linear-gradient(135deg,color-mix(in srgb,var(--bc) 22%,#0f172a),rgba(15,23,42,.85));
+ border-color:color-mix(in srgb,var(--bc) 40%,transparent);
+}
+.svc-pkg-vol-lbl{font-size:11px;font-weight:800;color:#64748b;margin-bottom:2px}
+body:not(.light) .svc-pkg-vol-lbl{color:#94a3b8}
+.svc-pkg-vol-val{
+ font-size:clamp(21px,5.6vw,27px);font-weight:900;letter-spacing:-.2px;line-height:1.25;
+ color:var(--bc);font-variant-numeric:tabular-nums;
+}
+body:not(.light) .svc-pkg-vol-val{color:#fff;text-shadow:0 2px 12px color-mix(in srgb,var(--bc) 45%,transparent)}
+.svc-pkg-specs{display:flex;flex-wrap:wrap;gap:7px}
+.svc-spec-pill{
+ flex:1 1 auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+ padding:7px 11px;border-radius:12px;font-size:12px;font-weight:800;
+ background:#f1f5f9;color:#1e293b;border:1px solid #cbd5e1;
+}
+body:not(.light) .svc-spec-pill{background:rgba(255,255,255,.06);color:#e2e8f0;border-color:rgba(255,255,255,.14)}
+.svc-spec-pill.ok{background:#ecfdf5;color:#047857;border-color:#a7f3d0}
+body:not(.light) .svc-spec-pill.ok{background:rgba(16,185,129,.16);color:#6ee7b7;border-color:rgba(16,185,129,.35)}
+.svc-pkg-cta{
+ margin-top:auto;padding:12px 18px;border-radius:999px;border:2px solid #15803d;
+ background:linear-gradient(135deg,#22c55e,#16a34a 60%,#15803d);color:#fff!important;-webkit-text-fill-color:#fff!important;
+ font-size:14.5px;font-weight:900;text-align:center;cursor:pointer;
+ box-shadow:0 8px 20px rgba(22,163,74,.34);transition:filter .16s ease,transform .16s ease;
+}
+.svc-pkg-cta:hover{filter:brightness(1.06);transform:translateY(-1px)}
 
-/* نوافذ الإدخال الصغيرة (السعر / رقم الهاتف) */
+/* نوافذ الإدخال الاحترافية (سعر الباقة / رقم الهاتف) */
 .svc-modal-ov{
- position:fixed;inset:0;z-index:2180;background:rgba(4,6,18,.76);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
+ position:fixed;inset:0;z-index:2180;background:rgba(4,6,18,.8);-webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);
  display:flex;align-items:center;justify-content:center;padding:16px;animation:pmFade .2s ease;direction:rtl;
 }
 .svc-modal-box{
- position:relative;width:min(440px,100%);max-height:calc(100dvh - 32px);overflow-y:auto;
- border-radius:24px;background:#fff;color:#0b1030;border:2px solid #e2e8f0;
- box-shadow:0 26px 70px rgba(0,0,0,.55);animation:pmUp .28s ease;
+ --op-c:#16a34a;position:relative;width:min(450px,100%);max-height:calc(100dvh - 32px);overflow-y:auto;
+ border-radius:26px;background:#fff;color:#0b1030;
+ border:2px solid color-mix(in srgb,var(--op-c) 55%,#cbd5e1);
+ box-shadow:0 28px 75px rgba(0,0,0,.58);animation:pmUp .28s ease;
 }
-body:not(.light) .svc-modal-box{background:var(--panel);color:#fff;border-color:var(--border)}
+.svc-modal-box::before{
+ content:"";display:block;height:5px;width:100%;background:linear-gradient(90deg,var(--op-c),#16a34a,var(--op-c));
+}
+body:not(.light) .svc-modal-box{
+ background:linear-gradient(170deg,#151936,#0a0d20);color:#fff;
+ border-color:color-mix(in srgb,var(--op-c) 60%,rgba(255,255,255,.16));
+}
 .svc-modal-hd{
- position:relative;padding:15px 54px;text-align:center;border-bottom:1px solid rgba(15,23,42,.1);
+ position:relative;padding:16px 56px;text-align:center;border-bottom:1px solid rgba(15,23,42,.08);
 }
 body:not(.light) .svc-modal-hd{border-bottom-color:rgba(255,255,255,.1)}
-.svc-modal-hd h3{margin:0;font-size:clamp(16px,4.2vw,19px);font-weight:900;line-height:1.45}
+.svc-modal-hd h3{margin:0;font-size:clamp(16px,4.3vw,19.5px);font-weight:900;line-height:1.45}
 .svc-modal-x{
  position:absolute;right:12px;top:50%;transform:translateY(-50%);
  width:38px;height:38px;border-radius:50%;background:#000!important;color:#fff!important;
@@ -13917,37 +14058,72 @@ body:not(.light) .svc-modal-hd{border-bottom-color:rgba(255,255,255,.1)}
  display:grid;place-items:center;padding:0 0 2px;font-family:Arial,sans-serif;cursor:pointer;
 }
 body:not(.light) .svc-modal-x{border-color:rgba(255,255,255,.45)!important}
-.svc-modal-bd{padding:18px 18px 20px;display:flex;flex-direction:column;gap:12px;text-align:center}
-.svc-modal-op-strip{
- display:inline-flex;align-items:center;justify-content:center;gap:10px;margin:0 auto;
- padding:7px 14px;border-radius:14px;background:#f8fafc;border:1.5px solid #e2e8f0;
- font-size:12.5px;font-weight:800;color:#0f172a;
+.svc-modal-bd{padding:18px 18px 22px;display:flex;flex-direction:column;gap:14px;text-align:center}
+.svc-modal-op-hero{
+ display:flex;align-items:center;justify-content:center;gap:12px;padding:10px 14px;border-radius:18px;
+ background:linear-gradient(135deg,color-mix(in srgb,var(--op-c) 10%,#f8fafc),#ffffff);
+ border:1.5px solid color-mix(in srgb,var(--op-c) 36%,#cbd5e1);
+ box-shadow:0 6px 18px color-mix(in srgb,var(--op-c) 14%,transparent);
 }
-body:not(.light) .svc-modal-op-strip{background:var(--panel2);border-color:var(--border);color:#fff}
-.svc-modal-op-strip .mini-logo{width:34px;height:24px;background:#fff;border-radius:6px;padding:2px 4px;display:grid;place-items:center}
-.svc-modal-op-strip .mini-logo svg{max-width:100%;max-height:100%}
-.svc-modal-illus{width:64px;height:64px;margin:0 auto;display:grid;place-items:center}
+body:not(.light) .svc-modal-op-hero{
+ background:linear-gradient(135deg,color-mix(in srgb,var(--op-c) 22%,#111633),rgba(11,14,34,.92));
+ border-color:color-mix(in srgb,var(--op-c) 48%,rgba(255,255,255,.14));
+}
+.svc-modal-op-hero .hero-logo{
+ width:78px;height:52px;background:#fff;border-radius:12px;padding:4px 6px;flex:none;
+ display:grid;place-items:center;border:1.5px solid rgba(15,23,42,.08);
+ box-shadow:0 4px 12px rgba(15,23,42,.12);
+}
+.svc-modal-op-hero .hero-logo svg{width:100%;height:100%;display:block}
+.svc-modal-op-hero .hero-txt{text-align:right;min-width:0}
+.svc-modal-op-hero .hero-op-name{font-size:14px;font-weight:900;line-height:1.35}
+.svc-modal-op-hero .hero-svc-name{font-size:12px;font-weight:800;color:#475569;margin-top:2px}
+body:not(.light) .svc-modal-op-hero .hero-svc-name{color:#cbd5e1}
+.svc-modal-illus{
+ width:82px;height:82px;margin:0 auto;display:grid;place-items:center;
+ filter:drop-shadow(0 8px 18px rgba(22,163,74,.25));
+}
 .svc-modal-illus svg{width:100%;height:100%}
 .svc-inp-wrap{
- display:flex;align-items:center;gap:8px;padding:4px 14px;border-radius:14px;
- border:2px solid #cbd5e1;background:#f8fafc;
+ display:flex;align-items:center;gap:10px;padding:6px 14px;border-radius:18px;
+ border:2px solid #cbd5e1;background:#f8fafc;transition:border-color .18s ease,box-shadow .18s ease;
 }
-.svc-inp-wrap:focus-within{border-color:#16a34a;box-shadow:0 0 0 3px rgba(22,163,74,.18)}
-body:not(.light) .svc-inp-wrap{background:var(--bg);border-color:var(--border)}
+.svc-inp-wrap:focus-within{
+ border-color:var(--op-c,#16a34a);
+ box-shadow:0 0 0 4px color-mix(in srgb,var(--op-c,#16a34a) 18%,transparent);
+}
+body:not(.light) .svc-inp-wrap{background:#080a19;border-color:rgba(255,255,255,.18)}
+.svc-inp-badge{
+ width:38px;height:38px;border-radius:12px;display:grid;place-items:center;flex:none;
+ background:linear-gradient(135deg,color-mix(in srgb,var(--op-c,#16a34a) 16%,#ecfdf5),color-mix(in srgb,var(--op-c,#16a34a) 6%,#fff));
+ border:1px solid color-mix(in srgb,var(--op-c,#16a34a) 35%,transparent);
+}
+body:not(.light) .svc-inp-badge{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14)}
 .svc-inp-wrap input{
  flex:1;min-width:0;border:0;outline:0;background:transparent;color:inherit;
- font-size:18px;font-weight:900;padding:11px 4px;text-align:center;font-variant-numeric:tabular-nums;
+ font-size:21px;font-weight:900;padding:10px 4px;text-align:center;font-variant-numeric:tabular-nums;
 }
-.svc-inp-unit{font-size:13px;font-weight:900;color:#64748b;flex-shrink:0}
-body:not(.light) .svc-inp-unit{color:#aab5d2}
+.svc-inp-unit{
+ font-size:13px;font-weight:900;padding:6px 12px;border-radius:11px;flex-shrink:0;
+ background:#e2e8f0;color:#0f172a;
+}
+body:not(.light) .svc-inp-unit{background:rgba(255,255,255,.1);color:#e2e8f0}
 .svc-hint-note{font-size:12px;font-weight:800;color:#475569;line-height:1.7}
 body:not(.light) .svc-hint-note{color:#aab5d2}
+.svc-trust-row{
+ display:flex;flex-wrap:wrap;justify-content:center;gap:6px;
+}
+.svc-trust-pill{
+ font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;
+ background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+}
+body:not(.light) .svc-trust-pill{background:rgba(255,255,255,.06);color:#cbd5e1;border-color:rgba(255,255,255,.12)}
 .svc-err{
  padding:10px 14px;border-radius:14px;background:#dc2626;border:2px solid #dc2626;
  color:#fff;-webkit-text-fill-color:#fff;font-size:12.5px;font-weight:900;line-height:1.7;text-align:center;
 }
 .svc-green-pill{
- width:100%;padding:13px 22px;border-radius:999px;border:2px solid #15803d;
+ width:100%;padding:14px 22px;border-radius:999px;border:2px solid #15803d;
  background:linear-gradient(135deg,#22c55e,#16a34a 55%,#15803d);
  color:#fff!important;-webkit-text-fill-color:#fff!important;
  font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 8px 22px rgba(22,163,74,.38);
@@ -13955,7 +14131,7 @@ body:not(.light) .svc-hint-note{color:#aab5d2}
 }
 .svc-green-pill:hover{filter:brightness(1.07);transform:translateY(-1px)}
 .svc-pkg-summary{
- padding:11px 14px;border-radius:16px;background:#f1f5f9;border:1.5px solid #cbd5e1;
+ padding:12px 14px;border-radius:16px;background:#f1f5f9;border:1.5px solid #cbd5e1;
  text-align:right;font-size:12.5px;font-weight:800;line-height:1.85;color:#0f172a;
 }
 body:not(.light) .svc-pkg-summary{background:var(--panel2);border-color:var(--border);color:#e2e8f0}
@@ -13972,13 +14148,13 @@ const SERVICE_TYPES=[
   id:"net",
   title:"باقات الموبايل (نت)",
   desc:"باقات الإنترنت والميجا بايت والوحدات والفليكس",
-  icon:'<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" stroke="#087bff" stroke-width="3"/><ellipse cx="24" cy="24" rx="9" ry="19" fill="none" stroke="#00d9ff" stroke-width="2.6"/><path d="M6 18h36M6 30h36" stroke="#a600ff" stroke-width="2.4" stroke-linecap="round"/></svg>'
+  icon:'<svg viewBox="0 0 80 80" aria-hidden="true"><defs><linearGradient id="svcNetCardBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00d2ff"/><stop offset="48%" stop-color="#3a7bd5"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient><linearGradient id="svcNetGlow" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fff" stop-opacity=".42"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></linearGradient><linearGradient id="svcNetGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="6" y="6" width="68" height="68" rx="22" fill="url(#svcNetCardBg)"/><path d="M12 24C24 10 56 10 68 24V18C68 11.4 62.6 6 56 6H24C17.4 6 12 11.4 12 18Z" fill="url(#svcNetGlow)"/><circle cx="40" cy="40" r="19" fill="none" stroke="#fff" stroke-width="2.8" stroke-opacity=".95"/><ellipse cx="40" cy="40" rx="9.5" ry="19" fill="none" stroke="#67e8f9" stroke-width="2.5"/><path d="M21 34h38M21 46h38" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-opacity=".9"/><circle cx="57" cy="23" r="8" fill="url(#svcNetGold)" stroke="#fff" stroke-width="2"/><path d="M54 23l2.2 2.2L60.5 21" fill="none" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
  },
  {
   id:"calls",
   title:"باقات الموبايل (مكالمات)",
   desc:"باقات الوحدات والفليكس للمكالمات لجميع الشبكات",
-  icon:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13.6 7.5h6.2a2.5 2.5 0 012.4 1.9l1.3 5.2a2.5 2.5 0 01-.7 2.4l-3.1 3a24 24 0 008.3 8.3l3-3.1a2.5 2.5 0 012.4-.7l5.2 1.3a2.5 2.5 0 011.9 2.4v6.2a3 3 0 01-3.2 3C19.8 39 9 28.2 9 10.7a3 3 0 013-3.2z" fill="#16a34a"/><path d="M29 10a10 10 0 019 9M29 15.5a4.5 4.5 0 013.5 3.5" fill="none" stroke="#00d9ff" stroke-width="2.8" stroke-linecap="round"/></svg>'
+  icon:'<svg viewBox="0 0 80 80" aria-hidden="true"><defs><linearGradient id="svcCallCardBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10b981"/><stop offset="52%" stop-color="#059669"/><stop offset="100%" stop-color="#0284c7"/></linearGradient><linearGradient id="svcCallWave" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#fb923c"/></linearGradient><linearGradient id="svcCallShine" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff" stop-opacity=".35"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect x="6" y="6" width="68" height="68" rx="22" fill="url(#svcCallCardBg)"/><rect x="6" y="6" width="68" height="32" rx="20" fill="url(#svcCallShine)"/><path d="M25.5 21h6.8a3 3 0 012.9 2.3l1.5 6a3 3 0 01-.8 2.8l-3.4 3.4a25 25 0 009.8 9.8l3.4-3.4a3 3 0 012.8-.8l6 1.5a3 3 0 012.3 2.9v6.8a3.4 3.4 0 01-3.6 3.4C33 57 23 47 22 24.4a3.4 3.4 0 013.5-3.4z" fill="#fff"/><path d="M44 21a16 16 0 0115 15M44 28.5a8.5 8.5 0 017.5 7.5" fill="none" stroke="url(#svcCallWave)" stroke-width="3.6" stroke-linecap="round"/><circle cx="58" cy="22" r="3" fill="#fde047"/></svg>'
  }
 ];
 
@@ -13989,7 +14165,7 @@ const OPERATORS=[
   arName:"فودافون مصر",
   prefix:"010",
   color:"#E60000",
-  logo:'<svg viewBox="0 0 120 80" aria-label="Vodafone Egypt"><circle cx="60" cy="40" r="34" fill="#E60000"/><path d="M63.5 14c-11.2 0-21.5 9.2-21.5 22.8 0 12.6 8.8 22.2 20.6 22.2 10.5 0 18.4-7.4 18.4-16.8 0-8.4-6.4-14.6-14.6-14.6-2.4 0-4.4.6-6.2 1.5.8-6.4 5.2-11 10.8-12.7-2.2-1.5-4.7-2.4-7.5-2.4z" fill="#fff"/></svg>'
+  logo:'<svg viewBox="0 0 120 78" aria-label="Vodafone Egypt"><rect width="120" height="78" rx="12" fill="#fff"/><circle cx="60" cy="30" r="22" fill="#E60000"/><circle cx="60" cy="30" r="17.2" fill="#fff"/><circle cx="57.2" cy="34.2" r="9.4" fill="#E60000"/><path d="M56.5 14.5c9.2 0 16.5 6.8 16.5 15.8 0 6-3 10.6-6.8 13 2.1-3.2 2.4-7.6.2-11.2-2-3.4-6-5-10.2-4.6 1.5-5.6 5.2-10.4.3-13z" fill="#E60000"/><text x="60" y="69" text-anchor="middle" fill="#E60000" font-family="system-ui,-apple-system,Arial,sans-serif" font-weight="800" font-size="14.5" letter-spacing=".3">vodafone</text></svg>'
  },
  {
   id:"orange",
@@ -13997,7 +14173,7 @@ const OPERATORS=[
   arName:"أورنج مصر",
   prefix:"012",
   color:"#FF7900",
-  logo:'<svg viewBox="0 0 120 80" aria-label="Orange Egypt"><rect x="20" y="6" width="80" height="68" rx="10" fill="#FF7900"/><text x="60" y="59" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-weight="900" font-size="18">orange</text></svg>'
+  logo:'<svg viewBox="0 0 120 78" aria-label="Orange Egypt"><rect width="120" height="78" rx="12" fill="#fff"/><rect x="26" y="5" width="68" height="68" rx="3" fill="#FF7900"/><text x="32" y="64.5" text-anchor="start" fill="#fff" font-family="Helvetica,Arial,sans-serif" font-weight="800" font-size="16.5" letter-spacing="-.2">orange</text><text x="86.5" y="57.5" fill="#fff" font-family="Arial,sans-serif" font-weight="700" font-size="5">™</text></svg>'
  },
  {
   id:"etisalat",
@@ -14005,7 +14181,7 @@ const OPERATORS=[
   arName:"إي آند (اتصالات)",
   prefix:"011",
   color:"#E00800",
-  logo:'<svg viewBox="0 0 140 80" aria-label="e& Egypt"><rect x="10" y="10" width="120" height="60" rx="14" fill="#E00800"/><text x="70" y="50" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-weight="900" font-size="34">e&amp;</text></svg>'
+  logo:'<svg viewBox="0 0 120 78" aria-label="e& Egypt"><rect width="120" height="78" rx="12" fill="#fff"/><rect x="14" y="6" width="92" height="50" rx="14" fill="#E00800"/><text x="60" y="42.5" text-anchor="middle" fill="#fff" font-family="Helvetica,Arial,sans-serif" font-weight="900" font-size="33" letter-spacing="-1">e&amp;</text><text x="60" y="70" text-anchor="middle" fill="#1e293b" font-family="Tahoma,Arial,sans-serif" font-weight="900" font-size="11">اتصالات · etisalat</text></svg>'
  },
  {
   id:"we",
@@ -14013,7 +14189,7 @@ const OPERATORS=[
   arName:"وي (المصرية للاتصالات)",
   prefix:"015",
   color:"#6F2C91",
-  logo:'<svg viewBox="0 0 120 80" aria-label="WE Egypt"><rect x="14" y="10" width="92" height="60" rx="14" fill="#6F2C91"/><text x="60" y="52" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-weight="900" font-size="34" letter-spacing="1">WE</text></svg>'
+  logo:'<svg viewBox="0 0 120 78" aria-label="WE Egypt"><defs><linearGradient id="svcWeBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#5c1d82"/><stop offset="100%" stop-color="#8b2fc9"/></linearGradient></defs><rect width="120" height="78" rx="12" fill="#fff"/><rect x="16" y="7" width="88" height="48" rx="14" fill="url(#svcWeBg)"/><path d="M25 22l7 20 8-15 8 15 7-20" fill="none" stroke="#fff" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M88 33H69c.4 5.2 4.2 8.2 9.4 8.2 3.2 0 5.6-1 7.6-2.6M69.2 31c.6-5.2 4.5-8.4 9.5-8.4 5.2 0 8.8 3.2 9.3 8.4" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><rect x="16" y="59" width="88" height="3.5" rx="2" fill="#e11d48"/><text x="60" y="73" text-anchor="middle" fill="#5c1d82" font-family="Tahoma,Arial,sans-serif" font-weight="900" font-size="9.5">المصرية للاتصالات</text></svg>'
  }
 ];
 
@@ -14147,6 +14323,8 @@ GENERAL_UNITS_BASE.forEach(u=>{
  });
 });
 
+window.__nasrTelecomPackages=PACKAGES;
+
 function getHomeServicesHeaderLogoSvg(){
  const srcSvg=document.querySelector("#servicesSection h2 svg");
  if(!srcSvg)return "";
@@ -14164,9 +14342,10 @@ function getHomeServicesHeaderLogoSvg(){
  return clone.outerHTML;
 }
 
-const TELECOM_HEADER_ICON='<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="11" y="5" width="26" height="38" rx="5" fill="#0f172a" stroke="#00d9ff" stroke-width="2.6"/><rect x="15" y="10" width="18" height="22" rx="2" fill="#1e293b"/><path d="M19 25v3M24 21v7M29 17v11" stroke="#22c55e" stroke-width="2.6" stroke-linecap="round"/><circle cx="24" cy="37.5" r="2" fill="#00d9ff"/></svg>';
-const PRICE_ILLUS='<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="16" width="48" height="32" rx="8" fill="#16a34a"/><rect x="13" y="21" width="38" height="22" rx="4" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.6"/><circle cx="32" cy="32" r="8" fill="#ffc52e"/><text x="32" y="36" text-anchor="middle" fill="#0b1030" font-size="11" font-weight="900">EGP</text></svg>';
-const PHONE_ILLUS='<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="18" y="6" width="28" height="52" rx="6" fill="#0f172a" stroke="#16a34a" stroke-width="2.6"/><rect x="22" y="12" width="20" height="34" rx="2" fill="#e2e8f0"/><circle cx="32" cy="51.5" r="2.2" fill="#22c55e"/><path d="M27 25h10M27 31h6" stroke="#16a34a" stroke-width="2.6" stroke-linecap="round"/></svg>';
+const TELECOM_HEADER_ICON='<svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="telHdG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00d9ff"/><stop offset="100%" stop-color="#22c55e"/></linearGradient></defs><rect x="11" y="5" width="26" height="38" rx="6" fill="#0f172a" stroke="url(#telHdG)" stroke-width="2.6"/><rect x="15" y="10" width="18" height="22" rx="3" fill="#1e293b"/><path d="M19 25v4M24 20v9M29 15v14" stroke="#22c55e" stroke-width="2.6" stroke-linecap="round"/><circle cx="24" cy="37.5" r="2.2" fill="#00d9ff"/></svg>';
+const PRICE_ILLUS='<svg viewBox="0 0 84 84" aria-hidden="true"><defs><linearGradient id="prNoteBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22c55e"/><stop offset="100%" stop-color="#059669"/></linearGradient><linearGradient id="prCoin" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="8" y="20" width="62" height="40" rx="11" fill="url(#prNoteBg)"/><rect x="13" y="25" width="52" height="30" rx="7" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.8"/><circle cx="39" cy="40" r="11" fill="#ecfdf5" fill-opacity=".22"/><text x="39" y="45" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="13.5" font-weight="900">EGP</text><circle cx="64" cy="24" r="13" fill="url(#prCoin)" stroke="#fff" stroke-width="2.2"/><text x="64" y="28.5" text-anchor="middle" fill="#0f172a" font-family="Arial,sans-serif" font-size="13" font-weight="900">£</text></svg>';
+const PRICE_INP_BADGE='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3" fill="#16a34a"/><circle cx="12" cy="12" r="3.5" fill="#fde047"/></svg>';
+const PHONE_ILLUS='<svg viewBox="0 0 84 84" aria-hidden="true"><defs><linearGradient id="phBody" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1e293b"/><stop offset="100%" stop-color="#0f172a"/></linearGradient><linearGradient id="phScr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#22c55e"/></linearGradient></defs><rect x="24" y="7" width="36" height="70" rx="9" fill="url(#phBody)" stroke="#22c55e" stroke-width="2.8"/><rect x="29" y="14" width="26" height="47" rx="4" fill="url(#phScr)"/><path d="M35 31h14M35 38h9" stroke="#fff" stroke-width="3" stroke-linecap="round"/><circle cx="42" cy="68.5" r="2.8" fill="#22c55e"/></svg>';
 
 function normalizeDigits(str){
  return String(str||"").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d));
@@ -14282,7 +14461,7 @@ window.openServicesCatalogPage=function(){
   <div class="svcp-sub">اختر الخدمة المطلوبة لعرض الشبكات والباقات المتاحة</div>
   <div class="svc-types-grid">
    ${SERVICE_TYPES.map((s,idx)=>`
-    <div class="svc-type-card" data-svc-type="${esc(s.id)}" role="button" tabindex="0" style="--bc:${idx===0?"var(--c1)":"var(--c2)"}">
+    <div class="svc-type-card" data-svc-type="${esc(s.id)}" role="button" tabindex="0" style="--bc:${idx===0?"#087bff":"#10b981"}">
      <div class="svc-type-ic">${s.icon}</div>
      <div class="wp-name">${esc(s.title)}</div>
      <div class="svc-type-desc">${esc(s.desc)}</div>
@@ -14372,25 +14551,33 @@ function openPriceInputModal(op){
  ov.setAttribute("aria-modal","true");
  ov.setAttribute("aria-label","اكتب سعر الباقة التي تريدها");
  ov.innerHTML=`
-  <div class="svc-modal-box">
+  <div class="svc-modal-box" style="--op-c:${op.color}">
    <div class="svc-modal-hd">
     <h3>اكتب سعر الباقة التي تريدها</h3>
     <button type="button" class="svc-modal-x" aria-label="إغلاق">×</button>
    </div>
    <div class="svc-modal-bd">
-    <div class="svc-modal-op-strip">
-     <span class="mini-logo">${op.logo}</span>
-     <span>${esc(op.name)} · ${esc(svcState.service.title)}</span>
+    <div class="svc-modal-op-hero">
+     <span class="hero-logo">${op.logo}</span>
+     <div class="hero-txt">
+      <div class="hero-op-name">${esc(op.name)} · ${esc(op.arName)}</div>
+      <div class="hero-svc-name">${esc(svcState.service.title)}</div>
+     </div>
     </div>
     <div class="svc-modal-illus">${PRICE_ILLUS}</div>
     <form id="svcPriceForm" novalidate style="display:flex;flex-direction:column;gap:12px">
      <div class="svc-inp-wrap">
+      <span class="svc-inp-badge" aria-hidden="true">${PRICE_INP_BADGE}</span>
       <input type="text" id="svcPriceInp" inputmode="decimal" dir="ltr" placeholder="مثال: 70" autocomplete="off">
       <span class="svc-inp-unit">جنيه</span>
      </div>
-     <div class="svc-hint-note">أدخل سعر البيع الكامل للباقة المطلوبة بالجنيه المصري</div>
+     <div class="svc-hint-note">أدخل سعر البيع الكامل للباقة المطلوبة بالجنيه المصري للعرض الفوري</div>
+     <div class="svc-trust-row">
+      <span class="svc-trust-pill">⚡ تفعيل سريع</span>
+      <span class="svc-trust-pill">🔒 أسعار بيع رسمية معتمدة</span>
+     </div>
      <div class="svc-err hidden" id="svcPriceErr"></div>
-     <button type="submit" class="svc-green-pill">التالي</button>
+     <button type="submit" class="svc-green-pill">عرض الباقات المتاحة ←</button>
     </form>
    </div>
   </div>`;
@@ -14451,28 +14638,42 @@ function openPackageSelectionPage(matches,price){
    <div class="wp-title">${TELECOM_HEADER_ICON}<span>اختر نوع الباقة</span></div>
    <button type="button" class="wp-x" aria-label="إغلاق">×</button>
   </div>
-  <div class="svcp-chip-bar">
-   <span class="svcp-chip">${esc(op.name)}</span>
-   <span class="svcp-chip">${esc(svcObj.title)}</span>
-   <span class="svcp-chip">السعر: ${price} جنيه</span>
+  <div class="svc-pkg-banner" style="--op-c:${op.color}">
+   <div class="svc-pkg-b-brand">
+    <span class="svc-pkg-b-logo">${op.logo}</span>
+    <div class="svc-pkg-b-txt">
+     <h4>${esc(op.name)} · ${esc(op.arName)}</h4>
+     <p>${esc(svcObj.title)} · متاح ${matches.length} ${matches.length===1?"باقة":"باقات"}</p>
+    </div>
+   </div>
+   <div class="svc-pkg-b-right">
+    <span class="svc-pkg-b-price">السعر: ${price} جنيه</span>
+    <button type="button" class="svc-pkg-edit-btn" id="svcEditPriceBtn">✏️ تعديل السعر</button>
+   </div>
   </div>
   <div class="svc-pkg-grid">
    ${matches.map((pkg,idx)=>`
     <div class="svc-pkg-card" data-pkg-idx="${idx}" role="button" tabindex="0" style="--bc:${op.color}">
      <div class="svc-pkg-head">
-      <div class="svc-pkg-title">${esc(pkg.packageName)}</div>
+      <div class="svc-pkg-op-tag"><span class="svc-pkg-op-dot"></span><span>${esc(pkg.packageName)}</span></div>
       <span class="svc-pkg-price">${pkg.sellingPrice} جنيه</span>
      </div>
-     <div class="svc-pkg-meta">
-      <div>📦 <b>السعة / الوحدات:</b> ${esc(pkg.volume)}</div>
-      ${pkg.validity?`<div>⏳ <b>الصلاحية:</b> ${esc(pkg.validity)}</div>`:""}
-      <div>⚡ <b>نوع الاستخدام:</b> ${esc(pkg.usageType)}</div>
+     <div class="svc-pkg-vol-hero">
+      <div class="svc-pkg-vol-lbl">حجم الباقة / السعة المتاحة</div>
+      <div class="svc-pkg-vol-val">${esc(pkg.volume)}</div>
      </div>
-     <button type="button" class="svc-pkg-cta" data-pkg-idx="${idx}">اختيار الباقة</button>
+     <div class="svc-pkg-specs">
+      <span class="svc-spec-pill">⚡ الاستخدام: ${esc(pkg.usageType)}</span>
+      ${pkg.validity?`<span class="svc-spec-pill">⏳ الصلاحية: ${esc(pkg.validity)}</span>`:""}
+      <span class="svc-spec-pill ok">✓ جاهز للشحن</span>
+     </div>
+     <button type="button" class="svc-pkg-cta" data-pkg-idx="${idx}">اختيار الباقة ←</button>
     </div>
    `).join("")}
   </div>`;
  ov.querySelector(".wp-x").onclick=closeSubModalsToOperator;
+ const editBtn=ov.querySelector("#svcEditPriceBtn");
+ if(editBtn)editBtn.onclick=()=>openPriceInputModal(op);
  ov.addEventListener("click",e=>{
   const trig=e.target.closest("[data-pkg-idx]");
   if(!trig)return;
@@ -14504,16 +14705,23 @@ function openPhoneInputModal(pkg){
  ov.setAttribute("aria-modal","true");
  ov.setAttribute("aria-label","اكتب رقم الهاتف");
  ov.innerHTML=`
-  <div class="svc-modal-box">
+  <div class="svc-modal-box" style="--op-c:${op.color}">
    <div class="svc-modal-hd">
     <h3>اكتب رقم الهاتف</h3>
     <button type="button" class="svc-modal-x" aria-label="إغلاق">×</button>
    </div>
    <div class="svc-modal-bd">
+    <div class="svc-modal-op-hero">
+     <span class="hero-logo">${op.logo}</span>
+     <div class="hero-txt">
+      <div class="hero-op-name">${esc(op.name)} · كود ${esc(op.prefix)}</div>
+      <div class="hero-svc-name">${esc(pkg.packageName)}</div>
+     </div>
+    </div>
     <div class="svc-modal-illus">${PHONE_ILLUS}</div>
     <div class="svc-pkg-summary">
-     <div>🏢 <b>الشركة:</b> ${esc(op.name)}</div>
-     <div>📦 <b>الباقة:</b> ${esc(pkg.packageName)} (${esc(pkg.volume)})</div>
+     <div>📦 <b>السعة / الوحدات:</b> ${esc(pkg.volume)}</div>
+     ${pkg.validity?`<div>⏳ <b>الصلاحية:</b> ${esc(pkg.validity)}</div>`:""}
      <div>💰 <b>سعر الباقة:</b> ${pkg.sellingPrice} جنيه</div>
     </div>
     <form id="svcPhoneForm" novalidate style="display:flex;flex-direction:column;gap:11px">
@@ -14522,7 +14730,7 @@ function openPhoneInputModal(pkg){
      </div>
      <div class="svc-hint-note">تنبيه: يجب أن يطابق الرقم شبكة ${esc(op.name)} (يبدأ بـ ${esc(op.prefix)})</div>
      <div class="svc-err hidden" id="svcPhoneErr"></div>
-     <button type="submit" class="svc-green-pill">إرسال</button>
+     <button type="submit" class="svc-green-pill">إرسال الطلب عبر واتساب ✓</button>
     </form>
    </div>
   </div>`;
