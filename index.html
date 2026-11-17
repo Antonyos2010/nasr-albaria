@@ -2526,6 +2526,18 @@ body.light .mand-app-card{
  background:transparent;color:var(--muted);font-size:11.5px;font-weight:800;cursor:pointer;
 }
 .mand-admin-skip:hover{border-color:var(--c1);color:var(--text);background:var(--panel2)}
+.mand-x-close{
+ position:absolute;top:12px;left:12px;z-index:8;width:34px;height:34px;border-radius:50%;
+ border:1.5px solid rgba(255,255,255,.45);background:rgba(0,0,0,.35);color:#fff;
+ font-size:20px;line-height:1;font-weight:800;display:grid;place-items:center;cursor:pointer;
+}
+.mand-x-close:hover{background:rgba(0,0,0,.6)}
+.mand-continue-btn{
+ width:100%;padding:11px 16px;border-radius:999px;border:1.5px solid var(--border);
+ background:var(--panel2);color:var(--muted);font-size:13px;font-weight:800;cursor:pointer;
+ transition:color .16s,border-color .16s,background .16s;
+}
+.mand-continue-btn:hover{color:var(--text);border-color:var(--c1)}
 .mand-app-top{
  position:relative;padding:24px 18px 20px;color:#fff;
  background:radial-gradient(circle at 50% 0%,rgba(0,217,255,.42),transparent 65%),
@@ -4142,8 +4154,8 @@ async function setStoreDisplayMode(mode){
 window.APP_DL_PROMPT_MODE=(()=>{
  try{
   const v=localStorage.getItem("nasr_app_dl_prompt_mode");
-  return (v==="mandatory"||v==="optional")?v:"mandatory";
- }catch(e){return "mandatory"}
+  return (v==="mandatory"||v==="optional")?v:"optional";
+ }catch(e){return "optional"}
 })();
 document.body.dataset.appDlMode=window.APP_DL_PROMPT_MODE;
 
@@ -4254,17 +4266,37 @@ function triggerInstantAppPackageDownload(){
  return false;
 }
 
+function buildChromeIntentUrl(){
+ try{
+  const u=new URL(location.href);
+  u.searchParams.set("nasr_install","1");
+  const noScheme=u.href.replace(/^https?:\/\//i,"");
+  return "intent://"+noScheme+"#Intent;scheme=https;package=com.android.chrome;end";
+ }catch(e){
+  const curHref=String(location.href||"").replace(/^https?:\/\//i,"");
+  return "intent://"+curHref+"#Intent;scheme=https;package=com.android.chrome;end";
+ }
+}
+function openChromeIntentDirect(){
+ try{
+  const a=document.createElement("a");
+  a.href=buildChromeIntentUrl();
+  a.style.display="none";
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(()=>{try{a.remove()}catch(e){}},400);
+  return true;
+ }catch(e){return false}
+}
 function formatManualInstallGuideHtml(env){
  const e=env||(typeof getClientInstallEnv==="function"?getClientInstallEnv():{isIOS:false,isAndroid:true,isInApp:false});
  if(e.isInApp){
-  const curHref=String(location.href||"").replace(/^https?:\/\//i,"");
-  const chromeIntent="intent://"+curHref+"#Intent;scheme=https;package=com.android.chrome;end";
-  return '<div style="text-align:right;line-height:1.85">📲 <b>للتثبيت المباشر على جهازك:</b><br>المتصفح الداخلي لا يسمح بتنزيل التطبيقات مباشرة — اضغط الزر أدناه للفتح في متصفح <b>Chrome</b> ليبدأ تثبيت التطبيق فورًا:<br><a href="'+escapeHTML(chromeIntent)+'" style="display:inline-block;margin-top:8px;padding:9px 16px;border-radius:999px;background:#087bff;color:#fff;font-weight:900;text-decoration:none">🚀 فتح وتثبيت التطبيق في Chrome</a></div>';
+  return '<div style="text-align:right;line-height:1.85">📲 <b>للتثبيت المباشر على جهازك:</b><br><a href="'+escapeHTML(buildChromeIntentUrl())+'" style="display:inline-block;margin-top:8px;padding:9px 16px;border-radius:999px;background:#087bff;color:#fff;font-weight:900;text-decoration:none">🚀 فتح وتثبيت التطبيق في Chrome</a></div>';
  }
  if(e.isIOS){
-  return '<div style="text-align:right;line-height:1.85">📱 <b>للتثبيت المباشر على iPhone / iPad:</b><br>اضغط زر المشاركة <b>(⬆️)</b> في شريط متصفح Safari أسفل الشاشة ثم اختر <b>«إضافة إلى الشاشة الرئيسية / Add to Home Screen»</b>.</div>';
+  return '<div style="text-align:right;line-height:1.85">📱 <b>للتثبيت على iPhone / iPad:</b><br>اضغط زر المشاركة <b>(⬆️)</b> في متصفح Safari ثم اختر <b>«إضافة إلى الشاشة الرئيسية»</b>.</div>';
  }
- return '<div style="text-align:right;line-height:1.85">📲 <b>اضغط قائمة المتصفح (⋮) بالأعلى</b> ثم اختر <b>«تثبيت التطبيق / Install app»</b> أو <b>«الإضافة إلى الشاشة الرئيسية»</b> ليتم التثبيت فورًا على جهازك مباشرة.</div>';
+ return '<div style="text-align:center;line-height:1.8">ℹ️ يمكنك تصفح المتجر بحرية أو التثبيت من زر التحميل عندما يجهز المتصفح للتثبيت التلقائي.</div>';
 }
 window.formatManualInstallGuideHtml=formatManualInstallGuideHtml;
 
@@ -4287,6 +4319,11 @@ window.performDirectAppDownload=async function(sourceTag){
   }
   return {status:"external",url:customUrl};
  }
+ const env=typeof getClientInstallEnv==="function"?getClientInstallEnv():{};
+ if(env.isInApp&&env.isAndroid&&!(deferredInstallPrompt||window.__deferredInstallPrompt)){
+  openChromeIntentDirect();
+  return {status:"inapp_chrome",env};
+ }
  const st=typeof triggerNativeInstallPrompt==="function"?await triggerNativeInstallPrompt():"manual_guide";
  if(st==="accepted"||st==="already_installed"){
   recordDownloadInitiated(sourceTag||"native_accepted");
@@ -4297,7 +4334,7 @@ window.performDirectAppDownload=async function(sourceTag){
   return {status:"dismissed"};
  }
  clearDownloadInitiated();
- return {status:"manual_guide",env:typeof getClientInstallEnv==="function"?getClientInstallEnv():{}};
+ return {status:"manual_guide",env};
 };
 
 window.runInteractiveInstallVerification=async function({panelEl,verifyBtn,dlBtn,isPreview,onPass}){
@@ -4454,6 +4491,7 @@ async function setAppDownloadPromptMode(mode){
 
 window.isMandatoryAppGateBlocking=function(){
  try{
+  if(window.__nasrGateDismissedThisSession)return false;
   if(typeof parseHash==="function"&&parseHash().type==="app-download")return false;
   if(!currentSession)return false;
   if(typeof recoveryMode!=="undefined"&&recoveryMode)return false;
@@ -4513,20 +4551,18 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
     <div class="mand-perk"><span>💬</span><span>طلب واستفسار فوري عبر واتساب</span></div>`
   :`<div class="mand-perk"><span>⚡</span><span>تصفّح أسرع بدون شريط متصفح</span></div>
     <div class="mand-perk"><span>🔔</span><span>إشعارات العروض والخصومات</span></div>`;
- const dlBtnLabel=hasCustomUrl?"⬇️ تحميل التطبيق الآن (رابط مباشر)":"⬇️ تحميل التطبيق الآن";
- const prevHeadline=wasUninstalledNow?"تم رصد حذف التطبيق من الجهاز 📲":"حمّل التطبيق الرسمي للمتابعة 📲";
- const prevDesc=wasUninstalledNow
-  ?"تم حذف تطبيق نسر البرية من الجهاز! اضغط الزر أدناه لتحميل التطبيق فورًا وسيتم فتح حسابك والمتجر مباشرة."
-  :(isExh
-   ?"تم تسجيل دخولك بنجاح! لتحقيق أسرع تجربة وتصفّح منتجات المعرض والخصومات، اضغط لتحميل التطبيق مباشرة."
-   :"تم تسجيل دخولك بنجاح! لتصفّح كافة المنتجات والطلب بسهولة وأمان، اضغط لتحميل تطبيق نسر البرية مباشرة.");
+ const dlBtnLabel=hasCustomUrl?"⬇️ تحميل التطبيق الآن (رابط مباشر)":"⬇️ تحميل وتثبيت التطبيق الآن";
+ const prevHeadline="حمّل التطبيق الرسمي 📲";
+ const prevDesc=isExh
+  ?"تصفّح المعرض والعروض بسرعة فائقة في تطبيق مستقل، أو تابع داخل المتصفح."
+  :"ثبّت تطبيق نسر البرية بضغطة واحدة (تظهر نافذة التثبيت مباشرة)، أو تابع داخل المتصفح.";
 
  if(existing){
   const badge=existing.querySelector(".mand-app-badge");
   const titleEl=existing.querySelector(".mand-app-top h3");
   const desc=existing.querySelector(".mand-app-top p");
   const perks=existing.querySelector(".mand-perks");
-  if(badge)badge.textContent=(isPrev?(simUninst?"🧪 محاكاة رصد حذف التطبيق · ":"👁️ معاينة الإدارة · "):"🔒 خطوة مطلوبة · ")+bLabel;
+  if(badge)badge.textContent=(isPrev?"👁️ معاينة الإدارة · ":"📲 التطبيق الرسمي · ")+bLabel;
   if(titleEl)titleEl.textContent=prevHeadline;
   if(desc)desc.textContent=prevDesc;
   if(perks)perks.innerHTML=perksHtml;
@@ -4541,13 +4577,13 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
  if(isPrev)ov.dataset.preview="1";
  ov.innerHTML=`
   <div class="mand-app-card" role="dialog" aria-modal="true" aria-label="تحميل تطبيق ${escapeHTML(bLabel)}">
+   <button type="button" class="mand-x-close" id="mandXCloseBtn" aria-label="إغلاق والمتابعة">×</button>
    ${isPrev?'<button type="button" class="mand-preview-exit" id="mandPrevExit">✕ إغلاق المعاينة (خاص بالإدارة)</button>':""}
    <div class="mand-app-top">
-    <span class="mand-app-badge">${isPrev?(simUninst?"🧪 محاكاة رصد حذف التطبيق · ":"👁️ معاينة الإدارة · "):"🔒 خطوة مطلوبة · "}${escapeHTML(bLabel)}</span>
+    <span class="mand-app-badge">${isPrev?"👁️ معاينة الإدارة · ":"📲 التطبيق الرسمي · "}${escapeHTML(bLabel)}</span>
     <div class="mand-app-logo"><img src="${logoSrc}" alt="شعار نسر البرية"></div>
     <h3>${prevHeadline}</h3>
     <p>${prevDesc}</p>
-    ${(isPrev||wasUninstalledNow)?`<div class="mand-audit-chip ${wasUninstalledNow?"uninst":""}" id="mandLiveAuditBadge">📡 ${wasUninstalledNow?"تم رصد الحذف في الفحص الصامت (كل 3 ثوانٍ)":"الفحص الصامت كل 3 ثوانٍ نشط"}</div>`:""}
    </div>
    <div class="mand-app-body">
     <div class="mand-perks">${perksHtml}</div>
@@ -4555,19 +4591,28 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
      <div class="app-arrow" aria-hidden="true">${typeof INVITE_ARROW!=="undefined"?INVITE_ARROW:""}</div>
      <button type="button" class="mand-dl-btn" id="mandDlBtn">${dlBtnLabel}</button>
     </div>
-    <button type="button" class="mand-verify-pill" id="mandVerifyBtn">✓ تم التحميل — تحقّق والمتابعة الآن</button>
+    <button type="button" class="mand-continue-btn" id="mandContinueBtn">المتابعة داخل المتصفح</button>
     <div class="verify-panel hidden" id="mandVerifyPanel"></div>
-    <div class="mand-foot-trust">🛡️ تحميل فوري وآمن 100% · حسابك وبياناتك محفوظة تلقائيًا</div>
+    <div class="mand-foot-trust">🛡️ تثبيت فوري وآمن 100% · حسابك محفوظ تلقائيًا</div>
    </div>
   </div>`;
 
+ const dismissGateToStore=()=>{
+  if(isPrev){ov.remove();return}
+  window.__nasrGateDismissedThisSession=true;
+  hideMandatoryAppGate(false);
+  if(typeof route==="function")route();
+ };
  if(isPrev){
   const ex=ov.querySelector("#mandPrevExit");
   if(ex)ex.onclick=()=>ov.remove();
  }
+ const xClose=ov.querySelector("#mandXCloseBtn");
+ if(xClose)xClose.onclick=dismissGateToStore;
+ const contBtn=ov.querySelector("#mandContinueBtn");
+ if(contBtn)contBtn.onclick=dismissGateToStore;
 
  const dlBtn=ov.querySelector("#mandDlBtn");
- const verifyBtn=ov.querySelector("#mandVerifyBtn");
  const verifyPanel=ov.querySelector("#mandVerifyPanel");
 
  const showVerifyBanner=(msg,isOk)=>{
@@ -4579,7 +4624,7 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
  if(dlBtn){
   dlBtn.onclick=async()=>{
    dlBtn.disabled=true;
-   dlBtn.textContent="⏳ جارٍ تثبيت التطبيق مباشرة...";
+   dlBtn.textContent="⏳ جارٍ إظهار نافذة التثبيت...";
    const res=await window.performDirectAppDownload(isPrev?"admin_preview_mand":"mandatory_gate");
    dlBtn.disabled=false;
    dlBtn.textContent=dlBtnLabel;
@@ -4590,32 +4635,26 @@ function showMandatoryAppGate(isAdminPreview,previewOpts){
     return;
    }
    if(res.status==="external"){
-    if(verifyBtn)verifyBtn.textContent="✅ اكتمل التحميل — تحقّق وادخل للمتجر الآن";
-    showVerifyBanner("📥 بدأ تحميل التطبيق مباشرة على جهازك الآن! بعد التثبيت اضغط «تحقّق والمتابعة الآن» للدخول فورًا.",true);
+    showVerifyBanner("📥 بدأ تحميل التطبيق مباشرة على جهازك الآن!",true);
+    return;
+   }
+   if(res.status==="inapp_chrome"){
+    showVerifyBanner("🚀 جارٍ فتح المتجر داخل Chrome لتثبيت التطبيق مباشرة...",true);
     return;
    }
    if(res.status==="dismissed"){
-    showVerifyBanner("⚠️ اضغط «تحميل التطبيق الآن» مرة أخرى ثم اختر «تثبيت / Install» من نافذة الجهاز ليتم التثبيت تلقائيًا.",false);
+    showVerifyBanner("اختر «تثبيت / Install» عند ظهور النافذة للتثبيت الفوري، أو اضغط «المتابعة داخل المتصفح».",false);
     return;
    }
-   if(verifyPanel){
+   if(!isPrev){
+    window.__nasrGateDismissedThisSession=true;
+    hideMandatoryAppGate(false);
+    if(typeof toast==="function")toast("تم فتح المتجر الآن — يمكنك التثبيت في أي وقت");
+    if(typeof route==="function")route();
+   }else if(verifyPanel){
     verifyPanel.classList.remove("hidden");
     verifyPanel.innerHTML=`<div class="verify-result warn">${window.formatManualInstallGuideHtml(res.env)}</div>`;
    }
-  };
- }
- if(verifyBtn){
-  verifyBtn.onclick=()=>{
-   window.runInteractiveInstallVerification({
-    panelEl:verifyPanel,
-    verifyBtn,
-    dlBtn,
-    isPreview:isPrev,
-    onPass:()=>{
-     if(isPrev){ov.remove();return}
-     hideMandatoryAppGate(true);
-    }
-   });
   };
  }
 
@@ -11355,18 +11394,12 @@ window.inspectManifestRelatedSupport=inspectManifestRelatedSupport;
 inspectManifestRelatedSupport(false);
 
 function nudgeChromiumInstallabilityCheck(){
+ /* نحافظ على وسم manifest.json ثابتًا دون إزالته حتى لا يتعطّل حدث التثبيت beforeinstallprompt في Chrome */
  try{
   if(detectPlatform()==="app")return;
-  const now=Date.now();
-  if(now-__nasrLastManifestReprobeAt<10000)return;
-  __nasrLastManifestReprobeAt=now;
-  const link=document.querySelector('link[rel="manifest"]');
-  if(!link||!link.parentNode)return;
-  const href=link.getAttribute("href")||"./manifest.json?v=5";
-  const clone=link.cloneNode(true);
-  clone.setAttribute("href",href);
-  link.remove();
-  document.head.appendChild(clone);
+  if("serviceWorker" in navigator&&!window.__swRegObj){
+   navigator.serviceWorker.register("./sw.js",{updateViaCache:"none"}).then(reg=>{window.__swRegObj=reg}).catch(()=>{});
+  }
  }catch(e){}
 }
 
@@ -11752,7 +11785,7 @@ async function triggerNativeInstallPrompt(){
  let p=deferredInstallPrompt||window.__deferredInstallPrompt;
  if(p){
   try{
-   p.prompt();
+   await Promise.resolve(p.prompt());
    const choice=await p.userChoice;
    deferredInstallPrompt=null;
    window.__deferredInstallPrompt=null;
@@ -11763,7 +11796,6 @@ async function triggerNativeInstallPrompt(){
     markAppInstalled("pwa_direct_prompt",true);
     return"accepted";
    }
-   if(typeof nudgeChromiumInstallabilityCheck==="function")nudgeChromiumInstallabilityCheck();
    return"dismissed";
   }catch(e){
    deferredInstallPrompt=null;
@@ -11798,9 +11830,9 @@ async function triggerNativeInstallPrompt(){
    if(!window.__swRegObj){
     navigator.serviceWorker.register("./sw.js",{updateViaCache:"none"}).then(reg=>{window.__swRegObj=reg}).catch(()=>{});
    }
+   await Promise.race([navigator.serviceWorker.ready,new Promise(r=>setTimeout(r,2200))]);
   }catch(e){}
-  if(typeof nudgeChromiumInstallabilityCheck==="function")nudgeChromiumInstallabilityCheck();
-  for(let i=0;i<9&&!p;i++){
+  for(let i=0;i<15&&!p;i++){
    await new Promise(r=>setTimeout(r,120));
    p=deferredInstallPrompt||window.__deferredInstallPrompt;
   }
@@ -11813,7 +11845,7 @@ async function triggerNativeInstallPrompt(){
   return"manual_guide";
  }
  try{
-  p.prompt();
+  await Promise.resolve(p.prompt());
   const choice=await p.userChoice;
   deferredInstallPrompt=null;
   window.__deferredInstallPrompt=null;
@@ -11824,7 +11856,6 @@ async function triggerNativeInstallPrompt(){
    markAppInstalled("pwa_direct_prompt",true);
    return"accepted";
   }
-  if(typeof nudgeChromiumInstallabilityCheck==="function")nudgeChromiumInstallabilityCheck();
   return"dismissed";
  }catch(e){return"manual_guide"}
 }
@@ -11907,7 +11938,7 @@ function showAppInviteModal(){
  ov.addEventListener("click",e=>{if(e.target===ov)dismiss()});
  const ctaBtn=ov.querySelector(".app-invite-btn");
  ctaBtn.onclick=async()=>{
-  ctaBtn.disabled=true;ctaBtn.textContent="⏳ جارٍ تثبيت التطبيق مباشرة...";
+  ctaBtn.disabled=true;ctaBtn.textContent="⏳ جارٍ إظهار نافذة التثبيت...";
   const res=await window.performDirectAppDownload("optional_invite");
   if(res.status==="accepted"){
    ov.remove();
@@ -11919,14 +11950,20 @@ function showAppInviteModal(){
    if(typeof okToast==="function")okToast("📥 بدأ تحميل التطبيق مباشرة على جهازك الآن!");
    return;
   }
+  if(res.status==="inapp_chrome"){
+   ov.remove();
+   if(typeof okToast==="function")okToast("🚀 جارٍ الفتح في متصفح Chrome لإتمام التثبيت مباشرة!");
+   return;
+  }
   if(res.status==="dismissed"){
    ctaBtn.disabled=false;ctaBtn.textContent="حمل الان";
    if(typeof toast==="function")toast("اضغط «حمل الان» ثم اختر «تثبيت / Install» في نافذة المتصفح.");
    return;
   }
+  ctaBtn.disabled=false;ctaBtn.textContent="حمل الان";
+  inviteDismissedThisView=true;
   ov.remove();
-  if(typeof nav==="function")nav("#/app-download");
-  else location.hash="#/app-download";
+  if(typeof toast==="function")toast("يمكنك تثبيت التطبيق في أي وقت من صفحة التحميل");
  };
  document.body.appendChild(ov);
  return true;
@@ -12157,7 +12194,7 @@ window.renderAppDownloadPage=function(container){
    }
    nowBtn.disabled=true;
    const prevTx=nowBtn.textContent;
-   nowBtn.textContent="⏳ جارٍ تثبيت التطبيق مباشرة...";
+   nowBtn.textContent="⏳ جارٍ إظهار نافذة التثبيت...";
    const res=await window.performDirectAppDownload("qr_dl_page");
    nowBtn.disabled=false;
    if(res.status==="accepted"){
@@ -12176,6 +12213,10 @@ window.renderAppDownloadPage=function(container){
     }
     return;
    }
+   if(res.status==="inapp_chrome"){
+    guideMsg.textContent="🚀 جارٍ فتح المتجر داخل متصفح Chrome لإظهار نافذة التثبيت مباشرة...";
+    return;
+   }
    if(res.status==="dismissed"){
     guideMsg.textContent="اضغط الزر بالأعلى مرة أخرى ثم اختر «تثبيت / Install» من نافذة التثبيت.";
     return;
@@ -12184,7 +12225,7 @@ window.renderAppDownloadPage=function(container){
     verifyPanel.classList.remove("hidden");
     verifyPanel.innerHTML=`<div class="verify-result warn">${window.formatManualInstallGuideHtml(res.env)}</div>`;
    }
-   guideMsg.textContent="اتبع خطوة التثبيت المباشر الموضحة أدناه لإضافة التطبيق على جهازك فورًا.";
+   guideMsg.textContent="اضغط زر التحميل عندما يكون المتصفح جاهزًا لإظهار نافذة التثبيت.";
   };
  }
  if(verifyBtn){
@@ -13919,11 +13960,13 @@ body:not(.light) .svc-type-desc{color:#aab5d2}
 .svc-op-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px color-mix(in srgb,var(--op-c) 30%,transparent)}
 body:not(.light) .svc-op-card{background:linear-gradient(165deg,#171c3d,#0c0f24);color:#fff}
 .svc-op-logo{
- width:118px;height:78px;border-radius:18px;background:#fff;padding:6px 8px;
+ width:124px;height:84px;border-radius:18px;background:#fff;padding:6px;overflow:hidden;
  display:flex;align-items:center;justify-content:center;
  border:1.5px solid rgba(15,23,42,.09);box-shadow:0 6px 16px rgba(15,23,42,.1);
 }
+.svc-op-logo img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;border-radius:12px}
 .svc-op-logo svg{width:100%;height:100%;display:block}
+.svc-op-svg-fb{width:100%;height:100%;display:none;align-items:center;justify-content:center}
 .svc-op-name{font-size:clamp(14px,3.6vw,17px);font-weight:900;line-height:1.45}
 .svc-op-sub{font-size:11.5px;font-weight:800;color:#64748b}
 body:not(.light) .svc-op-sub{color:#aab5d2}
@@ -13943,10 +13986,11 @@ body:not(.light) .svc-pkg-banner{
 }
 .svc-pkg-b-brand{display:flex;align-items:center;gap:12px;min-width:0}
 .svc-pkg-b-logo{
- width:76px;height:52px;border-radius:14px;background:#fff;padding:4px 6px;flex:none;
+ width:78px;height:54px;border-radius:14px;background:#fff;padding:4px;flex:none;overflow:hidden;
  display:flex;align-items:center;justify-content:center;
  border:1.5px solid rgba(15,23,42,.1);box-shadow:0 4px 12px rgba(15,23,42,.12);
 }
+.svc-pkg-b-logo img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;border-radius:10px}
 .svc-pkg-b-logo svg{width:100%;height:100%;display:block}
 .svc-pkg-b-txt h4{margin:0;font-size:clamp(14.5px,3.8vw,17px);font-weight:900;color:inherit}
 .svc-pkg-b-txt p{margin:2px 0 0;font-size:12px;font-weight:800;color:#475569}
@@ -14070,10 +14114,11 @@ body:not(.light) .svc-modal-op-hero{
  border-color:color-mix(in srgb,var(--op-c) 48%,rgba(255,255,255,.14));
 }
 .svc-modal-op-hero .hero-logo{
- width:78px;height:52px;background:#fff;border-radius:12px;padding:4px 6px;flex:none;
+ width:82px;height:54px;background:#fff;border-radius:13px;padding:4px;flex:none;overflow:hidden;
  display:grid;place-items:center;border:1.5px solid rgba(15,23,42,.08);
  box-shadow:0 4px 12px rgba(15,23,42,.12);
 }
+.svc-modal-op-hero .hero-logo img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;border-radius:9px}
 .svc-modal-op-hero .hero-logo svg{width:100%;height:100%;display:block}
 .svc-modal-op-hero .hero-txt{text-align:right;min-width:0}
 .svc-modal-op-hero .hero-op-name{font-size:14px;font-weight:900;line-height:1.35}
@@ -14192,6 +14237,34 @@ const OPERATORS=[
   logo:'<svg viewBox="0 0 120 78" aria-label="WE Egypt"><defs><linearGradient id="svcWeBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#5c1d82"/><stop offset="100%" stop-color="#8b2fc9"/></linearGradient></defs><rect width="120" height="78" rx="12" fill="#fff"/><rect x="16" y="7" width="88" height="48" rx="14" fill="url(#svcWeBg)"/><path d="M25 22l7 20 8-15 8 15 7-20" fill="none" stroke="#fff" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M88 33H69c.4 5.2 4.2 8.2 9.4 8.2 3.2 0 5.6-1 7.6-2.6M69.2 31c.6-5.2 4.5-8.4 9.5-8.4 5.2 0 8.8 3.2 9.3 8.4" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><rect x="16" y="59" width="88" height="3.5" rx="2" fill="#e11d48"/><text x="60" y="73" text-anchor="middle" fill="#5c1d82" font-family="Tahoma,Arial,sans-serif" font-weight="900" font-size="9.5">المصرية للاتصالات</text></svg>'
  }
 ];
+
+const OP_IMG_EXTS=["png","jpg","jpeg","webp"];
+const opImgResolved={};
+window.__nasrSvcOpImgOk=function(img){
+ if(!img)return;
+ const id=img.getAttribute("data-op-id");
+ const src=img.getAttribute("src");
+ if(id&&src)opImgResolved[id]=src;
+};
+window.__nasrSvcOpImgErr=function(img){
+ if(!img)return;
+ const id=img.getAttribute("data-op-id")||"";
+ const idx=Number(img.getAttribute("data-ext-i")||0)+1;
+ if(idx<OP_IMG_EXTS.length){
+  img.setAttribute("data-ext-i",String(idx));
+  img.src="./"+id+"."+OP_IMG_EXTS[idx]+"?v=5";
+  return;
+ }
+ opImgResolved[id]=null;
+ img.style.display="none";
+ const fb=img.nextElementSibling;
+ if(fb)fb.style.display="flex";
+};
+function renderOpLogo(op){
+ if(opImgResolved[op.id]===null)return op.logo;
+ const src=opImgResolved[op.id]||("./"+op.id+".png?v=5");
+ return `<img src="${esc(src)}" alt="${esc(op.name)}" data-op-id="${esc(op.id)}" data-ext-i="0" onload="window.__nasrSvcOpImgOk&&window.__nasrSvcOpImgOk(this)" onerror="window.__nasrSvcOpImgErr&&window.__nasrSvcOpImgErr(this)"><span class="svc-op-svg-fb">${op.logo}</span>`;
+}
 
 const GENERAL_UNITS_BASE=[
  {volume:"80 وحدة",sellingPrice:6,validity:"يومان"},
@@ -14514,7 +14587,7 @@ function openOperatorSelectionPage(svcObj){
   <div class="svc-op-grid">
    ${OPERATORS.map(op=>`
     <button type="button" class="svc-op-card" data-op-id="${esc(op.id)}" style="--op-c:${op.color}">
-     <div class="svc-op-logo">${op.logo}</div>
+     <div class="svc-op-logo">${renderOpLogo(op)}</div>
      <div class="svc-op-name">${esc(op.name)}</div>
      <div class="svc-op-sub">${esc(op.arName)} · كود ${esc(op.prefix)}</div>
     </button>
@@ -14558,7 +14631,7 @@ function openPriceInputModal(op){
    </div>
    <div class="svc-modal-bd">
     <div class="svc-modal-op-hero">
-     <span class="hero-logo">${op.logo}</span>
+     <span class="hero-logo">${renderOpLogo(op)}</span>
      <div class="hero-txt">
       <div class="hero-op-name">${esc(op.name)} · ${esc(op.arName)}</div>
       <div class="hero-svc-name">${esc(svcState.service.title)}</div>
@@ -14640,7 +14713,7 @@ function openPackageSelectionPage(matches,price){
   </div>
   <div class="svc-pkg-banner" style="--op-c:${op.color}">
    <div class="svc-pkg-b-brand">
-    <span class="svc-pkg-b-logo">${op.logo}</span>
+    <span class="svc-pkg-b-logo">${renderOpLogo(op)}</span>
     <div class="svc-pkg-b-txt">
      <h4>${esc(op.name)} · ${esc(op.arName)}</h4>
      <p>${esc(svcObj.title)} · متاح ${matches.length} ${matches.length===1?"باقة":"باقات"}</p>
@@ -14712,7 +14785,7 @@ function openPhoneInputModal(pkg){
    </div>
    <div class="svc-modal-bd">
     <div class="svc-modal-op-hero">
-     <span class="hero-logo">${op.logo}</span>
+     <span class="hero-logo">${renderOpLogo(op)}</span>
      <div class="hero-txt">
       <div class="hero-op-name">${esc(op.name)} · كود ${esc(op.prefix)}</div>
       <div class="hero-svc-name">${esc(pkg.packageName)}</div>
