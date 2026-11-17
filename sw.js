@@ -1,4 +1,4 @@
-const CACHE_NAME = "nasr-albaria-pwa-v7";
+const CACHE_NAME = "nasr-albaria-pwa-v8";
 const PRECACHE = [
   "./",
   "./manifest.json?v=5",
@@ -59,7 +59,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
   if (url.origin !== self.location.origin) return;
-  if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/download/")) return;
+  if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/download/") || /\.apk$/i.test(url.pathname)) return;
 
   const isFreshAsset =
     req.mode === "navigate" ||
