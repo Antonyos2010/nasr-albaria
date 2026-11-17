@@ -1,77 +1,43 @@
-/* Service Worker لمتجر ومعرض نسر البرية - إشعارات Web Push + تحديثات فورية */
-const CACHE_NAME = "nasr-store-v6";
+const CACHE_NAME = "nasr-albaria-pwa-v7";
+const PRECACHE = [
+  "./",
+  "./manifest.json?v=5",
+  "./pwa-192x192.png?v=5",
+  "./pwa-512x512.png?v=5",
+  "./apple-touch-icon.png?v=5",
+  "./store-logo.png?v=5"
+];
 
 self.addEventListener("install", (event) => {
-  self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE).catch(() => {})).then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    ).then(() => self.clients.claim())
+    caches.keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
 });
 
 self.addEventListener("message", (event) => {
-  if (event && event.data && event.data.type === "SKIP_WAITING") {
+  if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   }
 });
 
-/* استقبال إشعارات Web Push من الخادم حتى لو التطبيق أو المتصفح مغلق */
-self.addEventListener("push", (event) => {
-  let payload = {};
-  try {
-    if (event.data) {
-      payload = event.data.json();
-    }
-  } catch (e) {
-    try {
-      payload = { body: event.data ? event.data.text() : "" };
-    } catch (_) {
-      payload = {};
-    }
-  }
-
-  const title = String(payload.title || "متجر نسر البرية الرسمي 🦅");
-  const body = String(payload.body || "لديك إشعار جديد من نسر البرية");
-  const tag = String(payload.tag || ("nasr-push-" + Date.now()));
-  const targetUrl = String(payload.url || "./");
-  const icon = String(payload.icon || "./pwa-192x192.png");
-  const badge = String(payload.badge || "./favicon-48x48.png");
-
-  const options = {
-    body,
-    icon,
-    badge,
-    tag,
-    renotify: true,
-    vibrate: [200, 100, 200],
-    dir: "rtl",
-    lang: "ar",
-    data: {
-      url: targetUrl,
-      productId: payload.productId || null
-    }
-  };
-
-  event.waitUntil(self.registration.showNotification(title, options));
-});
-
-/* عند الضغط على الإشعار يفتح المتجر أو يركز على النافذة المفتوحة */
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  const data = (event.notification && event.notification.data) || {};
-  const targetUrl = data.url || "./";
-
+  const targetUrl = (event.notification.data && event.notification.data.url) || "./";
   event.waitUntil(
-    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {
-      for (const client of clientList) {
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientsList) => {
+      for (const client of clientsList) {
         if ("focus" in client) {
           client.focus();
-          if (targetUrl && "navigate" in client && client.url !== targetUrl) {
-            client.navigate(targetUrl).catch(() => {});
+          if (targetUrl && targetUrl !== "./" && "navigate" in client) {
+            try { client.navigate(targetUrl); } catch (e) {}
           }
           return;
         }
@@ -84,10 +50,49 @@ self.addEventListener("notificationclick", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") return;
-  const url = new URL(event.request.url);
+  const req = event.request;
+  if (req.method !== "GET") return;
+  let url;
+  try {
+    url = new URL(req.url);
+  } catch (e) {
+    return;
+  }
   if (url.origin !== self.location.origin) return;
+  if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/download/")) return;
+
+  const isFreshAsset =
+    req.mode === "navigate" ||
+    (req.headers.get("accept") || "").includes("text/html") ||
+    /\/(manifest\.json|sw\.js|store-logo\.|pwa-|apple-touch-icon|favicon)/i.test(url.pathname);
+
+  if (isFreshAsset) {
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          if (res && res.status === 200) {
+            const copy = res.clone();
+            caches.open(CACHE_NAME).then((c) => c.put(req, copy)).catch(() => {});
+          }
+          return res;
+        })
+        .catch(() => caches.match(req).then((r) => r || caches.match("./")))
+    );
+    return;
+  }
+
   event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request))
+    caches.match(req).then((cached) => {
+      const net = fetch(req)
+        .then((res) => {
+          if (res && res.status === 200) {
+            const copy = res.clone();
+            caches.open(CACHE_NAME).then((c) => c.put(req, copy)).catch(() => {});
+          }
+          return res;
+        })
+        .catch(() => cached);
+      return cached || net;
+    })
   );
 });
