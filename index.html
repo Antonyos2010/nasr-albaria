@@ -2822,8 +2822,8 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
  margin-inline:0;
  border-radius:16px;
  height:auto!important;
- min-height:310px;
- max-height:none;
+ min-height:0!important;
+ max-height:none!important;
 }
 .bb-stage::before{
  content:"";position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:inherit;
@@ -2895,9 +2895,9 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
 }
 .bb-empty{
- position:absolute;inset:0;z-index:5;direction:rtl;
- display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
- padding:24px 18px;text-align:center;
+ position:relative;inset:auto;z-index:5;direction:rtl;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+ padding:14px 14px;text-align:center;
  background:radial-gradient(circle at 22% 25%,rgba(0,229,255,.22),transparent 48%),
   radial-gradient(circle at 78% 75%,rgba(166,0,255,.24),transparent 52%),
   linear-gradient(135deg,#06081a,#0c1030 50%,#140b2e);
@@ -2908,30 +2908,24 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
  background-size:34px 34px;
 }
 .bb-empty-card{
- position:relative;z-index:2;max-width:520px;padding:24px 22px;border-radius:26px;
+ position:relative;z-index:2;max-width:520px;width:100%;padding:16px 18px;border-radius:20px;
  background:rgba(9,13,36,.78);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
  border:1.5px solid rgba(0,229,255,.48);
- box-shadow:0 20px 55px rgba(0,0,0,.55),0 0 34px rgba(0,229,255,.16);
- display:flex;flex-direction:column;align-items:center;gap:10px;
+ box-shadow:0 14px 40px rgba(0,0,0,.48),0 0 26px rgba(0,229,255,.14);
+ display:flex;flex-direction:column;align-items:center;gap:7px;
 }
-.bb-empty-emblem{width:64px;height:64px;display:grid;place-items:center;filter:drop-shadow(0 0 14px rgba(0,229,255,.55))}
+.bb-empty-emblem{width:46px;height:46px;display:grid;place-items:center;filter:drop-shadow(0 0 12px rgba(0,229,255,.55))}
 .bb-empty-emblem svg{width:100%;height:100%}
 .bb-empty-card h3{
- margin:0;font-size:clamp(20px,4.5vw,27px);font-weight:900;
+ margin:0;font-size:clamp(18px,4.2vw,23px);font-weight:900;
  background:linear-gradient(90deg,#00e5ff,#a78bfa,#ff4d8d,#ffc52e);
  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
-.bb-empty-card p{margin:0;font-size:clamp(12px,3.1vw,14px);font-weight:700;color:#cbd5e1;line-height:1.75;max-width:40ch}
+.bb-empty-card p{margin:0;font-size:clamp(12px,3vw,13.5px);font-weight:700;color:#cbd5e1;line-height:1.65;max-width:44ch}
 .bb-empty-pill{
- display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:999px;
+ display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;
  font-size:11px;font-weight:900;color:#67e8f9;background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.42);
 }
-.bb-empty-add-btn{
- margin-top:4px;padding:11px 22px;border-radius:999px;border:0;cursor:pointer;
- background:linear-gradient(135deg,#00d9ff,#087bff 55%,#a600ff);color:#fff;-webkit-text-fill-color:#fff;
- font-size:13.5px;font-weight:900;box-shadow:0 10px 26px rgba(8,123,255,.45);
-}
-.bb-empty-add-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
 
 /* ===== زر الإظهار / الإخفاء المتحرك داخل كل شريط في لوحة الإدارة ===== */
 .strip-vis-card{
@@ -3146,8 +3140,7 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
       </div>
       <span class="bb-empty-pill">📺 شاشة الإعلانات التفاعلية</span>
       <h3>ضع اعلانك هنا</h3>
-      <p>📣✨ يمكنك طلب عرض إعلانك هنا على شاشة الإعلانات الخاصة بنا 🎯 عبر التواصل معنا عبر واتساب وتقديم طلبك 💬💚، ويختفي الإعلان تلقائيًا بعد 24 ساعة ⏳🔥.</p>
-      <button type="button" class="bb-empty-add-btn hidden" id="bbEmptyAddBtn">＋ إضافة إعلان الآن (للإدارة)</button>
+      <p>📣✨ يمكنك طلب عرض إعلانك هنا على شاشة الإعلانات الخاصة بنا 🎯 عن طريق التواصل معنا عبر واتساب وتقديم طلبك 💬💚، ويختفي الإعلان تلقائيًا بعد 24 ساعة ⏳🔥.</p>
      </div>
     </div>
     <img class="bb-bg-img" id="bbBgImg" alt="" aria-hidden="true">
@@ -3640,7 +3633,7 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
   <div class="modal-head"><h2 id="adminModalTitle">⚙️ لوحة الإدارة</h2><button class="close-btn" type="button" onclick="closeModal('adminModal')">✕</button></div>
   <div id="adminModeBar">
    <div class="mode-bar-title">
-    <b>🎛️ وضع عرض الموقع للعملاء</b>
+    <b>🎛️ وضع عرض الموقع والتطبيق للعملاء</b>
     <small id="modeBarHint">تبديل فوري بضغطة واحدة مع حفظ كل المنتجات والبيانات والإحصائيات</small>
    </div>
    <div class="mode-bar-btns">
@@ -3656,27 +3649,12 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
    <div class="mode-bar-btns">
     <button type="button" class="mode-sw-btn dl-mand" id="dlPromptBtnMandatory" onclick="setAppDownloadPromptMode('mandatory')">🔒 إجبارية (لا يمكن تخطيها)</button>
     <button type="button" class="mode-sw-btn dl-opt" id="dlPromptBtnOptional" onclick="setAppDownloadPromptMode('optional')">✨ اختيارية (يمكن تخطيها)</button>
-    <button type="button" class="mode-sw-btn dl-prev" onclick="previewMandatoryAppGate()">👁️ معاينة الإجبارية</button>
-   </div>
-   <div class="admin-prompt-note">💡 عند اختيار <b>إجبارية</b>: تظهر للعميل نافذة تحميل التطبيق الرسمية ولا تُفتح باقي الصفحات إلا بعد تثبيت التطبيق، مع فحص صامت تلقائي للهاتف كل 3 ثوانٍ. <b>ملاحظة:</b> حساب الإدارة معفى تلقائيًا من القفل حتى لا تُغلق عليك لوحة التحكم — استخدم أزرار الاختبار بالأسفل لتجربة ما يراه العميل.</div>
-   <div class="admin-audit-box" id="adminAuditLiveBox">
-    <div class="admin-audit-top">
-     <span class="admin-audit-badge" id="adminAuditBadge"><i class="admin-audit-dot"></i><span>المعاينة الصامتة كل 3 ثوانٍ: نشطة</span></span>
-     <small class="admin-audit-meta" id="adminAuditCounter">الفحوصات: —</small>
-    </div>
-    <div class="admin-audit-meta" id="adminAuditDetail">جارٍ فحص حالة التطبيق والمنفذ على الجهاز...</div>
-    <div class="admin-audit-actions">
-     <button type="button" class="mode-sw-btn" onclick="runManualAdminDeviceAudit()">🔄 فحص الهاتف الآن</button>
-     <button type="button" class="mode-sw-btn dl-prev" onclick="simulateCustomerUninstallTest()">🧪 تجربة قفل الحذف كعميل</button>
-     <button type="button" class="mode-sw-btn dl-opt" onclick="downloadUpdatedManifestJson()">📄 تحميل manifest.json لاكتشاف الحذف</button>
-    </div>
    </div>
    <div class="app-dl-url-row">
     <label for="appDirectDlInput">🔗 رابط تحميل التطبيق المباشر (اختياري — اتركه فارغًا للتثبيت التلقائي الفوري للتطبيق PWA)</label>
     <div class="app-dl-url-inputs">
      <input id="appDirectDlInput" type="url" dir="ltr" placeholder="https://... (APK أو رابط المتجر أو اتركه فارغًا للتثبيت المباشر)">
      <button type="button" class="mode-sw-btn dl-opt" onclick="saveAppDirectDownloadUrl()">💾 حفظ الرابط</button>
-     <button type="button" class="mode-sw-btn" onclick="clearAppDirectDownloadUrl()">↺ التثبيت التلقائي</button>
     </div>
    </div>
   </div>
@@ -3808,13 +3786,6 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
   <div id="adminSendnotif" class="hidden">
    <div class="bc-card">
     <div class="bc-hd"><span class="bc-ic">📣</span><div><h3>إرسال إشعار لجميع المستخدمين</h3><small>يصل الإشعار فورًا إلى شريط الإشعارات في هواتف المستخدمين</small></div></div>
-    <div class="notif-perm-row" style="margin-top:0">
-     <span id="admNotifStatus">🔔 حالة إشعارات هذا الجهاز: ...</span>
-     <div style="display:flex;gap:6px;flex-wrap:wrap">
-      <button type="button" class="notif-perm-btn" id="admNotifBtn" onclick="enableMobileNotifsFromBtn(this)">تفعيل على جهازي</button>
-      <button type="button" class="notif-perm-btn" style="background:linear-gradient(135deg,#087bff,#5b1fb5)" onclick="testLocalSysNotif()">تجربة إشعار الهاتف</button>
-     </div>
-    </div>
     <div class="field"><label>عنوان الإشعار</label><input id="bcTitle" maxlength="60" placeholder="مثال: عرض اليوم 🔥" oninput="bcPreview()"></div>
     <div class="field"><label>نص الإشعار</label><textarea id="bcBody" maxlength="240" placeholder="اكتب رسالتك هنا..." oninput="bcPreview()"></textarea><div class="bc-count" id="bcCount">0 / 240</div></div>
     <div class="bc-prev-lab">معاينة كما تظهر في شريط الإشعارات</div>
@@ -3830,14 +3801,6 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
    <div class="qr-card">
     <h3 id="appQrAdmTitle" style="margin:0 0 6px;font-size:18px;font-weight:900">📱 باركود تحميل تطبيق معرض نسر البرية</h3>
     <p class="note" style="margin:0 0 12px">اطبع البطاقة أو حمّلها كصورة عالية الجودة وعلّقها في المحل أو على المنتجات — أي عميل يصور الباركود بكاميرا الموبايل هيدخل فورًا على صفحة تحميل التطبيق.</p>
-    <div class="field" style="text-align:right">
-     <label>رابط التحميل داخل الباركود</label>
-     <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <input id="qrTargetUrl" type="url" dir="ltr" style="flex:1 1 220px" oninput="renderAdminAppQr()">
-      <button type="button" class="primary-btn" style="width:auto;padding:10px 14px" onclick="saveAdminQrUrl()">💾 حفظ الرابط</button>
-      <button type="button" class="secondary-btn" onclick="resetAdminQrUrl()">الرابط الرسمي الافتراضي</button>
-     </div>
-    </div>
     <div class="qr-poster" id="qrPosterCard">
      <div class="qr-poster-top">
       <img id="qrLogoImg" alt="شعار نسر البرية" src="https://antonyos2010.github.io/nasr-albaria/store-logo.jpg">
@@ -8388,11 +8351,55 @@ function showBroadcast(n,forceShow){
  toast("🔔 "+t+" — "+b,null,10000);
  systemNotify(t,b,"bc-"+bcKey(n));
 }
+const BC_MAX_AGE_MS=10*24*60*60*1000;
+function isBroadcastExpired(n){
+ if(!n||typeof n!=="object")return false;
+ const ts=new Date(n.created_at||0).getTime()||0;
+ return !!(ts&&(Date.now()-ts)>=BC_MAX_AGE_MS);
+}
+async function purgeExpiredBroadcasts(){
+ if(!supabaseClient||!isAdmin())return;
+ const cutoffMs=Date.now()-BC_MAX_AGE_MS;
+ const cutoffIso=new Date(cutoffMs).toISOString();
+ try{
+  await supabaseClient.from("broadcast_notifications").delete().lt("created_at",cutoffIso);
+ }catch(e){}
+ try{
+  const prev=await supabaseClient.from("site_settings").select("value").eq("key",BC_SETTINGS_KEY).maybeSingle();
+  if(prev&&prev.data&&prev.data.value){
+   const arr=JSON.parse(prev.data.value);
+   if(Array.isArray(arr)){
+    const kept=arr.filter(x=>x&&!isBroadcastExpired(x));
+    if(kept.length!==arr.length){
+     await supabaseClient.from("site_settings").upsert({key:BC_SETTINGS_KEY,value:JSON.stringify(kept)});
+    }
+   }
+  }
+ }catch(e){}
+ try{
+  const {data,error}=await supabaseClient.from("site_settings").select("key,value").like("key","bc_msg_%").limit(80);
+  if(!error&&Array.isArray(data)&&data.length){
+   const expiredKeys=[];
+   data.forEach(r=>{
+    try{
+     const obj=JSON.parse(r.value);
+     if(isBroadcastExpired(obj)){expiredKeys.push(r.key);return}
+    }catch(e){}
+    const m=String(r.key||"").match(/^bc_msg_(\d+)/);
+    if(m&&Number(m[1])<cutoffMs)expiredKeys.push(r.key);
+   });
+   if(expiredKeys.length){
+    await supabaseClient.from("site_settings").delete().in("key",expiredKeys);
+   }
+  }
+ }catch(e){}
+}
 async function readAllBroadcasts(){
  const map=new Map();
  const bySig=new Map();
  const addItem=it=>{
   if(!isValidBroadcast(it))return;
+  if(isBroadcastExpired(it))return;
   const cleanTitle=bcCleanText(it.title)||getBrandName(true);
   const cleanBody=bcCleanText(it.body);
   const norm={
@@ -8450,6 +8457,7 @@ async function sendBroadcast(){
  };
  let dbSaved=false,rtSent=false,pushResult=null;
  try{
+  await purgeExpiredBroadcasts();
   // المستوى 1: الحفظ في جدول broadcast_notifications
   try{
    const ins=await supabaseClient.from("broadcast_notifications").insert({title,body}).select("*").single();
@@ -8460,7 +8468,7 @@ async function sendBroadcast(){
    let arr=[];
    const prev=await supabaseClient.from("site_settings").select("value").eq("key",BC_SETTINGS_KEY).maybeSingle();
    if(prev&&prev.data&&prev.data.value){try{arr=JSON.parse(prev.data.value);if(!Array.isArray(arr))arr=[];}catch(e){arr=[]}}
-   arr=[item,...arr.filter(x=>x&&x.uid!==item.uid)].slice(0,40);
+   arr=[item,...arr.filter(x=>x&&x.uid!==item.uid&&!isBroadcastExpired(x))].slice(0,40);
    const up=await supabaseClient.from("site_settings").upsert({key:BC_SETTINGS_KEY,value:JSON.stringify(arr)});
    if(!up.error)dbSaved=true;
    const fb=await supabaseClient.from("site_settings").insert({key:"bc_msg_"+Date.now()+"_"+Math.random().toString(36).slice(2,5),value:JSON.stringify(item)});
@@ -8509,6 +8517,7 @@ async function sendBroadcast(){
 async function loadBroadcasts(){
  const box=$("bcList");if(!box||!isAdmin())return;
  box.innerHTML='<div class="loading">جارٍ التحميل...</div>';
+ await purgeExpiredBroadcasts();
  const data=await readAllBroadcasts();
  box.innerHTML=(data&&data.length)?data.map(n=>`
   <div class="admin-item bc-item"><div class="meta"><span style="font-size:22px">🔔</span><div style="min-width:0"><h4>${escapeHTML(n.title||"")}</h4>
@@ -13838,7 +13847,7 @@ function syncAdsPlaybackAndAdmin(){
  window.__nasrAdsActiveCount=activeAds.length;
  window.__nasrBillboardAdsSnapshot=activeAds.map(a=>({title:a.title||"",link:a.link||""}));
  activeAds.forEach(a=>preloadAdMeta(a.url));
- const sec=$("billboardAdsSection"),stage=$("bbStage"),emptyEl=$("bbEmptyState"),addBtn=$("bbEmptyAddBtn");
+ const sec=$("billboardAdsSection"),stage=$("bbStage"),emptyEl=$("bbEmptyState");
  const mainImg=$("bbMainImg"),bgImg=$("bbBgImg"),asm=$("bbAssembly");
  const linkBadge=$("bbLinkBadge"),capBar=$("bbCapBar"),dots=$("bbDots"),prev=$("bbPrevBtn"),next=$("bbNextBtn");
  const isAdm=typeof isAdmin==="function"&&isAdmin();
@@ -13847,7 +13856,6 @@ function syncAdsPlaybackAndAdmin(){
   const hasAds=activeAds.length>0;
   sec.classList.toggle("hidden",!stripOn);
   if(emptyEl)emptyEl.classList.toggle("hidden",hasAds);
-  if(addBtn)addBtn.classList.toggle("hidden",!isAdm);
   adDestroyedOrHidden=!(hasAds&&stripOn);
   if(stage)stage.classList.toggle("bb-has-empty",!(hasAds&&stripOn));
   if(hasAds&&stripOn){
@@ -13886,25 +13894,9 @@ window.applyBillboardAdsRaw=function(raw){
 
 /* التفاعل على شاشة الإعلانات (تدوير تلقائي فقط بين الإعلانات بدون تقليب يدوي) */
 (function initBillboardInteractions(){
- const stage=$("bbStage"),emptyAdd=$("bbEmptyAddBtn");
- if(emptyAdd){
-  emptyAdd.addEventListener("click",e=>{
-   e.stopPropagation();
-   if(typeof isAdmin==="function"&&!isAdmin())return;
-   if(typeof openAdmin==="function"){
-    openAdmin().then(()=>{
-     const tabBtn=document.querySelector('.admin-tab[onclick*="\'ads\'"]');
-     if(typeof adminTab==="function")adminTab("ads",tabBtn);
-    }).catch(()=>{
-     const tabBtn=document.querySelector('.admin-tab[onclick*="\'ads\'"]');
-     if(typeof adminTab==="function")adminTab("ads",tabBtn);
-    });
-   }
-  });
- }
+ const stage=$("bbStage");
  if(!stage)return;
  stage.addEventListener("click",e=>{
-  if(e.target.closest("#bbEmptyAddBtn"))return;
   const ad=activeAds[curAdIdx];
   if(!ad)return;
   if(ad.link&&/^https?:\/\//i.test(ad.link)){
@@ -14441,12 +14433,13 @@ body:not(.light) .svc-modal-op-hero{
  border-color:color-mix(in srgb,var(--op-c) 48%,rgba(255,255,255,.14));
 }
 .svc-modal-op-hero .hero-logo{
- width:82px;height:54px;background:#fff;border-radius:13px;padding:0;flex:none;overflow:hidden;
- display:grid;place-items:center;border:1.5px solid rgba(15,23,42,.08);
- box-shadow:0 4px 12px rgba(15,23,42,.12);
+ width:68px;height:68px;min-width:68px;min-height:68px;background:transparent;border-radius:50%;padding:0;flex:none;overflow:hidden;
+ display:grid;place-items:center;border:2.5px solid color-mix(in srgb,var(--op-c,#087bff) 62%,rgba(255,255,255,.88));
+ box-shadow:0 6px 18px color-mix(in srgb,var(--op-c,#087bff) 26%,rgba(0,0,0,.18));position:relative;
 }
-.svc-modal-op-hero .hero-logo img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;border-radius:0}
-.svc-modal-op-hero .hero-logo svg{width:100%;height:100%;display:block}
+.svc-modal-op-hero .hero-logo img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%}
+.svc-modal-op-hero .hero-logo .svc-op-svg-fb{width:100%;height:100%;display:none;align-items:center;justify-content:center;border-radius:50%;overflow:hidden}
+.svc-modal-op-hero .hero-logo svg{width:100%;height:100%;display:block;border-radius:50%}
 .svc-modal-op-hero .hero-txt{text-align:right;min-width:0}
 .svc-modal-op-hero .hero-op-name{font-size:14px;font-weight:900;line-height:1.35}
 .svc-modal-op-hero .hero-svc-name{font-size:12px;font-weight:800;color:#475569;margin-top:2px}
@@ -14565,14 +14558,14 @@ const SVC_WA_NUM="201220841580";
 const SVC_OWNER="أ/ يوسف شحاته";
 
 /* ---------- الأيقونات الرسمية للخدمات الأساسية ---------- */
-const NET_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><linearGradient id="svcNetSphere" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00d9ff"/><stop offset="55%" stop-color="#087bff"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient><linearGradient id="svcNetGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><circle cx="40" cy="40" r="28" fill="url(#svcNetSphere)" fill-opacity=".14" stroke="url(#svcNetSphere)" stroke-width="3.6"/><ellipse cx="40" cy="40" rx="14" ry="28" fill="none" stroke="url(#svcNetSphere)" stroke-width="3.2"/><path d="M13 31h54M13 49h54" stroke="#087bff" stroke-width="2.8" stroke-linecap="round"/><path d="M22 14a28 28 0 0136 0" fill="none" stroke="#00d9ff" stroke-width="3.2" stroke-linecap="round"/><circle cx="62" cy="18" r="10" fill="url(#svcNetGold)" stroke="#fff" stroke-width="2.2"/><path d="M58 18.2l2.8 2.8 5.2-5.4" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-const CALLS_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><linearGradient id="svcCallGr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#0284c7"/></linearGradient><linearGradient id="svcCallWave" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#f97316"/></linearGradient></defs><path d="M20.5 14h8.6a3.6 3.6 0 013.5 2.7l1.9 7.6a3.6 3.6 0 01-.9 3.4l-4.2 4.2a31 31 0 0012.2 12.2l4.2-4.2a3.6 3.6 0 013.4-.9l7.6 1.9a3.6 3.6 0 012.7 3.5v8.6a4 4 0 01-4.2 4C31 60.5 17 46.5 16.5 18.2a4 4 0 014-4.2z" fill="url(#svcCallGr)" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M44 13a23 23 0 0123 23M44 22.5a13.5 13.5 0 0113.5 13.5" fill="none" stroke="url(#svcCallWave)" stroke-width="4.2" stroke-linecap="round"/><circle cx="62" cy="18" r="3.8" fill="#fbbf24"/></svg>';
-const FAWRY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><linearGradient id="fawBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#004d99"/></linearGradient><linearGradient id="fawGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M18 14h44a8 8 0 018 8v36a8 8 0 01-8 8H18a8 8 0 01-8-8V22a8 8 0 018-8z" fill="url(#fawBlue)" stroke="#facc15" stroke-width="3"/><path d="M26 57l9-32h22l-3.4 9.6H41.4l-2 6.6h10l-3 8.8H36.4L34.2 57z" fill="url(#fawGold)"/><path d="M58 18l4 6-6 2 3 5" fill="none" stroke="#fde047" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const NET_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="svcNetBg" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#0ea5e9"/><stop offset="55%" stop-color="#1d4ed8"/><stop offset="100%" stop-color="#4c1d95"/></radialGradient><linearGradient id="svcNetGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><circle cx="40" cy="40" r="40" fill="url(#svcNetBg)"/><circle cx="40" cy="41" r="21" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-width="2.8"/><ellipse cx="40" cy="41" rx="10.5" ry="21" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M19.5 34.5h41M19.5 47.5h41" stroke="#e0f2fe" stroke-width="2.3" stroke-linecap="round"/><path d="M25 18.5a21 21 0 0130 0" fill="none" stroke="#7dd3fc" stroke-width="2.8" stroke-linecap="round"/><circle cx="57" cy="23" r="8" fill="url(#svcNetGold)" stroke="#fff" stroke-width="2"/><path d="M53.8 23.2l2.2 2.2 4.2-4.4" fill="none" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const CALLS_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="svcCallBg" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#10b981"/><stop offset="60%" stop-color="#047857"/><stop offset="100%" stop-color="#0f4c81"/></radialGradient><linearGradient id="svcCallWave" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#f97316"/></linearGradient></defs><circle cx="40" cy="40" r="40" fill="url(#svcCallBg)"/><path d="M24 20.5h7a3 3 0 012.9 2.2l1.6 6.2a3 3 0 01-.8 2.8l-3.4 3.4a25 25 0 0010 10l3.4-3.4a3 3 0 012.8-.8l6.2 1.6a3 3 0 012.2 2.9v7a3.4 3.4 0 01-3.5 3.3C32.8 58 21.2 46.4 20.7 24a3.4 3.4 0 013.3-3.5z" fill="#fff" stroke="#fff" stroke-width="1" stroke-linejoin="round"/><path d="M43.5 19.5a18 18 0 0118 18M43.5 27a10.5 10.5 0 0110.5 10.5" fill="none" stroke="url(#svcCallWave)" stroke-width="3.8" stroke-linecap="round"/><circle cx="57.5" cy="23.5" r="3.2" fill="#fde047"/></svg>';
+const FAWRY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="fawBlue" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#0284c7"/><stop offset="65%" stop-color="#00529e"/><stop offset="100%" stop-color="#00356b"/></radialGradient><linearGradient id="fawGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fef08a"/><stop offset="55%" stop-color="#facc15"/><stop offset="100%" stop-color="#eab308"/></linearGradient></defs><circle cx="40" cy="40" r="40" fill="url(#fawBlue)"/><circle cx="40" cy="40" r="37.5" fill="none" stroke="url(#fawGold)" stroke-width="3"/><path d="M24 58l8.5-34h22.5l-3.2 9.4H39.4l-2 6.8h10.4l-2.9 8.6H34.5L32.2 58z" fill="url(#fawGold)"/><path d="M55 21l3.6 5.4-5.4 1.8 2.8 4.6" fill="none" stroke="#fef08a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const FAWRY_WORDMARK='<svg viewBox="0 0 220 76" aria-label="فوري باي Fawry Pay"><defs><linearGradient id="fwBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#004d99"/></linearGradient><linearGradient id="fwGd" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="2" y="2" width="216" height="72" rx="16" fill="url(#fwBg)" stroke="#facc15" stroke-width="3"/><path d="M26 54l8-28h19l-3 8.4H39.4l-1.8 5.8h9l-2.6 7.8H35L33 54z" fill="url(#fwGd)"/><text x="130" y="37" text-anchor="middle" fill="#fde047" font-family="Arial,sans-serif" font-weight="900" font-size="22" letter-spacing=".5">Fawry</text><text x="130" y="57" text-anchor="middle" fill="#ffffff" font-family="Tahoma,Arial,sans-serif" font-weight="900" font-size="14">فوري باي ⚡</text></svg>';
-const VFCASH_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><linearGradient id="vfRedG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff2a2a"/><stop offset="100%" stop-color="#c40000"/></linearGradient></defs><circle cx="40" cy="40" r="31" fill="url(#vfRedG)" stroke="#fff" stroke-width="2.2"/><circle cx="40" cy="40" r="24" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="1.6"/><circle cx="36.5" cy="45.5" r="12" fill="#fff"/><path d="M35.5 18c12.5 0 22 9 22 21.2 0 8.2-4.2 14.2-9.2 17.5 3-4.3 3.4-10.2.4-15.2-2.6-4.5-8-6.6-13.5-6.1 2-7.6 6.8-14 .3-17.4z" fill="#fff"/></svg>';
-const WEPAY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><linearGradient id="wePurpG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6d28d9"/><stop offset="100%" stop-color="#a21caf"/></linearGradient></defs><circle cx="40" cy="40" r="31" fill="url(#wePurpG)" stroke="#fff" stroke-width="2.2"/><path d="M17 31l7.2 18.5 7.4-13.5 7.4 13.5L46.2 31" fill="none" stroke="#fff" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M65.5 41.5H49c.5 4.8 4 7.6 8.8 7.6 2.8 0 5-.9 6.8-2.3M49.2 39.5c.6-4.8 4.2-7.8 8.8-7.8 4.8 0 8 3 8.5 7.8" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 57h36" stroke="#ff2d6f" stroke-width="4.2" stroke-linecap="round"/></svg>';
-const INSTAPAY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><linearGradient id="ipGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="55%" stop-color="#087bff"/><stop offset="100%" stop-color="#00d9ff"/></linearGradient></defs><circle cx="40" cy="40" r="31" fill="url(#ipGrad)" stroke="#fff" stroke-width="2.2"/><path d="M22 33h31l-7.5-7.5M58 47H27l7.5 7.5" fill="none" stroke="#fff" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="57" cy="23" r="4" fill="#fde047"/></svg>';
-const CUSTOM_SVC_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><linearGradient id="custSvBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#087bff"/></linearGradient></defs><path d="M20 27c0-6.2 5-11.2 11.2-11.2h17.6C55 15.8 60 20.8 60 27v26c0 6.2-5 11.2-11.2 11.2H31.2C25 64.2 20 59.2 20 53V27z" fill="url(#custSvBg)" stroke="#fff" stroke-width="2.4"/><path d="M29 36h22M29 45h14M40 24v-5" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><circle cx="59" cy="21" r="8" fill="#fde047" stroke="#fff" stroke-width="2.2"/></svg>';
+const VFCASH_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="vfRedG" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#ff3333"/><stop offset="65%" stop-color="#e60000"/><stop offset="100%" stop-color="#a80000"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#vfRedG)"/><circle cx="40" cy="40" r="28" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="1.6"/><circle cx="36.5" cy="45.5" r="12" fill="#fff"/><path d="M35.5 18c12.5 0 22 9 22 21.2 0 8.2-4.2 14.2-9.2 17.5 3-4.3 3.4-10.2.4-15.2-2.6-4.5-8-6.6-13.5-6.1 2-7.6 6.8-14 .3-17.4z" fill="#fff"/></svg>';
+const WEPAY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="wePurpG" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="60%" stop-color="#6d28d9"/><stop offset="100%" stop-color="#86198f"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#wePurpG)"/><path d="M17 31l7.2 18.5 7.4-13.5 7.4 13.5L46.2 31" fill="none" stroke="#fff" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M65.5 41.5H49c.5 4.8 4 7.6 8.8 7.6 2.8 0 5-.9 6.8-2.3M49.2 39.5c.6-4.8 4.2-7.8 8.8-7.8 4.8 0 8 3 8.5 7.8" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 57h36" stroke="#ff2d6f" stroke-width="4.2" stroke-linecap="round"/></svg>';
+const INSTAPAY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="ipGrad" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="55%" stop-color="#087bff"/><stop offset="100%" stop-color="#0284c7"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#ipGrad)"/><path d="M21 33h32l-7.5-7.5M59 47H27l7.5 7.5" fill="none" stroke="#fff" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="57" cy="22" r="4.2" fill="#fde047"/></svg>';
+const CUSTOM_SVC_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="custSvBg" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#8b5cf6"/><stop offset="65%" stop-color="#087bff"/><stop offset="100%" stop-color="#1e40af"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#custSvBg)"/><path d="M25 31c0-4.4 3.6-8 8-8h14c4.4 0 8 3.6 8 8v18c0 4.4-3.6 8-8 8H33c-4.4 0-8-3.6-8-8V31z" fill="#fff" fill-opacity=".18" stroke="#fff" stroke-width="2.4"/><path d="M31 37h18M31 44h12" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><circle cx="56" cy="24" r="7" fill="#fde047" stroke="#fff" stroke-width="2"/></svg>';
 const SVC_WA_SVG='<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" style="flex:none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
 
 const MONEY_SVG='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="vertical-align:-4px;margin-inline-end:4px"><defs><linearGradient id="mnyG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#047857"/></linearGradient></defs><rect x="1.5" y="5.5" width="21" height="13" rx="3" fill="url(#mnyG)" stroke="#065f46" stroke-width="1"/><circle cx="12" cy="12" r="3.6" fill="#ecfdf5" stroke="#065f46" stroke-width=".8"/><path d="M12 10.2v3.6M10.8 11h2.1a.8.8 0 010 1.6h-1.8" fill="none" stroke="#047857" stroke-width="1" stroke-linecap="round"/><circle cx="4.8" cy="12" r="1" fill="#d1fae5"/><circle cx="19.2" cy="12" r="1" fill="#d1fae5"/></svg>';
@@ -14594,19 +14587,23 @@ BUILTIN_DEFAULTS.push(
 const OPERATORS=[
  {
   id:"vodafone",name:"Vodafone Egypt",arName:"فودافون مصر",prefix:"010",color:"#E60000",
-  logo:'<svg viewBox="0 0 120 78" aria-label="Vodafone Egypt"><rect width="120" height="78" rx="12" fill="#fff"/><circle cx="60" cy="30" r="22" fill="#E60000"/><circle cx="60" cy="30" r="17.2" fill="#fff"/><circle cx="57.2" cy="34.2" r="9.4" fill="#E60000"/><path d="M56.5 14.5c9.2 0 16.5 6.8 16.5 15.8 0 6-3 10.6-6.8 13 2.1-3.2 2.4-7.6.2-11.2-2-3.4-6-5-10.2-4.6 1.5-5.6 5.2-10.4.3-13z" fill="#E60000"/><text x="60" y="69" text-anchor="middle" fill="#E60000" font-family="system-ui,-apple-system,Arial,sans-serif" font-weight="800" font-size="14.5" letter-spacing=".3">vodafone</text></svg>'
+  logo:'<svg viewBox="0 0 120 78" aria-label="Vodafone Egypt"><rect width="120" height="78" rx="12" fill="#fff"/><circle cx="60" cy="30" r="22" fill="#E60000"/><circle cx="60" cy="30" r="17.2" fill="#fff"/><circle cx="57.2" cy="34.2" r="9.4" fill="#E60000"/><path d="M56.5 14.5c9.2 0 16.5 6.8 16.5 15.8 0 6-3 10.6-6.8 13 2.1-3.2 2.4-7.6.2-11.2-2-3.4-6-5-10.2-4.6 1.5-5.6 5.2-10.4.3-13z" fill="#E60000"/><text x="60" y="69" text-anchor="middle" fill="#E60000" font-family="system-ui,-apple-system,Arial,sans-serif" font-weight="800" font-size="14.5" letter-spacing=".3">vodafone</text></svg>',
+  heroLogo:'<svg viewBox="0 0 80 80" aria-label="Vodafone Egypt"><defs><radialGradient id="opVfH" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#ff3333"/><stop offset="65%" stop-color="#e60000"/><stop offset="100%" stop-color="#a80000"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#opVfH)"/><circle cx="40" cy="40" r="28" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="1.6"/><circle cx="36.5" cy="45.5" r="12" fill="#fff"/><path d="M35.5 18c12.5 0 22 9 22 21.2 0 8.2-4.2 14.2-9.2 17.5 3-4.3 3.4-10.2.4-15.2-2.6-4.5-8-6.6-13.5-6.1 2-7.6 6.8-14 .3-17.4z" fill="#fff"/></svg>'
  },
  {
   id:"orange",name:"Orange Egypt",arName:"أورنج مصر",prefix:"012",color:"#FF7900",
-  logo:'<svg viewBox="0 0 120 78" aria-label="Orange Egypt"><rect width="120" height="78" rx="12" fill="#fff"/><rect x="26" y="5" width="68" height="68" rx="3" fill="#FF7900"/><text x="32" y="64.5" text-anchor="start" fill="#fff" font-family="Helvetica,Arial,sans-serif" font-weight="800" font-size="16.5" letter-spacing="-.2">orange</text><text x="86.5" y="57.5" fill="#fff" font-family="Arial,sans-serif" font-weight="700" font-size="5">™</text></svg>'
+  logo:'<svg viewBox="0 0 120 78" aria-label="Orange Egypt"><rect width="120" height="78" rx="12" fill="#fff"/><rect x="26" y="5" width="68" height="68" rx="3" fill="#FF7900"/><text x="32" y="64.5" text-anchor="start" fill="#fff" font-family="Helvetica,Arial,sans-serif" font-weight="800" font-size="16.5" letter-spacing="-.2">orange</text><text x="86.5" y="57.5" fill="#fff" font-family="Arial,sans-serif" font-weight="700" font-size="5">™</text></svg>',
+  heroLogo:'<svg viewBox="0 0 80 80" aria-label="Orange Egypt"><defs><radialGradient id="opOrH" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#ff9429"/><stop offset="65%" stop-color="#FF7900"/><stop offset="100%" stop-color="#d95800"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#opOrH)"/><text x="39" y="53" text-anchor="middle" fill="#fff" font-family="Helvetica,Arial,sans-serif" font-weight="900" font-size="18.5" letter-spacing="-.4">orange</text><text x="69" y="45" fill="#fff" font-family="Arial,sans-serif" font-weight="800" font-size="5.5">™</text></svg>'
  },
  {
   id:"etisalat",name:"e& Egypt (اتصالات)",arName:"إي آند (اتصالات)",prefix:"011",color:"#E00800",
-  logo:'<svg viewBox="0 0 120 78" aria-label="e& Egypt"><rect width="120" height="78" rx="12" fill="#fff"/><rect x="14" y="6" width="92" height="50" rx="14" fill="#E00800"/><text x="60" y="42.5" text-anchor="middle" fill="#fff" font-family="Helvetica,Arial,sans-serif" font-weight="900" font-size="33" letter-spacing="-1">e&amp;</text><text x="60" y="70" text-anchor="middle" fill="#1e293b" font-family="Tahoma,Arial,sans-serif" font-weight="900" font-size="11">اتصالات · etisalat</text></svg>'
+  logo:'<svg viewBox="0 0 120 78" aria-label="e& Egypt"><rect width="120" height="78" rx="12" fill="#fff"/><rect x="14" y="6" width="92" height="50" rx="14" fill="#E00800"/><text x="60" y="42.5" text-anchor="middle" fill="#fff" font-family="Helvetica,Arial,sans-serif" font-weight="900" font-size="33" letter-spacing="-1">e&amp;</text><text x="60" y="70" text-anchor="middle" fill="#1e293b" font-family="Tahoma,Arial,sans-serif" font-weight="900" font-size="11">اتصالات · etisalat</text></svg>',
+  heroLogo:'<svg viewBox="0 0 80 80" aria-label="e& Egypt"><defs><radialGradient id="opEtH" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#ff2e22"/><stop offset="65%" stop-color="#E00800"/><stop offset="100%" stop-color="#9e0000"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#opEtH)"/><text x="40" y="50" text-anchor="middle" fill="#fff" font-family="Helvetica,Arial,sans-serif" font-weight="900" font-size="33" letter-spacing="-1">e&amp;</text></svg>'
  },
  {
   id:"we",name:"WE Egypt",arName:"وي (المصرية للاتصالات)",prefix:"015",color:"#6F2C91",
-  logo:'<svg viewBox="0 0 120 78" aria-label="WE Egypt"><defs><linearGradient id="svcWeBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#5c1d82"/><stop offset="100%" stop-color="#8b2fc9"/></linearGradient></defs><rect width="120" height="78" rx="12" fill="#fff"/><rect x="16" y="7" width="88" height="48" rx="14" fill="url(#svcWeBg)"/><path d="M25 22l7 20 8-15 8 15 7-20" fill="none" stroke="#fff" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M88 33H69c.4 5.2 4.2 8.2 9.4 8.2 3.2 0 5.6-1 7.6-2.6M69.2 31c.6-5.2 4.5-8.4 9.5-8.4 5.2 0 8.8 3.2 9.3 8.4" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><rect x="16" y="59" width="88" height="3.5" rx="2" fill="#e11d48"/><text x="60" y="73" text-anchor="middle" fill="#5c1d82" font-family="Tahoma,Arial,sans-serif" font-weight="900" font-size="9.5">المصرية للاتصالات</text></svg>'
+  logo:'<svg viewBox="0 0 120 78" aria-label="WE Egypt"><defs><linearGradient id="svcWeBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#5c1d82"/><stop offset="100%" stop-color="#8b2fc9"/></linearGradient></defs><rect width="120" height="78" rx="12" fill="#fff"/><rect x="16" y="7" width="88" height="48" rx="14" fill="url(#svcWeBg)"/><path d="M25 22l7 20 8-15 8 15 7-20" fill="none" stroke="#fff" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M88 33H69c.4 5.2 4.2 8.2 9.4 8.2 3.2 0 5.6-1 7.6-2.6M69.2 31c.6-5.2 4.5-8.4 9.5-8.4 5.2 0 8.8 3.2 9.3 8.4" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><rect x="16" y="59" width="88" height="3.5" rx="2" fill="#e11d48"/><text x="60" y="73" text-anchor="middle" fill="#5c1d82" font-family="Tahoma,Arial,sans-serif" font-weight="900" font-size="9.5">المصرية للاتصالات</text></svg>',
+  heroLogo:'<svg viewBox="0 0 80 80" aria-label="WE Egypt"><defs><radialGradient id="opWeH" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#8b2fc9"/><stop offset="65%" stop-color="#6F2C91"/><stop offset="100%" stop-color="#4c1d95"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#opWeH)"/><path d="M16 30l7 19 7.5-14 7.5 14 7-19" fill="none" stroke="#fff" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M64.5 41H48c.5 4.8 4 7.6 8.8 7.6 2.8 0 5-.9 6.8-2.3M48.2 39c.6-4.8 4.2-7.8 8.8-7.8 4.8 0 8 3 8.5 7.8" fill="none" stroke="#fff" stroke-width="4.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 57h36" stroke="#ff2d6f" stroke-width="4" stroke-linecap="round"/></svg>'
  }
 ];
 
@@ -14616,6 +14613,12 @@ window.__nasrSvcOpImgOk=function(img){
  if(!img)return;
  const id=img.getAttribute("data-op-id"),src=img.getAttribute("src");
  if(id&&src)opImgResolved[id]=src;
+ try{
+  if(img.classList.contains("svc-hero-img")&&img.naturalWidth&&img.naturalHeight){
+   const r=img.naturalWidth/img.naturalHeight;
+   img.style.objectFit=(r>=0.75&&r<=1.32)?"cover":"contain";
+  }
+ }catch(e){}
 };
 window.__nasrSvcOpImgErr=function(img){
  if(!img)return;
@@ -14635,6 +14638,12 @@ function renderOpLogo(op){
  if(opImgResolved[op.id]===null)return op.logo;
  const src=opImgResolved[op.id]||("./"+op.id+".png?v=6");
  return `<img src="${esc(src)}" alt="${esc(op.name)}" data-op-id="${esc(op.id)}" data-ext-i="0" onload="window.__nasrSvcOpImgOk&&window.__nasrSvcOpImgOk(this)" onerror="window.__nasrSvcOpImgErr&&window.__nasrSvcOpImgErr(this)"><span class="svc-op-svg-fb">${op.logo}</span>`;
+}
+function renderOpHeroLogo(op){
+ const fbSvg=op.heroLogo||op.logo;
+ if(opImgResolved[op.id]===null)return fbSvg;
+ const src=opImgResolved[op.id]||("./"+op.id+".png?v=6");
+ return `<img class="svc-hero-img" src="${esc(src)}" alt="${esc(op.name)}" data-op-id="${esc(op.id)}" data-ext-i="0" onload="window.__nasrSvcOpImgOk&&window.__nasrSvcOpImgOk(this)" onerror="window.__nasrSvcOpImgErr&&window.__nasrSvcOpImgErr(this)"><span class="svc-op-svg-fb">${fbSvg}</span>`;
 }
 function renderFawryLogo(){
  if(opImgResolved.fawry===null)return FAWRY_WORDMARK;
@@ -15057,7 +15066,7 @@ document.addEventListener("keydown",e=>{
 function iconForServiceItem(it){
   const base=iconForServiceItemBase(it),f=SVC_LOGO_FILES[it&&it.kind];
   if(!f)return base;
-  return '<div class="svc-logo-fill"><span class="svc-logo-fb">'+base+'</span><img src="./'+f+'" alt="" onload="this.previousElementSibling&&this.previousElementSibling.remove()" onerror="this.remove()"></div>';
+  return '<div class="svc-logo-fill"><span class="svc-logo-fb">'+base+'</span><img src="./'+f+'" alt="" onload="this.previousElementSibling&&this.previousElementSibling.remove();if(this.naturalWidth&&this.naturalHeight){var r=this.naturalWidth/this.naturalHeight;this.style.objectFit=(r>=0.75&&r<=1.32)?\'cover\':\'contain\'}" onerror="this.remove()"></div>';
 }
 function iconForServiceItemBase(it){
  if(!it)return CUSTOM_SVC_ICON;
@@ -15238,16 +15247,20 @@ function openWalletFormModal(item,mode){
   const ov=document.createElement("div");
   ov.className="svc-modal-ov";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");
   const idLbl=isWithdraw
-   ?(cfg.ph?"📱 رقم الهاتف الذي أرسلت منه المبلغ":"🔗 رقم الهاتف أو عنوان انستا باي الذي أرسلت منه المبلغ")
+   ?(cfg.ph?"📱 رقم الهاتف الذي أرسلت منه الفلوس":"🔗 رقم الهاتف أو عنوان انستا باي الذي أرسلت منه الفلوس")
    :(cfg.ph?"📱 رقم الهاتف":"🔗 رقم الهاتف أو عنوان انستا باي");
   const txArrowSvg='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 6l10 9 10-9" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 15l10 9 10-9" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/></svg>';
   const fallbackIc=iconForServiceItemBase(item);
   const directPayUrl=(cfg.hasDirect&&typeof payLink==="function")?payLink(cfg.ch):(k==="builtin_vfcash"?"https://vf.eg/vfcash?id=mt&qrId=1lhquC":(k==="builtin_instapay"?"https://ipn.eg/S/youssefshahataaskaros/instapay/56jl8B":""));
+  const directUrlNumMatch=String(directPayUrl||"").match(/01[0125]\d{8}/);
+  const configuredPayAcc=(typeof paySettings!=="undefined"&&paySettings[cfg.ch]&&String(paySettings[cfg.ch].account_number||"").trim())||"";
+  const directLinkTargetNum=(directUrlNumMatch&&directUrlNumMatch[0])||configuredPayAcc||cfg.nums[0]||"";
+  let selectedTargetNum=directLinkTargetNum;
   const directBtnImg=(typeof payImg==="function"&&typeof PAY_BRAND_IMG!=="undefined"&&typeof PAY_ICON!=="undefined"&&PAY_BRAND_IMG[cfg.ch])?payImg(PAY_BRAND_IMG[cfg.ch],PAY_ICON[cfg.ch]):`<img src="./${cfg.img}" alt="" onerror="this.remove()">`;
   const withdrawInfoHtml=isWithdraw?`
    <div class="tx-card" style="text-align:right;margin-bottom:2px">
     <div class="tx-head" style="--tx1:${cfg.tx1};--tx2:${cfg.tx2}">
-     <div style="width:48px;height:48px;border-radius:50%;background:#fff;padding:6px;display:grid;place-items:center;flex-shrink:0;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.22)"><img src="./${cfg.img}" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:50%;display:block" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span style="display:none;width:100%;height:100%;place-items:center">${fallbackIc}</span></div>
+     <div style="width:48px;height:48px;border-radius:50%;background:transparent;padding:0;display:grid;place-items:center;flex-shrink:0;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.22)"><img src="./${cfg.img}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span style="display:none;width:100%;height:100%;place-items:center">${fallbackIc}</span></div>
      <div><b>${cfg.nums.length>1?`📲✨ أرقامنا للسحب عبر ${esc(cfg.n)} هي:`:`📲✨ رقمنا للسحب عبر ${esc(cfg.n)} هو:`}</b><small>🔐 حوّل المبلغ المطلوب سحبه لأي رقم ثم أدخل بياناتك بالأسفل</small></div>
     </div>
     ${cfg.nums.map((num,idx)=>`
@@ -15282,7 +15295,16 @@ function openWalletFormModal(item,mode){
   ov.addEventListener("click",e=>{
    if(e.target===ov){closeExtraModalToCatalog();return}
    const cp=e.target.closest&&e.target.closest("button[data-copy-num]");
-   if(cp)copyWithdrawNum(cp);
+   if(cp){
+    const copiedVal=String(cp.getAttribute("data-copy-num")||"").trim();
+    if(copiedVal)selectedTargetNum=copiedVal;
+    copyWithdrawNum(cp);
+    return;
+   }
+   const dp=e.target.closest&&e.target.closest("a.tx-pay");
+   if(dp){
+    selectedTargetNum=directLinkTargetNum;
+   }
   });
   const err=ov.querySelector("#svcWErr"),bad=(m,id)=>{err.textContent=m;err.classList.remove("hidden");ov.querySelector(id).focus()};
   ov.querySelector("#svcWForm").addEventListener("submit",e=>{
@@ -15292,7 +15314,22 @@ function openWalletFormModal(item,mode){
    if(!idv)return bad("هذا الحقل مطلوب.","#svcWId");
    if(cfg.ph){const c=normalizeAndValidatePhone(idv,null);if(!c.ok)return bad(c.msg,"#svcWId");idv=c.phone}
    if(!/^\d+(\.\d+)?$/.test(amt)||Number(amt)<=0)return bad("اكتب المبلغ بالأرقام بشكل صحيح.","#svcWAmt");
-   launchWhatsAppMessage([getCairoGreeting()+" "+SVC_OWNER+" 👋✨","","طلب "+mode+" "+(item.title||cfg.n)+" عبر متجر نسر البرية 🦅:","• نوع الخدمة: "+mode+" "+(item.title||cfg.n),"• "+(cfg.ph?"رقم الهاتف: ":"رقم الهاتف / العنوان: ")+idv,"• المبلغ: "+amt+" جنيه","","يرجى مراجعة الطلب وتأكيد التنفيذ، شكرًا لحضرتك 🙏"].join("\n"));
+   const toNum=selectedTargetNum||directLinkTargetNum||cfg.nums[0]||"";
+   const idMsgLine=isWithdraw
+    ?(cfg.ph?"رقم الهاتف الذي أرسلت منه الفلوس: ":"رقم الهاتف / العنوان الذي أرسلت منه الفلوس: ")+idv
+    :(cfg.ph?"رقم الهاتف: ":"رقم الهاتف / العنوان: ")+idv;
+   const waLines=[
+    getCairoGreeting()+" "+SVC_OWNER+" 👋✨",
+    "",
+    "طلب "+mode+" "+(item.title||cfg.n)+" عبر متجر نسر البرية 🦅:",
+    "• نوع الخدمة: "+mode+" "+(item.title||cfg.n),
+    "• "+idMsgLine,
+    isWithdraw?("• إلى رقم محفظتك: "+toNum):null,
+    "• المبلغ: "+amt+" جنيه",
+    "",
+    "يرجى مراجعة الطلب وتأكيد التنفيذ، شكرًا لحضرتك 🙏"
+   ].filter(Boolean);
+   launchWhatsAppMessage(waLines.join("\n"));
    closeAllServicesToHome();
   });
   svcState.extraModalEl=ov;document.body.appendChild(ov);syncScrollLock();
@@ -15466,7 +15503,7 @@ function openPriceInputModal(op){
    </div>
    <div class="svc-modal-bd">
     <div class="svc-modal-op-hero">
-     <span class="hero-logo">${renderOpLogo(op)}</span>
+     <span class="hero-logo">${renderOpHeroLogo(op)}</span>
      <div class="hero-txt">
       <div class="hero-op-name">${esc(op.name)} · ${esc(op.arName)}</div>
       <div class="hero-svc-name">${esc(svcState.service.title)}</div>
@@ -15629,7 +15666,7 @@ function openPhoneInputModal(pkg){
    </div>
    <div class="svc-modal-bd">
     <div class="svc-modal-op-hero">
-     <span class="hero-logo">${renderOpLogo(op)}</span>
+     <span class="hero-logo">${renderOpHeroLogo(op)}</span>
      <div class="hero-txt">
       <div class="hero-op-name">${esc(op.name)} · ${esc(op.arName)}</div>
       <div class="hero-svc-name">${esc(pkg.packageName)}</div>
@@ -16127,11 +16164,11 @@ if(typeof window.loadServicesConfigFromDb==="function"){
 .svc-type-card .wp-name{flex:0 0 auto!important;margin:2px 0 0!important}
 .svc-type-card .svc-type-desc{flex:1 0 auto!important;display:flex!important;align-items:center!important;justify-content:center!important;margin:0!important}
 .svc-type-card .wp-btn{cursor:pointer!important;margin-top:auto!important;flex:0 0 auto!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;width:100%!important;min-height:42px!important;padding:10px 10px!important;opacity:1!important;visibility:visible!important;position:relative!important;z-index:2!important;color:#fff!important;-webkit-text-fill-color:#fff!important;white-space:normal!important;text-align:center!important;line-height:1.35!important}
-.svc-type-card .svc-type-ic{width:96px!important;height:96px!important;min-width:96px!important;max-width:96px!important;min-height:96px!important;max-height:96px!important;aspect-ratio:1/1!important;border-radius:50%!important;padding:15px!important;border:2.5px solid color-mix(in srgb,var(--bc,#087bff) 48%,rgba(255,255,255,.85))!important;overflow:hidden!important;position:relative!important;background:radial-gradient(circle at 30% 25%,#ffffff,#eef4ff)!important;box-shadow:0 8px 22px color-mix(in srgb,var(--bc,#087bff) 26%,rgba(0,0,0,.18))!important;display:grid!important;place-items:center!important;flex:0 0 auto!important}
+.svc-type-card .svc-type-ic{width:96px!important;height:96px!important;min-width:96px!important;max-width:96px!important;min-height:96px!important;max-height:96px!important;aspect-ratio:1/1!important;border-radius:50%!important;padding:0!important;border:2.5px solid color-mix(in srgb,var(--bc,#087bff) 60%,rgba(255,255,255,.88))!important;overflow:hidden!important;position:relative!important;background:transparent!important;box-shadow:0 8px 22px color-mix(in srgb,var(--bc,#087bff) 26%,rgba(0,0,0,.18))!important;display:grid!important;place-items:center!important;flex:0 0 auto!important}
 .svc-logo-fill{position:relative!important;width:100%!important;height:100%!important;display:grid!important;place-items:center!important;background:transparent!important;border-radius:50%!important;overflow:hidden!important}
-.svc-logo-fill img{width:100%!important;height:100%!important;object-fit:contain!important;border-radius:10px!important;background:transparent!important;display:block!important;position:relative!important;z-index:1!important;mix-blend-mode:multiply!important}
-.svc-logo-fb{width:100%!important;height:100%!important;display:grid!important;place-items:center!important;border-radius:50%!important;background:transparent!important}
-.svc-logo-fb svg,.svc-type-ic>svg{width:100%!important;height:100%!important;border-radius:0!important;display:block!important;background:transparent!important}
+.svc-logo-fill img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;border-radius:50%!important;background:transparent!important;display:block!important;position:relative!important;z-index:1!important;mix-blend-mode:normal!important}
+.svc-logo-fb{width:100%!important;height:100%!important;display:grid!important;place-items:center!important;border-radius:50%!important;background:transparent!important;overflow:hidden!important}
+.svc-logo-fb svg,.svc-type-ic>svg{width:100%!important;height:100%!important;border-radius:50%!important;display:block!important;background:transparent!important}
 .svc-modal-box .tx-card{background:#fff;color:#0f172a;border-radius:22px}
 .svc-modal-box .tx-head b{font-size:15.5px;line-height:1.5}
 .svc-modal-box .tx-head small{font-size:11.5px;line-height:1.5;display:block;margin-top:2px}
@@ -16139,10 +16176,10 @@ if(typeof window.loadServicesConfigFromDb==="function"){
 .svc-modal-box .tx-rt b{font-size:clamp(16px,4.4vw,19.5px);white-space:nowrap;word-break:normal;letter-spacing:.3px}
 .svc-modal-box .tx-copy{cursor:pointer}
 body:not(.light) .svc-modal-box .tx-or{color:#f8fafc}
-.svc-w-logo-frame{width:90px;height:90px;border-radius:50%;margin:0 auto;padding:13px;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#ffffff,#eef4ff);border:2.5px solid color-mix(in srgb,var(--op-c,#7c3aed) 45%,rgba(255,255,255,.85));box-shadow:0 8px 22px color-mix(in srgb,var(--op-c,#7c3aed) 24%,rgba(0,0,0,.18));overflow:hidden}
-.svc-w-logo-frame img{width:100%;height:100%;object-fit:contain;border-radius:50%;display:block;mix-blend-mode:multiply}
-.svc-w-logo-frame span{display:none;width:100%;height:100%;place-items:center}
-.svc-w-logo-frame span svg{width:100%;height:100%;display:block}
+.svc-w-logo-frame{width:90px;height:90px;border-radius:50%;margin:0 auto;padding:0;display:grid;place-items:center;background:transparent;border:2.5px solid color-mix(in srgb,var(--op-c,#7c3aed) 60%,rgba(255,255,255,.88));box-shadow:0 8px 22px color-mix(in srgb,var(--op-c,#7c3aed) 24%,rgba(0,0,0,.18));overflow:hidden}
+.svc-w-logo-frame img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.svc-w-logo-frame span{display:none;width:100%;height:100%;place-items:center;border-radius:50%;overflow:hidden}
+.svc-w-logo-frame span svg{width:100%;height:100%;display:block;border-radius:50%}
 .svc-fawry-logo-frame{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:fit-content!important;max-width:min(260px,84%)!important;height:auto!important;aspect-ratio:auto!important;margin:0 auto!important;padding:0!important;border-radius:16px!important;overflow:hidden!important;background:transparent!important;border:0!important}
 .svc-fawry-logo-frame img,.svc-fawry-logo-frame svg{width:auto!important;max-width:100%!important;height:auto!important;max-height:92px!important;object-fit:contain!important;display:block!important}
 .svc-fawry-logo-frame .svc-fawry-svg-fb{width:auto!important;height:auto!important}
