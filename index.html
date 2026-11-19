@@ -14727,10 +14727,10 @@ body:not(.light) .svc-modal-box.is-fawry{
 .svc-modal-box.is-fawry .svc-inp-wrap input::placeholder{color:#64748b}
 .svc-modal-box.is-fawry .svc-hint-note{color:#713f12}
 .svc-fawry-logo-frame{
- display:inline-flex;align-items:center;justify-content:center;width:fit-content;max-width:min(260px,84%);height:auto;margin:0 auto;padding:0;border-radius:16px;
- overflow:hidden;background:transparent;border:0;box-shadow:0 8px 22px rgba(0,0,0,.18);
+ display:flex;align-items:center;justify-content:center;width:fit-content;max-width:min(250px,86%);height:auto;margin:0 auto;padding:6px 12px;border-radius:18px;
+ overflow:hidden;background:#fff;border:2px solid #eab308;box-shadow:0 8px 20px rgba(180,83,9,.16);
 }
-.svc-fawry-logo-frame img{width:auto;max-width:100%;height:auto;max-height:92px;object-fit:contain;display:block}
+.svc-fawry-logo-frame img{width:auto;max-width:100%;height:auto;max-height:82px;object-fit:contain;object-position:center;display:block;margin:0 auto}
 .svc-fawry-logo-frame .svc-fawry-svg-fb{width:auto;height:auto;display:none;align-items:center;justify-content:center}
 .svc-fawry-logo-frame svg{width:auto;max-width:220px;height:auto;max-height:76px;display:block}
 .svc-fawry-lbl{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:900;color:#0f172a;margin-bottom:5px;padding-inline:4px}
@@ -14738,7 +14738,7 @@ body:not(.light) .svc-modal-box:not(.is-fawry) .svc-fawry-lbl{color:#f8fafc}
 .svc-fawry-req{font-size:11px;font-weight:900;color:#b91c1c;background:#fee2e2;padding:2px 8px;border-radius:999px}
 
 .svc-modal-hd{
- position:relative;padding:16px 56px;text-align:center;border-bottom:1px solid rgba(15,23,42,.08);
+ position:relative;padding:15px 54px;text-align:center;border-bottom:1px solid rgba(15,23,42,.08);
 }
 body:not(.light) .svc-modal-hd{border-bottom-color:rgba(255,255,255,.1)}
 .svc-modal-hd h3{margin:0;font-size:clamp(16.5px,4.4vw,20px);font-weight:900;line-height:1.45}
@@ -14749,9 +14749,9 @@ body:not(.light) .svc-modal-hd{border-bottom-color:rgba(255,255,255,.1)}
  display:grid;place-items:center;padding:0 0 2px;font-family:Arial,sans-serif;cursor:pointer;
 }
 body:not(.light) .svc-modal-x{border-color:rgba(255,255,255,.45)!important}
-.svc-modal-bd{padding:18px 18px 22px;display:flex;flex-direction:column;gap:14px;text-align:center}
+.svc-modal-bd{padding:15px 16px 18px;display:flex;flex-direction:column;gap:11px;text-align:center}
 .svc-modal-op-hero{
- display:flex;align-items:center;justify-content:center;gap:12px;padding:10px 14px;border-radius:18px;
+ display:flex;align-items:center;justify-content:flex-start;gap:12px;padding:10px 14px;border-radius:18px;width:100%;
  background:linear-gradient(135deg,color-mix(in srgb,var(--op-c) 10%,#f8fafc),#ffffff);
  border:1.5px solid color-mix(in srgb,var(--op-c) 36%,#cbd5e1);
  box-shadow:0 6px 18px color-mix(in srgb,var(--op-c) 14%,transparent);
@@ -14761,21 +14761,21 @@ body:not(.light) .svc-modal-op-hero{
  border-color:color-mix(in srgb,var(--op-c) 48%,rgba(255,255,255,.14));
 }
 .svc-modal-op-hero .hero-logo{
- width:68px;height:68px;min-width:68px;min-height:68px;background:transparent;border-radius:50%;padding:0;flex:none;overflow:hidden;
- display:grid;place-items:center;border:2.5px solid color-mix(in srgb,var(--op-c,#087bff) 62%,rgba(255,255,255,.88));
- box-shadow:0 6px 18px color-mix(in srgb,var(--op-c,#087bff) 26%,rgba(0,0,0,.18));position:relative;
+ width:94px;height:62px;min-width:94px;min-height:62px;background:#fff;border-radius:14px;padding:4px;flex:none;overflow:hidden;
+ display:flex;align-items:center;justify-content:center;border:2px solid color-mix(in srgb,var(--op-c,#087bff) 55%,rgba(15,23,42,.12));
+ box-shadow:0 6px 16px color-mix(in srgb,var(--op-c,#087bff) 20%,rgba(0,0,0,.14));position:relative;
 }
-.svc-modal-op-hero .hero-logo img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%}
-.svc-modal-op-hero .hero-logo .svc-op-svg-fb{width:100%;height:100%;display:none;align-items:center;justify-content:center;border-radius:50%;overflow:hidden}
-.svc-modal-op-hero .hero-logo svg{width:100%;height:100%;display:block;border-radius:50%}
-.svc-modal-op-hero .hero-txt{text-align:right;min-width:0}
-.svc-modal-op-hero .hero-op-name{font-size:14px;font-weight:900;line-height:1.35}
-.svc-modal-op-hero .hero-svc-name{font-size:12px;font-weight:800;color:#475569;margin-top:2px}
+.svc-modal-op-hero .hero-logo img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;border-radius:0}
+.svc-modal-op-hero .hero-logo .svc-op-svg-fb{width:100%;height:100%;display:none;align-items:center;justify-content:center;border-radius:0;overflow:hidden}
+.svc-modal-op-hero .hero-logo svg{width:100%;height:100%;display:block;border-radius:0}
+.svc-modal-op-hero .hero-txt{text-align:right;min-width:0;flex:1}
+.svc-modal-op-hero .hero-op-name{font-size:14.5px;font-weight:900;line-height:1.35}
+.svc-modal-op-hero .hero-svc-name{font-size:12.5px;font-weight:800;color:#475569;margin-top:2px}
 body:not(.light) .svc-modal-op-hero .hero-svc-name{color:#cbd5e1}
-.svc-modal-illus{width:76px;height:76px;margin:0 auto;display:grid;place-items:center;filter:drop-shadow(0 8px 18px rgba(22,163,74,.25))}
+.svc-modal-illus{width:62px;height:62px;margin:0 auto;display:grid;place-items:center;filter:drop-shadow(0 8px 18px rgba(22,163,74,.25))}
 .svc-modal-illus svg{width:100%;height:100%}
 
-.svc-price-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;max-height:112px;overflow-y:auto;padding:2px}
+.svc-price-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;max-height:none;overflow:visible;padding:2px}
 .svc-price-chip{
  padding:6px 12px;border-radius:999px;font-size:12.5px;font-weight:900;cursor:pointer;font-variant-numeric:tabular-nums;
  background:#f1f5f9;color:#0f172a;border:1.5px solid #cbd5e1;transition:all .14s ease;
@@ -14888,10 +14888,10 @@ const SVC_OWNER="أ/ يوسف شحاته";
 /* ---------- الأيقونات الرسمية للخدمات الأساسية ---------- */
 const NET_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="svcNetBg" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#0ea5e9"/><stop offset="55%" stop-color="#1d4ed8"/><stop offset="100%" stop-color="#4c1d95"/></radialGradient><linearGradient id="svcNetGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><circle cx="40" cy="40" r="40" fill="url(#svcNetBg)"/><circle cx="40" cy="41" r="21" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-width="2.8"/><ellipse cx="40" cy="41" rx="10.5" ry="21" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M19.5 34.5h41M19.5 47.5h41" stroke="#e0f2fe" stroke-width="2.3" stroke-linecap="round"/><path d="M25 18.5a21 21 0 0130 0" fill="none" stroke="#7dd3fc" stroke-width="2.8" stroke-linecap="round"/><circle cx="57" cy="23" r="8" fill="url(#svcNetGold)" stroke="#fff" stroke-width="2"/><path d="M53.8 23.2l2.2 2.2 4.2-4.4" fill="none" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const CALLS_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="svcCallBg" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#10b981"/><stop offset="60%" stop-color="#047857"/><stop offset="100%" stop-color="#0f4c81"/></radialGradient><linearGradient id="svcCallWave" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#f97316"/></linearGradient></defs><circle cx="40" cy="40" r="40" fill="url(#svcCallBg)"/><path d="M24 20.5h7a3 3 0 012.9 2.2l1.6 6.2a3 3 0 01-.8 2.8l-3.4 3.4a25 25 0 0010 10l3.4-3.4a3 3 0 012.8-.8l6.2 1.6a3 3 0 012.2 2.9v7a3.4 3.4 0 01-3.5 3.3C32.8 58 21.2 46.4 20.7 24a3.4 3.4 0 013.3-3.5z" fill="#fff" stroke="#fff" stroke-width="1" stroke-linejoin="round"/><path d="M43.5 19.5a18 18 0 0118 18M43.5 27a10.5 10.5 0 0110.5 10.5" fill="none" stroke="url(#svcCallWave)" stroke-width="3.8" stroke-linecap="round"/><circle cx="57.5" cy="23.5" r="3.2" fill="#fde047"/></svg>';
-const FAWRY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="fawBlue" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#0284c7"/><stop offset="65%" stop-color="#00529e"/><stop offset="100%" stop-color="#00356b"/></radialGradient><linearGradient id="fawGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fef08a"/><stop offset="55%" stop-color="#facc15"/><stop offset="100%" stop-color="#eab308"/></linearGradient></defs><circle cx="40" cy="40" r="40" fill="url(#fawBlue)"/><circle cx="40" cy="40" r="37.5" fill="none" stroke="url(#fawGold)" stroke-width="3"/><path d="M24 58l8.5-34h22.5l-3.2 9.4H39.4l-2 6.8h10.4l-2.9 8.6H34.5L32.2 58z" fill="url(#fawGold)"/><path d="M55 21l3.6 5.4-5.4 1.8 2.8 4.6" fill="none" stroke="#fef08a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const FAWRY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="fawBlue" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#0284c7"/><stop offset="65%" stop-color="#00529e"/><stop offset="100%" stop-color="#00356b"/></radialGradient><linearGradient id="fawGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fef08a"/><stop offset="55%" stop-color="#facc15"/><stop offset="100%" stop-color="#eab308"/></linearGradient></defs><circle cx="40" cy="40" r="38.5" fill="url(#fawBlue)" stroke="url(#fawGold)" stroke-width="2.5"/><g transform="translate(40,40) scale(0.86) translate(-40,-40)"><path d="M26 57l7.5-33h21l-3 9H39.8l-1.9 6.6h10l-2.8 8.4h-9.9L33 57z" fill="url(#fawGold)"/><path d="M53 23l3.2 4.8-4.8 1.6 2.5 4.2" fill="none" stroke="#fef08a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g></svg>';
 const FAWRY_WORDMARK='<svg viewBox="0 0 220 76" aria-label="فوري باي Fawry Pay"><defs><linearGradient id="fwBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#004d99"/></linearGradient><linearGradient id="fwGd" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="2" y="2" width="216" height="72" rx="16" fill="url(#fwBg)" stroke="#facc15" stroke-width="3"/><path d="M26 54l8-28h19l-3 8.4H39.4l-1.8 5.8h9l-2.6 7.8H35L33 54z" fill="url(#fwGd)"/><text x="130" y="37" text-anchor="middle" fill="#fde047" font-family="Arial,sans-serif" font-weight="900" font-size="22" letter-spacing=".5">Fawry</text><text x="130" y="57" text-anchor="middle" fill="#ffffff" font-family="Tahoma,Arial,sans-serif" font-weight="900" font-size="14">فوري باي ⚡</text></svg>';
 const VFCASH_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="vfRedG" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#ff3333"/><stop offset="65%" stop-color="#e60000"/><stop offset="100%" stop-color="#a80000"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#vfRedG)"/><circle cx="40" cy="40" r="28" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="1.6"/><circle cx="36.5" cy="45.5" r="12" fill="#fff"/><path d="M35.5 18c12.5 0 22 9 22 21.2 0 8.2-4.2 14.2-9.2 17.5 3-4.3 3.4-10.2.4-15.2-2.6-4.5-8-6.6-13.5-6.1 2-7.6 6.8-14 .3-17.4z" fill="#fff"/></svg>';
-const WEPAY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="wePurpG" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="60%" stop-color="#6d28d9"/><stop offset="100%" stop-color="#86198f"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#wePurpG)"/><g transform="translate(40,40) scale(0.78) translate(-40,-40)"><path d="M17 31l7.2 18.5 7.4-13.5 7.4 13.5L46.2 31" fill="none" stroke="#fff" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M65.5 41.5H49c.5 4.8 4 7.6 8.8 7.6 2.8 0 5-.9 6.8-2.3M49.2 39.5c.6-4.8 4.2-7.8 8.8-7.8 4.8 0 8 3 8.5 7.8" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 57h36" stroke="#ff2d6f" stroke-width="4.2" stroke-linecap="round"/></g></svg>';
+const WEPAY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="wePurpG" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="60%" stop-color="#6d28d9"/><stop offset="100%" stop-color="#86198f"/></radialGradient></defs><circle cx="40" cy="40" r="37.5" fill="url(#wePurpG)"/><g transform="translate(40,40) scale(0.76) translate(-40,-40)"><path d="M17 31l7.2 18.5 7.4-13.5 7.4 13.5L46.2 31" fill="none" stroke="#fff" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M65.5 41.5H49c.5 4.8 4 7.6 8.8 7.6 2.8 0 5-.9 6.8-2.3M49.2 39.5c.6-4.8 4.2-7.8 8.8-7.8 4.8 0 8 3 8.5 7.8" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 57h36" stroke="#ff2d6f" stroke-width="4.2" stroke-linecap="round"/></g></svg>';
 const INSTAPAY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="ipGrad" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="55%" stop-color="#087bff"/><stop offset="100%" stop-color="#0284c7"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#ipGrad)"/><path d="M21 33h32l-7.5-7.5M59 47H27l7.5 7.5" fill="none" stroke="#fff" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="57" cy="22" r="4.2" fill="#fde047"/></svg>';
 const CUSTOM_SVC_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="custSvBg" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#8b5cf6"/><stop offset="65%" stop-color="#087bff"/><stop offset="100%" stop-color="#1e40af"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#custSvBg)"/><path d="M25 31c0-4.4 3.6-8 8-8h14c4.4 0 8 3.6 8 8v18c0 4.4-3.6 8-8 8H33c-4.4 0-8-3.6-8-8V31z" fill="#fff" fill-opacity=".18" stroke="#fff" stroke-width="2.4"/><path d="M31 37h18M31 44h12" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><circle cx="56" cy="24" r="7" fill="#fde047" stroke="#fff" stroke-width="2"/></svg>';
 const SVC_WA_SVG='<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" style="flex:none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
@@ -14942,9 +14942,8 @@ window.__nasrSvcOpImgOk=function(img){
  const id=img.getAttribute("data-op-id"),src=img.getAttribute("src");
  if(id&&src)opImgResolved[id]=src;
  try{
-  if(img.classList.contains("svc-hero-img")&&img.naturalWidth&&img.naturalHeight){
-   const r=img.naturalWidth/img.naturalHeight;
-   img.style.objectFit=(r>=0.75&&r<=1.32)?"cover":"contain";
+  if(img.classList.contains("svc-hero-img")){
+   img.style.objectFit="contain";
   }
  }catch(e){}
 };
@@ -14968,7 +14967,7 @@ function renderOpLogo(op){
  return `<img src="${esc(src)}" alt="${esc(op.name)}" data-op-id="${esc(op.id)}" data-ext-i="0" onload="window.__nasrSvcOpImgOk&&window.__nasrSvcOpImgOk(this)" onerror="window.__nasrSvcOpImgErr&&window.__nasrSvcOpImgErr(this)"><span class="svc-op-svg-fb">${op.logo}</span>`;
 }
 function renderOpHeroLogo(op){
- const fbSvg=op.heroLogo||op.logo;
+ const fbSvg=op.logo||op.heroLogo;
  if(opImgResolved[op.id]===null)return fbSvg;
  const src=opImgResolved[op.id]||("./"+op.id+".png?v=6");
  return `<img class="svc-hero-img" src="${esc(src)}" alt="${esc(op.name)}" data-op-id="${esc(op.id)}" data-ext-i="0" onload="window.__nasrSvcOpImgOk&&window.__nasrSvcOpImgOk(this)" onerror="window.__nasrSvcOpImgErr&&window.__nasrSvcOpImgErr(this)"><span class="svc-op-svg-fb">${fbSvg}</span>`;
@@ -15441,8 +15440,9 @@ function iconForServiceItem(it){
   const base=iconForServiceItemBase(it),f=SVC_LOGO_FILES[it&&it.kind];
   if(!f)return base;
   const isWe=it&&it.kind==="builtin_wepay";
-  if(isWe){
-   return '<div class="svc-logo-fill is-wepay"><span class="svc-logo-fb">'+base+'</span><img src="./'+f+'" alt="" onload="this.previousElementSibling&&this.previousElementSibling.remove()" onerror="this.remove()"></div>';
+  const isFaw=it&&it.kind==="builtin_fawry";
+  if(isWe||isFaw){
+   return '<div class="svc-logo-fill '+(isWe?"is-wepay":"is-fawry")+'"><span class="svc-logo-fb">'+base+'</span><img src="./'+f+'" alt="" onload="this.previousElementSibling&&this.previousElementSibling.remove()" onerror="this.remove()"></div>';
   }
   return '<div class="svc-logo-fill"><span class="svc-logo-fb">'+base+'</span><img src="./'+f+'" alt="" onload="this.previousElementSibling&&this.previousElementSibling.remove();if(this.naturalWidth&&this.naturalHeight){var r=this.naturalWidth/this.naturalHeight;this.style.objectFit=(r>=0.75&&r<=1.32)?\'cover\':\'contain\'}" onerror="this.remove()"></div>';
 }
@@ -15487,7 +15487,7 @@ window.openServicesCatalogPage=function(stripIdx){
     const priceTag=String(it.price||"").trim();
     return `
     <div class="svc-type-card" style="--bc:${esc(col)}">
-     <div class="svc-type-ic${isWe?" is-wepay":""}">${iconForServiceItem(it)}</div>
+     <div class="svc-type-ic${isWe?" is-wepay":""}${isFawry?" is-fawry":""}">${iconForServiceItem(it)}</div>
      <div class="wp-name">${esc(it.title)}</div>
      ${priceTag?`<span class="svc-type-badge">${MONEY_SVG}${esc(priceTag)}${/\d$/.test(priceTag)?" جنيه":""}</span>`:""}
      ${it.description?`<div class="svc-type-desc">${esc(it.description)}</div>`:""}
@@ -16632,13 +16632,23 @@ if(typeof window.loadServicesConfigFromDb==="function"){
 .svc-logo-fill img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;border-radius:50%!important;background:transparent!important;display:block!important;position:relative!important;z-index:1!important;mix-blend-mode:normal!important}
 .svc-logo-fb{width:100%!important;height:100%!important;display:grid!important;place-items:center!important;border-radius:50%!important;background:transparent!important;overflow:hidden!important}
 .svc-logo-fb svg,.svc-type-ic>svg{width:100%!important;height:100%!important;border-radius:50%!important;display:block!important;background:transparent!important}
-/* ضبط شعار وي باي كاملًا بالحجم الطبيعي بدون أي إطار بنفسجي حوله */
-.svc-type-ic.is-wepay,.svc-logo-fill.is-wepay,.svc-w-logo-frame.is-wepay,.tx-head-ic.is-wepay{
+/* ضبط شعار وي باي بدون أي إطار بنفسجي وتصغير طفيف جدًا (91%) لمنع أي قص في الحواف */
+.svc-type-card .svc-type-ic.is-wepay,.svc-type-ic.is-wepay,.svc-logo-fill.is-wepay,.svc-w-logo-frame.is-wepay,.tx-head-ic.is-wepay{
  background:transparent!important;
  border:0!important;
+ box-shadow:none!important;
 }
 .svc-logo-fill.is-wepay img,.svc-w-logo-frame.is-wepay img,.tx-head-ic.is-wepay img{
- width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;border-radius:50%!important;margin:0!important;background:transparent!important;
+ width:91%!important;height:91%!important;object-fit:contain!important;object-position:center!important;border-radius:50%!important;margin:auto!important;background:transparent!important;
+}
+/* ضبط شعار فوري في البطاقة والإطار بحيث يتوسط بالكامل دون أي اعوجاج أو قص */
+.svc-type-card .svc-type-ic.is-fawry{
+ background:#00529e!important;
+ border:2.5px solid #facc15!important;
+ padding:5px!important;
+}
+.svc-logo-fill.is-fawry img{
+ width:92%!important;height:92%!important;object-fit:contain!important;object-position:center!important;border-radius:50%!important;margin:auto!important;background:transparent!important;
 }
 .svc-modal-box .tx-card{background:#fff;color:#0f172a;border-radius:22px}
 .svc-modal-box .tx-head b{font-size:15.5px;line-height:1.5}
@@ -16651,8 +16661,8 @@ body:not(.light) .svc-modal-box .tx-or{color:#f8fafc}
 .svc-w-logo-frame img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
 .svc-w-logo-frame span{display:none;width:100%;height:100%;place-items:center;border-radius:50%;overflow:hidden}
 .svc-w-logo-frame span svg{width:100%;height:100%;display:block;border-radius:50%}
-.svc-fawry-logo-frame{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:fit-content!important;max-width:min(260px,84%)!important;height:auto!important;aspect-ratio:auto!important;margin:0 auto!important;padding:0!important;border-radius:16px!important;overflow:hidden!important;background:transparent!important;border:0!important}
-.svc-fawry-logo-frame img,.svc-fawry-logo-frame svg{width:auto!important;max-width:100%!important;height:auto!important;max-height:92px!important;object-fit:contain!important;display:block!important}
+.svc-fawry-logo-frame{display:flex!important;align-items:center!important;justify-content:center!important;width:fit-content!important;max-width:min(250px,86%)!important;height:auto!important;aspect-ratio:auto!important;margin:0 auto!important;padding:6px 12px!important;border-radius:18px!important;overflow:hidden!important;background:#fff!important;border:2px solid #eab308!important;box-shadow:0 8px 20px rgba(180,83,9,.16)!important}
+.svc-fawry-logo-frame img,.svc-fawry-logo-frame svg{width:auto!important;max-width:100%!important;height:auto!important;max-height:82px!important;object-fit:contain!important;object-position:center!important;display:block!important;margin:0 auto!important}
 .svc-fawry-logo-frame .svc-fawry-svg-fb{width:auto!important;height:auto!important}
 /* رسالة قفل السحب + لوحة تحكم قفل السحب */
 .svc-wlock-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:900;background:rgba(239,68,68,.14);color:#ef4444;border:1px solid rgba(239,68,68,.35)}
