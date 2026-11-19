@@ -1706,10 +1706,7 @@ footer{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
 .fx-face .fx-im{object-fit:contain}
 .fx-face .fx-bg{object-fit:cover;transform:scale(1.2);filter:blur(26px) brightness(.55) saturate(1.3);z-index:-1}
 .fx-face.d::after{content:"";position:absolute;inset:auto 0 0 0;height:34%;background:linear-gradient(180deg,transparent,#000a);pointer-events:none}
-.fx-desc{position:absolute;z-index:2;right:0;left:0;bottom:0;padding:14px 18px 34px;color:#fff;direction:rtl;font-size:clamp(14px,3.6vw,20px);font-weight:800;line-height:1.6;text-shadow:0 2px 10px #000a;pointer-events:none}
-.fx-dots{position:absolute;z-index:5;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:7px;pointer-events:none}
-.fx-dots i{width:8px;height:8px;border-radius:99px;background:#fff;opacity:.55;transition:.3s}
-.fx-dots i.on{width:26px;opacity:1;background:linear-gradient(90deg,#00d9ff,#a600ff)}
+.fx-desc{position:absolute;z-index:2;right:0;left:0;bottom:0;padding:14px 18px 16px;color:#fff;direction:rtl;font-size:clamp(14px,3.6vw,20px);font-weight:800;line-height:1.6;text-shadow:0 2px 10px #000a;pointer-events:none}
 /* عارض الصورة: الصورة كاملة بدون قص أو تشويه + خلفية ضبابية تملأ الشاشة */
 .svv{background:#000}
 .svv .vw-stage{position:relative;flex:1;min-height:0;width:100%;overflow:hidden;background:#000}
@@ -7329,7 +7326,8 @@ window.shouldAutoPromptNotifs=function(){
  try{
   if(!("Notification" in window)||typeof Notification.requestPermission!=="function")return false;
   if(!window.__nasrSettingsLoaded||!window.__nasrInstallSyncSettled)return false;
-  if(typeof currentSession==="undefined"||!currentSession)return false;
+  const inAppMode=(typeof detectPlatform==="function"&&detectPlatform()==="app")||(typeof isAppInstalledLocally==="function"&&isAppInstalledLocally());
+  if((typeof currentSession==="undefined"||!currentSession)&&!inAppMode)return false;
   if(typeof recoveryMode!=="undefined"&&recoveryMode)return false;
   if(document.documentElement.classList.contains("g-pre")||document.documentElement.classList.contains("rs-pre"))return false;
   const perm=getNotifPermSafe();
@@ -10749,8 +10747,8 @@ window.uploadProductImage=async function(file,folder){
 /* ---------- محرك التحريك الأفقي السلس والسريع (حركة واحدة واضحة متواصلة من اليسار لليمين) ---------- */
 function mkFlip(root,cfg){
  const S={cur:0,faceIdx:0,busy:false,items:[],timer:null},ratios={};
- root.innerHTML='<div class="fx-box"><div class="fx-in"><div class="fx-face"></div><div class="fx-face b"></div></div><div class="fx-dots"></div></div>';
- const box=root.querySelector(".fx-box"),faces=root.querySelectorAll(".fx-face"),dotsEl=root.querySelector(".fx-dots");
+ root.innerHTML='<div class="fx-box"><div class="fx-in"><div class="fx-face"></div><div class="fx-face b"></div></div></div>';
+ const box=root.querySelector(".fx-box"),faces=root.querySelectorAll(".fx-face");
  const vis=()=>faces[S.faceIdx],hid=()=>faces[S.faceIdx^1];
  const faceHTML=it=>{const u=esc(it.src),d=String(it.desc||"").trim();
   return `<img class="fx-bg" src="${u}" alt="" aria-hidden="true" draggable="false"><img class="fx-im" src="${u}" alt="${esc(d.slice(0,60)||cfg.alt)}" draggable="false" decoding="async">${d?`<div class="fx-desc">${esc(d)}</div>`:""}`};
@@ -10763,7 +10761,6 @@ function mkFlip(root,cfg){
  function fit(i){const it=S.items[i];if(!it)return;
   const vhNow=Math.max(360,(window.visualViewport&&window.visualViewport.height)||window.innerHeight||document.documentElement.clientHeight||800);
   box.style.height=Math.max(240,Math.round(vhNow*0.75))+"px"}
- function dots(){dotsEl.innerHTML=S.items.length>1?S.items.map((_,i)=>`<i class="${i===S.cur?"on":""}"></i>`).join(""):""}
  function flipTo(n,dir){
   if(S.busy||!S.items.length)return;
   if(n===S.cur&&S.items.length<2)return;
@@ -10788,7 +10785,6 @@ function mkFlip(root,cfg){
    S.cur=n;S.busy=false;
    outFace.style.transition="none";
    outFace.style.transform="translate3d(-100%,0,0)";
-   dots();
   };
   inFace.addEventListener("transitionend",function h(e){
    if(e.target!==inFace||String(e.propertyName).indexOf("transform")<0)return;
@@ -10806,14 +10802,14 @@ function mkFlip(root,cfg){
  const loadRatio=it=>new Promise(res=>{if(ratios[it.src])return res();const im=new Image(),to=setTimeout(res,6000);im.onload=()=>{ratios[it.src]=(im.naturalWidth||16)/(im.naturalHeight||9);clearTimeout(to);res()};im.onerror=()=>{clearTimeout(to);res()};im.src=it.src});
  function render(items){
   S.items=items;clearInterval(S.timer);const my=++tok;
-  if(!items.length){faces[0].innerHTML="";faces[1].innerHTML="";dotsEl.innerHTML="";return}
+  if(!items.length){faces[0].innerHTML="";faces[1].innerHTML="";return}
   if(S.cur>=items.length)S.cur=0;
   Promise.all(items.map(loadRatio)).then(()=>{if(my!==tok)return;
    box.style.animation="none";box.style.background="#0b0e1a";
    S.faceIdx=0;S.busy=false;
    setFace(vis(),items[S.cur],"translate3d(0,0,0)");
    setFace(hid(),null,"translate3d(-100%,0,0)");
-   fit(S.cur);dots();S.timer=setInterval(tick,2100)});
+   fit(S.cur);S.timer=setInterval(tick,4000)});
  }
  let st=null;
  root.addEventListener("pointerdown",e=>{st={x:e.clientX,y:e.clientY,m:false}});
@@ -10824,7 +10820,7 @@ function mkFlip(root,cfg){
   else if(n&&cfg.onOpen)cfg.onOpen(S.cur)});
  root.addEventListener("pointercancel",()=>{st=null});
  window.addEventListener("resize",()=>{if(S.items.length)fit(S.cur)});
- return{render,reset:function(){try{S.cur=0;S.faceIdx=0;S.busy=false;if(S.items&&S.items.length){setFace(vis(),S.items[0],"translate3d(0,0,0)");setFace(hid(),null,"translate3d(-100%,0,0)");fit(0);dots()}}catch(e){}}};
+ return{render,reset:function(){try{S.cur=0;S.faceIdx=0;S.busy=false;if(S.items&&S.items.length){setFace(vis(),S.items[0],"translate3d(0,0,0)");setFace(hid(),null,"translate3d(-100%,0,0)");fit(0)}}catch(e){}}};
 }
 
 /* ---------- الطبقات الكاملة (زر الرجوع الموحد يديرها بدون تعارض) ---------- */
@@ -16237,8 +16233,9 @@ window.renderServicesAdmin=function(){
    <div class="wlock-adm-list">
     ${WALLET_LOCK_META.map(w=>{
      const locked=!!(window.WALLET_WITHDRAW_LOCKS&&window.WALLET_WITHDRAW_LOCKS[w.kind]);
+     const isWeRow=w.kind==="builtin_wepay";
      return `<div class="wlock-row ${locked?"is-locked":""}">
-      <div class="wlock-info"><span class="wlock-ic" style="background:${w.color}22;color:${w.color};border-color:${w.color}44">${w.badge}</span><div><b>سحب ${esc(w.name)}</b><small>${locked?"⛔ السحب مقفول حاليًا — يظهر تنبيه الحد الأقصى":"✅ السحب مفتوح ويعمل بشكل طبيعي"}</small></div></div>
+      <div class="wlock-info"><span class="wlock-ic${isWeRow?" is-wepay":""}">${iconForServiceItem({kind:w.kind})}</span><div><b>سحب ${esc(w.name)}</b><small>${locked?"⛔ السحب مقفول حاليًا — يظهر تنبيه الحد الأقصى":"✅ السحب مفتوح ويعمل بشكل طبيعي"}</small></div></div>
       <button type="button" class="wlock-btn ${locked?"locked":"open"}" data-sx="wlock" data-k="${w.kind}">${locked?"🔒 مقفول — فتح الآن":"🔓 مفتوح — قفل السحب"}</button>
      </div>`;
     }).join("")}
@@ -16635,12 +16632,13 @@ if(typeof window.loadServicesConfigFromDb==="function"){
 .svc-logo-fill img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;border-radius:50%!important;background:transparent!important;display:block!important;position:relative!important;z-index:1!important;mix-blend-mode:normal!important}
 .svc-logo-fb{width:100%!important;height:100%!important;display:grid!important;place-items:center!important;border-radius:50%!important;background:transparent!important;overflow:hidden!important}
 .svc-logo-fb svg,.svc-type-ic>svg{width:100%!important;height:100%!important;border-radius:50%!important;display:block!important;background:transparent!important}
-/* ضبط شعار وي باي الدائري بالملي في البطاقات والصفحات والنوافذ */
+/* ضبط شعار وي باي كاملًا بالحجم الطبيعي بدون أي إطار بنفسجي حوله */
 .svc-type-ic.is-wepay,.svc-logo-fill.is-wepay,.svc-w-logo-frame.is-wepay,.tx-head-ic.is-wepay{
- background:radial-gradient(circle at 35% 30%,#7c3aed,#5b2c91 64%,#4c1d95)!important;
+ background:transparent!important;
+ border:0!important;
 }
 .svc-logo-fill.is-wepay img,.svc-w-logo-frame.is-wepay img,.tx-head-ic.is-wepay img{
- width:80%!important;height:80%!important;object-fit:contain!important;object-position:center!important;border-radius:50%!important;margin:auto!important;
+ width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;border-radius:50%!important;margin:0!important;background:transparent!important;
 }
 .svc-modal-box .tx-card{background:#fff;color:#0f172a;border-radius:22px}
 .svc-modal-box .tx-head b{font-size:15.5px;line-height:1.5}
@@ -16672,8 +16670,10 @@ body:not(.light) .svc-wlock-badge{color:#fcd34d;background:rgba(245,158,11,.18)}
 .wlock-adm-list{display:flex;flex-direction:column;gap:8px}
 .wlock-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:14px;background:var(--panel);border:1.5px solid var(--border);flex-wrap:wrap}
 .wlock-row.is-locked{border-color:rgba(239,68,68,.55);background:rgba(239,68,68,.06)}
-.wlock-info{display:flex;align-items:center;gap:9px;min-width:0;flex:1}
-.wlock-ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:17px;border:1.5px solid transparent;flex-shrink:0}
+.wlock-info{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.wlock-ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;overflow:hidden;padding:0;background:transparent;border:0;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.wlock-ic img,.wlock-ic svg{width:100%;height:100%;display:block;border-radius:50%;object-fit:cover}
+.wlock-ic.is-wepay img{object-fit:contain!important}
 .wlock-info b{display:block;font-size:13px;font-weight:900}
 .wlock-info small{display:block;font-size:11.5px;color:var(--muted)}
 .wlock-btn{border:0;border-radius:999px;padding:8px 14px;font:inherit;font-size:12px;font-weight:900;cursor:pointer;color:#fff;white-space:nowrap}
