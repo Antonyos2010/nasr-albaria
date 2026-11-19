@@ -1697,11 +1697,11 @@ footer{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
 #svcFx,#wfFx{display:block}
 .sv-ic,.wf-ic{width:36px;height:36px}
 .wf-ic{filter:drop-shadow(0 0 8px #1e90ffcc) saturate(1.3)}
-.fx{position:relative;width:100vw;margin-inline:calc(50% - 50vw);direction:ltr;-webkit-perspective:1800px;perspective:1800px;touch-action:pan-y;-webkit-user-select:none;user-select:none}
-.fx-box{position:relative;width:100%;height:56vw;transition:height .7s cubic-bezier(.4,0,.2,1)}
-.fx-in{position:absolute;inset:0;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;transition:transform .95s cubic-bezier(.45,.05,.25,1);will-change:transform}
-.fx-face{position:absolute;inset:0;overflow:hidden;background:#0b0e1a;cursor:pointer;-webkit-backface-visibility:hidden;backface-visibility:hidden;isolation:isolate}
-.fx-face.b{-webkit-transform:rotateY(180deg);transform:rotateY(180deg)}
+.fx{position:relative;width:100vw;margin-inline:calc(50% - 50vw);direction:ltr;overflow:hidden;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.fx-box{position:relative;width:100%;height:56vw;overflow:hidden;transition:height .35s ease}
+.fx-in{position:absolute;inset:0;overflow:hidden}
+.fx-face{position:absolute;inset:0;overflow:hidden;background:#0b0e1a;cursor:pointer;isolation:isolate;will-change:transform}
+.fx-face.b{transform:translate3d(-100%,0,0)}
 .fx-face img{position:absolute;inset:0;width:100%;height:100%;display:block;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .fx-face .fx-im{object-fit:contain}
 .fx-face .fx-bg{object-fit:cover;transform:scale(1.2);filter:blur(26px) brightness(.55) saturate(1.3);z-index:-1}
@@ -1778,10 +1778,9 @@ footer{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
 .wfa-ord button:disabled{opacity:.3}
 .wfa-price{display:inline-block;margin-top:2px;font-size:11px;font-weight:900;color:var(--success)}
 
-/* ===== تحديث 2: سرعة القلب، بدون حواف، صفحة متجاوبة، عمودين، تفاصيل، كروت الإدارة ===== */
-.fx{-webkit-perspective:2400px;perspective:2400px}
+/* ===== تحديث 2: انزلاق أفقي سريع، بدون حواف، صفحة متجاوبة، عمودين، تفاصيل، كروت الإدارة ===== */
 .fx-box{transition:height .35s ease}
-.fx-in{transition:transform .5s cubic-bezier(.5,0,.2,1);will-change:auto}
+.fx-in{transition:none;will-change:auto}
 .fx-box{background:linear-gradient(100deg,#0b0e1a 30%,#151a30 50%,#0b0e1a 70%);background-size:200% 100%;animation:ordSk 1.4s linear infinite}
 .fx-face{-webkit-touch-callout:none}
 .wp{background:#fff;color:#000}
@@ -2888,7 +2887,7 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
 .bb-stage.bb-intermission .bb-fx-canvas{opacity:1}
 
 .bb-cap-bar{
- position:absolute;left:16px;right:16px;bottom:42px;z-index:6;
+ position:absolute;left:16px;right:16px;bottom:16px;z-index:6;
  pointer-events:none;display:flex;justify-content:center;
  transition:opacity .3s ease,transform .3s ease;
 }
@@ -2901,18 +2900,15 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
 .bb-stage.bb-intermission .bb-cap-bar{opacity:0;transform:translateY(8px)}
 
 .bb-nav-btn{display:none!important}
-.bb-dots{
- position:absolute;left:0;right:0;bottom:14px;z-index:7;
- display:flex;justify-content:center;gap:7px;padding:0 16px;
- pointer-events:none;
+.bb-sub-notice{
+ margin:0 0 12px;padding:11px 15px;border-radius:14px;direction:rtl;text-align:right;
+ font-size:clamp(12px,3.1vw,13.8px);font-weight:800;line-height:1.75;color:#e2e8f0;
+ background:linear-gradient(135deg,rgba(15,23,42,.88),rgba(30,27,75,.86));
+ border:1.5px solid rgba(0,229,255,.35);
+ box-shadow:0 8px 22px rgba(8,123,255,.14);
 }
-.bb-dots span{
- display:block;width:9px;height:9px;padding:0;border:0;border-radius:99px;
- background:rgba(255,255,255,.48);transition:all .3s ease;pointer-events:none;
-}
-.bb-dots span.on{
- width:28px;background:linear-gradient(90deg,#00e5ff,#a600ff,#ff3d8d);
- box-shadow:0 0 12px rgba(0,229,255,.7);
+body.light .bb-sub-notice{
+ color:#0f172a;background:linear-gradient(135deg,#f0f9ff,#eef2ff);border-color:rgba(8,123,255,.3);
 }
 .bb-stage.bb-clickable{cursor:pointer}
 .bb-link-badge{
@@ -3122,7 +3118,7 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
    </div>
   </section>
 
-  <section id="billboardAdsSection" class="bb-sec" aria-label="شاشة الإعلانات — ضع اعلانك هنا">
+  <section id="billboardAdsSection" class="bb-sec" aria-label="شاشة الإعلانات — الإعلانات الحصرية">
    <div class="bb-head">
     <div class="bb-head-brand">
      <div class="bb-logo-wrap" aria-hidden="true">
@@ -3151,12 +3147,13 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
       </svg>
      </div>
      <div class="bb-title-col">
-      <h2>ضع اعلانك هنا</h2>
+      <h2>الإعلانات الحصرية</h2>
       <small>شاشة الإعلانات الرقمية التفاعلية</small>
      </div>
     </div>
     <span class="bb-live-pill"><span class="bb-live-dot"></span>عرض إعلاني متجدد</span>
    </div>
+   <div class="bb-sub-notice">📣✨ يمكنك طلب عرض إعلانك هنا على شاشة الإعلانات الخاصة بنا 🎯 عن طريق التواصل معنا عبر واتساب وتقديم طلبك 💬💚، ويختفي الإعلان تلقائيًا بعد 24 ساعة ⏳🔥.</div>
    <div class="bb-stage" id="bbStage">
     <div class="bb-empty" id="bbEmptyState">
      <div class="bb-empty-card">
@@ -3169,8 +3166,8 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
        </svg>
       </div>
       <span class="bb-empty-pill">📺 شاشة الإعلانات التفاعلية</span>
-      <h3>ضع اعلانك هنا</h3>
-      <p>📣✨ يمكنك طلب عرض إعلانك هنا على شاشة الإعلانات الخاصة بنا 🎯 عن طريق التواصل معنا عبر واتساب وتقديم طلبك 💬💚، ويختفي الإعلان تلقائيًا بعد 24 ساعة ⏳🔥.</p>
+      <h3>الإعلانات الحصرية</h3>
+      <p>مساحة عرض متجددة لأقوى الإعلانات والعروض الحصرية — تواصل معنا عبر واتساب لإضافة إعلانك الآن ✨</p>
      </div>
     </div>
     <img class="bb-bg-img" id="bbBgImg" alt="" aria-hidden="true">
@@ -3181,7 +3178,6 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
     <div class="bb-cap-bar hidden" id="bbCapBar"><div class="bb-cap-inner" id="bbCapInner"></div></div>
     <button type="button" class="bb-nav-btn prev hidden" id="bbPrevBtn" aria-label="الإعلان السابق">‹</button>
     <button type="button" class="bb-nav-btn next hidden" id="bbNextBtn" aria-label="الإعلان التالي">›</button>
-    <div class="bb-dots" id="bbDots"></div>
    </div>
   </section>
 
@@ -3680,28 +3676,12 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
     <button type="button" class="mode-sw-btn dl-mand" id="dlPromptBtnMandatory" onclick="setAppDownloadPromptMode('mandatory')">🔒 إجبارية (لا يمكن تخطيها)</button>
     <button type="button" class="mode-sw-btn dl-opt" id="dlPromptBtnOptional" onclick="setAppDownloadPromptMode('optional')">✨ اختيارية (يمكن تخطيها)</button>
    </div>
-   <div class="app-prev-grid">
-    <button type="button" class="mode-sw-btn dl-prev" onclick="previewMandatoryAppGate({mode:'mandatory'})">👁️ معاينة التحميل الإجباري</button>
-    <button type="button" class="mode-sw-btn dl-prev" onclick="previewOptionalAppInvite()">✨ معاينة الدعوة الاختيارية</button>
-    <button type="button" class="mode-sw-btn dl-notif" onclick="previewNotifPermissionPrompt()">🔔 معاينة رسالة الإشعارات</button>
-    <button type="button" class="mode-sw-btn dl-prev" onclick="simulateCustomerUninstallTest()">📲 محاكاة حذف التطبيق</button>
-   </div>
-   <div class="admin-audit-box" id="adminAuditBox">
-    <div class="admin-audit-top">
-     <span class="admin-audit-badge" id="adminAuditBadge"><i class="admin-audit-dot"></i><span>المعاينة الصامتة كل 3 ثوانٍ: جاهزة</span></span>
-     <small class="admin-audit-meta" id="adminAuditCounter">فحوصات الجلسة: 0 · كل 3 ثوانٍ</small>
-    </div>
-    <div class="admin-audit-meta" id="adminAuditDetail">جارٍ فحص حالة الجهاز والتثبيت بدقة...</div>
-    <div class="admin-audit-actions">
-     <button type="button" class="mode-sw-btn dl-opt" onclick="runManualAdminDeviceAudit()">🔍 فحص فوري للجهاز</button>
-     <button type="button" class="mode-sw-btn dl-prev" onclick="downloadUpdatedManifestJson()">📄 تحميل manifest.json</button>
-    </div>
-   </div>
    <div class="app-dl-url-row">
-    <label for="appDirectDlInput">🔗 رابط تحميل التطبيق المباشر (اختياري — اتركه فارغًا للتثبيت التلقائي الفوري للتطبيق PWA)</label>
+    <label for="appDirectDlInput">🔗 رابط تحميل التطبيق المباشر (رابط Google Play أو رابط التطبيق المباشر — يتزامن تلقائيًا مع أزرار التحميل وباركود التطبيق)</label>
     <div class="app-dl-url-inputs">
-     <input id="appDirectDlInput" type="url" dir="ltr" placeholder="https://... (APK أو رابط المتجر أو اتركه فارغًا للتثبيت المباشر)">
-     <button type="button" class="mode-sw-btn dl-opt" onclick="saveAppDirectDownloadUrl()">💾 حفظ الرابط</button>
+     <input id="appDirectDlInput" type="url" dir="ltr" placeholder="https://play.google.com/store/apps/details?id=com.nasralbaria.store">
+     <button type="button" class="mode-sw-btn dl-opt" onclick="saveAppDirectDownloadUrl()">💾 حفظ الرابط ومزامنة الباركود</button>
+     <button type="button" class="mode-sw-btn dl-prev" onclick="clearAppDirectDownloadUrl()">✕ مسح</button>
     </div>
    </div>
   </div>
@@ -3717,7 +3697,7 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
    <button class="admin-tab" type="button" onclick="adminTab('exclvideos',this)">🎬 فيديوهات منتجات حصرية</button>
    <button class="admin-tab" type="button" onclick="adminTab('services',this)">🛎️ الخدمات</button>
    <button class="admin-tab" type="button" onclick="adminTab('wifi',this)">📶 كروت واي فاي</button>
-   <button class="admin-tab" type="button" onclick="adminTab('ads',this)">📺 ضع إعلانك هنا</button>
+   <button class="admin-tab" type="button" onclick="adminTab('ads',this)">📺 الإعلانات الحصرية</button>
    <button class="admin-tab" type="button" onclick="adminTab('hero',this)">🖼️ الشاشة الرئيسية</button>
    <button class="admin-tab" id="admTabNotifs" type="button" onclick="adminTab('notifications',this)">📥 الإشعارات المستلمة <span class="pill red hidden" id="notifBadge">0</span></button>
    <button class="admin-tab" type="button" onclick="adminTab('sendnotif',this)">📣 إرسال إشعارات</button>
@@ -3793,7 +3773,7 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
 
   <div id="adminAds" class="hidden">
    <div class="strip-vis-slot" data-strip-toggle="ads"></div>
-   <p class="note" style="margin:0 0 10px">شاشة الإعلانات التفاعلية «ضع اعلانك هنا» — تظهر بعرض الشاشة وارتفاع 75% (وتظل ظاهرة فاضية أو بالإعلانات طالما الشريط مفعّل)، وتُحذف كل صورة تلقائيًا بعد مرور 24 ساعة من رفعها.</p>
+   <p class="note" style="margin:0 0 10px">شاشة الإعلانات التفاعلية «الإعلانات الحصرية» — تظهر بعرض الشاشة وارتفاع 75% (وتظل ظاهرة فاضية أو بالإعلانات طالما الشريط مفعّل)، وتُحذف كل صورة تلقائيًا بعد مرور 24 ساعة من رفعها.</p>
    <div class="ads-adm-box">
     <div class="field"><label>عنوان / وصف مختصر للإعلان (اختياري)</label><input id="adTitleInput" maxlength="90" placeholder="مثال: خصم 30% اليوم فقط 🔥"></div>
     <div class="field"><label>رابط عند الضغط على الإعلان (اختياري)</label><input id="adLinkInput" type="text" inputmode="url" dir="ltr" placeholder="https://..."></div>
@@ -3846,8 +3826,8 @@ body.light .mand-guide-os{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
 
   <div id="adminAppqr" class="hidden">
    <div class="qr-card">
-    <h3 id="appQrAdmTitle" style="margin:0 0 6px;font-size:18px;font-weight:900">📱 باركود تحميل تطبيق معرض نسر البرية</h3>
-    <p class="note" style="margin:0 0 12px">اطبع البطاقة أو حمّلها كصورة عالية الجودة وعلّقها في المحل أو على المنتجات — أي عميل يصور الباركود بكاميرا الموبايل هيدخل فورًا على صفحة تحميل التطبيق.</p>
+    <h3 id="appQrAdmTitle" style="margin:0 0 6px;font-size:18px;font-weight:900">📱 باركود تحميل تطبيق نسر البرية</h3>
+    <p class="note" style="margin:0 0 12px">الباركود متزامن تلقائيًا مع رابط التطبيق المباشر (رابط Google Play أو رابط التحميل المحدّد بالأعلى) — أي عميل يمسحه بكاميرا الموبايل يتوجّه مباشرة لتحميل التطبيق.</p>
     <div class="qr-poster" id="qrPosterCard">
      <div class="qr-poster-top">
       <img id="qrLogoImg" alt="شعار نسر البرية" src="https://antonyos2010.github.io/nasr-albaria/store-logo.jpg">
@@ -4091,11 +4071,13 @@ function calcDiscPct(p){
  if(old>pr&&old>0){const pct=Math.round((1-pr/old)*100);if(pct>0)return pct;}
  return 0;
 }
+window.getNasrPlaceLabel=()=>window.STORE_MODE==="exhibition"?"معرض نسر البرية":"متجر نسر البرية";
+window.getNasrOfficialPlaceLabel=()=>window.STORE_MODE==="exhibition"?"معرض نسر البرية الرسمي":"متجر نسر البرية الرسمي";
 function buildProdWaUrl(p){
  const disc=calcDiscPct(p);
  const discTx=disc>0?" (خصم "+disc+"%)":"";
  const link=location.origin+location.pathname+"#/product/"+Number(p.id);
- const msg="السلام عليكم 👋\nأنا مهتم بهذا المنتج في معرض نسر البرية الرسمي:\n• المنتج: "+(p.name||"")+"\n• القسم: "+(p.category||"")+discTx+"\n• الرابط: "+link+"\nممكن أعرف التفاصيل والسعر؟";
+ const msg="السلام عليكم 👋\nأنا مهتم بهذا المنتج في "+window.getNasrOfficialPlaceLabel()+":\n• المنتج: "+(p.name||"")+"\n• القسم: "+(p.category||"")+discTx+"\n• الرابط: "+link+"\nممكن أعرف التفاصيل والسعر؟";
  return "https://wa.me/"+BRAND_WA_PHONE+"?text="+encodeURIComponent(msg);
 }
 function waBtnHtml(p,cls=""){
@@ -4211,6 +4193,8 @@ function applyStoreMode(mode){
  }
  if(typeof window.aiSyncModeUi==="function")window.aiSyncModeUi();
  if(typeof window.aiRefreshStoreData==="function")window.aiRefreshStoreData(true);
+ try{document.querySelectorAll("a.ct-wa").forEach(a=>{if(typeof window.fixNasrWaContactLink==="function")window.fixNasrWaContactLink(a)})}catch(e){}
+ if(typeof window.renderAdminAppQr==="function")try{window.renderAdminAppQr()}catch(e){}
 }
 try{applyStoreMode(window.STORE_MODE)}catch(e){}
 async function setStoreDisplayMode(mode){
@@ -4252,15 +4236,37 @@ function sanitizeAppDlUrl(raw){
 window.getConfiguredDirectDlUrl=function(){
  return sanitizeAppDlUrl(window.APP_DIRECT_DL_URL);
 };
+window.getUnifiedAppDownloadUrl=function(){
+ const direct=window.getConfiguredDirectDlUrl();
+ if(direct)return direct;
+ const qrCustom=sanitizeAppDlUrl(window.APP_QR_TARGET_URL);
+ if(qrCustom)return qrCustom;
+ return (typeof window.getDefaultAppQrUrl==="function")?window.getDefaultAppQrUrl():(location.origin+location.pathname+"#/app-download");
+};
+function syncDownloadUiToUnifiedUrl(){
+ try{if(typeof window.renderAdminAppQr==="function")window.renderAdminAppQr()}catch(e){}
+ try{
+  const dlC=document.getElementById("dlQrCanvas"),dlU=document.getElementById("dlQrUrl");
+  const u=window.getUnifiedAppDownloadUrl();
+  if(dlU)dlU.textContent=u;
+  if(dlC&&window.drawQrOnCanvas)window.drawQrOnCanvas(dlC,u);
+  const dlBtn=document.getElementById("dlNowBtn"),mandBtn=document.getElementById("mandDlBtn");
+  const hasC=!!window.getConfiguredDirectDlUrl();
+  if(dlBtn&&!dlBtn.disabled&&!isAppInstalledLocally())dlBtn.textContent=hasC?"⬇️ تحميل التطبيق الآن":"⬇️ تحميل التطبيق الآن مجانًا";
+  if(mandBtn&&!mandBtn.disabled)mandBtn.textContent=hasC?"⬇️ تحميل التطبيق الآن":"⬇️ تحميل وتثبيت التطبيق الآن";
+ }catch(e){}
+}
 function applyAppDirectDownloadUrl(url){
  const clean=sanitizeAppDlUrl(url);
  window.APP_DIRECT_DL_URL=clean;
+ window.APP_QR_TARGET_URL=clean||"";
  try{
-  if(clean)localStorage.setItem("nasr_app_direct_dl_url",clean);
-  else localStorage.removeItem("nasr_app_direct_dl_url");
+  if(clean){localStorage.setItem("nasr_app_direct_dl_url",clean);localStorage.setItem("nasr_app_qr_target_url",clean)}
+  else{localStorage.removeItem("nasr_app_direct_dl_url");localStorage.removeItem("nasr_app_qr_target_url")}
  }catch(e){}
  const inp=$("appDirectDlInput");
  if(inp&&document.activeElement!==inp)inp.value=clean;
+ syncDownloadUiToUnifiedUrl();
 }
 async function saveAppDirectDownloadUrl(){
  if(!isAdmin())return;
@@ -4268,18 +4274,21 @@ async function saveAppDirectDownloadUrl(){
  const raw=inp?inp.value.trim():"";
  const clean=sanitizeAppDlUrl(raw);
  if(raw&&!clean){
-  toast("أدخل رابطًا صحيحًا يبدأ بـ https:// أو اتركه فارغًا للتثبيت التلقائي.");
+  toast("أدخل رابطًا صحيحًا يبدأ بـ https:// أو اتركه فارغًا.");
   return;
  }
  applyAppDirectDownloadUrl(clean);
  try{
-  const {error}=await supabaseClient.from("site_settings").upsert({key:"app_direct_download_url",value:clean});
+  const {error}=await supabaseClient.from("site_settings").upsert([
+   {key:"app_direct_download_url",value:clean},
+   {key:"app_qr_target_url",value:clean}
+  ]);
   if(error)throw error;
  }catch(e){console.warn("app_direct_dl_url save notice:",e&&e.message)}
  try{
   if(window.__nasrBcCh)window.__nasrBcCh.send({type:"broadcast",event:"app_dl_url",payload:{url:clean}});
  }catch(e){}
- okToast(clean?"✅ تم حفظ رابط التحميل المباشر للتطبيق":"✅ تم التبديل إلى التثبيت التلقائي الرسمي (PWA)");
+ okToast(clean?"✅ تم حفظ الرابط ومزامنته مع أزرار التحميل وباركود التطبيق بنجاح":"✅ تم مسح الرابط والعودة للرابط الافتراضي للتحميل والباركود");
 }
 async function clearAppDirectDownloadUrl(){
  if(!isAdmin())return;
@@ -4289,6 +4298,11 @@ async function clearAppDirectDownloadUrl(){
 }
 function applyAdminQrTargetUrl(url){
  const clean=sanitizeAppDlUrl(url);
+ if(window.getConfiguredDirectDlUrl()){
+  window.APP_QR_TARGET_URL=window.getConfiguredDirectDlUrl();
+  syncDownloadUiToUnifiedUrl();
+  return;
+ }
  window.APP_QR_TARGET_URL=clean;
  try{
   if(clean)localStorage.setItem("nasr_app_qr_target_url",clean);
@@ -4297,8 +4311,8 @@ function applyAdminQrTargetUrl(url){
  const inp=$("qrTargetUrl");
  if(inp&&document.activeElement!==inp){
   inp.value=clean||(typeof window.getDefaultAppQrUrl==="function"?window.getDefaultAppQrUrl():"");
-  if(typeof window.renderAdminAppQr==="function")window.renderAdminAppQr();
  }
+ syncDownloadUiToUnifiedUrl();
 }
 window.saveAdminQrUrl=async function(silent){
  if(typeof isAdmin==="function"&&!isAdmin())return;
@@ -4311,7 +4325,6 @@ window.saveAdminQrUrl=async function(silent){
   return;
  }
  applyAdminQrTargetUrl(toStore);
- if(typeof window.renderAdminAppQr==="function")window.renderAdminAppQr();
  try{
   const {error}=await supabaseClient.from("site_settings").upsert({key:"app_qr_target_url",value:toStore});
   if(error)throw error;
@@ -4385,7 +4398,9 @@ window.performDirectAppDownload=async function(sourceTag){
   try{
    const a=document.createElement("a");
    a.href=customUrl;
-   a.setAttribute("download","");
+   const isDirectFile=/\.(apk|aab|ipa|zip)(\?|#|$)/i.test(customUrl);
+   if(isDirectFile)a.setAttribute("download","");
+   else a.target="_blank";
    a.rel="noopener noreferrer";
    a.style.display="none";
    document.body.appendChild(a);
@@ -5515,7 +5530,7 @@ function setHero(url){
 }
 async function loadSettings(){
  try{
-  const {data}=await supabaseClient.from("site_settings").select("key,value").in("key",["hero_image","store_display_mode","app_download_prompt_mode","app_direct_download_url","app_qr_target_url","billboard_ads_v1","strip_visibility_v1","services_visible","services_items_v1","telecom_packages_v1"]);
+  const {data}=await supabaseClient.from("site_settings").select("key,value").in("key",["hero_image","store_display_mode","app_download_prompt_mode","app_direct_download_url","app_qr_target_url","billboard_ads_v1","strip_visibility_v1","services_visible","services_items_v1","telecom_packages_v1","wallet_withdraw_locks_v1"]);
   const map={};(data||[]).forEach(r=>{map[r.key]=r.value});
   setHero(map.hero_image||DEFAULT_HERO);
   if(map.store_display_mode==="store"||map.store_display_mode==="exhibition")applyStoreMode(map.store_display_mode);
@@ -5529,6 +5544,7 @@ async function loadSettings(){
   if(typeof map.services_visible==="string"){window.servicesVisible=(String(map.services_visible)!=="0")}
   if(typeof map.services_items_v1==="string"&&typeof window.applyServicesItemsRaw==="function")window.applyServicesItemsRaw(map.services_items_v1);
   if(typeof map.telecom_packages_v1==="string"&&typeof window.applyTelecomPackagesRaw==="function")window.applyTelecomPackagesRaw(map.telecom_packages_v1);
+  if(typeof map.wallet_withdraw_locks_v1==="string"&&typeof window.applyWalletWithdrawLocksRaw==="function")window.applyWalletWithdrawLocksRaw(map.wallet_withdraw_locks_v1);
  }catch(e){setHero(DEFAULT_HERO);applyStoreMode(window.STORE_MODE);applyAppDownloadPromptMode(window.APP_DL_PROMPT_MODE)}
  finally{
   window.__nasrSettingsLoaded=true;
@@ -5565,6 +5581,9 @@ async function loadSettings(){
    })
    .on("postgres_changes",{event:"*",schema:"public",table:"site_settings",filter:"key=eq.telecom_packages_v1"},p=>{
     if(p&&p.new&&typeof window.applyTelecomPackagesRaw==="function")window.applyTelecomPackagesRaw(p.new.value);
+   })
+   .on("postgres_changes",{event:"*",schema:"public",table:"site_settings",filter:"key=eq.wallet_withdraw_locks_v1"},p=>{
+    if(p&&p.new&&typeof window.applyWalletWithdrawLocksRaw==="function")window.applyWalletWithdrawLocksRaw(p.new.value);
    }).subscribe();
  }catch(e){}
 }
@@ -9144,12 +9163,13 @@ window.aiRefreshStoreData=async function(force){
     })(),
     (async()=>{
      try{
-      const {data}=await supabaseClient.from("site_settings").select("key,value").in("key",["hidden_categories","services_v1","services_visible","services_items_v1","telecom_packages_v1","wifi_v1","app_release_v1","store_display_mode","app_download_prompt_mode","app_direct_download_url","app_qr_target_url"]);
+      const {data}=await supabaseClient.from("site_settings").select("key,value").in("key",["hidden_categories","services_v1","services_visible","services_items_v1","telecom_packages_v1","wifi_v1","app_release_v1","store_display_mode","app_download_prompt_mode","app_direct_download_url","app_qr_target_url","wallet_withdraw_locks_v1"]);
       let changed=false,appRel="";
       (data||[]).forEach(r=>{
        if(r.key==="services_visible"){const nx=!(String(r.value)==="0");if(window.servicesVisible!==nx){window.servicesVisible=nx;changed=true}}
        else if(r.key==="services_items_v1"){if(typeof window.applyServicesItemsRaw==="function")window.applyServicesItemsRaw(r.value);changed=true}
        else if(r.key==="telecom_packages_v1"){if(typeof window.applyTelecomPackagesRaw==="function")window.applyTelecomPackagesRaw(r.value);changed=true}
+       else if(r.key==="wallet_withdraw_locks_v1"){if(typeof window.applyWalletWithdrawLocksRaw==="function")window.applyWalletWithdrawLocksRaw(r.value)}
        else if(r.key==="app_release_v1"){appRel=String(r.value||"").trim()}
        else if(r.key==="store_display_mode"){if((r.value==="store"||r.value==="exhibition")&&window.STORE_MODE!==r.value&&typeof applyStoreMode==="function")applyStoreMode(r.value)}
        else if(r.key==="app_download_prompt_mode"){if((r.value==="mandatory"||r.value==="optional")&&window.APP_DL_PROMPT_MODE!==r.value&&typeof applyAppDownloadPromptMode==="function")applyAppDownloadPromptMode(r.value)}
@@ -10659,7 +10679,9 @@ const WIFI=(k)=>`<svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradie
 const greet=()=>{let h=12;try{h=Number(new Intl.DateTimeFormat("en-US",{hour:"numeric",hourCycle:"h23",timeZone:"Africa/Cairo"}).formatToParts(new Date()).find(p=>p.type==="hour").value)%24}catch(e){h=new Date().getUTCHours()+2}
  return h<12?"صباح الخير":"مساء الخير"};
 const fixContact=a=>{try{const m=/^([^?]*\?text=)(.*)$/.exec(a.getAttribute("href")||"");if(!m)return;
- const t=greet()+" "+OWNER+" 👋\nأنا عميل من متجر نسر البرية وعايز أستفسر عن أحد المنتجات.";a.setAttribute("href",m[1]+encodeURIComponent(t))}catch(e){}};
+ const place=(typeof window.getNasrOfficialPlaceLabel==="function")?window.getNasrOfficialPlaceLabel():(window.STORE_MODE==="exhibition"?"معرض نسر البرية الرسمي":"متجر نسر البرية الرسمي");
+ const t=greet()+" "+OWNER+" 👋\nأنا عميل من "+place+" وعايز أستفسر عن أحد المنتجات.";a.setAttribute("href",m[1]+encodeURIComponent(t))}catch(e){}};
+window.fixNasrWaContactLink=fixContact;
 document.querySelectorAll("a.ct-wa").forEach(fixContact);
 ["pointerdown","click","touchstart"].forEach(ev=>document.addEventListener(ev,e=>{const a=e.target.closest&&e.target.closest("a.ct-wa");if(a)fixContact(a)},true));
 /* الباء الطويلة: كل «ب» لوحدها قبل رقم تتحول لـ «بـ» */
@@ -10724,26 +10746,55 @@ window.uploadProductImage=async function(file,folder){
 };
 ["productImage","categoryImage","heroFile","svcFile","wfImgFile","wfTypeFile"].forEach(id=>{const el=$(id);if(el)el.setAttribute("accept","image/*")});
 
-/* ---------- محرك قلب الكارت كله مرة واحدة (3D) ---------- */
+/* ---------- محرك التحريك الأفقي السلس والسريع (حركة واحدة واضحة متواصلة من اليسار لليمين) ---------- */
 function mkFlip(root,cfg){
- const S={cur:0,rot:0,busy:false,hold:0,hover:false,touch:false,items:[],timer:null},ratios={};
+ const S={cur:0,faceIdx:0,busy:false,items:[],timer:null},ratios={};
  root.innerHTML='<div class="fx-box"><div class="fx-in"><div class="fx-face"></div><div class="fx-face b"></div></div><div class="fx-dots"></div></div>';
- const box=root.querySelector(".fx-box"),inEl=root.querySelector(".fx-in"),faces=root.querySelectorAll(".fx-face"),dotsEl=root.querySelector(".fx-dots");
- const vis=()=>faces[((Math.round(S.rot/180)%2)+2)%2],hid=()=>faces[((Math.round(S.rot/180)+1)%2+2)%2];
+ const box=root.querySelector(".fx-box"),faces=root.querySelectorAll(".fx-face"),dotsEl=root.querySelector(".fx-dots");
+ const vis=()=>faces[S.faceIdx],hid=()=>faces[S.faceIdx^1];
  const faceHTML=it=>{const u=esc(it.src),d=String(it.desc||"").trim();
   return `<img class="fx-bg" src="${u}" alt="" aria-hidden="true" draggable="false"><img class="fx-im" src="${u}" alt="${esc(d.slice(0,60)||cfg.alt)}" draggable="false" decoding="async">${d?`<div class="fx-desc">${esc(d)}</div>`:""}`};
- const setFace=(f,it)=>{f.innerHTML=it?faceHTML(it):"";f.classList.toggle("d",!!(it&&String(it.desc||"").trim()))};
+ const setFace=(f,it,pos)=>{
+  f.style.transition="none";
+  f.style.transform=pos||"translate3d(0,0,0)";
+  f.innerHTML=it?faceHTML(it):"";
+  f.classList.toggle("d",!!(it&&String(it.desc||"").trim()));
+ };
  function fit(i){const it=S.items[i];if(!it)return;
   const vhNow=Math.max(360,(window.visualViewport&&window.visualViewport.height)||window.innerHeight||document.documentElement.clientHeight||800);
   box.style.height=Math.max(240,Math.round(vhNow*0.75))+"px"}
  function dots(){dotsEl.innerHTML=S.items.length>1?S.items.map((_,i)=>`<i class="${i===S.cur?"on":""}"></i>`).join(""):""}
  function flipTo(n,dir){
-  if(S.busy||!S.items.length)return;S.busy=true;
-  setFace(hid(),S.items[n]);fit(n);
-  S.rot+=dir*180;inEl.style.transform="rotateY("+S.rot+"deg)";
-  let done=false;const fin=()=>{if(done)return;done=true;S.cur=n;S.busy=false;dots()};
-  inEl.addEventListener("transitionend",function h(e){if(e.target!==inEl||String(e.propertyName).indexOf("transform")<0)return;inEl.removeEventListener("transitionend",h);fin()});
-  setTimeout(fin,1250);
+  if(S.busy||!S.items.length)return;
+  if(n===S.cur&&S.items.length<2)return;
+  S.busy=true;
+  const outFace=vis(),inFace=hid();
+  const enterFrom=(dir>=0)?"translate3d(-100%,0,0)":"translate3d(100%,0,0)";
+  const exitTo=(dir>=0)?"translate3d(100%,0,0)":"translate3d(-100%,0,0)";
+  setFace(inFace,S.items[n],enterFrom);
+  outFace.style.transition="none";
+  outFace.style.transform="translate3d(0,0,0)";
+  fit(n);
+  void box.offsetWidth;
+  const tr="transform .55s cubic-bezier(.22,.61,.36,1)";
+  inFace.style.transition=tr;
+  outFace.style.transition=tr;
+  inFace.style.transform="translate3d(0,0,0)";
+  outFace.style.transform=exitTo;
+  let done=false;
+  const fin=()=>{
+   if(done)return;done=true;
+   S.faceIdx=S.faceIdx^1;
+   S.cur=n;S.busy=false;
+   outFace.style.transition="none";
+   outFace.style.transform="translate3d(-100%,0,0)";
+   dots();
+  };
+  inFace.addEventListener("transitionend",function h(e){
+   if(e.target!==inFace||String(e.propertyName).indexOf("transform")<0)return;
+   inFace.removeEventListener("transitionend",h);fin();
+  });
+  setTimeout(fin,650);
  }
  function tick(){
   const n=S.items.length;if(!n||(n<2&&!cfg.loopSingle))return;
@@ -10759,18 +10810,21 @@ function mkFlip(root,cfg){
   if(S.cur>=items.length)S.cur=0;
   Promise.all(items.map(loadRatio)).then(()=>{if(my!==tok)return;
    box.style.animation="none";box.style.background="#0b0e1a";
-   setFace(vis(),items[S.cur]);setFace(hid(),null);fit(S.cur);dots();S.timer=setInterval(tick,4000)});
+   S.faceIdx=0;S.busy=false;
+   setFace(vis(),items[S.cur],"translate3d(0,0,0)");
+   setFace(hid(),null,"translate3d(-100%,0,0)");
+   fit(S.cur);dots();S.timer=setInterval(tick,2100)});
  }
  let st=null;
  root.addEventListener("pointerdown",e=>{st={x:e.clientX,y:e.clientY,m:false}});
  root.addEventListener("pointermove",e=>{if(st&&(Math.abs(e.clientX-st.x)>8||Math.abs(e.clientY-st.y)>8))st.m=true});
  root.addEventListener("pointerup",e=>{if(!st)return;const dx=e.clientX-st.x,m=st.m;st=null;
   const n=S.items.length;
-  if(m){if(Math.abs(dx)>40&&n>1){flipTo(dx<0?(S.cur+1)%n:(S.cur-1+n)%n,dx<0?1:-1)}}
+  if(m){if(Math.abs(dx)>40&&n>1){flipTo(dx>0?(S.cur+1)%n:(S.cur-1+n)%n,dx>0?1:-1)}}
   else if(n&&cfg.onOpen)cfg.onOpen(S.cur)});
  root.addEventListener("pointercancel",()=>{st=null});
  window.addEventListener("resize",()=>{if(S.items.length)fit(S.cur)});
- return{render,reset:function(){try{S.cur=0;S.rot=0;S.busy=false;inEl.style.transition="none";inEl.style.transform="rotateY(0deg)";if(S.items&&S.items.length){setFace(vis(),S.items[0]);setFace(hid(),null);fit(0);dots()}void inEl.offsetWidth;inEl.style.transition=""}catch(e){}}};
+ return{render,reset:function(){try{S.cur=0;S.faceIdx=0;S.busy=false;if(S.items&&S.items.length){setFace(vis(),S.items[0],"translate3d(0,0,0)");setFace(hid(),null,"translate3d(-100%,0,0)");fit(0);dots()}}catch(e){}}};
 }
 
 /* ---------- الطبقات الكاملة (زر الرجوع الموحد يديرها بدون تعارض) ---------- */
@@ -10913,8 +10967,9 @@ function openTypesPage(img){
 /* ---------- صفحة تفاصيل الكارت + طلب واتساب ---------- */
 function waMessage(t){
  const price=fmtPrice(t.price);
+ const place=(typeof window.getNasrOfficialPlaceLabel==="function")?window.getNasrOfficialPlaceLabel():(window.STORE_MODE==="exhibition"?"معرض نسر البرية الرسمي":"متجر نسر البرية الرسمي");
  return [greet()+" "+OWNER+" 👋✨","",
-  "أنا عميل من متجر نسر البرية 🦅 وحابب أطلب الكارت ده 👇","",
+  "أنا عميل من "+place+" 🦅 وحابب أطلب الكارت ده 👇","",
   "📶 *نوع الكارت:* "+fixBa(t.name),
   price?"💰 *السعر:* "+price:null,
   t.image_url?"🖼️ *صورة الكارت:* "+t.image_url:null,"",
@@ -12717,7 +12772,7 @@ window.renderAppDownloadPage=function(container){
   </div>`;
  try{
   const dlC=container.querySelector("#dlQrCanvas"),dlU=container.querySelector("#dlQrUrl");
-  const target=window.APP_QR_TARGET_URL||getDefaultAppQrUrl();
+  const target=typeof window.getUnifiedAppDownloadUrl==="function"?window.getUnifiedAppDownloadUrl():(window.APP_QR_TARGET_URL||getDefaultAppQrUrl());
   if(dlU)dlU.textContent=target;
   if(dlC&&window.drawQrOnCanvas)window.drawQrOnCanvas(dlC,target);
  }catch(e){}
@@ -12794,7 +12849,7 @@ window.renderAppDownloadPage=function(container){
  }
  if(copyBtn){
   copyBtn.onclick=async()=>{
-   const url=window.APP_QR_TARGET_URL||getDefaultAppQrUrl();
+   const url=typeof window.getUnifiedAppDownloadUrl==="function"?window.getUnifiedAppDownloadUrl():(window.APP_QR_TARGET_URL||getDefaultAppQrUrl());
    try{await navigator.clipboard.writeText(url);if(typeof okToast==="function")okToast("✅ تم نسخ رابط التحميل المباشر")}
    catch(e){guideMsg.textContent=url}
   };
@@ -13073,7 +13128,7 @@ function scheduleAppInvite(){
  window.initAdminAppQr=function(){
   const inp=document.getElementById("qrTargetUrl");
   if(inp){
-   const saved=window.APP_QR_TARGET_URL||"";
+   const saved=typeof window.getUnifiedAppDownloadUrl==="function"?window.getUnifiedAppDownloadUrl():(window.APP_QR_TARGET_URL||"");
    if(saved)inp.value=saved;
    else if(!inp.value)inp.value=window.getDefaultAppQrUrl();
   }
@@ -13089,7 +13144,7 @@ function scheduleAppInvite(){
  };
  window.renderAdminAppQr=function(){
   const inp=document.getElementById("qrTargetUrl");
-  const url=((inp&&inp.value)||"").trim()||window.APP_QR_TARGET_URL||window.getDefaultAppQrUrl();
+  const url=((inp&&inp.value)||"").trim()||(typeof window.getUnifiedAppDownloadUrl==="function"?window.getUnifiedAppDownloadUrl():(window.APP_QR_TARGET_URL||window.getDefaultAppQrUrl()));
   const lbl=document.getElementById("qrPosterUrl");
   if(lbl)lbl.textContent=url;
   const cv=document.getElementById("admQrCanvas");
@@ -13097,13 +13152,14 @@ function scheduleAppInvite(){
  };
  window.copyAdminQrUrl=async function(){
   const inp=document.getElementById("qrTargetUrl");
-  const url=((inp&&inp.value)||"").trim()||window.APP_QR_TARGET_URL||window.getDefaultAppQrUrl();
+  const url=((inp&&inp.value)||"").trim()||(typeof window.getUnifiedAppDownloadUrl==="function"?window.getUnifiedAppDownloadUrl():(window.APP_QR_TARGET_URL||window.getDefaultAppQrUrl()));
   try{await navigator.clipboard.writeText(url);if(typeof okToast==="function")okToast("✅ تم نسخ رابط التحميل")}
   catch(e){}
  };
  window.downloadQrPosterPng=function(customUrl){
   const inp=document.getElementById("qrTargetUrl");
-  const url=(customUrl||((inp&&inp.value)||"")).trim()||window.APP_QR_TARGET_URL||window.getDefaultAppQrUrl();
+  const url=(customUrl||((inp&&inp.value)||"")).trim()||(typeof window.getUnifiedAppDownloadUrl==="function"?window.getUnifiedAppDownloadUrl():(window.APP_QR_TARGET_URL||window.getDefaultAppQrUrl()));
+  const placeOfficial=typeof window.getNasrOfficialPlaceLabel==="function"?window.getNasrOfficialPlaceLabel():"متجر نسر البرية الرسمي";
   const g=encodeQrMatrix(url),n=g.length,quiet=4,tot=n+quiet*2;
   const W=1200,H=1480,c=document.createElement("canvas");c.width=W;c.height=H;
   const ctx=c.getContext("2d");
@@ -13111,7 +13167,7 @@ function scheduleAppInvite(){
   ctx.strokeStyle="#16a34a";ctx.lineWidth=16;
   ctx.strokeRect(36,36,W-72,H-72);
   ctx.fillStyle="#0b1224";ctx.font="900 54px Tahoma, Arial, sans-serif";ctx.textAlign="center";
-  ctx.fillText("🦅 معرض نسر البرية الرسمي",W/2,140);
+  ctx.fillText("🦅 "+placeOfficial,W/2,140);
   ctx.fillStyle="#15803d";ctx.font="800 34px Tahoma, Arial, sans-serif";
   ctx.fillText("امسح الباركود بكاميرا الموبايل لتحميل التطبيق فورًا",W/2,215);
   const qrSize=840,cell=Math.floor(qrSize/tot),realQr=cell*tot,qx=Math.floor((W-realQr)/2),qy=265;
@@ -13124,7 +13180,7 @@ function scheduleAppInvite(){
   ctx.fillStyle="#475569";ctx.font="700 22px monospace";
   ctx.fillText(url.length>62?url.slice(0,59)+"...":url,W/2,1290);
   ctx.fillStyle="#16a34a";ctx.font="900 28px Tahoma, Arial, sans-serif";
-  ctx.fillText("معرض نسر البرية — كل ما تحتاجه في عالم الموبايل والكمبيوتر",W/2,1375);
+  ctx.fillText(placeOfficial+" — كل ما تحتاجه في عالم الموبايل والكمبيوتر",W/2,1375);
   const a=document.createElement("a");
   a.href=c.toDataURL("image/png");
   a.download="nasr-app-qr.png";
@@ -13572,7 +13628,7 @@ setTimeout(window.calibrateResponsiveViewport,50);
 const STRIP_KEY="strip_visibility_v1";
 const STRIP_META={
  hero:{secId:"heroSection",label:"الشاشة الرئيسية"},
- ads:{secId:"billboardAdsSection",label:"شاشة الإعلانات «ضع اعلانك هنا»"},
+ ads:{secId:"billboardAdsSection",label:"الإعلانات الحصرية"},
  best:{secId:"bestSellersSection",label:"المنتجات الأكثر مبيعًا"},
  exclusive:{secId:"exclusiveSection",label:"منتجات حصرية"},
  exclvideos:{secId:"exclVideosSection",label:"فيديوهات منتجات حصرية"},
@@ -14081,12 +14137,9 @@ async function assembleAdWithChoreography(ad,onComplete){
 }
 
 function renderAdDots(){
- const box=$("bbDots"),prevBtn=$("bbPrevBtn"),nextBtn=$("bbNextBtn");
- if(!box)return;
- const many=activeAds.length>1;
+ const prevBtn=$("bbPrevBtn"),nextBtn=$("bbNextBtn");
  if(prevBtn)prevBtn.classList.add("hidden");
  if(nextBtn)nextBtn.classList.add("hidden");
- box.innerHTML=many?activeAds.map((_,i)=>`<span class="${i===curAdIdx?"on":""}" aria-hidden="true"></span>`).join(""):"";
 }
 
 function scheduleNextCycle(){
@@ -14128,7 +14181,7 @@ function syncAdsPlaybackAndAdmin(){
  activeAds.forEach(a=>preloadAdMeta(a.url));
  const sec=$("billboardAdsSection"),stage=$("bbStage"),emptyEl=$("bbEmptyState");
  const mainImg=$("bbMainImg"),bgImg=$("bbBgImg"),asm=$("bbAssembly");
- const linkBadge=$("bbLinkBadge"),capBar=$("bbCapBar"),dots=$("bbDots"),prev=$("bbPrevBtn"),next=$("bbNextBtn");
+ const linkBadge=$("bbLinkBadge"),capBar=$("bbCapBar"),prev=$("bbPrevBtn"),next=$("bbNextBtn");
  const isAdm=typeof isAdmin==="function"&&isAdmin();
  if(sec){
   const stripOn=!(window.STRIP_VISIBILITY&&window.STRIP_VISIBILITY.ads===false);
@@ -14154,7 +14207,6 @@ function syncAdsPlaybackAndAdmin(){
    if(capBar)capBar.classList.add("hidden");
    if(prev)prev.classList.add("hidden");
    if(next)next.classList.add("hidden");
-   if(dots)dots.innerHTML="";
   }
  }
  if(isAdm){
@@ -14843,7 +14895,7 @@ const CALLS_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradi
 const FAWRY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="fawBlue" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#0284c7"/><stop offset="65%" stop-color="#00529e"/><stop offset="100%" stop-color="#00356b"/></radialGradient><linearGradient id="fawGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fef08a"/><stop offset="55%" stop-color="#facc15"/><stop offset="100%" stop-color="#eab308"/></linearGradient></defs><circle cx="40" cy="40" r="40" fill="url(#fawBlue)"/><circle cx="40" cy="40" r="37.5" fill="none" stroke="url(#fawGold)" stroke-width="3"/><path d="M24 58l8.5-34h22.5l-3.2 9.4H39.4l-2 6.8h10.4l-2.9 8.6H34.5L32.2 58z" fill="url(#fawGold)"/><path d="M55 21l3.6 5.4-5.4 1.8 2.8 4.6" fill="none" stroke="#fef08a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const FAWRY_WORDMARK='<svg viewBox="0 0 220 76" aria-label="فوري باي Fawry Pay"><defs><linearGradient id="fwBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#004d99"/></linearGradient><linearGradient id="fwGd" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="2" y="2" width="216" height="72" rx="16" fill="url(#fwBg)" stroke="#facc15" stroke-width="3"/><path d="M26 54l8-28h19l-3 8.4H39.4l-1.8 5.8h9l-2.6 7.8H35L33 54z" fill="url(#fwGd)"/><text x="130" y="37" text-anchor="middle" fill="#fde047" font-family="Arial,sans-serif" font-weight="900" font-size="22" letter-spacing=".5">Fawry</text><text x="130" y="57" text-anchor="middle" fill="#ffffff" font-family="Tahoma,Arial,sans-serif" font-weight="900" font-size="14">فوري باي ⚡</text></svg>';
 const VFCASH_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="vfRedG" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#ff3333"/><stop offset="65%" stop-color="#e60000"/><stop offset="100%" stop-color="#a80000"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#vfRedG)"/><circle cx="40" cy="40" r="28" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="1.6"/><circle cx="36.5" cy="45.5" r="12" fill="#fff"/><path d="M35.5 18c12.5 0 22 9 22 21.2 0 8.2-4.2 14.2-9.2 17.5 3-4.3 3.4-10.2.4-15.2-2.6-4.5-8-6.6-13.5-6.1 2-7.6 6.8-14 .3-17.4z" fill="#fff"/></svg>';
-const WEPAY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="wePurpG" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="60%" stop-color="#6d28d9"/><stop offset="100%" stop-color="#86198f"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#wePurpG)"/><path d="M17 31l7.2 18.5 7.4-13.5 7.4 13.5L46.2 31" fill="none" stroke="#fff" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M65.5 41.5H49c.5 4.8 4 7.6 8.8 7.6 2.8 0 5-.9 6.8-2.3M49.2 39.5c.6-4.8 4.2-7.8 8.8-7.8 4.8 0 8 3 8.5 7.8" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 57h36" stroke="#ff2d6f" stroke-width="4.2" stroke-linecap="round"/></svg>';
+const WEPAY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="wePurpG" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="60%" stop-color="#6d28d9"/><stop offset="100%" stop-color="#86198f"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#wePurpG)"/><g transform="translate(40,40) scale(0.78) translate(-40,-40)"><path d="M17 31l7.2 18.5 7.4-13.5 7.4 13.5L46.2 31" fill="none" stroke="#fff" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M65.5 41.5H49c.5 4.8 4 7.6 8.8 7.6 2.8 0 5-.9 6.8-2.3M49.2 39.5c.6-4.8 4.2-7.8 8.8-7.8 4.8 0 8 3 8.5 7.8" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 57h36" stroke="#ff2d6f" stroke-width="4.2" stroke-linecap="round"/></g></svg>';
 const INSTAPAY_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="ipGrad" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="55%" stop-color="#087bff"/><stop offset="100%" stop-color="#0284c7"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#ipGrad)"/><path d="M21 33h32l-7.5-7.5M59 47H27l7.5 7.5" fill="none" stroke="#fff" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="57" cy="22" r="4.2" fill="#fde047"/></svg>';
 const CUSTOM_SVC_ICON='<svg viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="custSvBg" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#8b5cf6"/><stop offset="65%" stop-color="#087bff"/><stop offset="100%" stop-color="#1e40af"/></radialGradient></defs><circle cx="40" cy="40" r="40" fill="url(#custSvBg)"/><path d="M25 31c0-4.4 3.6-8 8-8h14c4.4 0 8 3.6 8 8v18c0 4.4-3.6 8-8 8H33c-4.4 0-8-3.6-8-8V31z" fill="#fff" fill-opacity=".18" stroke="#fff" stroke-width="2.4"/><path d="M31 37h18M31 44h12" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><circle cx="56" cy="24" r="7" fill="#fde047" stroke="#fff" stroke-width="2"/></svg>';
 const SVC_WA_SVG='<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" style="flex:none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
@@ -15054,6 +15106,51 @@ let PACKAGES=DEFAULT_PACKAGES.map(x=>({...x}));
 window.__nasrTelecomPackages=PACKAGES;
 
 let SVC_ITEMS_CFG={initialized:false,items:[]};
+const getPlaceOfficial=()=>typeof window.getNasrOfficialPlaceLabel==="function"?window.getNasrOfficialPlaceLabel():(window.STORE_MODE==="exhibition"?"معرض نسر البرية الرسمي":"متجر نسر البرية الرسمي");
+const DEFAULT_WALLET_WITHDRAW_LOCKS={builtin_vfcash:false,builtin_wepay:false,builtin_instapay:false};
+const WALLET_LOCK_META=[
+ {kind:"builtin_vfcash",name:"فودافون كاش",color:"#e60000",badge:"📱"},
+ {kind:"builtin_wepay",name:"وي باي",color:"#5b2c91",badge:"💜"},
+ {kind:"builtin_instapay",name:"انستا باي",color:"#7c3aed",badge:"🏦"}
+];
+window.WALLET_WITHDRAW_LOCKS=(function(){
+ try{
+  const s=localStorage.getItem("nasr_wallet_withdraw_locks");
+  if(s){
+   const p=JSON.parse(s);
+   if(p&&typeof p==="object")return {builtin_vfcash:!!p.builtin_vfcash,builtin_wepay:!!p.builtin_wepay,builtin_instapay:!!p.builtin_instapay};
+  }
+ }catch(e){}
+ return {...DEFAULT_WALLET_WITHDRAW_LOCKS};
+})();
+window.applyWalletWithdrawLocksRaw=function(raw){
+ try{
+  const p=typeof raw==="string"?JSON.parse(raw):raw;
+  if(p&&typeof p==="object"){
+   window.WALLET_WITHDRAW_LOCKS={
+    builtin_vfcash:!!p.builtin_vfcash,
+    builtin_wepay:!!p.builtin_wepay,
+    builtin_instapay:!!p.builtin_instapay
+   };
+   try{localStorage.setItem("nasr_wallet_withdraw_locks",JSON.stringify(window.WALLET_WITHDRAW_LOCKS))}catch(e){}
+   window.renderServicesAdmin&&window.renderServicesAdmin();
+  }
+ }catch(e){}
+};
+async function saveWalletWithdrawLocks(next){
+ const clean={
+  builtin_vfcash:!!(next&&next.builtin_vfcash),
+  builtin_wepay:!!(next&&next.builtin_wepay),
+  builtin_instapay:!!(next&&next.builtin_instapay)
+ };
+ window.WALLET_WITHDRAW_LOCKS=clean;
+ try{localStorage.setItem("nasr_wallet_withdraw_locks",JSON.stringify(clean))}catch(e){}
+ if(typeof supabaseClient!=="undefined"&&supabaseClient){
+  const {error}=await supabaseClient.from("site_settings").upsert({key:"wallet_withdraw_locks_v1",value:JSON.stringify(clean)});
+  if(error)throw error;
+ }
+ window.renderServicesAdmin&&window.renderServicesAdmin();
+}
 
 function makeSeedItemsForImage(imageId){
  return BUILTIN_DEFAULTS.map((d,k)=>({
@@ -15137,10 +15234,11 @@ window.applyTelecomPackagesRaw=function(raw){
 window.loadServicesConfigFromDb=async function(){
  if(typeof supabaseClient==="undefined"||!supabaseClient)return;
  try{
-  const {data}=await supabaseClient.from("site_settings").select("key,value").in("key",["services_items_v1","telecom_packages_v1"]);
+  const {data}=await supabaseClient.from("site_settings").select("key,value").in("key",["services_items_v1","telecom_packages_v1","wallet_withdraw_locks_v1"]);
   (data||[]).forEach(r=>{
    if(r.key==="services_items_v1")window.applyServicesItemsRaw(r.value);
    else if(r.key==="telecom_packages_v1")window.applyTelecomPackagesRaw(r.value);
+   else if(r.key==="wallet_withdraw_locks_v1")window.applyWalletWithdrawLocksRaw(r.value);
   });
  }catch(e){}
 };
@@ -15346,6 +15444,10 @@ document.addEventListener("keydown",e=>{
 function iconForServiceItem(it){
   const base=iconForServiceItemBase(it),f=SVC_LOGO_FILES[it&&it.kind];
   if(!f)return base;
+  const isWe=it&&it.kind==="builtin_wepay";
+  if(isWe){
+   return '<div class="svc-logo-fill is-wepay"><span class="svc-logo-fb">'+base+'</span><img src="./'+f+'" alt="" onload="this.previousElementSibling&&this.previousElementSibling.remove()" onerror="this.remove()"></div>';
+  }
   return '<div class="svc-logo-fill"><span class="svc-logo-fb">'+base+'</span><img src="./'+f+'" alt="" onload="this.previousElementSibling&&this.previousElementSibling.remove();if(this.naturalWidth&&this.naturalHeight){var r=this.naturalWidth/this.naturalHeight;this.style.objectFit=(r>=0.75&&r<=1.32)?\'cover\':\'contain\'}" onerror="this.remove()"></div>';
 }
 function iconForServiceItemBase(it){
@@ -15384,11 +15486,12 @@ window.openServicesCatalogPage=function(stripIdx){
   <div class="svc-types-grid">
    ${items.length?items.map((it,idx)=>{
     const isFawry=it.kind==="builtin_fawry";
+    const isWe=it.kind==="builtin_wepay";
     const col=(isFawry?"#087bff":it.color)||(isFawry?"#eab308":(idx%2===0?"#087bff":"#10b981"));
     const priceTag=String(it.price||"").trim();
     return `
     <div class="svc-type-card" style="--bc:${esc(col)}">
-     <div class="svc-type-ic">${iconForServiceItem(it)}</div>
+     <div class="svc-type-ic${isWe?" is-wepay":""}">${iconForServiceItem(it)}</div>
      <div class="wp-name">${esc(it.title)}</div>
      ${priceTag?`<span class="svc-type-badge">${MONEY_SVG}${esc(priceTag)}${/\d$/.test(priceTag)?" جنيه":""}</span>`:""}
      ${it.description?`<div class="svc-type-desc">${esc(it.description)}</div>`:""}
@@ -15470,7 +15573,7 @@ function openFawryPayModal(item){
   const msg=[
    getCairoGreeting()+" "+SVC_OWNER+" 👋✨",
    "",
-   "طلب خدمة "+(item.title||"فوري باي")+" عبر متجر نسر البرية 🦅:",
+   "طلب خدمة "+(item.title||"فوري باي")+" عبر "+getPlaceOfficial()+" 🦅:",
    "• اسم الخدمة: "+(item.title||"فوري باي (Fawry Pay)"),
    "• نوع الخدمة: "+(item.typeLabel||"دفع الفواتير والخدمات عبر فوري"),
    "• الرقم المرجعي: "+refVal,
@@ -15488,17 +15591,73 @@ function openFawryPayModal(item){
  setTimeout(()=>{try{refInp.focus()}catch(e){}},60);
 }
 
+function openWalletWithdrawClosedModal(item){
+  removeLayer(svcState.extraModalEl);svcState.extraModalEl=null;
+  const k=item&&item.kind;
+  const cfg={builtin_vfcash:{n:"فودافون كاش",img:"pay-vodafone.png",c:"#e60000"},builtin_wepay:{n:"وي باي",img:"svc-wepay.png",c:"#5b2c91"},builtin_instapay:{n:"انستا باي",img:"pay-instapay.png",c:"#7c3aed"}}[k]||{n:item.title||"المحفظة",img:"",c:item.color||"#7c3aed"};
+  const isWe=k==="builtin_wepay";
+  const fallbackIc=iconForServiceItemBase(item);
+  const titleName=item.title||cfg.n;
+  const ov=document.createElement("div");
+  ov.className="svc-modal-ov";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");
+  ov.setAttribute("aria-label","السحب متوقف مؤقتًا");
+  ov.innerHTML=`
+   <div class="svc-modal-box" style="border:2px solid ${cfg.c};--op-c:${cfg.c}">
+    <div class="svc-modal-hd">
+     <h3>⛔ السحب في ${esc(titleName)}</h3>
+     <button type="button" class="svc-modal-x" aria-label="إغلاق">×</button>
+    </div>
+    <div class="svc-modal-bd">
+     <div class="svc-w-logo-frame${isWe?" is-wepay":""}" style="--op-c:${cfg.c}">${cfg.img?`<img src="./${cfg.img}" alt="${esc(titleName)}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span>${fallbackIc}</span>`:`<span style="display:grid">${fallbackIc}</span>`}</div>
+     <div class="svc-wlock-card">
+      <div class="svc-wlock-badge">⏳ عذرًا — تم الوصول للحد الأقصى للسحب حاليًا</div>
+      <h4>🔒 خدمة السحب عبر «${esc(titleName)}» متوقفة مؤقتًا</h4>
+      <p>نعتذر لك بكل حب ❤️ لقد تم الوصول حاليًا إلى الحد الأقصى المسموح لعمليات السحب عبر <b>${esc(titleName)}</b> 💼✨</p>
+      <div class="svc-wlock-note">🌟 اطمئن تمامًا! سيتم إعادة فتح السحب مرة أخرى <b>قريبًا جدًا</b> فور تحديث الرصيد والحد اليومي بإذن الله 🚀💚<br>📌 خدمة <b>الإيداع</b> ما زالت متاحة وتعمل بشكل طبيعي وسريع في أي وقت ⚡</div>
+     </div>
+     <div class="svc-wlock-acts">
+      <button type="button" class="svc-green-pill" id="svcWlockWaBtn">${SVC_WA_SVG}<span>💬 استفسر عبر واتساب عن موعد الفتح</span></button>
+      <button type="button" class="svc-wlock-back" id="svcWlockBackBtn">🔙 العودة لاختيار عملية أخرى</button>
+     </div>
+    </div>
+   </div>`;
+  ov.querySelector(".svc-modal-x").onclick=closeExtraModalToCatalog;
+  ov.querySelector("#svcWlockBackBtn").onclick=closeExtraModalToCatalog;
+  ov.addEventListener("click",e=>{if(e.target===ov)closeExtraModalToCatalog()});
+  ov.querySelector("#svcWlockWaBtn").onclick=()=>{
+   const msg=[
+    getCairoGreeting()+" "+SVC_OWNER+" 👋✨",
+    "",
+    "استفسار عن موعد فتح السحب في خدمة "+titleName+" عبر "+getPlaceOfficial()+" 🦅:",
+    "• نوع الاستفسار: موعد إعادة فتح السحب عبر "+titleName,
+    "",
+    "من فضلك أبلغني بموعد التوفر القادم، شكرًا لحضرتك 🙏"
+   ].join("\n");
+   launchWhatsAppMessage(msg);
+  };
+  svcState.extraModalEl=ov;document.body.appendChild(ov);syncScrollLock();
+}
 function openWalletPayModal(item){
   removeLayer(svcState.extraModalEl);svcState.extraModalEl=null;
   removeLayer(svcState.operatorEl);svcState.operatorEl=null;
   const ov=document.createElement("div");
   ov.className="wp svcp";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");
   const nm=esc(item.title||"");
+  const isWe=item&&item.kind==="builtin_wepay";
+  const isWLocked=!!(window.WALLET_WITHDRAW_LOCKS&&window.WALLET_WITHDRAW_LOCKS[item&&item.kind]);
   ov.innerHTML=`<div class="wp-top"><div class="wp-title">${getHomeServicesHeaderLogoSvg()}<span>${nm}</span></div><button type="button" class="wp-x" aria-label="رجوع">×</button></div>
    <div class="svcp-sub">اختر العملية المطلوبة</div>
-   <div class="svc-types-grid">${["إيداع","سحب"].map(m=>`<div class="svc-type-card" style="--bc:${esc(item.color||"#087bff")}"><div class="svc-type-ic">${iconForServiceItem(item)}</div><div class="wp-name">${m} ${nm}</div><button type="button" class="wp-btn" data-mode="${m}">اختر الخدمة</button></div>`).join("")}</div>`;
+   <div class="svc-types-grid">${["إيداع","سحب"].map(m=>{const lockedHere=(m==="سحب"&&isWLocked);return `<div class="svc-type-card" style="--bc:${esc(item.color||"#087bff")}"><div class="svc-type-ic${isWe?" is-wepay":""}">${iconForServiceItem(item)}</div><div class="wp-name">${m} ${nm}</div>${lockedHere?'<span class="svc-wlock-pill">🔒 وصل للحد الأقصى مؤقتًا</span>':""}<button type="button" class="wp-btn" data-mode="${m}">${lockedHere?"عرض التفاصيل":"اختر الخدمة"}</button></div>`}).join("")}</div>`;
   ov.querySelector(".wp-x").onclick=()=>{removeLayer(svcState.extraModalEl);svcState.extraModalEl=null;removeLayer(ov);svcState.operatorEl=null;syncScrollLock()};
-  ov.addEventListener("click",e=>{const b=e.target.closest("[data-mode]");if(b)openWalletFormModal(item,b.dataset.mode)});
+  ov.addEventListener("click",e=>{
+   const b=e.target.closest("[data-mode]");
+   if(!b)return;
+   if(b.dataset.mode==="سحب"&&window.WALLET_WITHDRAW_LOCKS&&window.WALLET_WITHDRAW_LOCKS[item&&item.kind]){
+    openWalletWithdrawClosedModal(item);
+    return;
+   }
+   openWalletFormModal(item,b.dataset.mode);
+  });
   svcState.operatorEl=ov;document.body.appendChild(ov);syncScrollLock();
 }
 function copyWithdrawNum(btn){
@@ -15524,6 +15683,7 @@ function openWalletFormModal(item,mode){
   removeLayer(svcState.extraModalEl);svcState.extraModalEl=null;
   const k=item.kind,cfg={builtin_vfcash:{n:"فودافون كاش",img:"pay-vodafone.png",c:"#e60000",ph:true,tx1:"#e60000",tx2:"#a80000",ch:"vodafone_cash",nums:["01065750446","01009012719"],hasDirect:true},builtin_wepay:{n:"وي باي",img:"svc-wepay.png",c:"#5b2c91",ph:true,tx1:"#5b2c91",tx2:"#a21caf",ch:"we_pay",nums:["01550369986"],hasDirect:false},builtin_instapay:{n:"انستا باي",img:"pay-instapay.png",c:"#7c3aed",ph:false,tx1:"#5b1fa6",tx2:"#ff7a45",ch:"instapay",nums:["01009012719","01220841580"],hasDirect:true}}[k];
   const isWithdraw=mode==="سحب";
+  const isWe=k==="builtin_wepay";
   const ov=document.createElement("div");
   ov.className="svc-modal-ov";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");
   const idLbl=isWithdraw
@@ -15540,7 +15700,7 @@ function openWalletFormModal(item,mode){
   const withdrawInfoHtml=isWithdraw?`
    <div class="tx-card" style="text-align:right;margin-bottom:2px">
     <div class="tx-head" style="--tx1:${cfg.tx1};--tx2:${cfg.tx2}">
-     <div style="width:48px;height:48px;border-radius:50%;background:transparent;padding:0;display:grid;place-items:center;flex-shrink:0;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.22)"><img src="./${cfg.img}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span style="display:none;width:100%;height:100%;place-items:center">${fallbackIc}</span></div>
+     <div class="tx-head-ic${isWe?" is-wepay":""}" style="width:48px;height:48px;border-radius:50%;background:transparent;padding:0;display:grid;place-items:center;flex-shrink:0;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.22)"><img src="./${cfg.img}" alt="" style="width:100%;height:100%;object-fit:${isWe?"contain":"cover"};border-radius:50%;display:block" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span style="display:none;width:100%;height:100%;place-items:center">${fallbackIc}</span></div>
      <div><b>${cfg.nums.length>1?`📲✨ أرقامنا للسحب عبر ${esc(cfg.n)} هي:`:`📲✨ رقمنا للسحب عبر ${esc(cfg.n)} هو:`}</b><small>🔐 حوّل المبلغ المطلوب سحبه لأي رقم ثم أدخل بياناتك بالأسفل</small></div>
     </div>
     ${cfg.nums.map((num,idx)=>`
@@ -15560,14 +15720,14 @@ function openWalletFormModal(item,mode){
   ov.innerHTML=`<div class="svc-modal-box" style="border:2px solid ${cfg.c};--op-c:${cfg.c}">
    <div class="svc-modal-hd"><h3>${esc(mode)} ${esc(item.title||cfg.n)}</h3><button type="button" class="svc-modal-x" aria-label="إغلاق">×</button></div>
    <div class="svc-modal-bd">
-    <div class="svc-w-logo-frame" style="--op-c:${cfg.c}"><img src="./${cfg.img}" alt="${esc(cfg.n)}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span>${fallbackIc}</span></div>
+    <div class="svc-w-logo-frame${isWe?" is-wepay":""}" style="--op-c:${cfg.c}"><img src="./${cfg.img}" alt="${esc(cfg.n)}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span>${fallbackIc}</span></div>
     ${item.description?`<div class="svc-hint-note" style="font-weight:900;font-size:13px">${esc(item.description)}</div>`:""}
     ${withdrawInfoHtml}
     <form id="svcWForm" novalidate style="display:flex;flex-direction:column;gap:12px;text-align:right">
      <div><div class="svc-fawry-lbl"><span>${idLbl}</span><span class="svc-fawry-req">مطلوب *</span></div>
-      <div class="svc-inp-wrap"><input type="text" id="svcWId" inputmode="${cfg.ph?"tel":"text"}" dir="ltr" autocomplete="off" required></div></div>
+     <div class="svc-inp-wrap"><input type="text" id="svcWId" inputmode="${cfg.ph?"tel":"text"}" dir="ltr" autocomplete="off" required></div></div>
      <div><div class="svc-fawry-lbl"><span>${MONEY_SVG}المبلغ</span><span class="svc-fawry-req">مطلوب *</span></div>
-      <div class="svc-inp-wrap"><input type="text" id="svcWAmt" inputmode="numeric" dir="ltr" autocomplete="off" required></div></div>
+     <div class="svc-inp-wrap"><input type="text" id="svcWAmt" inputmode="numeric" dir="ltr" autocomplete="off" required></div></div>
      <div class="svc-err hidden" id="svcWErr"></div>
      <button type="submit" class="svc-green-pill">${SVC_WA_SVG}<span>إرسال الطلب عبر واتساب</span></button>
     </form></div></div>`;
@@ -15601,7 +15761,7 @@ function openWalletFormModal(item,mode){
    const waLines=[
     getCairoGreeting()+" "+SVC_OWNER+" 👋✨",
     "",
-    "طلب "+mode+" "+(item.title||cfg.n)+" عبر متجر نسر البرية 🦅:",
+    "طلب "+mode+" "+(item.title||cfg.n)+" عبر "+getPlaceOfficial()+" 🦅:",
     "• نوع الخدمة: "+mode+" "+(item.title||cfg.n),
     "• "+idMsgLine,
     (isWithdraw&&toNum)?("• إلى رقم محفظتك: "+toNum):null,
@@ -15695,7 +15855,7 @@ function openCustomServiceModal(item){
   const msg=[
    getCairoGreeting()+" "+SVC_OWNER+" 👋✨",
    "",
-   "طلب خدمة عبر متجر نسر البرية 🦅:",
+   "طلب خدمة عبر "+getPlaceOfficial()+" 🦅:",
    "• اسم الخدمة: "+item.title,
    item.typeLabel?"• نوع الخدمة: "+item.typeLabel:null,
    formattedPrice?"• سعر الخدمة: "+formattedPrice:null,
@@ -16013,7 +16173,7 @@ function openPhoneInputModal(pkg){
   const msg=[
    getCairoGreeting()+" "+SVC_OWNER+" 👋✨",
    "",
-   "طلب خدمة شحن باقة موبايل عبر متجر نسر البرية 🦅:",
+   "طلب خدمة شحن باقة موبايل عبر "+getPlaceOfficial()+" 🦅:",
    "• الخدمة: "+svcObj.title,
    "• الشركة: "+op.name,
    "• الباقة: "+pkg.packageName,
@@ -16071,6 +16231,18 @@ window.renderServicesAdmin=function(){
   <div class="strip-vis-card ${on?"":"is-off"}">
    <div class="strip-vis-info"><span class="strip-vis-dot"></span><div class="strip-vis-txt"><b>إظهار شريط «الخدمات التي نقدمها»</b><small>${on?"ظاهر حاليًا في المتجر والمعرض والتطبيق":"مخفي حاليًا عن جميع العملاء"}</small></div></div>
    <button type="button" class="strip-vis-btn ${on?"on":""}" data-sx="all" aria-label="إظهار / إخفاء الشريط"><span class="strip-vis-thumb">${on?"👁️":"🚫"}</span></button>
+  </div>
+  <div class="wlock-adm-card">
+   <div class="wlock-adm-hd"><b>🔒 التحكم في خانات السحب (فودافون كاش / وي باي / انستا باي)</b><small>عند إغلاق السحب لأي خدمة تظل ظاهرة للعملاء، وإذا ضغط العميل على «سحب» تظهر له رسالة احترافية بالوصول للحد الأقصى وإعادة الفتح قريبًا</small></div>
+   <div class="wlock-adm-list">
+    ${WALLET_LOCK_META.map(w=>{
+     const locked=!!(window.WALLET_WITHDRAW_LOCKS&&window.WALLET_WITHDRAW_LOCKS[w.kind]);
+     return `<div class="wlock-row ${locked?"is-locked":""}">
+      <div class="wlock-info"><span class="wlock-ic" style="background:${w.color}22;color:${w.color};border-color:${w.color}44">${w.badge}</span><div><b>سحب ${esc(w.name)}</b><small>${locked?"⛔ السحب مقفول حاليًا — يظهر تنبيه الحد الأقصى":"✅ السحب مفتوح ويعمل بشكل طبيعي"}</small></div></div>
+      <button type="button" class="wlock-btn ${locked?"locked":"open"}" data-sx="wlock" data-k="${w.kind}">${locked?"🔒 مقفول — فتح الآن":"🔓 مفتوح — قفل السحب"}</button>
+     </div>`;
+    }).join("")}
+   </div>
   </div>
   <div class="wfa-seg">
    <button type="button" class="${admSvcTab==="images"?"on":""}" data-sx="tab" data-t="images">🖼️ صور وخدمات الشريط (${list.length})</button>
@@ -16355,6 +16527,20 @@ if(admSvcBox){
    (async()=>{try{const {error}=await supabaseClient.from("site_settings").upsert({key:"services_visible",value:next?"1":"0"});
     if(error)throw error;window.servicesVisible=next;window.renderServices();window.renderServicesAdmin();
     toast(next?"تم إظهار شريط الخدمات":"تم إخفاء شريط الخدمات")}catch(err){toast("تعذر الحفظ: "+(err.message||""),null,6000)}})();
+  }else if(a==="wlock"){
+   const k=b.dataset.k;
+   const meta=WALLET_LOCK_META.find(x=>x.kind===k);
+   if(!meta)return;
+   const cur=window.WALLET_WITHDRAW_LOCKS||{};
+   const nextVal=!cur[k];
+   const next={...DEFAULT_WALLET_WITHDRAW_LOCKS,...cur,[k]:nextVal};
+   b.disabled=true;
+   saveWalletWithdrawLocks(next).then(()=>{
+    toast(nextVal?("⛔ تم إغلاق السحب مؤقتًا لخدمة "+meta.name):("✅ تم فتح السحب لخدمة "+meta.name+" الآن"));
+   }).catch(err=>{
+    b.disabled=false;
+    toast("تعذر حفظ حالة السحب: "+(err.message||""),null,6000);
+   });
   }else if(a==="tab"){
    admSvcTab=b.dataset.t||"images";
    window.renderServicesAdmin();
@@ -16449,6 +16635,13 @@ if(typeof window.loadServicesConfigFromDb==="function"){
 .svc-logo-fill img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;border-radius:50%!important;background:transparent!important;display:block!important;position:relative!important;z-index:1!important;mix-blend-mode:normal!important}
 .svc-logo-fb{width:100%!important;height:100%!important;display:grid!important;place-items:center!important;border-radius:50%!important;background:transparent!important;overflow:hidden!important}
 .svc-logo-fb svg,.svc-type-ic>svg{width:100%!important;height:100%!important;border-radius:50%!important;display:block!important;background:transparent!important}
+/* ضبط شعار وي باي الدائري بالملي في البطاقات والصفحات والنوافذ */
+.svc-type-ic.is-wepay,.svc-logo-fill.is-wepay,.svc-w-logo-frame.is-wepay,.tx-head-ic.is-wepay{
+ background:radial-gradient(circle at 35% 30%,#7c3aed,#5b2c91 64%,#4c1d95)!important;
+}
+.svc-logo-fill.is-wepay img,.svc-w-logo-frame.is-wepay img,.tx-head-ic.is-wepay img{
+ width:80%!important;height:80%!important;object-fit:contain!important;object-position:center!important;border-radius:50%!important;margin:auto!important;
+}
 .svc-modal-box .tx-card{background:#fff;color:#0f172a;border-radius:22px}
 .svc-modal-box .tx-head b{font-size:15.5px;line-height:1.5}
 .svc-modal-box .tx-head small{font-size:11.5px;line-height:1.5;display:block;margin-top:2px}
@@ -16463,6 +16656,29 @@ body:not(.light) .svc-modal-box .tx-or{color:#f8fafc}
 .svc-fawry-logo-frame{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:fit-content!important;max-width:min(260px,84%)!important;height:auto!important;aspect-ratio:auto!important;margin:0 auto!important;padding:0!important;border-radius:16px!important;overflow:hidden!important;background:transparent!important;border:0!important}
 .svc-fawry-logo-frame img,.svc-fawry-logo-frame svg{width:auto!important;max-width:100%!important;height:auto!important;max-height:92px!important;object-fit:contain!important;display:block!important}
 .svc-fawry-logo-frame .svc-fawry-svg-fb{width:auto!important;height:auto!important}
+/* رسالة قفل السحب + لوحة تحكم قفل السحب */
+.svc-wlock-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:900;background:rgba(239,68,68,.14);color:#ef4444;border:1px solid rgba(239,68,68,.35)}
+.svc-wlock-card{padding:16px 14px;border-radius:20px;background:linear-gradient(135deg,rgba(245,158,11,.13),rgba(239,68,68,.09));border:1.5px solid rgba(245,158,11,.42);text-align:center;display:flex;flex-direction:column;gap:8px}
+.svc-wlock-badge{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:0 auto;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:900;background:rgba(245,158,11,.2);color:#d97706;border:1px solid rgba(245,158,11,.45)}
+body:not(.light) .svc-wlock-badge{color:#fcd34d;background:rgba(245,158,11,.18)}
+.svc-wlock-card h4{margin:0;font-size:16px;font-weight:900;line-height:1.5}
+.svc-wlock-card p{margin:0;font-size:13.5px;font-weight:700;line-height:1.75;opacity:.95}
+.svc-wlock-note{padding:11px 12px;border-radius:14px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.35);font-size:12.5px;font-weight:800;line-height:1.8}
+.svc-wlock-acts{display:flex;flex-direction:column;gap:9px;margin-top:4px}
+.svc-wlock-back{width:100%;padding:12px 16px;border-radius:999px;border:1.5px solid var(--border);background:var(--panel2);color:var(--text);font:inherit;font-size:14px;font-weight:900;cursor:pointer}
+.wlock-adm-card{margin:12px 0;padding:13px;border-radius:18px;background:var(--panel2);border:1.5px solid var(--border);display:flex;flex-direction:column;gap:10px}
+.wlock-adm-hd b{display:block;font-size:13.5px;font-weight:900;margin-bottom:3px}
+.wlock-adm-hd small{display:block;font-size:11.5px;color:var(--muted);line-height:1.55}
+.wlock-adm-list{display:flex;flex-direction:column;gap:8px}
+.wlock-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:14px;background:var(--panel);border:1.5px solid var(--border);flex-wrap:wrap}
+.wlock-row.is-locked{border-color:rgba(239,68,68,.55);background:rgba(239,68,68,.06)}
+.wlock-info{display:flex;align-items:center;gap:9px;min-width:0;flex:1}
+.wlock-ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:17px;border:1.5px solid transparent;flex-shrink:0}
+.wlock-info b{display:block;font-size:13px;font-weight:900}
+.wlock-info small{display:block;font-size:11.5px;color:var(--muted)}
+.wlock-btn{border:0;border-radius:999px;padding:8px 14px;font:inherit;font-size:12px;font-weight:900;cursor:pointer;color:#fff;white-space:nowrap}
+.wlock-btn.open{background:linear-gradient(135deg,#10b981,#059669)}
+.wlock-btn.locked{background:linear-gradient(135deg,#ef4444,#b91c1c)}
 </style>
 <script>try{history.scrollRestoration="manual"}catch(e){}
 (function(){function top(){window.scrollTo(0,0);var t=document.getElementById("svcTrack");if(t)t.scrollLeft=0}
